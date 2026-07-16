@@ -1,0 +1,8 @@
+# Pinned at first install; verified against the versions actually used in CI.
+# Runtime (pipeline)
+requests==2.32.4
+feedparser==6.0.11
+anthropic==0.57.1
+
+# Tests
+pytest==8.4.1

@@ -1,0 +1,37 @@
+# Local-only working areas (never tracked; see build handoff)
+/.scratch/
+/board/
+/DESIGN.md
+/docs/reviews/
+
+# Raw captured data: only gzipped aggregates under data/ are committed
+/data/raw/
+/pipeline/tests/fixtures/raw/
+*.raw.json
+*.raw.html
+*.raw.csv
+
+# Large files guard (raw dumps by extension; aggregates are *.json.gz)
+*.csv
+!pipeline/tests/fixtures/**/*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Secrets / environment
+.env
+.env.*
+
+# OS noise
+Thumbs.db
+Desktop.ini
+.DS_Store
