@@ -1,4 +1,5 @@
 """RSS detector: official lab feeds (OpenAI, Google DeepMind, Qwen, AWS)."""
+import calendar
 import re
 import time
 
@@ -15,7 +16,8 @@ def parse_feed(org: str, content: bytes, lookback_days: int,
     horizon = now_ts - lookback_days * 86400
     for item in feed.entries:
         parsed = item.get("published_parsed") or item.get("updated_parsed")
-        if parsed and time.mktime(parsed) < horizon:
+        # feedparser structs are UTC; timegm keeps them UTC (invariant 9).
+        if parsed and calendar.timegm(parsed) < horizon:
             continue
         title = item.get("title", "")
         if title_filter and not re.search(title_filter, title):

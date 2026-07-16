@@ -43,11 +43,35 @@ def test_rss_lookback_excludes_old_items():
 
 
 def test_rss_title_filter_applies():
-    signals = rss.parse_feed("amazon", _read("rss_aws_blog.xml"),
-                             lookback_days=3650, now_ts=CAPTURE_TS,
-                             title_filter=r"\bNova\b")
-    for s in signals:
+    # Positive case on a synthetic feed (the AWS capture happens to carry no
+    # Nova post, which made a fixture-only test vacuous; P3 review F2).
+    feed = b"""<?xml version="1.0"?><rss version="2.0"><channel>
+      <item><title>Introducing Amazon Nova 3</title>
+        <link>https://aws.amazon.com/nova-3</link>
+        <pubDate>Wed, 15 Jul 2026 12:00:00 GMT</pubDate></item>
+      <item><title>Introducing Amazon EC2 M8g instances</title>
+        <link>https://aws.amazon.com/ec2</link>
+        <pubDate>Wed, 15 Jul 2026 12:00:00 GMT</pubDate></item>
+    </channel></rss>"""
+    signals = rss.parse_feed("amazon", feed, lookback_days=30,
+                             now_ts=CAPTURE_TS, title_filter=r"\bNova\b")
+    assert [s["model_hint"] for s in signals] == ["Amazon Nova 3"]
+    # And on the real capture nothing non-Nova leaks through.
+    for s in rss.parse_feed("amazon", _read("rss_aws_blog.xml"),
+                            lookback_days=3650, now_ts=CAPTURE_TS,
+                            title_filter=r"\bNova\b"):
         assert "Nova" in s["title"]
+
+
+def test_date_tokens_are_never_model_hints():
+    # P3 review R1: date fragments dominated candidates.
+    for title in ("Jul 14 update", "Announcing our December 11 event",
+                  "Claude for K-12 classrooms", "Series B funding round",
+                  "How Cars24 scales conversations with OpenAI"):
+        assert not common.looks_like_release(title), title
+    assert common.model_hint_from("Introducing Claude Sonnet 5") == "Claude Sonnet 5"
+    assert common.looks_like_release("Introducing GPT-5")
+    assert common.looks_like_release("Kimi K2.7 Code is here")
 
 
 # --------------------------------------------------------------- html_diff
@@ -156,6 +180,47 @@ def test_known_entries_are_not_candidates():
     assert correlate.correlate(signals, entries, set()) == []
 
 
+def test_fragment_hints_of_known_models_are_suppressed():
+    # P3 review R2: hints are often fragments of the dataset name.
+    entries = [
+        {"org": "anthropic", "model_name": "Claude Sonnet 5", "variants": []},
+        {"org": "moonshot", "model_name": "Kimi K2.5", "variants": []},
+        {"org": "xai", "model_name": "Grok Code Fast 1", "variants": []},
+    ]
+    signals = [
+        _sig("html_diff", "anthropic", "Sonnet 5"),
+        _sig("html_diff", "moonshot", "K2.5"),
+        _sig("html_diff", "xai", "Fast 1"),
+    ]
+    assert correlate.correlate(signals, entries, set()) == []
+
+
+def test_fragment_and_full_hints_merge_to_one_candidate():
+    # P3 review F3: "K3" from a title and "kimi-k3" from a catalog slug are
+    # one release.
+    signals = [
+        _sig("html_diff", "moonshot", "K3", "https://kimi.com/blog/k3"),
+        _sig("openrouter", "moonshot", "kimi-k3",
+             "https://openrouter.ai/moonshotai/kimi-k3", "2026-07-16"),
+    ]
+    cands = correlate.correlate(signals, [], set())
+    assert len(cands) == 1
+    assert cands[0]["id"] == "moonshot--kimi-k3"
+    assert cands[0]["confidence"] == 2
+
+
+def test_rejected_ids_are_durable(tmp_path):
+    import json as _json
+    pdir = tmp_path / "data" / "pending"
+    pdir.mkdir(parents=True)
+    (pdir / "rejected.json").write_text(
+        _json.dumps([{"id": "openai--gpt-6", "reason": "not a model"}]))
+    ids = pending.existing_pending_ids(str(tmp_path))
+    assert "openai--gpt-6" in ids
+    signals = [_sig("rss", "openai", "GPT-6", "https://openai.com/gpt-6")]
+    assert correlate.correlate(signals, [], ids) == []
+
+
 def test_existing_pending_not_recreated():
     signals = [_sig("rss", "openai", "GPT-6", "https://openai.com/gpt-6")]
     assert correlate.correlate(signals, [], {"openai--gpt-6"}) == []
@@ -163,23 +228,62 @@ def test_existing_pending_not_recreated():
 
 # ------------------------------------------------- replay harness (full path)
 
-def test_replay_fixtures_through_full_path(tmp_path):
-    """Phase 0 captures -> detectors -> correlate against the real dataset ->
-    pending files + morning report."""
+_HTML_SOURCES = {
+    "anthropic": ("html_anthropic.html", "https://www.anthropic.com/news"),
+    "xai": ("html_xai.html", "https://x.ai/news"),
+    "mistral": ("html_mistral.html", "https://mistral.ai/news"),
+    "deepseek": ("html_deepseek.html", "https://api-docs.deepseek.com/news"),
+    "cohere": ("html_cohere.html", "https://cohere.com/blog"),
+    "moonshot": ("html_moonshot_kimi_blog.html", "https://www.kimi.com/blog/"),
+    "zai": ("html_zai_release_notes.html", "https://docs.z.ai/release-notes/new-released"),
+}
+
+
+def _all_fixture_signals():
+    """Every configured source that has a Phase 0 capture (P3 review F1)."""
     signals = []
-    signals += html_diff.parse_index("anthropic", _read("html_anthropic.html"),
-                                     "https://www.anthropic.com/news")
+    for org, (name, base) in _HTML_SOURCES.items():
+        signals += html_diff.parse_index(org, _read(name), base)
     signals += hf_orgs.parse_listing("zai", json.loads(_read("hf_zai_org_60.json")),
                                      config.DETECTION_LOOKBACK_DAYS, CAPTURE_DATE)
     signals += openrouter.parse_catalog(json.loads(_read("openrouter_models.json")),
                                         config.DETECTION_LOOKBACK_DAYS, CAPTURE_TS)
-    signals += rss.parse_feed("openai", _read("rss_openai.xml"),
-                              config.DETECTION_LOOKBACK_DAYS, CAPTURE_TS)
+    for org, name in (("openai", "rss_openai.xml"),
+                      ("google-deepmind", "rss_deepmind.xml"),
+                      ("alibaba-qwen", "rss_qwen_index.xml")):
+        signals += rss.parse_feed(org, _read(name),
+                                  config.DETECTION_LOOKBACK_DAYS, CAPTURE_TS)
+    signals += rss.parse_feed("amazon", _read("rss_aws_blog.xml"),
+                              config.DETECTION_LOOKBACK_DAYS, CAPTURE_TS,
+                              title_filter=r"\bNova\b")
+    return signals
+
+
+def test_replay_fixtures_through_full_path(tmp_path):
+    """Phase 0 captures for EVERY configured source -> detectors ->
+    correlate against the real dataset -> pending files + morning report,
+    with candidate-quality assertions (P3 review R1/R2/F1)."""
+    import re as _re
+    signals = _all_fixture_signals()
 
     entries = store.read_entries()  # the real committed dataset
     candidates = correlate.correlate(signals, entries,
                                      pending.existing_pending_ids(str(tmp_path)))
     assert candidates, "capture window contains releases newer than the dataset"
+
+    # Known truth: kimi-k3 (OpenRouter, created the capture day) is a real
+    # release the dataset lacks.
+    ids = {c["id"] for c in candidates}
+    assert "moonshot--kimi-k3" in ids
+
+    # No candidate may be a date fragment (R1) or a published model (R2).
+    month_re = _re.compile(
+        r"--(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*-?\d")
+    known = correlate.known_slugs(entries)
+    for c in candidates:
+        assert not month_re.search(c["id"]), f"date-fragment candidate {c['id']}"
+        assert not correlate.is_known(c["org"], c["base_slug"], known), \
+            f"published model resurfaced: {c['id']}"
 
     paths = pending.write_candidates(candidates, CAPTURE_DATE, root=str(tmp_path))
     assert len(paths) == len(candidates)

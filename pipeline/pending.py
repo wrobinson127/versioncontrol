@@ -9,13 +9,24 @@ import json
 import os
 
 PENDING_DIR = os.path.join("data", "pending")
+REJECTED_PATH = os.path.join("data", "pending", "rejected.json")
 
 
 def existing_pending_ids(root: str = ".") -> set:
+    """Ids that must not be re-created: open candidates plus the durable
+    rejection list (detection is stateless, so a deleted candidate file
+    alone would resurrect the next night; P3 review R2)."""
+    ids = set()
     path = os.path.join(root, PENDING_DIR)
-    if not os.path.isdir(path):
-        return set()
-    return {f[:-5] for f in os.listdir(path) if f.endswith(".json")}
+    if os.path.isdir(path):
+        ids |= {f[:-5] for f in os.listdir(path)
+                if f.endswith(".json") and f != "rejected.json"}
+    rejected = os.path.join(root, REJECTED_PATH)
+    if os.path.exists(rejected):
+        with open(rejected, encoding="utf-8") as f:
+            ids |= {r["id"] if isinstance(r, dict) else r
+                    for r in json.load(f)}
+    return ids
 
 
 def write_candidates(candidates: list, run_date: str, root: str = ".") -> list:
@@ -45,11 +56,16 @@ def write_candidates(candidates: list, run_date: str, root: str = ".") -> list:
 
 
 def morning_report(candidates: list, run_date: str, detector_errors: list,
-                   flags: list, llm_note: str = "") -> str:
+                   flags: list, llm_note: str = "",
+                   source_counts: dict = None) -> str:
     """Markdown artifact summarizing the night. Registrar voice."""
     lines = [f"# Morning report, {run_date} (UTC)", ""]
     if not candidates and not detector_errors and not flags:
         lines.append("No new candidate releases detected. All detectors ran clean.")
+        if source_counts:
+            lines.append("")
+            lines.append("Signals by source: " + ", ".join(
+                f"{k}={v}" for k, v in sorted(source_counts.items())))
         return "\n".join(lines) + "\n"
 
     if candidates:
@@ -65,8 +81,9 @@ def morning_report(candidates: list, run_date: str, detector_errors: list,
                 f"| {anchor} |")
         lines.append("")
         lines.append("Each candidate has a file under data/pending/. "
-                     "Approval is merging this branch; deleting a candidate "
-                     "file rejects it.")
+                     "Approval is merging this branch. Deleting a candidate "
+                     "file rejects it for now; to reject it permanently, add "
+                     "its id to data/pending/rejected.json.")
     else:
         lines.append("No new candidate releases detected.")
 
@@ -86,5 +103,11 @@ def morning_report(candidates: list, run_date: str, detector_errors: list,
         lines.append("## FLAGS")
         for f in flags:
             lines.append(f"- {f}")
+
+    if source_counts:
+        lines.append("")
+        lines.append("## Signals by source")
+        for k, v in sorted(source_counts.items()):
+            lines.append(f"- {k}: {v}")
 
     return "\n".join(lines) + "\n"

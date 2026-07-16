@@ -45,7 +45,13 @@ def parse_index(org: str, content: bytes, base_url: str) -> list:
             f"html_diff {org}: index is {len(content)} bytes, too small to be "
             f"a real news page (JS shell or block page)")
     parser = _AnchorParser()
-    parser.feed(content.decode("utf-8", errors="replace"))
+    try:
+        text = content.decode("utf-8")
+    except UnicodeDecodeError:
+        # Some lab pages mix cp1252 punctuation into otherwise-UTF-8 bytes;
+        # cp1252 decodes every byte, avoiding U+FFFD in candidate titles.
+        text = content.decode("cp1252", errors="replace")
+    parser.feed(text)
     signals = []
     seen = set()
     for href, text in parser.anchors:
