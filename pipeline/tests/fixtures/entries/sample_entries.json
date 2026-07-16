@@ -7,20 +7,8 @@
     "date": "2023-12-11",
     "availability_class": "open_weights",
     "parameters": 46700000000,
-    "summary": "Mistral AI released Mixtral 8x7B, a sparse mixture-of-experts language model, with open weights under the Apache 2.0 license. Mistral AI reports results on public benchmarks and provides a paper and model card.",
-    "benchmarks": [
-      {
-        "benchmark": "gpqa-diamond",
-        "value": 29.9,
-        "provenance": {
-          "source_class": "LAB_REPORTED",
-          "source_url": "https://mistral.ai/news/mixtral-of-experts/",
-          "benchmark_name": "GPQA Diamond",
-          "benchmark_version": "diamond",
-          "retrieval_date": "2026-07-16"
-        }
-      }
-    ],
+    "summary": "Mistral AI released Mixtral 8x7B, a sparse mixture-of-experts language model, with open weights under the Apache 2.0 license. Mistral AI reports results on public benchmarks and provides a paper and model card. Neither pinned benchmark existed in the lab's announcement; no comparable measurement is recorded.",
+    "benchmarks": [],
     "disclosure_links": {
       "system_card": "NOT_DISCLOSED",
       "model_card": "https://huggingface.co/mistralai/Mixtral-8x7B-v0.1",

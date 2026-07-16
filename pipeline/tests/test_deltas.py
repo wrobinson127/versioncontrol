@@ -75,6 +75,14 @@ def test_entry_deltas_silent_when_predecessor_lacks_measurement():
     assert deltas.entry_deltas(entry, pred) == []
 
 
+def test_provenance_less_pair_refused_not_computed():
+    # None == None must not satisfy the equality gates (review flag, P1).
+    bare = {"benchmark": "gpqa-diamond", "value": 5}
+    d = deltas.compute_delta(bare, dict(bare))
+    assert d["kind"] == deltas.REFUSED_COMPARISON
+    assert "lacks provenance" in d["reason"]
+
+
 def test_entry_deltas_refuses_when_only_cross_class_available():
     entry = {"benchmarks": [_num(source_class="LAB_REPORTED")]}
     pred = {"benchmarks": [_num(value=64.2, source_class="INDEPENDENT")]}

@@ -20,6 +20,13 @@ def compute_delta(current: dict, predecessor: dict) -> dict:
     cp = current.get("provenance", {})
     pp = predecessor.get("provenance", {})
 
+    # Self-defending against unvalidated inputs: an absent provenance class
+    # or version must never satisfy the equality gates by both being None.
+    for prov, side in ((cp, "current"), (pp, "predecessor")):
+        if not prov.get("source_class") or not prov.get("benchmark_version"):
+            return {"kind": REFUSED_COMPARISON,
+                    "reason": f"{side} number lacks provenance"}
+
     if current.get("benchmark") != predecessor.get("benchmark"):
         return {"kind": REFUSED_COMPARISON,
                 "reason": "different benchmarks"}

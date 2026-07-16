@@ -1,5 +1,10 @@
 """Schema validation tests (P1). Fixture entries are cut from real Phase 0
-captures; every invariant the validator owns has a rejection test."""
+captures; every invariant the validator owns has a rejection test.
+
+The mutation baseline is the GPT-5 entry because it carries benchmark
+numbers whose values trace to the committed announcement capture
+(openai_gpt5_launch.html: 85.7 GPQA Diamond, 74.9 SWE-Bench Verified).
+"""
 import copy
 import json
 import os
@@ -16,7 +21,9 @@ def _entries():
 
 
 def _valid_entry():
-    return copy.deepcopy(_entries()[0])  # Mixtral
+    entry = copy.deepcopy(_entries()[1])  # GPT-5
+    assert entry["id"] == "openai--gpt-5"
+    return entry
 
 
 def test_all_fixture_entries_validate_clean():
@@ -28,6 +35,14 @@ def test_all_fixture_entries_validate_clean():
 def test_fixture_covers_release_and_revision_types():
     types = {e["entry_type"] for e in _entries()}
     assert types == {"release", "revision"}
+
+
+def test_fixture_covers_empty_benchmark_list_era_sparsity():
+    # Mixtral predates both pinned benchmarks; the honest entry records no
+    # numbers at all rather than a number with invented provenance.
+    mixtral = _entries()[0]
+    assert mixtral["benchmarks"] == []
+    assert validate.validate_entry(mixtral) == []
 
 
 def test_missing_provenance_field_rejected():
@@ -42,7 +57,15 @@ def test_missing_provenance_field_rejected():
 def test_empty_provenance_field_rejected():
     entry = _valid_entry()
     entry["benchmarks"][0]["provenance"]["source_url"] = ""
-    assert validate.validate_entry(entry)
+    errors = validate.validate_entry(entry)
+    assert any("provenance.source_url" in e for e in errors)
+
+
+def test_invalid_source_class_rejected():
+    entry = _valid_entry()
+    entry["benchmarks"][0]["provenance"]["source_class"] = "OPENROUTER"
+    errors = validate.validate_entry(entry)
+    assert any("source_class" in e for e in errors)
 
 
 def test_unpinned_benchmark_rejected():
@@ -59,7 +82,7 @@ def test_provenance_version_must_match_pin():
 
 def test_null_disclosure_link_rejected():
     entry = _valid_entry()
-    entry["disclosure_links"]["system_card"] = None
+    entry["disclosure_links"]["model_card"] = None
     errors = validate.validate_entry(entry)
     assert any("invariant 4" in e for e in errors), \
         "null disclosure link must be rejected; absence is NOT_DISCLOSED"
@@ -68,7 +91,7 @@ def test_null_disclosure_link_rejected():
 def test_null_parameters_rejected_not_disclosed_accepted():
     entry = _valid_entry()
     entry["parameters"] = None
-    assert validate.validate_entry(entry)
+    assert any("invariant 4" in e for e in validate.validate_entry(entry))
     entry["parameters"] = "NOT_DISCLOSED"
     assert validate.validate_entry(entry) == []
 
@@ -77,13 +100,13 @@ def test_zero_parameters_rejected():
     # NOT_DISCLOSED must never be rendered or stored as zero (invariant 4).
     entry = _valid_entry()
     entry["parameters"] = 0
-    assert validate.validate_entry(entry)
+    assert any("invariant 4" in e for e in validate.validate_entry(entry))
 
 
 def test_non_iso_date_rejected():
     entry = _valid_entry()
-    entry["date"] = "12/11/2023"
-    assert validate.validate_entry(entry)
+    entry["date"] = "08/07/2025"
+    assert any("ISO" in e for e in validate.validate_entry(entry))
 
 
 def test_pre_window_date_rejected():
@@ -101,7 +124,7 @@ def test_non_registry_org_rejected():
 
 def test_summary_violating_voice_lint_rejected():
     entry = _valid_entry()
-    entry["summary"] = "Mistral AI released an impressive model that beats rivals."
+    entry["summary"] = "OpenAI released an impressive model that beats rivals."
     errors = validate.validate_entry(entry)
     assert any("registrar voice" in e for e in errors)
 
@@ -117,18 +140,18 @@ def test_retracted_requires_note():
 def test_predecessor_self_reference_rejected():
     entry = _valid_entry()
     entry["predecessor"] = entry["id"]
-    assert validate.validate_entry(entry)
+    assert any("not be the entry itself" in e for e in validate.validate_entry(entry))
 
 
 def test_id_must_start_with_org_key():
     entry = _valid_entry()
-    entry["id"] = "openai--mixtral-8x7b"
+    entry["id"] = "mistral--gpt-5"
     assert any("org key" in e for e in validate.validate_entry(entry))
 
 
 def test_make_entry_id_is_stable_and_wellformed():
-    eid = validate.make_entry_id("openai", "GPT-4o (Mar 2025)")
-    assert eid == "openai--gpt-4o-mar-2025"
+    assert validate.make_entry_id("openai", "GPT-4o (Mar 2025)") == "openai--gpt-4o-mar-2025"
     entry = _valid_entry()
-    entry["id"] = validate.make_entry_id("mistral", "Mixtral 8x7B")
+    entry["id"] = validate.make_entry_id("openai", "GPT-5")
+    assert entry["id"] == "openai--gpt-5"
     assert validate.validate_entry(entry) == []
