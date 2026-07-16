@@ -1,0 +1,65 @@
+name: nightly
+
+on:
+  schedule:
+    - cron: "20 8 * * *"   # 08:20 UTC daily; quiet hour for lab announcements
+  workflow_dispatch:
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    # Dormant until Walker sets the repository variable NIGHTLY_ENABLED=true
+    # on his launch checklist. workflow_dispatch respects the same gate.
+    if: vars.NIGHTLY_ENABLED == 'true'
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+
+      - name: Detect, correlate, extract, write pending
+        id: nightly
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          git checkout -B nightly-pending origin/main
+          git merge --no-edit origin/nightly-pending || git merge --abort || true
+          python -m pipeline.nightly --report-path morning_report.md
+
+      - name: Upload morning report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: morning-report
+          path: morning_report.md
+
+      - name: Commit candidates to the pending branch
+        run: |
+          git config user.name "versioncontrol-nightly"
+          git config user.email "nightly@users.noreply.github.com"
+          git add data/pending data/derived/llm_ledger.json || true
+          if git diff --cached --quiet; then
+            echo "No new candidates."
+            exit 0
+          fi
+          git commit -m "nightly: candidate releases awaiting review $(date -u +%F)"
+          git push origin nightly-pending
+
+      - name: Open or refresh the review PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git ls-remote --exit-code origin nightly-pending >/dev/null 2>&1; then
+            existing=$(gh pr list --head nightly-pending --state open --json number --jq length)
+            if [ "$existing" = "0" ] && ! git diff --quiet origin/main origin/nightly-pending -- data/pending 2>/dev/null; then
+              gh pr create --base main --head nightly-pending \
+                --title "Pending release candidates" \
+                --body "$(cat morning_report.md)"
+            fi
+          fi

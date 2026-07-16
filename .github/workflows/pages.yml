@@ -1,0 +1,41 @@
+name: pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    # Inert until Walker sets the Pages source to "GitHub Actions" on his
+    # launch checklist; until then this job runs but deploy-pages fails
+    # closed on a private repo without Pages enabled.
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble the site artifact (site files at root, data alongside)
+        run: |
+          mkdir -p dist
+          cp -r site/* dist/
+          cp -r data dist/data
+          rm -rf dist/data/pending dist/data/raw
+          cp docs/METHODOLOGY.md docs/verification_report.md docs/backfill_strategy.md dist/ || true
+          cp DATA_LICENSE.md dist/
+          echo "versioncontrol.walker-robinson.com" > dist/CNAME
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - id: deployment
+        uses: actions/deploy-pages@v4
