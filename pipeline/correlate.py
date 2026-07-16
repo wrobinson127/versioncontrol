@@ -27,14 +27,49 @@ def base_slug(model_hint: str) -> str:
     return s or slugify(model_hint)
 
 
-def known_slugs(entries: list) -> set:
-    known = set()
+def known_slugs(entries: list) -> dict:
+    """Per-org set of known base slugs (flagship names, Epoch row names,
+    variants)."""
+    known = {}
     for e in entries:
+        org = known.setdefault(e["org"], set())
         for name in {e["model_name"], e.get("epoch_row_name", e["model_name"])}:
-            known.add((e["org"], base_slug(name)))
+            org.add(base_slug(name))
         for v in e.get("variants", []):
-            known.add((e["org"], base_slug(v)))
+            org.add(base_slug(v))
     return known
+
+
+def is_known(org: str, slug: str, known: dict) -> bool:
+    """Fragment-aware suppression (P3 review R2). Detector hints are often
+    name fragments ("Sonnet 5" for "Claude Sonnet 5", "K2.5" for
+    "Kimi K2.5"); a candidate is known when its slug equals a known slug or
+    aligns with one at a hyphen boundary in either direction."""
+    org_known = known.get(org, set())
+    if slug in org_known:
+        return True
+    for k in org_known:
+        if k.endswith("-" + slug) or slug.endswith("-" + k):
+            return True
+        # A candidate that a longer known name extends at a hyphen boundary
+        # is a fragment of that release ("mistral-3" of "mistral-3-large").
+        # The reverse (candidate extends known: "mistral-ocr-3" over known
+        # "mistral-ocr") is a NEW version and stays a candidate.
+        if k.startswith(slug + "-"):
+            return True
+    # Deep-suffix check: a hint like "Redeploying Fable 5" slugs to
+    # "redeploying-fable-5"; its digit-bearing multi-segment suffix
+    # "fable-5" aligns with known "claude-fable-5". Single-segment suffixes
+    # (e.g. "flash") are too generic to suppress on.
+    segments = slug.split("-")
+    for i in range(1, len(segments) - 1):
+        suffix = "-".join(segments[i:])
+        if not re.search(r"\d", suffix):
+            continue
+        for k in org_known:
+            if suffix == k or k.endswith("-" + suffix):
+                return True
+    return False
 
 
 def correlate(signals: list, entries: list, pending_ids: set) -> list:
@@ -50,9 +85,26 @@ def correlate(signals: list, entries: list, pending_ids: set) -> list:
         key = (s["org"], base_slug(s["model_hint"]))
         clusters.setdefault(key, []).append(s)
 
+    # Merge fragment clusters into their superset within one org: a
+    # cluster whose slug is a hyphen-boundary suffix of another cluster's
+    # slug is the same event seen by a detector that only caught the tail
+    # ("k3" from a title, "kimi-k3" from a catalog slug).
+    merged_into = {}
+    org_slugs = {}
+    for org, slug in clusters:
+        org_slugs.setdefault(org, []).append(slug)
+    for org, slugs in org_slugs.items():
+        for s in slugs:
+            supersets = [t for t in slugs
+                         if t != s and t.endswith("-" + s)]
+            if len(supersets) == 1:
+                merged_into[(org, s)] = (org, supersets[0])
+    for src, dst in merged_into.items():
+        clusters[dst].extend(clusters.pop(src))
+
     candidates = []
     for (org, slug), cluster in sorted(clusters.items()):
-        if not slug or (org, slug) in known:
+        if not slug or is_known(org, slug, known):
             continue
         cand_id = f"{org}--{slug}"
         if cand_id in pending_ids:
