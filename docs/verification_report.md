@@ -10,7 +10,7 @@ Gate verdicts: 1 PASS, 2 PASS, 3 PASS, 4 PASS, 5 PASS, 6 PARTIAL (flagged, see b
 
 Source: `https://epoch.ai/data/all_ai_models.csv`. HTTP 200, 6,712,040 bytes, 3,555 data rows, 57 columns.
 
-Full header, in order, as retrieved 2026-07-16:
+Full header, in order, transcribed from the capture at `.scratch/epoch_header.json` (an earlier revision of this report mis-transcribed two columns; caught by phase review, corrected against the capture):
 
 ```
 Model, Domain, Task, Organization, Authors, Publication date, Reference, Link,
@@ -25,9 +25,10 @@ Training data center, Archived links, Batch size, Batch size notes,
 Organization categorization, Foundation model, Training compute lower bound,
 Training compute upper bound, Training chip-hours, Training code accessibility,
 Accessibility notes, Possibly over 1e23 FLOP, Training compute cost (2023 USD),
-Utilization notes, Numerical format, Frontier model, Training chip-hours,
-Hugging Face developer id, Post-training compute (FLOP),
-Post-training compute notes, Hardware utilization (HFU), Open model weights?
+Utilization notes, Numerical format, Frontier model, Training power draw (W),
+Training compute estimation method, Hugging Face developer id,
+Post-training compute (FLOP), Post-training compute notes,
+Hardware utilization (HFU), Open model weights?
 ```
 
 Columns the pipeline consumes, all present: `Model`, `Organization`, `Publication date`, `Model accessibility`, `Parameters`, `Link`, `Reference`, `Notability criteria`, `Accessibility notes`, `Open model weights?`, `Hugging Face developer id`, `Base model`, `Last modified`.
@@ -40,7 +41,7 @@ Findings that shape the adapter:
 - `Model accessibility` observed values: `API access`, `Open weights (unrestricted)`, `Open weights (restricted use)`, `Open weights (non-commercial)`, `Unreleased`, empty.
 - `Organization` is a comma-joined list for collaborations. Registry matching uses the primary (first) organization plus an exact-spelling set captured in `pipeline/config.py`.
 
-The expected-column set is pinned in config; the nightly Epoch detector asserts the pin against the live header and fails loudly on drift.
+The expected-column set is pinned in `pipeline/config.py` (`EPOCH_EXPECTED_COLUMNS`, all 57, plus the consumed subset `EPOCH_CONSUMED_COLUMNS`); the nightly Epoch detector (built in P3) asserts the pin against the live header and fails loudly on drift.
 
 ## Gate 2: Known truth
 
@@ -86,7 +87,7 @@ All four signal classes returned parseable output on 2026-07-16.
 | Cohere | `CohereLabs` | 200, active |
 | Amazon (Nova) | `amazon` | 200, active but noisy (mostly speculative-decoding repos, not Nova) |
 
-This mapping is FLAGGED for Walker's confirmation per the handoff.
+This mapping is captured in `pipeline/config.py` (`REGISTRY[org]["hf_handles"]`) and FLAGGED for Walker's confirmation per the handoff.
 
 **Sibling-repo clustering.** Validated against zai-org's real release history (60 most recent repos). Suffix stripping (`-FP8`, `-Base`, quantization tags) plus same-day `createdAt` grouping correctly clusters nine consecutive GLM releases, e.g. `GLM-5.2` + `GLM-5.2-FP8` (both 2026-06-16) as one event, and `GLM-4.5` + `GLM-4.5-FP8` + `GLM-4.5-Base` (all 2025-07-20) as one event. Capture in `pipeline/tests/fixtures/captures/2026-07-16/hf_zai_org_60.json`.
 
@@ -96,25 +97,30 @@ This mapping is FLAGGED for Walker's confirmation per the handoff.
 
 Nightly workload: one Epoch CSV (6.7MB), three RSS feeds (~1MB), seven HTML indexes (~3MB), twelve HF API queries (~1MB), one OpenRouter call (0.5MB). Roughly 25 requests and 12MB per night, minutes of runtime. GitHub Actions allows far more per job; the private-repo free tier of 2,000 minutes per month absorbs a nightly job at ~5 minutes (about 150 minutes per month) with an order of magnitude to spare.
 
-Dataset growth: 404 Epoch rows are backfill-eligible today (registry orgs, 2022-11-30 forward, publicly usable, language or multimodal domain) before D3 variant clustering reduces the count. Recent cadence is ~150 rows per year before clustering. At a generous 250 published entries per year and ~2KB gzipped per entry, five years is roughly 2 to 3MB of aggregates against Pages limits of 100MB per file and ~1GB per repo. No pressure.
+Dataset growth: 404 Epoch rows are backfill-eligible today (registry orgs, 2022-11-30 forward, publicly usable, language or multimodal domain; the count includes 5 rows with an empty Domain field, an over-count of about one percent inside an estimate) before D3 variant clustering reduces the count. Recent cadence is ~150 rows per year before clustering. At a generous 250 published entries per year and ~2KB gzipped per entry, five years is roughly 2 to 3MB of aggregates against Pages limits of 100MB per file and ~1GB per repo. No pressure.
 
 ## Gate 5: Adapter brittleness fixtures
 
-Captured 2026-07-16 into `pipeline/tests/fixtures/captures/2026-07-16/`: `rss_openai.xml`, `rss_deepmind.xml`, `rss_qwen_index.xml`, `rss_aws_blog.xml`, `html_anthropic.html`, `html_xai.html`, `html_mistral.html`, `html_deepseek.html`, `html_cohere.html`, `html_qwen.html`, `html_moonshot_kimi_blog.html`, `html_zai_release_notes.html`, `html_amazon_nova.html`, `hf_org_samples.json`, `hf_zai_org_60.json`, `openrouter_models.json`. Adapter tests assert against these fixtures so upstream markup drift fails CI visibly. Era-drift lesson applied to Epoch specifically: the adapter treats `Link` format, accessibility values, and the parenthetical revision naming as era-dependent and tests each against fixture rows from 2023, 2024, and 2026.
+Captured 2026-07-16 into `pipeline/tests/fixtures/captures/2026-07-16/`: `rss_openai.xml`, `rss_deepmind.xml`, `rss_qwen_index.xml`, `rss_aws_blog.xml`, `html_anthropic.html`, `html_xai.html`, `html_mistral.html`, `html_deepseek.html`, `html_cohere.html`, `html_qwen.html`, `html_moonshot_kimi_blog.html`, `html_zai_release_notes.html`, `html_amazon_nova.html`, `hf_org_samples.json`, `hf_zai_org_60.json`, `openrouter_models.json`. One additional capture, `html_moonshot.html` (615 bytes), is the JS shell that `moonshot.ai` serves to scripted fetches; it is kept deliberately as a negative-example fixture so the adapter's too-small-to-be-an-index guard has a real specimen to test against. Adapter tests asserting against these fixtures are built with the detectors in P3 (extraction and voice-lint tests exist now under `pipeline/tests/`); this gate's deliverable is the captures themselves. Era-drift lesson applied to Epoch specifically: the adapter treats `Link` format, accessibility values, and the parenthetical revision naming as era-dependent, with fixture rows spanning 2023 through 2026.
 
 ## Gate 6: LLM extraction (PARTIAL, flagged)
 
-What was verified:
+The gate asks for four things: run the extraction prompt on 3 real historical announcements, verify structured output parses, verify provenance fields populate, verify `lint_voice.py` catches a seeded violation, plus pricing arithmetic. Everything except the live API round trip was built and executed; the round trip is blocked on a missing key and FLAGGED.
+
+Verified by execution (test run: `python -m pytest pipeline/tests`, 13 passed):
 
 - Three real historical announcements captured as extraction fixtures: `openai_gpt5_launch.html` (API-only launch, 988KB), `mistral_mixtral_8x7b.html` (open-weights drop, 223KB) plus `deepseek_v31_open.html` as a static open-weights backup (25KB), and `openai_gpt41_point.html` (point release, 797KB).
+- The extraction prompt (`pipeline/extract.py`) builds from all three fixtures with announcement text intact after HTML stripping and stays inside the budgeted ~4K-token input size. Incidental finding: OpenAI typesets model names with a Unicode non-breaking hyphen (U+2011 in "GPT-4.1"); the text normalizer folds the hyphen family to ASCII.
+- Structured output parses and provenance fields populate: `parse_extraction` validates a realistic extraction output shaped exactly as the prompt requests and emits benchmark numbers carrying the complete mandatory provenance block (source class, source URL, benchmark name AND version, retrieval date). Malformed JSON, missing fields, unknown availability classes, and non-ISO dates are rejected. Numbers whose as-stated benchmark name does not match the pinned pair (for example bare "GPQA" without the Diamond qualifier) are quarantined as unpinned claims and cannot be published.
+- `pipeline/lint_voice.py` catches all 15 seeded violations across every banned category (quality adjectives, ranking language, editorial characterization, corporate speak, em dashes, git metaphor) and passes 5 clean registrar-voice strings without false positives.
 - Current pricing verified against the live model documentation on 2026-07-16. Chosen model: Claude Haiku 4.5, pinned ID `claude-haiku-4-5-20251001`, $1.00 per million input tokens, $5.00 per million output tokens.
-- Cost arithmetic: one extraction call at ~4,000 input + ~400 output tokens costs 4,000 x $1/1M + 400 x $5/1M = $0.004 + $0.002 = **$0.006 per call**. At the observed cadence of 10 to 15 detection-positive nights per month: **$0.06 to $0.09 per month expected**, with a 3x retry buffer still under $0.30. The $2.00 monthly hard cap corresponds to 333 calls; config enforces a monthly call counter capped at 300. One-time backfill assist, if used on ~150 entries, is ~$0.90, under the $5 target.
+- Cost arithmetic: one extraction call at ~4,000 input + ~400 output tokens costs 4,000 x $1/1M + 400 x $5/1M = $0.004 + $0.002 = **$0.006 per call**. At the observed cadence of 10 to 15 detection-positive nights per month: **$0.06 to $0.09 per month expected**, with a 3x retry buffer still under $0.30. The $2.00 monthly hard cap corresponds to 333 calls; `pipeline/config.py` sets `LLM_MONTHLY_CALL_CAP = 300`. One-time backfill assist, if used on ~150 entries, is ~$0.90, under the $5 target.
 
-What could NOT be verified tonight: a live extraction call. No `ANTHROPIC_API_KEY` is present in this environment. FLAG: Walker adds the key (locally for a one-command verification, and as a GitHub Actions secret for the nightly). The extraction prompt, output parsing, provenance population, and the voice lint's seeded-violation catch are all testable offline and are covered by the P4 test suite; the single deferred item is one real API round trip.
+NOT verified tonight: one live extraction round trip against the API, because no `ANTHROPIC_API_KEY` is present in this environment. The validation path the live output will flow through is the same one exercised above. FLAG: Walker adds the key (locally for a one-command verification, and as a GitHub Actions secret for the nightly); the live round trip re-runs before P4 closes.
 
 ## Gate 7: Name context
 
-`grep -i "the earlier working name"` across the repository: zero matches. README's first sentence carries the tagline and states that the project tracks AI model versions and is not an MLOps tool, disambiguating from software "model version control" tooling.
+`grep -i "the earlier working name"` across tracked files and drafted copy: zero matches. (The word does appear inside third-party abstract text in the gitignored raw Epoch CSV, which is not project copy.) README's first sentence carries the tagline and states that the project tracks AI model versions and is not an MLOps tool, disambiguating from software "model version control" tooling.
 
 ---
 
