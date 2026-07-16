@@ -146,6 +146,7 @@ EPOCH_CONSUMED_COLUMNS = [
 
 BACKFILL_START = "2022-11-30"          # D7
 DATE_TOLERANCE_DAYS = 3                # max observed Epoch-vs-announcement gap was 2
+DETECTION_LOOKBACK_DAYS = 14           # signals older than this are not candidates
 HF_API_URL = "https://huggingface.co/api/models"
 HF_RECENT_LIMIT = 30                   # repos pulled per org per night
 OPENROUTER_MODELS_URL = "https://openrouter.ai/api/v1/models"
