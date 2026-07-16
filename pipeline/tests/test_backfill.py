@@ -139,10 +139,11 @@ def _mini_entries():
     return [e1, e2]
 
 
-def _hub_row(slug, value=50.0):
+def _hub_row(slug, value=50.0, started_at="2026-07-01T00:00:00.000Z"):
     return {"org": "openai", "slug": slug, "benchmark": "gpqa-diamond",
             "benchmark_name": "GPQA Diamond", "benchmark_version": "diamond",
-            "value": value, "retrieval_date": "2026-07-16"}
+            "value": value, "started_at": started_at,
+            "retrieval_date": "2026-07-16"}
 
 
 def test_dated_snapshot_routes_to_revision_entry():
@@ -181,6 +182,59 @@ def test_attached_number_carries_full_independent_provenance():
     assert prov["source_class"] == "INDEPENDENT"
     for field in validate.PROVENANCE_FIELDS:
         assert prov.get(field), f"missing {field}"
+
+
+def test_identical_slugs_resolve_to_most_recent_run():
+    entries = _mini_entries()
+    backfill.attach_hub_numbers(entries, [
+        _hub_row("gpt-4o", 40.0, started_at="2026-01-01T00:00:00.000Z"),
+        _hub_row("gpt-4o", 42.0, started_at="2026-06-01T00:00:00.000Z"),
+    ])
+    assert entries[0]["benchmarks"][0]["value"] == 42.0
+
+
+# ------------------------------------- launch-vs-revision reclassification
+
+def _epoch_row(model, date, link=""):
+    return {"Model": model, "Organization": "OpenAI",
+            "Publication date": date, "Model accessibility": "API access",
+            "Domain": "Language", "Link": link, "Parameters": "",
+            "Accessibility notes": ""}
+
+
+def test_first_parenthetical_occurrence_is_a_release_named_base():
+    # Epoch names the GPT-4 LAUNCH "GPT-4 (Mar 2023)"; the first occurrence
+    # of a base name is the launch, not a silent snapshot (P2 review R2).
+    entries, _, problems = backfill.build_entries([
+        _epoch_row("GPT-4 (Mar 2023)", "2023-03-15", "https://arxiv.org/abs/2303.08774"),
+        _epoch_row("GPT-4 (Jun 2023)", "2023-06-13", "https://arxiv.org/abs/2303.08774v3"),
+    ], [], "2026-07-16")
+    assert problems == []
+    by_id = {e["id"]: e for e in entries}
+    assert "openai--gpt-4" in by_id, sorted(by_id)
+    launch = by_id["openai--gpt-4"]
+    assert launch["entry_type"] == "release"
+    assert launch["model_name"] == "GPT-4"
+    assert launch["epoch_row_name"] == "GPT-4 (Mar 2023)"
+    rev = by_id["openai--gpt-4-jun-2023"]
+    assert rev["entry_type"] == "revision"
+    assert rev["predecessor"] == "openai--gpt-4"
+
+
+def test_revision_summary_never_denies_a_link_it_carries():
+    # P2 review R1: revision prose must match the entry's own sources.
+    entries, _, problems = backfill.build_entries([
+        _epoch_row("GPT-4o", "2024-05-13", "https://openai.com/index/hello-gpt-4o/"),
+        _epoch_row("GPT-4o (Nov 2024)", "2024-11-20",
+                   "https://help.openai.com/en/articles/9624314-model-release-notes"),
+        _epoch_row("GPT-4o (Jan 2025)", "2025-01-29", ""),
+    ], [], "2026-07-16")
+    assert problems == []
+    by_id = {e["id"]: e for e in entries}
+    with_link = by_id["openai--gpt-4o-nov-2024"]
+    assert "documents it at the linked source" in with_link["summary"]
+    without_link = by_id["openai--gpt-4o-jan-2025"]
+    assert "no lab announcement link is recorded" in without_link["summary"]
 
 
 # ---------------------------------------------------------------- summaries

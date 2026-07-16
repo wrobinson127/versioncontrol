@@ -19,12 +19,13 @@
       "entry_id": "google-deepmind--palm-2",
       "model_name": "PaLM 2",
       "date": "2023-05-10",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://arxiv.org/pdf/2305.10403",
+      "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
       "paper": "https://arxiv.org/abs/2305.10403",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Paper verified on arXiv (title PaLM 2 Technical Report, HTTP 200). Model card is Appendix D.10 of the tech report PDF, confirmed by extracting the PDF text this session. No separate system card was published for PaLM 2; safety analysis sits in the report. Usage policy is Google's Generative AI Prohibited Use Policy, page fetched 200 with matching title.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--palm-2-bison",
@@ -52,12 +53,13 @@
       "entry_id": "google-deepmind--gemini-1.0-pro",
       "model_name": "Gemini 1.0 Pro",
       "date": "2023-12-06",
-      "system_card": "",
+      "system_card": "NOT_DISCLOSED",
       "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
+      "paper": "https://arxiv.org/abs/2312.11805",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Paper verified on arXiv (Gemini: A Family of Highly Capable Multimodal Models, 200). No standalone system card; the tech report states card content is released within tech report updates. Model card left blank: the report's Appendix 10.1 card covers Gemini Ultra only, and the old storage.googleapis.com/model-cards bucket URL now returns 403, so a Pro-specific card could not be confirmed. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--funsearch",
@@ -107,23 +109,25 @@
       "entry_id": "google-deepmind--gemini-1.5-pro",
       "model_name": "Gemini 1.5 Pro",
       "date": "2024-02-15",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://storage.googleapis.com/deepmind-media/gemini/gemini_v1_5_report.pdf",
+      "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
+      "paper": "https://arxiv.org/abs/2403.05530",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Paper verified on arXiv (Gemini 1.5, 200). Model card is Appendix 12.1 (Table 45) of the Gemini 1.5 report PDF, fetched 200 and confirmed by extracting the PDF text this session. No standalone system card was published; Google releases card content inside tech report updates. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--gemma-7b",
       "model_name": "Gemma 7B",
       "date": "2024-02-21",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://ai.google.dev/gemma/docs/model_card",
+      "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
+      "paper": "https://arxiv.org/abs/2403.08295",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card page fetched 200 with title Gemma model card. Paper verified on arXiv (Gemma: Open Models Based on Gemini Research and Technology, 200); report PDF on deepmind-media also fetched 200. Gemma releases ship a model card and tech report, no system card. Usage policy is the Gemma Prohibited Use Policy, fetched 200 with matching title.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--gemma-1.1-7b-instruct",
@@ -162,12 +166,13 @@
       "entry_id": "google-deepmind--gemma-2-27b",
       "model_name": "Gemma 2 27B",
       "date": "2024-06-24",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://ai.google.dev/gemma/docs/core/model_card_2",
+      "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
+      "paper": "https://arxiv.org/abs/2408.00118",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card page fetched 200 with title Gemma 2 model card. Paper verified on arXiv (Gemma 2: Improving Open Language Models at a Practical Size, 200); report PDF on deepmind-media also fetched 200. No system card for Gemma releases. Gemma Prohibited Use Policy fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--datagemma",
@@ -195,12 +200,13 @@
       "entry_id": "google-deepmind--gemini-2.0-flash",
       "model_name": "Gemini 2.0 Flash",
       "date": "2024-12-11",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-0-Flash-Model-Card.pdf",
+      "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card PDF fetched 200 (application/pdf) from the official deepmind-media Model-Cards bucket. Google published no Gemini 2.0 technical report; the release was announced by blog and the next report is the Gemini 2.5 one, confirmed by web search this session. No standalone system card; safety content sits in the model card. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--gemini-2.0-pro",
@@ -239,12 +245,13 @@
       "entry_id": "google-deepmind--gemma-3-27b",
       "model_name": "Gemma 3 27B",
       "date": "2025-03-12",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://ai.google.dev/gemma/docs/core/model_card_3",
+      "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
+      "paper": "https://arxiv.org/abs/2503.19786",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card page fetched 200 with title Gemma 3 model card. Paper verified on arXiv (Gemma 3 Technical Report, 200); report PDF on deepmind-media also fetched 200. No system card for Gemma releases. Gemma Prohibited Use Policy fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--t5gemma-gemma-9b-9b",
@@ -272,12 +279,13 @@
       "entry_id": "google-deepmind--gemini-2.5-flash",
       "model_name": "Gemini 2.5 Flash",
       "date": "2025-04-17",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-5-Flash-Model-Card.pdf",
+      "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
+      "paper": "https://arxiv.org/abs/2507.06261",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card PDF fetched 200 (application/pdf) from the deepmind-media Model-Cards bucket. Paper verified on arXiv (Gemini 2.5: Pushing the Frontier, 200); the report covers the 2.5 family including Flash. No standalone system card; safety content sits in the model card and report. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--gemma-3-qat-27b",
@@ -294,12 +302,13 @@
       "entry_id": "google-deepmind--gemma-3n",
       "model_name": "Gemma 3n",
       "date": "2025-05-20",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://ai.google.dev/gemma/docs/gemma-3n/model_card",
+      "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
       "paper": "",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card page fetched 200 with title Gemma 3n model card. No system card for Gemma releases. Gemma Prohibited Use Policy fetched 200. Paper left blank: no dedicated Gemma 3n tech report was located this session but absence was not confirmed.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--medgemma-27b",
@@ -316,12 +325,13 @@
       "entry_id": "google-deepmind--gemini-2.5-flash-lite",
       "model_name": "Gemini 2.5 Flash-Lite",
       "date": "2025-06-15",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-5-Flash-Lite-Model-Card.pdf",
+      "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
+      "paper": "https://arxiv.org/abs/2507.06261",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card PDF fetched 200 (application/pdf) from the deepmind-media Model-Cards bucket. Gemini 2.5 report verified on arXiv (200) and covers the 2.5 family including Flash-Lite. No standalone system card. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--gemini-embedding",
@@ -349,12 +359,13 @@
       "entry_id": "google-deepmind--gemini-2.5-deep-think",
       "model_name": "Gemini 2.5 Deep Think",
       "date": "2025-08-01",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-5-Deep-Think-Model-Card.pdf",
+      "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
+      "paper": "https://arxiv.org/abs/2507.06261",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card PDF fetched 200 (application/pdf) from the deepmind-media Model-Cards bucket. Gemini 2.5 report verified on arXiv (200); it documents the 2.5 family including Deep Think, no Deep Think specific paper exists. No standalone system card; safety and Frontier Safety Framework content sits in the model card. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--gemma-3-270m",
@@ -415,12 +426,13 @@
       "entry_id": "google-deepmind--gemini-3-pro",
       "model_name": "Gemini 3 Pro",
       "date": "2025-11-18",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://storage.googleapis.com/deepmind-media/gemini/gemini_3_pro_fsf_report.pdf",
+      "model_card": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-Pro-Model-Card.pdf",
+      "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card PDF fetched 200 (application/pdf). System card cell holds the Gemini 3 Pro Frontier Safety Framework report PDF, fetched 200; Google does not use the system card label and this is the release safety report. No tech report or arXiv paper for Gemini 3 Pro, confirmed by web search this session; disclosure is via model card, model evaluation report, and FSF report. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--gemini-3.1-pro",

@@ -13,150 +13,163 @@
       "usage_policy": "",
       "paper": "",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Not researched this pass. Grok-0 was an internal prototype mentioned only inside the Grok announcement; no standalone artifacts expected but not verified."
     },
     {
       "entry_id": "xai--grok-1",
       "model_name": "Grok-1",
       "date": "2023-11-04",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://x.ai/news/grok/model-card",
+      "model_card": "https://huggingface.co/xai-org/grok-1",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Fetched Grok-1 Model Card page on x.ai (200, title Grok-1 Model Card; the older /blog/grok/model-card path now 404s). HF card at xai-org/grok-1 fetched 200, open weights under Apache 2.0. AUP fetched 200. xAI released no technical paper for Grok-1; announcement links no arxiv.",
+      "researched": true
     },
     {
       "entry_id": "xai--grok-1.5",
       "model_name": "Grok-1.5",
       "date": "2024-03-28",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Announcement at x.ai/news/grok-1.5 fetched 200; it links no model card, system card, or paper. Weights never released; xai-org on HF lists only grok-1 and grok-2 (org page checked this session). AUP fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "xai--grok-1.5v",
       "model_name": "Grok-1.5V",
       "date": "2024-03-28",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Preview announcement at x.ai/news/grok-1.5v fetched 200; only artifact linked is the RealWorldQA benchmark zip, no card or paper. No HF release; xai-org lists only grok-1 and grok-2. AUP fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "xai--grok-2",
       "model_name": "Grok-2",
       "date": "2024-08-13",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/xai-org/grok-2",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Grok-2 Beta Release post fetched 200 with no card or paper links; xAI model card PDFs begin with the 2025 releases. HF card at xai-org/grok-2 fetched 200, weights released Aug 2025 under Grok 2 Community License. AUP fetched 200. No technical paper published.",
+      "researched": true
     },
     {
       "entry_id": "xai--grok-3",
       "model_name": "Grok 3",
       "date": "2025-02-17",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Announcement at x.ai/news/grok-3 fetched 200. No Grok 3 model card exists; the post links only a draft Risk Management Framework at data.x.ai/2025.02.20-RMF-Draft.pdf (fetched 200, application/pdf), which is org level, not model specific. Closed weights, no HF repo. AUP fetched 200. No paper.",
+      "researched": true
     },
     {
       "entry_id": "xai--grok-3-mini",
       "model_name": "Grok-3 mini",
       "date": "2025-02-19",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Mini variant announced inside the Grok 3 post; no separate x.ai/news/grok-3-mini page (404 this session) and no artifacts of its own. Same disclosure posture as Grok 3: no card, no HF repo, no paper. AUP fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "xai--grok-4",
       "model_name": "Grok 4",
       "date": "2025-07-09",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://data.x.ai/2025-08-20-grok-4-model-card.pdf",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Grok 4 model card PDF fetched 200 (application/pdf) and confirmed listed on x.ai/safety; note it was published 2025-08-20, several weeks after release. Closed weights, no xai-org HF repo, so no HF model card. AUP fetched 200. xAI publishes no technical papers.",
+      "researched": true
     },
     {
       "entry_id": "xai--grok-code-fast-1",
       "model_name": "Grok Code Fast 1",
       "date": "2025-08-28",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://data.x.ai/2025-08-26-grok-code-fast-1-model-card.pdf",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card PDF fetched 200 (application/pdf), linked from both the announcement post and x.ai/safety. Closed weights, no HF repo. AUP fetched 200. No paper.",
+      "researched": true
     },
     {
       "entry_id": "xai--grok-4-fast",
       "model_name": "Grok 4 Fast",
       "date": "2025-09-19",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://data.x.ai/2025-09-19-grok-4-fast-model-card.pdf",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card PDF fetched 200 (application/pdf), linked from the announcement post and x.ai/safety. Closed weights, no HF repo. AUP fetched 200. No paper.",
+      "researched": true
     },
     {
       "entry_id": "xai--grok-4.1",
       "model_name": "Grok 4.1",
       "date": "2025-11-17",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://data.x.ai/2025-11-17-grok-4-1-model-card.pdf",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card PDF fetched 200 (application/pdf), linked from x.ai/news/grok-4-1. Not listed on the x.ai/safety card index, so registrars should keep the direct link. Closed weights, no HF repo. AUP fetched 200. No paper.",
+      "researched": true
     },
     {
       "entry_id": "xai--grok-4.1-fast",
       "model_name": "Grok 4.1 Fast",
       "date": "2025-11-19",
       "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Announcement at x.ai/news/grok-4-1-fast fetched 200 but links no card; likely data.x.ai URL patterns returned 404 and x.ai/safety does not list one. Absence not certain since the 4.1 card is also missing from that index, so system card left blank pending recheck. No HF repo. AUP fetched 200. No paper.",
+      "researched": true
     },
     {
       "entry_id": "xai--grok-4.20",
       "model_name": "Grok 4.20",
       "date": "2026-02-17",
       "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Release confirmed via docs.x.ai model page (fetched 200) and third party coverage; no announcement slug on the x.ai/news index. No card found on x.ai/safety and data.x.ai URL guesses 404, but the safety index is incomplete, so system card left blank pending recheck. Closed weights, xai-org HF lists only grok-1 and grok-2. AUP fetched 200. No paper.",
+      "researched": true
     },
     {
       "entry_id": "xai--grok-4.3-beta",
       "model_name": "Grok 4.3 Beta",
       "date": "2026-04-17",
       "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Beta release confirmed via press coverage; no x.ai/news post found this session. Early access product still in beta; the x.ai/safety card index lists a Grok 4.5 card but nothing for 4.3, so system card left blank pending a post GA recheck. Closed weights, no HF repo. AUP fetched 200. No paper.",
+      "researched": true
     }
   ]
 }

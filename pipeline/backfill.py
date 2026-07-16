@@ -199,6 +199,7 @@ def load_hub_rows(zip_path: str, retrieval_date: str) -> list:
                 "benchmark_name": pin["name"],
                 "benchmark_version": pin["version"],
                 "value": value,
+                "started_at": (r.get("Started at") or "").strip(),
                 "retrieval_date": retrieval_date,
             })
     return out
@@ -264,6 +265,11 @@ def normalize_hub_slug(slug: str):
     return s, stamp
 
 
+def _desc(text: str) -> tuple:
+    """Sort key that orders ISO timestamps descending within an ascending sort."""
+    return tuple(-ord(c) for c in text)
+
+
 def _slug_probes(name: str) -> set:
     s = slugify(name)
     return {s, s.replace(".", "-"), s.replace("-", ""), s.replace(".", "")}
@@ -308,7 +314,13 @@ def attach_hub_numbers(entries: list, hub_rows: list) -> int:
                 index.setdefault((e["org"], probe), []).append(e)
 
     picked = {}
-    for row in sorted(hub_rows, key=lambda r: (len(r["slug"]), r["slug"])):
+    # Ordering rule for competing runs: the plainest slug wins (shortest,
+    # then lexical); among identical slugs, the most recent run ("Started
+    # at" descending) wins. Deterministic and documented in
+    # docs/backfill_strategy.md.
+    ordered = sorted(hub_rows, key=lambda r: (len(r["slug"]), r["slug"],
+                                              _desc(r["started_at"])))
+    for row in ordered:
         core, stamp = normalize_hub_slug(row["slug"])
         candidates = []
         seen_ids = set()
@@ -378,13 +390,16 @@ def _availability_phrase(availability: str, access_raw: str) -> str:
 
 
 def build_summary(org_display: str, model_name: str, entry_type: str,
-                  availability: str, access_raw: str, has_ind: bool) -> str:
+                  availability: str, access_raw: str, has_ind: bool,
+                  has_lab_links: bool = False) -> str:
     phrase = _availability_phrase(availability, access_raw)
     if entry_type == "revision":
         base = _REVISION_RE.sub("", model_name).strip()
         text = (f"{org_display} updated the {base} snapshot in service. "
-                f"The change is recorded from Epoch AI's models dataset; "
-                f"the lab published no separate announcement link for it.")
+                f"The change is recorded from Epoch AI's models dataset")
+        text += ("; the lab documents it at the linked source."
+                 if has_lab_links else
+                 "; no lab announcement link is recorded for it.")
     else:
         text = (f"{org_display} released {model_name}, available {phrase}. "
                 f"The entry is backfilled from Epoch AI's models dataset.")
@@ -401,7 +416,6 @@ def build_entries(rows: list, hub_rows: list, retrieval_date: str):
     clusters = cluster_variants(kept)
 
     entries = []
-    access_by_id = {}
     for cluster in clusters:
         flagship = pick_flagship(cluster)
         org = flagship["_org"]
@@ -451,15 +465,32 @@ def build_entries(rows: list, hub_rows: list, retrieval_date: str):
         }
         if variants:
             entry["variants"] = variants
+        entry["_access_raw"] = access_raw
         entries.append(entry)
-        access_by_id[entry["id"]] = access_raw
+
+    # Epoch names snapshots with a "(Mon YYYY)" parenthetical, but the FIRST
+    # occurrence of a base name is the model's launch, not a silent update
+    # (observed: "GPT-4 (Mar 2023)" IS the GPT-4 launch). Reclassify: the
+    # earliest entry per (org, base name) becomes a release carrying the base
+    # name; later parenthetical entries remain revisions of it.
+    by_base = {}
+    for e in entries:
+        base = _REVISION_RE.sub("", e["model_name"]).strip()
+        by_base.setdefault((e["org"], slugify(base)), []).append((e, base))
+    for group in by_base.values():
+        group.sort(key=lambda t: (t[0]["date"], t[0]["id"]))
+        first, base = group[0]
+        if first["entry_type"] == "revision":
+            first["entry_type"] = "release"
+            first["epoch_row_name"] = first["model_name"]
+            first["model_name"] = base
+            first["id"] = validate.make_entry_id(first["org"], base)
 
     # Duplicate ids (same org, same model name, different clusters) get a
     # date suffix so both survive; rare, but Epoch has re-listed names.
     seen = Counter(e["id"] for e in entries)
     for e in entries:
         if seen[e["id"]] > 1:
-            access_by_id[f"{e['id']}-{e['date']}"] = access_by_id[e["id"]]
             e["id"] = f"{e['id']}-{e['date']}"
 
     # Predecessor chaining: previous entry of the same org + family by date.
@@ -473,10 +504,11 @@ def build_entries(rows: list, hub_rows: list, retrieval_date: str):
 
     attach_hub_numbers(entries, hub_rows)
     for e in entries:
+        has_lab_links = len(e["sources"]) > 1
         e["summary"] = build_summary(
             config.REGISTRY[e["org"]]["display"], e["model_name"],
             e["entry_type"], e["availability_class"],
-            access_by_id[e["id"]], bool(e["benchmarks"]))
+            e.pop("_access_raw"), bool(e["benchmarks"]), has_lab_links)
 
     problems = []
     for e in entries:

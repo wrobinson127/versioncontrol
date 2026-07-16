@@ -13,128 +13,139 @@
       "usage_policy": "",
       "paper": "",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Outside flagship scope for this pass (pre GLM-4). Not researched."
     },
     {
       "entry_id": "zai--glm-4",
       "model_name": "GLM-4",
       "date": "2024-01-17",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
       "paper": "https://arxiv.org/abs/2406.12793",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "System card: Z.ai publishes no system cards, only HF model cards and arxiv reports. Model card: flagship GLM-4 was API only; HF cards exist only for later open 9B variants. Usage policy is the current Z.ai terms of service with acceptable use restrictions, verified this session. Paper is the ChatGLM to GLM-4 family report, verified on arxiv.",
+      "researched": true
     },
     {
       "entry_id": "zai--glm-4-0520",
       "model_name": "GLM-4 (0520)",
       "date": "2024-05-20",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
       "paper": "https://arxiv.org/abs/2406.12793",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "System card: none published by Z.ai. Model card: GLM-4-0520 served via API only, no HF repo for this snapshot. Usage policy is the current Z.ai terms, verified this session. Paper is the GLM-4 family report, verified on arxiv; it covers the GLM-4 generation including this refresh.",
+      "researched": true
     },
     {
       "entry_id": "zai--glm-4v-9b",
       "model_name": "GLM-4V-9B",
       "date": "2024-06-18",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/zai-org/glm-4v-9b",
+      "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
       "paper": "https://arxiv.org/abs/2406.12793",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "System card: none published by Z.ai. Model card verified this session on the zai-org HF page, describes the 9B multimodal model, specs, and usage. Usage policy is the current Z.ai terms, verified. Paper is the GLM-4 family report, verified on arxiv; no dedicated GLM-4V paper.",
+      "researched": true
     },
     {
       "entry_id": "zai--glm-4-plus",
       "model_name": "GLM-4-Plus",
       "date": "2024-08-29",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "System card: none published by Z.ai. Model card: GLM-4-Plus is an API only model with no HF repo under zai-org. Paper: no technical report was released for GLM-4-Plus. Usage policy is the current Z.ai terms, verified this session.",
+      "researched": true
     },
     {
       "entry_id": "zai--glm-4-32b-0414",
       "model_name": "GLM-4-32B-0414",
       "date": "2025-04-14",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/zai-org/GLM-4-32B-0414",
+      "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "System card: none published by Z.ai. Model card verified this session on HF, covers the 32B model and its Z1 variants with benchmarks and deployment guidance. Paper: the HF card cites no dedicated technical report for the 0414 series. Usage policy is the current Z.ai terms, verified.",
+      "researched": true
     },
     {
       "entry_id": "zai--glm-4.5",
       "model_name": "GLM-4.5",
       "date": "2025-08-05",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/zai-org/GLM-4.5",
+      "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
       "paper": "https://arxiv.org/abs/2508.06471",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "System card: none published by Z.ai. Model card verified this session on HF, MIT license, 355B MoE, cites the arxiv report. Paper verified on arxiv, GLM-4.5 ARC foundation models report. Usage policy is the current Z.ai terms, verified.",
+      "researched": true
     },
     {
       "entry_id": "zai--glm-4.5v",
       "model_name": "GLM-4.5V",
       "date": "2025-08-15",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/zai-org/GLM-4.5V",
+      "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
       "paper": "https://arxiv.org/abs/2507.01006",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "System card: none published by Z.ai. Model card verified this session on HF and it links the paper. Paper verified on arxiv, GLM-4.1V-Thinking and GLM-4.5V multimodal reasoning report. Usage policy is the current Z.ai terms, verified.",
+      "researched": true
     },
     {
       "entry_id": "zai--glm-4.6",
       "model_name": "GLM-4.6",
       "date": "2025-09-30",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/zai-org/GLM-4.6",
+      "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
+      "paper": "https://arxiv.org/abs/2508.06471",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "System card: none published by Z.ai. Model card verified this session on HF, 357B, 200K context, MIT license. Paper: no dedicated GLM-4.6 report; the HF card cites the GLM-4.5 family report, verified on arxiv. Usage policy is the current Z.ai terms, verified.",
+      "researched": true
     },
     {
       "entry_id": "zai--glm-4.7",
       "model_name": "GLM-4.7",
       "date": "2025-12-22",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/zai-org/GLM-4.7",
+      "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
+      "paper": "https://arxiv.org/abs/2508.06471",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "System card: none published by Z.ai. Model card verified this session on HF, 358B, interleaved thinking, MIT license. Paper: no dedicated GLM-4.7 report; the HF card cites the GLM-4.5 family report, verified on arxiv. Usage policy is the current Z.ai terms, verified.",
+      "researched": true
     },
     {
       "entry_id": "zai--glm-5",
       "model_name": "GLM-5",
       "date": "2026-02-11",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "https://arxiv.org/pdf/2602.15763",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/zai-org/GLM-5",
+      "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
+      "paper": "https://arxiv.org/abs/2602.15763",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "System card: none published by Z.ai. Model card verified this session on HF, 744B total 40B active, MIT license, links the paper. Paper verified on arxiv, GLM-5 from vibe coding to agentic engineering. Swapped prior pdf link for the abs page. Usage policy is the current Z.ai terms, verified.",
+      "researched": true
     },
     {
       "entry_id": "zai--glm-5.2",
       "model_name": "GLM-5.2",
       "date": "2026-06-16",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/zai-org/GLM-5.2",
+      "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
+      "paper": "https://arxiv.org/abs/2602.15763",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "System card: none published by Z.ai. Model card verified this session on HF, 753B, 1M context, MIT license. Paper: no dedicated GLM-5.2 report; the HF card links the GLM-5 report, verified on arxiv. Usage policy is the current Z.ai terms, verified.",
+      "researched": true
     }
   ]
 }
