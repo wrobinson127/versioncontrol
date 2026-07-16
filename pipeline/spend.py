@@ -1,15 +1,22 @@
 """LLM spend ledger and hard cap (invariant 7, ruling D8).
 
-The ledger is a small committed JSON file counting calls and estimated spend
-per calendar month (UTC). The cap check runs BEFORE every call; at the cap
-the pipeline skips extraction and FLAGs, it never spends past it.
+The ledger is a small JSON file counting calls and estimated spend per
+calendar month (UTC); the nightly workflow commits it to the pending branch
+so the count persists across runs. The cap check runs BEFORE every call and
+reserves one worst-case call of headroom, so the recorded monthly spend
+cannot cross the cap.
 """
 import json
 import os
 
 from . import config
 
-LEDGER_PATH = os.path.join("data", "derived", "llm_ledger.json")
+LEDGER_PATH = config.LLM_SPEND_LEDGER_PATH
+
+# One worst-case call: the budgeted input size plus the full output ceiling.
+_WORST_CASE_CALL_USD = (16000 * config.LLM_PRICE_INPUT_PER_MTOK
+                        + config.LLM_MAX_OUTPUT_TOKENS
+                        * config.LLM_PRICE_OUTPUT_PER_MTOK) / 1_000_000
 
 
 def _load(root: str = ".") -> dict:
@@ -36,7 +43,8 @@ def can_spend(run_date: str, root: str = ".") -> bool:
     month = _load(root)["months"].get(month_of(run_date),
                                       {"calls": 0, "usd": 0.0})
     return (month["calls"] < config.LLM_MONTHLY_CALL_CAP
-            and month["usd"] < config.LLM_MONTHLY_SPEND_CAP_USD)
+            and month["usd"] + _WORST_CASE_CALL_USD
+            <= config.LLM_MONTHLY_SPEND_CAP_USD)
 
 
 def record_call(run_date: str, input_tokens: int, output_tokens: int,

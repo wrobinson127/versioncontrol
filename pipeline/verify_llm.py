@@ -9,7 +9,7 @@ import os
 import sys
 from datetime import datetime, timezone
 
-from . import extract, lint_voice
+from . import config, extract, lint_voice, spend
 
 FIXTURES = {
     "openai_gpt5_launch.html": "https://openai.com/index/introducing-gpt-5/",
@@ -31,8 +31,14 @@ def main():
         with open(os.path.join(base, name), encoding="utf-8",
                   errors="replace") as f:
             html = f.read()
+        if not spend.can_spend(today):
+            print(f"skipping {name}: {spend.cap_flag(today)}")
+            failures += 1
+            continue
         raw, t_in, t_out = extract.call_extraction(html)
-        usd = (t_in * 1.0 + t_out * 5.0) / 1_000_000
+        spend.record_call(today, t_in, t_out)
+        usd = (t_in * config.LLM_PRICE_INPUT_PER_MTOK
+               + t_out * config.LLM_PRICE_OUTPUT_PER_MTOK) / 1_000_000
         total_usd += usd
         print(f"\n=== {name} ({t_in} in / {t_out} out tokens, ${usd:.4f})")
         try:
