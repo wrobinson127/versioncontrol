@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Version Control: the release record of the model era</title>
+<meta name="description" content="A public registry of AI model releases: what shipped, what changed against the predecessor, what the lab disclosed, and where every number comes from.">
+<link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+<link rel="canonical" href="https://versioncontrol.walker-robinson.com/">
+<!-- og:image points at a rendered PNG; the PNG render of assets/og-card.svg lands in a later phase. -->
+<meta property="og:title" content="Version Control">
+<meta property="og:description" content="The release record of the model era. Every number tells you where it came from, or it does not appear.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://versioncontrol.walker-robinson.com/">
+<meta property="og:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
+<link rel="stylesheet" href="./css/site.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the timeline</a>
+
+<header class="masthead">
+  <div class="wrap mast-row">
+    <div class="mast-brand">
+      <a class="mast-title" href="./index.html">Version Control</a>
+      <p class="mast-tagline">The release record of the model era.</p>
+    </div>
+    <nav class="mast-nav" aria-label="Site">
+      <a href="./index.html" aria-current="page">Timeline</a>
+      <a href="./methodology.html">Methodology</a>
+      <a href="./about.html">About</a>
+      <a href="./data.html">Data</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap">
+  <h1 class="visually-hidden">Timeline of release entries</h1>
+  <p class="registry-scope" id="registry-scope">A public registry of AI model releases from 12 tracked organizations.</p>
+
+  <section class="controls" aria-label="Filters">
+    <label>Organization
+      <select id="f-org">
+        <option value="all" selected>All 12 organizations</option>
+      </select>
+    </label>
+    <label>Entry type
+      <select id="f-type">
+        <option value="all" selected>Releases and revisions</option>
+        <option value="release">Releases only</option>
+        <option value="revision">Revisions only</option>
+      </select>
+    </label>
+    <label><input type="checkbox" id="f-meas"> With measurements</label>
+    <span class="count" id="count" role="status" aria-live="polite"></span>
+  </section>
+
+  <nav class="year-ruler" id="year-ruler" aria-label="Jump to year"></nav>
+
+  <section id="timeline" class="timeline" aria-label="Release entries">
+    <!-- Loading state: the static specimen poster, per DESIGN.md. Never a spinner on blank. -->
+    <div class="loading">
+      <img src="./assets/poster.svg" alt="" width="720" height="470">
+      <p>Loading the registry record.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p class="update" id="foot-update">Last successful update loads with the dataset.</p>
+    <p>Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>. Dataset licensed CC-BY 4.0 with Epoch AI attribution. <a href="./data.html">Download the dataset</a>.</p>
+  </div>
+</footer>
+
+<script src="./js/app.js"></script>
+</body>
+</html>
