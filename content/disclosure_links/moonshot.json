@@ -1,0 +1,107 @@
+{
+  "org": "moonshot",
+  "display": "Moonshot AI",
+  "reviewed_by_walker": false,
+  "instructions": "Fill each artifact cell with a URL or the literal NOT_DISCLOSED after checking the lab's site. A row publishes to its entry only when status is APPROVED.",
+  "rows": [
+    {
+      "entry_id": "moonshot--kimi-explorer",
+      "model_name": "Kimi Explorer",
+      "date": "2024-01-01",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "moonshot--kimi-k1.5",
+      "model_name": "Kimi k1.5",
+      "date": "2025-01-22",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2501.12599v1",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "moonshot--kimi-dev-72b",
+      "model_name": "Kimi Dev 72b",
+      "date": "2025-06-16",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "moonshot--kimi-k2",
+      "model_name": "Kimi K2",
+      "date": "2025-07-11",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "moonshot--kimi-linear",
+      "model_name": "Kimi Linear",
+      "date": "2025-10-30",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "moonshot--kimi-k2-thinking",
+      "model_name": "Kimi K2 Thinking",
+      "date": "2025-11-06",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "moonshot--kimi-k2.5",
+      "model_name": "Kimi K2.5",
+      "date": "2026-02-02",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2602.02276",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "moonshot--kimi-k2.6",
+      "model_name": "Kimi K2.6",
+      "date": "2026-04-20",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "moonshot--kimi-k2.7-code",
+      "model_name": "Kimi K2.7 Code",
+      "date": "2026-06-12",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    }
+  ]
+}

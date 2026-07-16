@@ -1,0 +1,151 @@
+{
+  "org": "cohere",
+  "display": "Cohere",
+  "reviewed_by_walker": false,
+  "instructions": "Fill each artifact cell with a URL or the literal NOT_DISCLOSED after checking the lab's site. A row publishes to its entry only when status is APPROVED.",
+  "rows": [
+    {
+      "entry_id": "cohere--cohere-command",
+      "model_name": "Cohere Command",
+      "date": "2023-03-01",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "cohere--cohere-embed",
+      "model_name": "Cohere Embed",
+      "date": "2023-11-02",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "cohere--cohere-command-light",
+      "model_name": "Cohere Command Light",
+      "date": "2023-11-30",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "cohere--aya",
+      "model_name": "Aya",
+      "date": "2024-02-12",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2402.07827",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "cohere--command-r",
+      "model_name": "Command R",
+      "date": "2024-03-11",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "cohere--command-r-plus",
+      "model_name": "Command R+",
+      "date": "2024-04-04",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "cohere--aya-expanse-32b",
+      "model_name": "Aya Expanse 32B",
+      "date": "2024-10-24",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "cohere--aya-vision-32b",
+      "model_name": "Aya Vision 32B",
+      "date": "2025-03-03",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "cohere--cohere-command-a",
+      "model_name": "Cohere Command A",
+      "date": "2025-03-13",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "cohere--cohere-embed-4",
+      "model_name": "Cohere Embed 4",
+      "date": "2025-04-15",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "cohere--command-a-vision",
+      "model_name": "Command A Vision",
+      "date": "2025-07-31",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "cohere--cohere-command-a-reasoning",
+      "model_name": "Cohere Command A Reasoning",
+      "date": "2025-08-21",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "cohere--north-mini-code",
+      "model_name": "North Mini Code",
+      "date": "2026-06-09",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    }
+  ]
+}

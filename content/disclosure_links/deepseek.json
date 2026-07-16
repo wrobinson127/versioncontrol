@@ -1,0 +1,250 @@
+{
+  "org": "deepseek",
+  "display": "DeepSeek",
+  "reviewed_by_walker": false,
+  "instructions": "Fill each artifact cell with a URL or the literal NOT_DISCLOSED after checking the lab's site. A row publishes to its entry only when status is APPROVED.",
+  "rows": [
+    {
+      "entry_id": "deepseek--deepseek-llm-67b",
+      "model_name": "DeepSeek LLM 67B",
+      "date": "2024-01-05",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2401.02954",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseekmoe-16b",
+      "model_name": "DeepSeekMoE-16B",
+      "date": "2024-01-11",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2401.06066",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-coder-33b",
+      "model_name": "DeepSeek Coder 33B",
+      "date": "2024-01-25",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2401.14196",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseekmath-7b",
+      "model_name": "DeepSeekMath 7B",
+      "date": "2024-02-05",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2402.03300",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-vl-7b",
+      "model_name": "DeepSeek-VL-7B",
+      "date": "2024-03-08",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2403.05525",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-v2-moe-236b",
+      "model_name": "DeepSeek-V2 (MoE-236B)",
+      "date": "2024-05-07",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2405.04434",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-coder-v2-236b",
+      "model_name": "DeepSeek-Coder-V2 236B",
+      "date": "2024-06-17",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-prover-v1.5",
+      "model_name": "DeepSeek-Prover-V1.5",
+      "date": "2024-08-15",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2408.08152",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-v2.5",
+      "model_name": "DeepSeek-V2.5",
+      "date": "2024-09-06",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--janus-1.3b",
+      "model_name": "Janus 1.3B",
+      "date": "2024-10-17",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2410.13848",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-r1-lite-preview",
+      "model_name": "DeepSeek-R1-Lite-Preview",
+      "date": "2024-11-20",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-v3",
+      "model_name": "DeepSeek-V3",
+      "date": "2024-12-24",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2412.19437",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-r1",
+      "model_name": "DeepSeek-R1",
+      "date": "2025-01-20",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-r1-distill-llama-70b",
+      "model_name": "DeepSeek-R1-Distill-Llama-70B",
+      "date": "2025-01-22",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2501.12948",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--janus-pro-7b",
+      "model_name": "Janus-Pro-7B",
+      "date": "2025-01-27",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-prover-v2-671b",
+      "model_name": "DeepSeek-Prover-V2-671B",
+      "date": "2025-04-30",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2504.21801",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-v3.1",
+      "model_name": "DeepSeek-V3.1",
+      "date": "2025-08-21",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-v3.1-terminus",
+      "model_name": "DeepSeek-V3.1-Terminus",
+      "date": "2025-09-22",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-v3.2-exp",
+      "model_name": "DeepSeek-V3.2-Exp",
+      "date": "2025-09-29",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-ocr",
+      "model_name": "Deepseek OCR",
+      "date": "2025-10-21",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2510.18234v1",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseekmath-v2",
+      "model_name": "DeepSeekMath-V2",
+      "date": "2025-11-27",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2511.22570",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-v4-pro",
+      "model_name": "DeepSeek-V4-Pro",
+      "date": "2026-04-24",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    }
+  ]
+}

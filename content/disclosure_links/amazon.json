@@ -1,0 +1,85 @@
+{
+  "org": "amazon",
+  "display": "Amazon (Nova)",
+  "reviewed_by_walker": false,
+  "instructions": "Fill each artifact cell with a URL or the literal NOT_DISCLOSED after checking the lab's site. A row publishes to its entry only when status is APPROVED.",
+  "rows": [
+    {
+      "entry_id": "amazon--amazon-titan",
+      "model_name": "Amazon Titan",
+      "date": "2023-09-28",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "amazon--amazon-titan-text-lite",
+      "model_name": "Amazon Titan Text Lite",
+      "date": "2023-11-29",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "amazon--amazon-q-developer",
+      "model_name": "Amazon Q Developer",
+      "date": "2024-04-30",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "amazon--amazon-titan-text-premier",
+      "model_name": "Amazon Titan Text Premier",
+      "date": "2024-05-07",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "amazon--amazon-nova-pro",
+      "model_name": "Amazon Nova Pro",
+      "date": "2024-12-03",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "amazon--amazon-nova-premier",
+      "model_name": "Amazon Nova Premier",
+      "date": "2025-04-30",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "amazon--nova-2",
+      "model_name": "Nova 2",
+      "date": "2025-12-02",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "org": "xai",
+  "display": "xAI",
+  "reviewed_by_walker": false,
+  "instructions": "Fill each artifact cell with a URL or the literal NOT_DISCLOSED after checking the lab's site. A row publishes to its entry only when status is APPROVED.",
+  "rows": [
+    {
+      "entry_id": "xai--grok-0",
+      "model_name": "Grok-0",
+      "date": "2023-11-04",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-1",
+      "model_name": "Grok-1",
+      "date": "2023-11-04",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-1.5",
+      "model_name": "Grok-1.5",
+      "date": "2024-03-28",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-1.5v",
+      "model_name": "Grok-1.5V",
+      "date": "2024-03-28",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-2",
+      "model_name": "Grok-2",
+      "date": "2024-08-13",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-3",
+      "model_name": "Grok 3",
+      "date": "2025-02-17",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-3-mini",
+      "model_name": "Grok-3 mini",
+      "date": "2025-02-19",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-4",
+      "model_name": "Grok 4",
+      "date": "2025-07-09",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-code-fast-1",
+      "model_name": "Grok Code Fast 1",
+      "date": "2025-08-28",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-4-fast",
+      "model_name": "Grok 4 Fast",
+      "date": "2025-09-19",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-4.1",
+      "model_name": "Grok 4.1",
+      "date": "2025-11-17",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-4.1-fast",
+      "model_name": "Grok 4.1 Fast",
+      "date": "2025-11-19",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-4.20",
+      "model_name": "Grok 4.20",
+      "date": "2026-02-17",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "xai--grok-4.3-beta",
+      "model_name": "Grok 4.3 Beta",
+      "date": "2026-04-17",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    }
+  ]
+}

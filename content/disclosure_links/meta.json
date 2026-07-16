@@ -1,0 +1,217 @@
+{
+  "org": "meta",
+  "display": "Meta",
+  "reviewed_by_walker": false,
+  "instructions": "Fill each artifact cell with a URL or the literal NOT_DISCLOSED after checking the lab's site. A row publishes to its entry only when status is APPROVED.",
+  "rows": [
+    {
+      "entry_id": "meta--opt-iml-175b",
+      "model_name": "OPT-IML (175B)",
+      "date": "2022-12-22",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2212.12017",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--llama-65b",
+      "model_name": "LLaMA-65B",
+      "date": "2023-02-24",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2302.13971",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--llama-33b",
+      "model_name": "LLaMA-33B",
+      "date": "2023-02-27",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2302.13971",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--incoder-6.7b",
+      "model_name": "Incoder-6.7B",
+      "date": "2023-04-09",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2204.05999",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--imagebind",
+      "model_name": "ImageBind",
+      "date": "2023-05-09",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2305.05665",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--llama-2-70b",
+      "model_name": "Llama 2-70B",
+      "date": "2023-07-18",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2307.09288",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--code-llama-34b",
+      "model_name": "Code Llama-34B",
+      "date": "2023-08-14",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2308.12950",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--llama-guard",
+      "model_name": "Llama Guard",
+      "date": "2023-12-07",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2312.06674",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--code-llama-70b",
+      "model_name": "Code Llama-70B",
+      "date": "2024-01-29",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2308.12950",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--llama-3-70b",
+      "model_name": "Llama 3-70B",
+      "date": "2024-04-18",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--llama-3-instruct-8b",
+      "model_name": "LLaMA-3-Instruct-8B",
+      "date": "2024-04-18",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--multi-token-prediction-7b",
+      "model_name": "Multi-Token Prediction 7B",
+      "date": "2024-04-30",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2404.19737",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--chameleon-34b",
+      "model_name": "Chameleon-34B",
+      "date": "2024-05-16",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2405.09818v1",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--llama-3.1-405b",
+      "model_name": "Llama 3.1-405B",
+      "date": "2024-07-23",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--llama-3.2-90b",
+      "model_name": "Llama 3.2 90B",
+      "date": "2024-09-24",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--longvu",
+      "model_name": "LongVU",
+      "date": "2024-10-22",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "https://arxiv.org/abs/2410.17434v1",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--llama-3.3-70b",
+      "model_name": "Llama 3.3 70B",
+      "date": "2024-12-06",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--llama-4-maverick",
+      "model_name": "Llama 4 Maverick",
+      "date": "2025-04-05",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "meta--muse-spark",
+      "model_name": "Muse Spark",
+      "date": "2026-04-08",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    }
+  ]
+}
