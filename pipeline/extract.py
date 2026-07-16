@@ -108,6 +108,54 @@ class ExtractionError(ValueError):
     pass
 
 
+def call_extraction(announcement_html: str, client=None):
+    """One live extraction call, cap-agnostic (callers check the spend
+    ledger first). Returns (raw_json_text, input_tokens, output_tokens).
+
+    The client parameter exists for tests; production passes None and the
+    SDK resolves ANTHROPIC_API_KEY from the environment.
+    """
+    if client is None:
+        import anthropic
+        client = anthropic.Anthropic()
+    response = client.messages.create(
+        model=config.LLM_MODEL_ID,
+        max_tokens=config.LLM_MAX_OUTPUT_TOKENS,
+        messages=[{"role": "user", "content": build_prompt(announcement_html)}],
+    )
+    text = next((b.text for b in response.content
+                 if getattr(b, "type", "") == "text"), "")
+    # The prompt demands a bare JSON object; tolerate a fenced block.
+    text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip())
+    return (text, response.usage.input_tokens, response.usage.output_tokens)
+
+
+def extract_candidate(candidate: dict, announcement_html: str, run_date: str,
+                      client=None, root: str = "."):
+    """Full extraction path for one candidate: spend gate, live call,
+    parse + provenance, voice lint. Returns (draft_entry or None, note).
+
+    A draft lands on the candidate only after passing the lint gate; a
+    failed parse or lint returns None with the reason, and the candidate
+    stays in pending without a draft (flag, not guess).
+    """
+    from . import lint_voice, spend
+    if not spend.can_spend(run_date, root=root):
+        return None, spend.cap_flag(run_date, root=root)
+    raw, tokens_in, tokens_out = call_extraction(announcement_html, client)
+    spend.record_call(run_date, tokens_in, tokens_out, root=root)
+    try:
+        draft = parse_extraction(raw, candidate["announcement_url"],
+                                 retrieval_date=run_date)
+    except ExtractionError as e:
+        return None, f"extraction output rejected: {e}"
+    violations = lint_voice.lint_text(draft["summary"], context="summary")
+    if violations:
+        cats = ", ".join(sorted({v["category"] for v in violations}))
+        return None, f"draft summary failed voice lint ({cats}); no draft written"
+    return draft, "draft extracted, linted clean"
+
+
 def parse_extraction(raw_json: str, announcement_url: str,
                      retrieval_date: str = None) -> dict:
     """Validate the model's JSON and populate provenance.
