@@ -438,45 +438,49 @@
       "entry_id": "google-deepmind--gemini-3.1-pro",
       "model_name": "Gemini 3.1 Pro",
       "date": "2026-02-19",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Pro-Model-Card.pdf",
+      "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card PDF fetched 200 (application/pdf) from the deepmind-media Model-Cards bucket; first page reads Gemini 3.1 Pro Model Card, February 2026, confirmed by extracting the PDF text this session. No standalone FSF or safety report for 3.1 Pro: the model card carries the FSF results table as of February 2026 and defers detail to the Gemini 3 Pro FSF report, and probes for a gemini_3_1_pro_fsf_report.pdf returned 404. No tech report or arXiv paper, confirmed by web search this session; disclosure is via model card. Usage policy page fetched 200 with title Generative AI Prohibited Use Policy.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--gemini-3.0-flash-lite",
       "model_name": "Gemini 3.0 Flash-lite",
       "date": "2026-03-03",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Flash-Lite-Model-Card.pdf",
+      "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Naming flag: the model launched 2026-03-03 is branded Gemini 3.1 Flash-Lite by Google; press coverage dated 2026-03-03 confirms the preview launch, and no Gemini 3.0 or plain Gemini 3 Flash-Lite card exists in the bucket (variant probes returned 404). Linked card matches the row date. Model card PDF fetched 200 (application/pdf); extracted text reads Gemini 3.1 Flash-Lite Model Card. No standalone system or safety report: the card's Frontier Safety Assessment relies on the Gemini 3.1 Pro evaluation. No tech report or arXiv paper for Gemini 3 series releases, confirmed by web search this session. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--gemma-4-31b-it",
       "model_name": "Gemma 4 31B IT",
       "date": "2026-04-02",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://ai.google.dev/gemma/docs/core/model_card_4",
+      "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
+      "paper": "https://arxiv.org/abs/2607.02770",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card page fetched 200 with title Gemma 4 model card; page text covers the 31B and 12B sizes. Paper verified on arXiv (Gemma 4 Technical Report, 200); the report covers the family from 2.3B to 31B and postdates this release by some weeks. No system card for Gemma releases; disclosure is model card plus tech report. Gemma Prohibited Use Policy fetched 200 with matching title.",
+      "researched": true
     },
     {
       "entry_id": "google-deepmind--gemma-4-12b",
       "model_name": "Gemma 4 12B",
       "date": "2026-06-03",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://ai.google.dev/gemma/docs/core/model_card_4",
+      "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
+      "paper": "https://arxiv.org/abs/2607.02770",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Model card page fetched 200 with title Gemma 4 model card; the 12B size appears throughout the page text. Paper verified on arXiv (Gemma 4 Technical Report, 200); the report describes the 12B encoder-free multimodal variant. No system card for Gemma releases. Gemma Prohibited Use Policy fetched 200 with matching title.",
+      "researched": true
     }
   ]
 }

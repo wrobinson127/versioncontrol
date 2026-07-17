@@ -49,6 +49,7 @@ def compute_delta(current: dict, predecessor: dict) -> dict:
         "benchmark": current["benchmark"],
         "benchmark_version": cp.get("benchmark_version"),
         "source_class": cp.get("source_class"),
+        "source_url": cp.get("source_url"),
         "value": round(value - prior, 6),
         "current": value,
         "predecessor": prior,

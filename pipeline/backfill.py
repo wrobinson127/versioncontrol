@@ -53,6 +53,30 @@ ACCESSIBILITY_MAP = {
     "Hosted access (no API)": "public_service",
 }
 
+# Documented corrections of upstream dataset errors (never silent; each
+# correction names its evidence and surfaces in the entry summary and in
+# docs/backfill_strategy.md). Keyed by (org key, Epoch Model spelling).
+UPSTREAM_CORRECTIONS = {
+    ("openai", "Operator"): {
+        "field": "Publication date",
+        "wrong": "2023-01-23",
+        "corrected": "2025-01-23",
+        "evidence": "OpenAI announced Operator on 2025-01-23; Epoch's own "
+                    "Computer-Using Agent (CUA) row carries that date.",
+    },
+}
+
+
+def _clean_license_note(access_raw: str, notes: str) -> str:
+    """Access class plus upstream accessibility notes, cleaned for display:
+    URLs stripped (they belong in sources), whitespace collapsed."""
+    notes = re.sub(r"https?://\S+", "", notes or "")
+    notes = re.sub(r"\s+", " ", notes).strip(" .:;,")
+    text = access_raw.rstrip(".")
+    if notes:
+        text += ". " + notes
+    return text + "."
+
 
 def primary_org_key(org_field: str):
     return _EPOCH_NAME_TO_ORG.get(org_field.split(",")[0].strip())
@@ -412,6 +436,15 @@ def build_summary(org_display: str, model_name: str, entry_type: str,
 def build_entries(rows: list, hub_rows: list, retrieval_date: str):
     """Full pipeline: D3 filter, clustering, entry construction, hub-number
     attachment, predecessor chaining. Returns (entries, refusals, problems)."""
+    corrections_applied = []
+    for r in rows:
+        org = primary_org_key(r["Organization"])
+        fix = UPSTREAM_CORRECTIONS.get((org, r["Model"].strip()))
+        if fix and r.get(fix["field"], "").strip() == fix["wrong"]:
+            r[fix["field"]] = fix["corrected"]
+            r["_corrected"] = fix
+            corrections_applied.append((r["Model"].strip(), fix))
+
     kept, refusals = d3_filter(rows)
     clusters = cluster_variants(kept)
 
@@ -457,14 +490,21 @@ def build_entries(rows: list, hub_rows: list, retrieval_date: str):
                 "paper": paper or validate.NOT_DISCLOSED,
             },
             "predecessor": None,
-            "license_note": (f"{access_raw}. {flagship.get('Accessibility notes', '').strip()}".strip()
-                             .rstrip(".") + "."),
+            "license_note": _clean_license_note(
+                access_raw, flagship.get("Accessibility notes", "")),
             "sources": sources,
             "origin": "backfill-epoch",
             "retracted": False,
         }
         if variants:
             entry["variants"] = variants
+        correction = next((r["_corrected"] for r in cluster
+                           if r.get("_corrected")), None)
+        if correction:
+            entry["correction_note"] = (
+                f"The {correction['field'].lower()} corrects an upstream "
+                f"dataset error ({correction['wrong']} in the source). "
+                f"{correction['evidence']}")
         entry["_access_raw"] = access_raw
         entries.append(entry)
 
@@ -509,6 +549,9 @@ def build_entries(rows: list, hub_rows: list, retrieval_date: str):
             config.REGISTRY[e["org"]]["display"], e["model_name"],
             e["entry_type"], e["availability_class"],
             e.pop("_access_raw"), bool(e["benchmarks"]), has_lab_links)
+        if e.get("correction_note"):
+            e["summary"] += (" The recorded date corrects an upstream "
+                             "dataset error; see the correction note.")
 
     problems = []
     for e in entries:

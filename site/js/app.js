@@ -135,7 +135,7 @@
         var sign = d.value >= 0 ? "+" : "";
         html += '<span class="delta"><span class="dval">' + sign + esc(Number(d.value).toFixed(1)) +
           '</span><span class="dctx">vs predecessor</span>' +
-          provTag(d.source_class, null, null) + "</span>";
+          provTag(d.source_class, d.source_url || null, null) + "</span>";
       }
     }
     if (b.configuration) {
@@ -167,6 +167,11 @@
     }
 
     html += '<p class="entry-summary">' + esc(e.summary) + "</p>";
+
+    if (e.correction_note) {
+      /* corrections render as an outlined annotation layer (rule 8) */
+      html += '<p class="entry-correction">' + esc(e.correction_note) + "</p>";
+    }
 
     html += '<div class="entry-facts">';
     html += '<span class="fact">availability: <b>' + esc(AVAIL_NAMES[e.availability_class] || e.availability_class) + "</b></span>";
@@ -360,7 +365,8 @@
         scope.innerHTML = "A public registry of AI model releases from 12 tracked organizations. " +
           '<span class="num">' + meta.entry_count + "</span> entries, " +
           '<span class="num">' + esc(meta.first_date) + "</span> to " +
-          '<span class="num">' + esc(meta.last_date) + "</span>.";
+          '<span class="num">' + esc(meta.last_date) + "</span>. Maintained by " +
+          '<a href="https://walker-robinson.com">Walker Robinson</a>.';
       }
 
       var files = Object.keys(manifest.files || {}).sort();
