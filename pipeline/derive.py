@@ -5,7 +5,6 @@ nowhere else (invariant 3); precomputing at build time means no second
 implementation exists in JavaScript.
 """
 import argparse
-import gzip
 import json
 import os
 
@@ -33,12 +32,7 @@ def build(root: str = ".", run_date: str = None) -> dict:
             refused += sum(1 for d in result
                            if d["kind"] == deltas.REFUSED_COMPARISON)
 
-    payload = json.dumps(delta_map, ensure_ascii=False, sort_keys=True,
-                         separators=(",", ":")).encode("utf-8")
-    path = os.path.join(root, DELTAS_PATH)
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with gzip.GzipFile(path, "wb", mtime=0) as f:
-        f.write(payload)
+    store.write_derived_json(delta_map, "deltas.json.gz", root=root)
 
     meta = {
         "entry_count": len(entries),
@@ -51,10 +45,12 @@ def build(root: str = ".", run_date: str = None) -> dict:
         "first_date": min(e["date"] for e in entries),
         "last_date": max(e["date"] for e in entries),
     }
-    with open(os.path.join(root, META_PATH), "w", encoding="utf-8",
-              newline="\n") as f:
-        json.dump(meta, f, indent=2, sort_keys=True)
-        f.write("\n")
+    store.write_derived_json(meta, "site_meta.json", root=root)
+
+    # The narrative/explorer datasets rebuild with every derive pass so no
+    # flow can update entries without refreshing them (Amendment 1, P4.5).
+    from . import derive_views
+    derive_views.build_views(root=root, run_date=run_date)
     return meta
 
 

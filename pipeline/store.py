@@ -45,6 +45,10 @@ def write_entries(entries: list, root: str = ".") -> dict:
     Entries are grouped by the year of their date, sorted by (date, id)
     within each aggregate. Returns the manifest. Callers validate first;
     this function asserts ids are unique and refuses to write otherwise.
+
+    Any existing derived-file registrations are preserved: if entries change
+    and the derived views are not rebuilt, their stale hashes fail the
+    manifest guard loudly, which is the drift protection working.
     """
     ids = [e["id"] for e in entries]
     dupes = {i for i in ids if ids.count(i) > 1}
@@ -72,11 +76,44 @@ def write_entries(entries: list, root: str = ".") -> dict:
         "files": files,
     }
     manifest_abs = os.path.join(root, MANIFEST_PATH)
+    if os.path.exists(manifest_abs):
+        with open(manifest_abs, encoding="utf-8") as f:
+            prior = json.load(f)
+        if prior.get("derived"):
+            manifest["derived"] = prior["derived"]
+    _write_manifest(manifest, root)
+    return manifest
+
+
+def _write_manifest(manifest: dict, root: str) -> None:
+    manifest_abs = os.path.join(root, MANIFEST_PATH)
     os.makedirs(os.path.dirname(manifest_abs), exist_ok=True)
     with open(manifest_abs, "w", encoding="utf-8", newline="\n") as f:
         json.dump(manifest, f, indent=2, sort_keys=True)
         f.write("\n")
-    return manifest
+
+
+def write_derived_json(obj, filename: str, root: str = ".") -> str:
+    """Write a derived view (gzipped when the name ends .gz, deterministic
+    bytes either way) and register its hash in the manifest so the
+    every-indexed-item-resolves guard covers it."""
+    rel = (DERIVED_DIR + "/" + filename).replace(os.sep, "/")
+    path = os.path.join(root, DERIVED_DIR, filename)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    if filename.endswith(".gz"):
+        _dump_gz(path, obj)
+    else:
+        with open(path, "w", encoding="utf-8", newline="\n") as f:
+            json.dump(obj, f, indent=2, sort_keys=True)
+            f.write("\n")
+
+    manifest_abs = os.path.join(root, MANIFEST_PATH)
+    with open(manifest_abs, encoding="utf-8") as f:
+        manifest = json.load(f)
+    manifest.setdefault("derived", {})[rel.replace("\\", "/")] = {
+        "sha256": _sha256(path)}
+    _write_manifest(manifest, root)
+    return path
 
 
 def read_entries(root: str = ".") -> list:
@@ -128,4 +165,11 @@ def check_manifest(root: str = ".") -> list:
     dupes = {i for i in seen_ids if seen_ids.count(i) > 1}
     if dupes:
         problems.append(f"duplicate ids across aggregates: {sorted(dupes)}")
+
+    for rel, meta in sorted(manifest.get("derived", {}).items()):
+        path = os.path.join(root, rel)
+        if not os.path.exists(path):
+            problems.append(f"derived file missing: {rel}")
+        elif _sha256(path) != meta["sha256"]:
+            problems.append(f"derived hash drift: {rel} (rebuild the views)")
     return problems
