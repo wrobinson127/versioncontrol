@@ -7,7 +7,6 @@
 <meta name="description" content="A public registry of AI model releases: what shipped, what changed against the predecessor, what the lab disclosed, and where every number comes from.">
 <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
 <link rel="canonical" href="https://versioncontrol.walker-robinson.com/">
-<!-- og:image points at a rendered PNG; the PNG render of assets/og-card.svg lands in a later phase. -->
 <meta property="og:title" content="Version Control">
 <meta property="og:description" content="The release record of the model era. Every number tells you where it came from, or it does not appear.">
 <meta property="og:type" content="website">
@@ -35,7 +34,7 @@
 
 <main id="main" class="wrap">
   <h1 class="visually-hidden">Timeline of release entries</h1>
-  <p class="registry-scope" id="registry-scope">A public registry of AI model releases from 12 tracked organizations.</p>
+  <p class="registry-scope" id="registry-scope">A public registry of AI model releases from 12 tracked organizations. Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>.</p>
 
   <section class="controls" aria-label="Filters">
     <label>Organization
@@ -63,6 +62,14 @@
       <p>Loading the registry record.</p>
     </div>
   </section>
+
+  <!-- The single prehistory context note (ruling D7). Static, outlined
+       annotation at the far end of the timeline.
+       FLAGGED FOR WALKER APPROVAL (drafted in content/prehistory.md). -->
+  <aside class="prehistory" aria-label="Before this record begins">
+    <h2>Before this record begins</h2>
+    <p>This record begins on 2022-11-30, the day OpenAI released ChatGPT and the release cadence of large AI models became a public event. Models existed before that date. GPT-3 shipped as an API in 2020; instruction-tuned variants, open research models, and commercial systems preceded and accompanied it. The registry does not attempt to reconstruct that earlier history: disclosure practices, benchmark conventions, and release mechanics before late 2022 differ enough from what followed that entries built from today's sources would misrepresent them. For the earlier record, <a href="https://epoch.ai/data/ai-models" rel="external">Epoch AI's "Data on AI Models"</a> dataset reaches back decades and documents its own methods.</p>
+  </aside>
 </main>
 
 <footer class="site-foot">

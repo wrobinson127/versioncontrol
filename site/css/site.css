@@ -304,6 +304,19 @@ a:hover { color: var(--ink); }
   max-width: 70ch;
 }
 
+/* A correction is the one surface besides retraction that may carry the
+   alarm color (rule 5); it renders as an outlined annotation layer, never
+   a fill (rule 8). */
+.entry-correction {
+  margin: 0 0 10px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  max-width: 70ch;
+  border: 1px solid var(--retracted);
+  color: var(--ink);
+  background: transparent;
+}
+
 .entry-facts {
   display: flex;
   flex-wrap: wrap;
@@ -419,6 +432,21 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
 .disc { display: flex; flex-direction: column; gap: 3px; }
 .disc-label { color: var(--ink-muted); }
 
+.entry-foot,
+.entry-foot * {
+  overflow-wrap: anywhere;
+}
+
+/* The prehistory note: an outlined annotation layer (rule 8), visually
+   apart from entry cards. */
+.prehistory {
+  margin: 28px 0 8px;
+  padding: 14px 18px;
+  border: 1px dashed var(--ink-muted);
+  max-width: 76ch;
+}
+.prehistory h2 { margin: 0 0 6px; font-size: 1.02rem; }
+.prehistory p { margin: 0; font-size: 0.9rem; color: var(--ink-muted); }
 .entry-foot {
   margin-top: 12px;
   font-size: 0.78rem;

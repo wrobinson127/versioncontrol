@@ -72,8 +72,9 @@
             a.textContent = short;
             td1.appendChild(a);
             var td2 = document.createElement("td");
-            td2.textContent = "Entries dated " + year + " (" +
-              manifest.files[rel].count + " entries).";
+            var n = manifest.files[rel].count;
+            td2.textContent = "Entries dated " + year + " (" + n +
+              (n === 1 ? " entry)." : " entries).");
             tr.appendChild(td1);
             tr.appendChild(td2);
             tbody.insertBefore(tr, anchor);

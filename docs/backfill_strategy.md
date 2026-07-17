@@ -44,7 +44,7 @@ Findings from the research pass worth knowing when reviewing: OpenAI publishes s
 ## Known limits
 
 - **ChatGPT itself has no entry.** Epoch's dataset carries no ChatGPT row (its nearest neighbor is a blank-organization GPT-3.5 row, refused by the registry filter), so the record that begins on ChatGPT's release date opens without ChatGPT. Whether to add a manually sourced entry is flagged for review.
-- **Upstream errors are carried, not corrected silently.** Epoch dates OpenAI's Operator 2023-01-23; the product shipped 2025-01-23. The row is reported upstream and the entry will be corrected through the normal review flow, leaving a correction note.
+- **Upstream errors are corrected in the open, never silently.** Epoch dates OpenAI's Operator 2023-01-23; the product shipped 2025-01-23 (Epoch's own Computer-Using Agent row carries the correct date). The backfill applies a documented correction map (`UPSTREAM_CORRECTIONS` in `pipeline/backfill.py`); the corrected entry states the original value and the evidence in a rendered correction note. The row is also worth reporting upstream.
 
 - **Predecessor chains are heuristic** (same organization, same coarse model family, nearest earlier entry; 105 of 292 entries are chained). A wrong chain can suppress or misdirect a delta chip but can never fabricate a comparison: delta computation independently requires identical benchmark, version, and provenance class, and refuses everything else.
 - **Meta's announcement surfaces block scripted fetches** (HTTP 400, Phase 0 finding), so Meta entries lean entirely on Epoch data.
