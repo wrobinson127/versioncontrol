@@ -59,6 +59,13 @@ jobs:
         # the job still goes red on failure, this step only preserves state.
         if: always()
         run: |
+          # Never complete a conflicted merge with candidate files full of
+          # conflict markers: bail and leave the red run for human eyes.
+          if git rev-parse -q --verify MERGE_HEAD >/dev/null; then
+            echo "Merge in progress after a conflict; not committing."
+            exit 0
+          fi
+          mkdir -p data/pending
           git add -A -- data/pending
           if [ -f data/derived/llm_ledger.json ]; then
             git add data/derived/llm_ledger.json
