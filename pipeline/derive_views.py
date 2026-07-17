@@ -77,11 +77,11 @@ def build_trajectory(entries: list) -> dict:
                 "source_class": prov["source_class"],
                 "points": [],
             })
-            # Structural guard: a point can only join a series whose key it
-            # reproduces exactly (D15: never mix versions or classes).
-            if (s["benchmark_version"] != prov["benchmark_version"]
-                    or s["source_class"] != prov["source_class"]):
-                raise ViewsError(f"mixed series refused at {e['id']}")
+            # D15 partitioning is the series key itself (benchmark, version,
+            # class); the refusal mechanism is the P1 validator above. This
+            # assertion only documents the impossibility of mixing.
+            assert (s["benchmark_version"] == prov["benchmark_version"]
+                    and s["source_class"] == prov["source_class"])
             point = {
                 "date": e["date"],
                 "value": num["value"],

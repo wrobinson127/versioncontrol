@@ -57,7 +57,6 @@ def test_series_partition_by_version_and_class():
              len(s["points"])) for s in t["series"]}
     assert keys == {("diamond", "INDEPENDENT", 2), ("diamond", "LAB_REPORTED", 1)}
     for s in t["series"]:
-        classes = {p for p in []}  # points carry no class; the series does
         assert s["points"] == sorted(s["points"], key=lambda p: p["date"])
 
 
