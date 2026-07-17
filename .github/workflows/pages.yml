@@ -31,7 +31,7 @@ jobs:
           cp -r site/* dist/
           cp -r data dist/data
           rm -rf dist/data/pending dist/data/raw
-          cp docs/METHODOLOGY.md docs/verification_report.md docs/backfill_strategy.md dist/ || true
+          rm -f dist/data/derived/llm_ledger.json
           cp DATA_LICENSE.md dist/
           echo "versioncontrol.walker-robinson.com" > dist/CNAME
       - uses: actions/upload-pages-artifact@v3
