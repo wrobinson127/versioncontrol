@@ -82,6 +82,7 @@
           </g>
         </svg>
         <p class="stage-error" id="stage-error" hidden></p>
+        <figcaption class="stage-caption" id="stage-caption">The record's time axis. The marked origin: 2022-11-30, ChatGPT released.</figcaption>
       </figure>
       <p class="visually-hidden" id="stage-live" aria-live="polite"></p>
     </div>
@@ -180,7 +181,7 @@
 <script>
 (function () {
   if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { return; }
-  var h = Math.max(420, Math.round(window.innerHeight * (window.innerWidth <= 700 ? 0.78 : 0.85)));
+  var h = Math.max(420, Math.round(window.innerHeight * (window.innerWidth <= 700 ? 0.62 : 0.85)));
   var steps = document.querySelectorAll("#scrolly .step");
   for (var i = 0; i < steps.length; i++) { steps[i].style.minHeight = h + "px"; }
 })();

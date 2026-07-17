@@ -173,6 +173,13 @@
     d.meta = meta;
     d.tiles = views.tiles;
 
+    /* releases per year (the acceleration, in raw counts) and the
+       registrar's pending-review state per disclosure artifact */
+    d.yearly = (views.cadence.yearly || []).slice().sort(function (a, b) {
+      return a.year < b.year ? -1 : 1;
+    });
+    d.artifactStatus = views.disclosure_matrix.artifact_status || {};
+
     /* pulse: releases only, from the disclosure matrix rows (the derived
        file carries date, org, model_name per release) */
     d.releases = (views.disclosure_matrix.rows || []).slice().map(function (r) {
@@ -327,13 +334,33 @@
     var paperTotal = paper.disclosed + paper.not_disclosed;
     var lastTraj = d.traj ? d.traj.points[d.traj.points.length - 1] : null;
     var firstTraj = d.traj ? d.traj.points[0] : null;
+    var yearlyText = d.yearly.length ?
+      " Releases per year: " + d.yearly.map(function (yr, i) {
+        return yr.year + " " + yr.releases +
+          (i === d.yearly.length - 1 ? " so far" : "");
+      }).join(", ") + "." : "";
+    var pendingArtifacts = ARTIFACTS.filter(function (a) {
+      var st = d.artifactStatus[a];
+      return st && st.links_on_record === 0 && st.pending_review > 0;
+    });
+    var mixedArtifacts = ARTIFACTS.filter(function (a) {
+      var st = d.artifactStatus[a];
+      return st && st.links_on_record > 0 && st.pending_review > 0;
+    });
+    var pendingText = (pendingArtifacts.length ?
+      " " + pendingArtifacts.map(function (a) { return ARTIFACT_NAMES[a]; }).join(", ") +
+      " links are under the registrar's review and not yet on record; those columns show no counts." : "") +
+      (mixedArtifacts.length ?
+        " Further " + mixedArtifacts.map(function (a) { return ARTIFACT_NAMES[a]; }).join(", ") +
+        " links await approval beyond the counts shown." : "");
     return [
       "A timeline on paper ground. The axis origin sits at 2022-11-30, the day OpenAI released ChatGPT. The record's first entry, " +
         d.first.name + " from " + (ORG_NAMES[d.first.org] || d.first.org) + " on " + d.first.date +
         ", is marked on the axis with its entry card ghosted beside it.",
       "The pulse strip now holds " + t.releases_recorded + " release marks across 12 organization rows, " +
         d.releases[0].date + " to " + d.releases[d.releases.length - 1].date +
-        ". The median gap counter, computed from these release dates, reads " + fmtGap(t.median_gap_days_this_year) + " days.",
+        ". The median gap counter, computed from these release dates, reads " + fmtGap(t.median_gap_days_this_year) + " days." +
+        yearlyText,
       d.traj ?
         "The trajectory chart shows " + d.traj.points.length + " independent " + d.traj.name +
         " measurements as solid marks, " + firstTraj.date + " to " + lastTraj.date +
@@ -347,10 +374,44 @@
         ": a hollow lab reported mark at " + d.pair.labValue +
         " and a solid independent mark at " + d.pair.indValue + ", each with its provenance tag.",
       "The disclosure matrix: 12 organizations by four artifact types, releases only. Cells with links on record fill with their counts; cells with none stay hollow. Papers on record: " +
-        paper.disclosed + " of " + paperTotal + " releases.",
+        paper.disclosed + " of " + paperTotal + " releases." + pendingText,
       "The pulse strip and the registry measures, recomposed as the explorer's landing view: " +
         t.releases_recorded + " releases recorded, " + t.days_since_last_release +
         " days since the last release, a median gap of " + fmtGap(t.median_gap_days_this_year) + " days this year."
+    ];
+  }
+
+  /* Persistent stage captions: present for the whole beat, so the stage
+     always states what it shows without waiting on the animation. Each
+     caption may carry one link into the matching explorer view. */
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function beatCaptions(d) {
+    var pendingCols = ARTIFACTS.some(function (a) {
+      var st = d.artifactStatus[a];
+      return st && st.links_on_record === 0 && st.pending_review > 0;
+    });
+    return [
+      { text: "The record's time axis. The marked origin: 2022-11-30, ChatGPT released." },
+      { text: "One mark per release, one row per organization, rows in registry entry order. The counter: median gap between releases, in days, over a trailing 365 day window across all organizations.",
+        href: "./index.html#pulse-h", link: "Open the pulse in the explorer." },
+      { text: d.traj ?
+          d.traj.name + ", independent measurements only, on the benchmark's own 0 to 100 scale. The backfill carries independent numbers; lab reported numbers accrue through the nightly path." :
+          "No independent series is available in this session.",
+        href: "./index.html#traj-h", link: "Open the trajectory in the explorer." },
+      { text: (d.treadmill.specimen ? "Specimen data, watermarked, until the record holds a closed era. " : "") +
+          "Score over a closed benchmark era and its successor. No mark crosses the boundary." },
+      { text: (d.pair.specimen ? "Specimen data, watermarked, until the record holds a lab and independent pair. " : "") +
+          "One model, one benchmark, two provenance classes." },
+      { text: "Disclosure links on record, releases only. Each filled cell: releases with a link, of releases recorded." +
+          (pendingCols ? " Columns marked under review carry researched links awaiting the registrar's approval; they show no counts." : ""),
+        href: "./index.html#matrix-h", link: "Open the disclosure record." },
+      { text: "The registry measures and the full pulse, as the explorer's landing view renders them.",
+        href: "./index.html", link: "Enter the record." }
     ];
   }
 
@@ -378,24 +439,24 @@
     /* font sizes: the compact stage is redesigned for the half-height
        mobile box (larger type, fewer gridlines, short labels) */
     var F = compact ? {
-      year: 19, org: 16, counterVal: 46, counterLab: 16, counterDate: 15,
+      year: 19, org: 16, counterVal: 50, counterLab: 16, counterDate: 15,
       gDate: 17, gOrg: 17, gKind: 16, gName: 25, gBody: 16, gFact: 16,
       oDate: 17, oSub: 16, title: 21, legend: 17, grid: 17, lblVal: 19,
-      lblName: 16, tag: 13, region: 17, stamp: 15, bnd: 16,
-      pName: 26, pBench: 18, pVal: 24, pClass: 17,
+      lblName: 16, tag: 13, region: 17, stamp: 15, bnd: 16, water: 46,
+      pName: 28, pBench: 18, pVal: 26, pClass: 17,
       mHead: 15, mOrg: 15, mCount: 16,
       tVal: 27, tLab: 14, miniOrg: 13, miniYear: 14, timeLab: 16
     } : {
-      year: 12, org: 10.5, counterVal: 30, counterLab: 10.5, counterDate: 10.5,
+      year: 12, org: 10.5, counterVal: 46, counterLab: 10.5, counterDate: 10.5,
       gDate: 12, gOrg: 12, gKind: 11, gName: 20, gBody: 11.5, gFact: 11,
       oDate: 11, oSub: 11, title: 15, legend: 11, grid: 10.5, lblVal: 12,
-      lblName: 10.5, tag: 8.5, region: 12, stamp: 12, bnd: 10.5,
-      pName: 20, pBench: 12, pVal: 16, pClass: 11,
+      lblName: 10.5, tag: 8.5, region: 12, stamp: 13, bnd: 10.5, water: 40,
+      pName: 24, pBench: 13, pVal: 22, pClass: 12,
       mHead: 11, mOrg: 11, mCount: 11,
       tVal: 24, tLab: 10, miniOrg: 9.5, miniYear: 10, timeLab: 11
     };
     var POINT_R = compact ? 6 : 4.5;
-    var PAIR_R = compact ? 10 : 7;
+    var PAIR_R = compact ? 11 : 9;
     var GRID_VALS = compact ? [0, 50, 100] : [0, 20, 40, 60, 80, 100];
     var orgLabel = function (org) {
       return compact ? (ORG_SHORT[org] || org) : (ORG_NAMES[org] || org);
@@ -493,7 +554,8 @@
     var gGhost = null, setGhost = null, firstMark = null, setFirstMark = null;
     var fx = x(d.first.ms);
     var metaRow = REGISTRY_ORDER.indexOf(d.first.org);
-    var rowBase = function (i) { return 106 + i * 26; };
+    /* rows start at 120 so the poster-scale counter clears the top band */
+    var rowBase = function (i) { return 120 + i * 25; };
 
     if (needs(0, 1)) {
       firstMark = svgEl("rect", { x: fx - 1.75, width: 3.5, y: AXIS_Y - 16, height: 16, "class": "st-mark" });
@@ -545,6 +607,7 @@
     var gPulse = null, setPulse = null, pulseReveal = null, pulseMarks = [];
     var gPlayhead = null, setPlayhead = null, playheadLine = null;
     var gCounter = null, setCounter = null, counterVal = null, counterDate = null;
+    var yearSegs = [];
 
     if (needs(1)) {
       gPulse = group("st-pulse");
@@ -568,18 +631,43 @@
       pulseReveal = makeRevealer(pulseMarks);
       setPulse = makeVisSetter(gPulse);
 
+      /* releases per year, landing as the sweep closes each year: the
+         acceleration in raw counts, no smoothing (43, 95, 112) */
+      if (d.yearly.length && !compact) {
+        var gYearCounts = group("st-yearcounts");
+        gYearCounts.appendChild(svgEl("text", { x: XL, y: 38, "class": "st-sub-label", "font-size": F.legend }, "releases per year"));
+        var xCursor = XL;
+        d.yearly.forEach(function (yr, i) {
+          var isLast = i === d.yearly.length - 1;
+          var txt = yr.year + " " + yr.releases + (isLast ? " so far" : "");
+          var seg = svgEl("text", { x: xCursor, y: 58, "class": "st-mono-strong", "font-size": F.lblVal }, txt);
+          gYearCounts.appendChild(seg);
+          /* the segment appears once the sweep passes the year's end
+             (or, for the running year, stays with the sweep's finish) */
+          var boundary = isLast ? null : Date.UTC(parseInt(yr.year, 10) + 1, 0, 1);
+          yearSegs.push({ node: seg, boundary: boundary, set: makeVisSetter(seg) });
+          seg.setAttribute("visibility", "hidden");
+          xCursor += txt.length * F.lblVal * 0.62 + 16;
+        });
+        gYearCounts.__set = makeVisSetter(gYearCounts);
+        yearSegs.__group = gYearCounts;
+      }
+
       gPlayhead = group("st-playhead");
-      playheadLine = svgEl("line", { x1: XL, y1: 84, x2: XL, y2: AXIS_Y + 4, "class": "st-playhead" });
+      playheadLine = svgEl("line", { x1: XL, y1: 108, x2: XL, y2: AXIS_Y + 4, "class": "st-playhead" });
       gPlayhead.appendChild(playheadLine);
       setPlayhead = makeVisSetter(gPlayhead);
 
+      /* the counter is the beat's protagonist: poster scale, with its
+         definition stated beside it, never a caption-sized footnote */
       gCounter = group("st-counter");
-      var cValY = 22 + F.counterVal * 0.72;
+      var cValY = 24 + F.counterVal * 0.72;
       counterVal = svgEl("text", { x: XR, y: cValY, "text-anchor": "end", "class": "st-counter-val", "font-size": F.counterVal }, "");
       gCounter.appendChild(counterVal);
       gCounter.appendChild(svgEl("text", { x: XR, y: cValY + F.counterLab * 1.5, "text-anchor": "end", "class": "st-sub-label", "font-size": F.counterLab }, "median gap between releases, days"));
       if (!compact) {
-        counterDate = svgEl("text", { x: XR, y: cValY + F.counterLab * 1.5 + F.counterDate * 1.4, "text-anchor": "end", "class": "st-mono-faint", "font-size": F.counterDate }, "");
+        gCounter.appendChild(svgEl("text", { x: XR, y: cValY + F.counterLab * 1.5 + F.counterDate * 1.3, "text-anchor": "end", "class": "st-mono-faint", "font-size": F.counterDate }, "trailing 365 days, all organizations"));
+        counterDate = svgEl("text", { x: XR, y: cValY + F.counterLab * 1.5 + F.counterDate * 2.6, "text-anchor": "end", "class": "st-mono-faint", "font-size": F.counterDate }, "");
         gCounter.appendChild(counterDate);
       }
       setCounter = makeVisSetter(gCounter);
@@ -596,6 +684,8 @@
         }
         gGrid.appendChild(svgEl("text", { x: XL - 8, y: yScore(v) + F.grid * 0.35, "text-anchor": "end", "class": "st-grid-num", "font-size": F.grid }, String(v)));
       });
+      /* the unit, stated on the axis itself */
+      gGrid.appendChild(svgEl("text", { x: XL - 8, y: yScore(100) - F.grid, "text-anchor": "end", "class": "st-sub-label", "font-size": F.grid }, "score"));
       setGrid = makeVisSetter(gGrid);
     }
 
@@ -605,6 +695,7 @@
     var gPoints = null, setPoints = null, pointReveal = null, trajNodes = [];
     var gArrive = null, setArrive = null, arriveVal = null, arriveTagBox = null,
         arriveTagText = null, arriveName = null, lastArriveIdx = -1;
+    var latestRing = null, setLatestRing = null;
 
     if (needs(2) && d.traj) {
       gTitle3 = group("st-title3");
@@ -619,6 +710,11 @@
       });
       hideAll(trajNodes);
       pointReveal = makeRevealer(trajNodes);
+      /* the newest revealed measurement wears an annotation ring, tying
+         the readout beside the legend to its mark on the chart */
+      latestRing = svgEl("circle", { r: POINT_R + 3.5, "class": "st-latest-ring" });
+      gPoints.appendChild(latestRing);
+      setLatestRing = makeVisSetter(latestRing);
       setPoints = makeVisSetter(gPoints);
 
       /* the newest point's value, provenance tag and model name, read out
@@ -671,6 +767,17 @@
       return g;
     }
 
+    /* the watermark across the plot band: specimen marks can never be
+       skimmed as data, at any reading speed */
+    function specimenWater(cy) {
+      var cx = (XL + XR) / 2;
+      return svgEl("text", {
+        x: cx, y: cy, "text-anchor": "middle", "class": "st-stamp-water",
+        "font-size": F.water,
+        transform: "rotate(-12 " + cx + " " + cy + ")"
+      }, "SPECIMEN");
+    }
+
     if (needs(3)) {
       var tm = d.treadmill;
       var regionY = 97;
@@ -706,6 +813,7 @@
 
       if (tm.specimen) {
         gStamp4 = group("st-stamp-holder");
+        gStamp4.appendChild(specimenWater(262));
         gStamp4.appendChild(specimenStamp(XR - F.stamp * 4.7 - 8, 372));
         setStamp4 = makeVisSetter(gStamp4);
       }
@@ -717,12 +825,14 @@
     var pairLeft = { val: null, tagBox: null, tagText: null, cls: null };
     var pairRight = { val: null, tagBox: null, tagText: null, cls: null };
     var gPairHead = null, setPairHead = null, gStamp5 = null, setStamp5 = null;
-    var PAIR_Y = 258, PAIR_CX = 416, PAIR_LX = 288, PAIR_RX = 544;
+    /* the thesis beat fills the stage: the pair sits at the optical
+       center, poster scale (P5 composition fix, critical review F7) */
+    var PAIR_Y = 288, PAIR_CX = 416, PAIR_LX = 272, PAIR_RX = 560;
 
     if (needs(4)) {
       gPairHead = group("st-pairhead");
-      gPairHead.appendChild(svgEl("text", { x: PAIR_CX, y: 140, "text-anchor": "middle", "class": "st-slab", "font-size": F.pName }, d.pair.model));
-      gPairHead.appendChild(svgEl("text", { x: PAIR_CX, y: 140 + F.pBench * 1.9, "text-anchor": "middle", "class": "st-sub-label", "font-size": F.pBench }, d.pair.bench));
+      gPairHead.appendChild(svgEl("text", { x: PAIR_CX, y: 152, "text-anchor": "middle", "class": "st-slab", "font-size": F.pName }, d.pair.model));
+      gPairHead.appendChild(svgEl("text", { x: PAIR_CX, y: 152 + F.pBench * 1.9, "text-anchor": "middle", "class": "st-sub-label", "font-size": F.pBench }, d.pair.bench));
       setPairHead = makeVisSetter(gPairHead);
 
       gPair = group("st-pair");
@@ -754,6 +864,7 @@
 
       if (d.pair.specimen) {
         gStamp5 = group("st-stamp-holder");
+        gStamp5.appendChild(specimenWater(222));
         gStamp5.appendChild(specimenStamp(XR - F.stamp * 4.7 - 8, 96));
         setStamp5 = makeVisSetter(gStamp5);
       }
@@ -765,12 +876,36 @@
     if (needs(5)) {
       var ML = compact ? { labelX: 126, colX0: 140, colW: 140, top: 116, rowH: 30, headY: 96, dotR: 6.5 }
                        : { labelX: 176, colX0: 190, colW: 127.5, top: 116, rowH: 26, headY: 96, dotR: 5 };
+      /* which artifact columns are the registrar's own pending state:
+         researched links awaiting approval, zero on record. Rendered as
+         'under review', never as a wall of zeros (DESIGN rule 2). */
+      var isPendingCol = function (a) {
+        var st = d.artifactStatus[a];
+        return !!(st && st.links_on_record === 0 && st.pending_review > 0);
+      };
+      var isMixedCol = function (a) {
+        var st = d.artifactStatus[a];
+        return !!(st && st.links_on_record > 0 && st.pending_review > 0);
+      };
       gMatrixBase = group("st-matrix");
+      if (!compact) {
+        gMatrixBase.appendChild(svgEl("text", { x: XL, y: 40, "class": "st-title", "font-size": F.title }, "Disclosure links on record"));
+        gMatrixBase.appendChild(svgEl("text", { x: XL, y: 40 + F.legend * 1.7, "class": "st-sub-label", "font-size": F.legend }, "each filled cell: releases with a link, of releases recorded"));
+      }
       ARTIFACTS.forEach(function (a, ci) {
+        var hx2 = ML.colX0 + ci * ML.colW + ML.colW / 2;
         gMatrixBase.appendChild(svgEl("text", {
-          x: ML.colX0 + ci * ML.colW + ML.colW / 2, y: ML.headY, "text-anchor": "middle",
+          x: hx2, y: ML.headY, "text-anchor": "middle",
           "class": "st-sub-label", "font-size": F.mHead
         }, ARTIFACT_NAMES[a]));
+        var headStatus = isPendingCol(a) ? "under review" :
+          (isMixedCol(a) ? "more under review" : null);
+        if (headStatus) {
+          gMatrixBase.appendChild(svgEl("text", {
+            x: hx2, y: ML.headY + F.mHead * 1.2, "text-anchor": "middle",
+            "class": "st-mono-faint", "font-size": F.mHead - 1, "font-style": "italic"
+          }, headStatus));
+        }
       });
       var gMatrixFill = svgEl("g", {});
       REGISTRY_ORDER.forEach(function (org, ri) {
@@ -783,7 +918,11 @@
           var c = d.matrix[org][a];
           var cx = ML.colX0 + ci * ML.colW + ML.colW / 2;
           var countText = c.disclosed + "/" + c.total;
-          if (c.disclosed > 0) {
+          if (isPendingCol(a)) {
+            /* the registrar has not finished reviewing this column: the
+               hollow ground renders with no count at all */
+            gMatrixBase.appendChild(svgEl("circle", { cx: cx - F.mCount * 2.4, cy: cy, r: ML.dotR, "class": "st-cell-hollow" }));
+          } else if (c.disclosed > 0) {
             /* the hollow ground of the cell is drawn with the grid; the
                fill and its count land cell by cell */
             gMatrixBase.appendChild(svgEl("circle", { cx: cx - F.mCount * 2.4, cy: cy, r: ML.dotR, "class": "st-cell-hollow" }));
@@ -837,11 +976,17 @@
 
       var t = d.tiles;
       var sharePct = Math.round((t.share_with_system_card || 0) * 1000) / 10;
+      /* while the system card column is the registrar's pending state, a
+         0% headline would misstate the labs' record; the papers measure
+         is the honest tile until approvals land */
+      var fourth = (t.system_card_links_pending > 0 && !(t.share_with_system_card > 0))
+        ? { value: String(t.papers_on_record), label: ["releases with a", "paper link"] }
+        : { value: sharePct + "%", label: ["releases with a", "system card link"] };
       var tiles = [
-        { value: String(t.releases_recorded), label: ["releases", "recorded"] },
+        { value: String(t.releases_recorded), label: ["releases recorded,", "of " + (t.entries_recorded || t.releases_recorded) + " entries"] },
         { value: String(t.days_since_last_release), label: ["days since the", "last release"] },
         { value: fmtGap(t.median_gap_days_this_year), label: ["median gap this", "year, in days"] },
-        { value: sharePct + "%", label: ["releases with a", "system card link"] }
+        fourth
       ];
       var gap = 14;
       var tw = (XR - XL - gap * (LT.cols - 1)) / LT.cols;
@@ -911,6 +1056,16 @@
           counterVal.textContent = text;
         }
         if (counterDate) { counterDate.textContent = "through " + fmtDay(sweepMs); }
+
+        /* per-year release totals land as the sweep closes each year */
+        if (yearSegs.__group) {
+          yearSegs.__group.__set(vis(p, 3.2, 0.3, 6.0, 0.35));
+          for (var yi = 0; yi < yearSegs.length; yi++) {
+            var ys = yearSegs[yi];
+            var show = ys.boundary === null ? sweepT >= 0.999 : sweepMs >= ys.boundary;
+            ys.set(show ? 1 : 0);
+          }
+        }
       }
 
       /* beats 3 and 4 frame */
@@ -930,7 +1085,10 @@
           var pt = d.traj.points[lastArriveIdx];
           arriveVal.textContent = String(pt.value);
           arriveName.textContent = pt.model_name + ", " + pt.date;
+          latestRing.setAttribute("cx", x(parseMs(pt.date)));
+          latestRing.setAttribute("cy", yScore(pt.value));
         }
+        setLatestRing(count > 0 ? vis(p, 6.2, 0.2, 9.0, 0.2) : 0);
       } else if (setKeySolid) {
         setKeySolid(vis(p, 6.15, 0.3, 14.0, 0.35));
       }
@@ -1002,17 +1160,20 @@
     var stageFig = document.getElementById("stage");
     var stageSvg = document.getElementById("stage-svg");
     var liveEl = document.getElementById("stage-live");
+    var captionEl = document.getElementById("stage-caption");
     var steps = Array.prototype.slice.call(scrolly.querySelectorAll(".step"));
     var beatBlocks = Array.prototype.slice.call(scrolly.querySelectorAll(".beat"));
 
     var reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     var hasGsap = !!(window.gsap && window.ScrollTrigger);
 
-    /* step runway: measured innerHeight, never CSS vh (craft notes) */
+    /* step runway: measured innerHeight, never CSS vh (craft notes).
+       Compact runway 0.62: the pinned mobile stage takes the top half,
+       so longer runways leave dead scroll between prose cards. */
     var lastW = window.innerWidth, lastH = window.innerHeight;
     function setStepHeights() {
       var compact = window.innerWidth <= 700;
-      var h = Math.max(420, Math.round(window.innerHeight * (compact ? 0.78 : 0.85)));
+      var h = Math.max(420, Math.round(window.innerHeight * (compact ? 0.62 : 0.85)));
       steps.forEach(function (s) { s.style.minHeight = h + "px"; });
     }
 
@@ -1059,6 +1220,11 @@
     ]).then(function (results) {
       var d = prepare(results[0], results[1]);
       var summaries = beatSummaries(d);
+      var captions = beatCaptions(d);
+      function captionHtml(b) {
+        var c = captions[b];
+        return esc(c.text) + (c.href ? ' <a href="' + c.href + '">' + esc(c.link) + "</a>" : "");
+      }
       fillSlots(d);
       renderFooter(results[1]);
 
@@ -1083,6 +1249,7 @@
         if (b !== lastBeat) {
           lastBeat = b;
           if (liveEl) { liveEl.textContent = summaries[b]; }
+          if (captionEl) { captionEl.innerHTML = captionHtml(b); }
         }
       }
 
@@ -1104,9 +1271,11 @@
           s.setAttribute("class", "stage-svg");
           s.setAttribute("aria-hidden", "true");
           fig.insertBefore(s, null);
+          /* visible decode line; the full summary rides the aria-label.
+             No links inside: children of a role img are presentational. */
           var cap = document.createElement("figcaption");
-          cap.className = "visually-hidden";
-          cap.textContent = summaries[b];
+          cap.className = "stage-caption";
+          cap.textContent = captions[b].text;
           fig.appendChild(cap);
           var headingBlock = block.querySelector(".beat-head");
           block.insertBefore(fig, headingBlock ? headingBlock.nextSibling : block.firstChild);
@@ -1145,9 +1314,13 @@
           var sectionTop = sectionRect.top + scrollTop;
           var sectionH = scrolly.offsetHeight;
           var span = Math.max(1, sectionH - window.innerHeight);
+          /* the activation line sits below the pinned stage: on compact
+             widths the stage owns the top half of the screen, so a step
+             activates only once its prose is visible beneath it */
+          var offset = window.innerWidth <= 700 ? 0.60 : 0.22;
           anchors = steps.map(function (s) {
             var top = s.getBoundingClientRect().top + scrollTop - sectionTop;
-            return clamp01((top - window.innerHeight * 0.22) / span);
+            return clamp01((top - window.innerHeight * offset) / span);
           });
           for (var i = 1; i < anchors.length; i++) {
             if (anchors[i] <= anchors[i - 1]) { anchors[i] = anchors[i - 1] + 0.0001; }

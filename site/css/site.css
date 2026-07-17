@@ -24,7 +24,16 @@
    Palette: pale ledger-green paper (the tint of ruled accounting
    ledger stock), warm green-black ink, deep desaturated ledger green
    as the only tonal accent. Saturated red (--retracted) carries
-   exactly one meaning: retracted or corrected data. */
+   exactly one meaning: retracted or corrected data.
+
+   FLAGGED DESIGN CHOICE (four-ink ledger, 2026-07-17 color pass;
+   logged in DESIGN.md approved additions): black ink is the
+   registrar's frame and text; entry green is the recorded datum
+   (every data mark: pulse marks, trajectory dots, matrix fills);
+   annotation blue is the registrar's stamp ink (era boundaries,
+   SPECIMEN, origin marker), always outlined, never a data fill;
+   red stays reserved for retraction. Provenance remains shape-first
+   (solid/hollow), so every chart survives full desaturation. */
 
 :root {
   --paper: #f1f3e9;
@@ -34,6 +43,9 @@
   --ink-muted: #57604e;
   --ink-faint: #6b7361; /* AA-checked against --surface for small data text */
   --accent: #2e4a38;
+  --entry: #2f5d46;       /* recorded-datum green; 6.75:1 on paper, marks + large numerals only */
+  --entry-faint: #6f8a78; /* revision marks; 3.36:1 on paper, graphical marks only */
+  --annotation: #3d5a70;  /* registrar's stamp ink; 6.47:1 on paper */
   --retracted: #b3261e;
   --slab: Rockwell, "Rockwell Nova", "Roboto Slab", "DejaVu Serif", "Sitka Small", Georgia, serif;
   --body: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -610,7 +622,7 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
   background: var(--surface);
   border: 1px solid var(--surface-edge);
   border-radius: 4px;
-  min-height: 208px;
+  min-height: 270px; /* strip rows + the releases-per-month band */
 }
 .pulse-scroll { overflow-x: auto; }
 .pulse-svg { display: block; }
@@ -628,8 +640,24 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
 /* marks are pointer-transparent; the brush overlay owns the gestures and
    hover resolves against the nearest mark */
 .pulse-marks { pointer-events: none; }
-.pulse-mark { fill: var(--ink); }
-.pulse-mark.is-revision { fill: var(--ink-faint); }
+.pulse-mark { fill: var(--entry); }
+.pulse-mark.is-revision { fill: var(--entry-faint); }
+
+/* releases per month: raw counts on the same time scale, beneath the
+   strip; bars are data, so they carry the entry ink */
+.pulse-bars { pointer-events: none; }
+.pulse-bar { fill: var(--entry); }
+.pulse-bar-label {
+  font-family: var(--body);
+  font-size: 0.68rem;
+  fill: var(--ink-muted);
+}
+.pulse-bar-max {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  fill: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
 .pulse-brush .selection {
   fill: var(--accent);
   fill-opacity: 0.13;
@@ -771,7 +799,7 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
 .traj-legend input[type="radio"],
 .traj-legend input[type="checkbox"] { accent-color: var(--accent); }
 .key-mark { flex: none; }
-.key-solid { fill: var(--ink); }
+.key-solid { fill: var(--entry); }
 .key-hollow { fill: var(--surface); stroke: var(--ink); stroke-width: 1.4; }
 
 .traj-caption {
@@ -790,14 +818,23 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
 .traj-svg { display: block; width: 100%; height: auto; }
 .traj-grid line { stroke: var(--surface-edge); shape-rendering: crispEdges; }
 .traj-axis line { stroke: var(--ink-faint); shape-rendering: crispEdges; }
-.traj-eras line { stroke: var(--ink-faint); stroke-dasharray: 4 3; }
-.traj-eras text { font-family: var(--mono); font-size: 0.7rem; fill: var(--ink-muted); }
+.traj-eras line { stroke: var(--annotation); stroke-dasharray: 4 3; }
+.traj-eras text { font-family: var(--mono); font-size: 0.7rem; fill: var(--annotation); }
+
+/* the y-axis unit, stated on the chart itself */
+.traj-unit {
+  font-family: var(--body);
+  font-size: 0.68rem;
+  fill: var(--ink-muted);
+}
+/* the newest measurement: an outlined annotation ring, never a fill */
+.traj-latest-ring { fill: none; stroke: var(--annotation); stroke-width: 1.5; }
 
 .traj-point { cursor: pointer; }
 .traj-point .dot { transition: fill 150ms ease, stroke 150ms ease; }
-.dot-solid { fill: var(--ink); }
+.dot-solid { fill: var(--entry); }
 .dot-hollow { fill: var(--surface); stroke: var(--ink); stroke-width: 1.4; }
-.traj-point:hover .dot-solid { fill: var(--accent); }
+.traj-point:hover .dot-solid { fill: var(--ink); }
 .traj-point:hover .dot-hollow { stroke: var(--accent); }
 .traj-point .focus-ring { fill: none; stroke: none; }
 .traj-point:focus { outline: none; }
@@ -813,6 +850,23 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
   font-size: 0.85rem;
   font-style: italic;
   color: var(--ink-faint);
+}
+
+/* an empty filter result states itself in the chart area, never blank */
+.chart-empty-note {
+  margin: 0;
+  padding: 20px 16px;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+
+/* per-chart source line: where these numbers come from, at point of use */
+.chart-source {
+  margin: 6px 0 0;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
 }
 
 /* disclosure record */
@@ -857,12 +911,52 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
 }
 .dm-cell:hover { border-color: var(--ink); }
 .dm-dots { flex: none; }
-.dm-dot-filled { fill: var(--ink); }
+.dm-dot-filled { fill: var(--entry); }
 .dm-dot-hollow { fill: none; stroke: var(--ink); stroke-width: 1.2; }
 .dm-count {
   font-family: var(--mono);
   font-size: 0.78rem;
   font-variant-numeric: tabular-nums;
+}
+
+/* a column whose links are researched but await approval: the
+   registrar's own pending state, visually disjoint from any count
+   (DESIGN rule 2: never rendered as a zero) */
+.dm-cell.is-pending {
+  border-style: dashed;
+  border-color: var(--ink-faint);
+  color: var(--ink-muted);
+}
+.dm-cell.is-pending:hover { border-color: var(--ink-muted); }
+.dm-pending-word {
+  font-size: 0.72rem;
+  font-style: italic;
+}
+.dm-colhead .dm-head-status {
+  display: block;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+
+/* glyph legend for the matrix, where a legend belongs */
+.dm-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+}
+.dm-legend span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* paper links by year: the disclosure record's time dimension */
+.matrix-years {
+  margin: 10px 0 0;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
+  max-width: 76ch;
 }
 
 /* explorer-driven filter note: an outlined annotation layer (rule 8) */
@@ -902,7 +996,16 @@ html { scroll-behavior: smooth; }
   .year-ruler a { padding: 4px 10px 8px; }
 
   /* explorer at narrow widths: the strip and the matrix scroll inside
-     their own containers, never the page; tiles wrap two-up */
+     their own containers, never the page; tiles wrap two-up. The
+     organization labels stay pinned while the matrix scrolls so the
+     row identity never leaves the screen. */
+  .dm-rowhead,
+  .dm-corner {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+    background: var(--paper);
+  }
   .tile-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tile-value { font-size: 1.6rem; }
   .traj-legend { gap: 8px; }

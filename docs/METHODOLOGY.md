@@ -18,6 +18,17 @@ A tracked release is a new named model or versioned variant from a registry orga
 
 The registry is a closed set of twelve organizations: OpenAI, Anthropic, Google (DeepMind), Meta, xAI, Mistral, DeepSeek, Alibaba (Qwen), Moonshot AI, Z.ai (Zhipu), Cohere, Amazon (Nova). It is append-only. An organization enters when it ships a model meeting Epoch AI's notability bar or sustains top-tier leaderboard presence. Every registry change is logged publicly.
 
+## The measures, defined
+
+Every headline number on the site is computed from the published files by a stated rule; nothing is smoothed or modeled.
+
+- **Median gap between releases (the story counter)**: the median of the gaps, in days, between consecutive releases across all tracked organizations, over a trailing 365 day window evaluated at each release date. It pools twelve organizations, which is why it saturates at a few days once the record densifies.
+- **Median gap this year (the tile)**: the median of the gaps between consecutive releases dated within the current calendar year. A different window from the story counter, stated on each surface.
+- **Releases per year and per month**: raw counts of release entries by date. Revisions are counted separately and excluded from release cadence.
+- **Days since the last release**: calendar days from the newest release date to the last successful update.
+- **Releases with a paper link / system card link**: the count of release entries whose disclosure row carries a link on record for that artifact.
+- **Under review**: a disclosure artifact column renders "under review" when researched links exist in the registrar's queue but none has been approved onto the record. This is the registrar's own state, distinct from a lab's `NOT_DISCLOSED`, and it is never rendered as a zero or a percentage.
+
 ## How releases are detected
 
 A nightly pipeline reads four independent signal classes: official lab announcement feeds and news indexes (primary), organization-scoped Hugging Face listings (open-weights signal), the OpenRouter catalog (tripwire), and Epoch AI's models dataset (trailing confirmation). Signals correlate into candidate events; sibling repositories (quantizations, size ladders) cluster into one event. Candidates queue for human review. **Nothing publishes without explicit human approval.** Pending candidates have no public trace.

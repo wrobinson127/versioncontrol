@@ -67,6 +67,17 @@
   </ul>
   <p>Values are percentages on a 0 to 100 scale, recorded as published by their source.</p>
 
+  <h2>The measures, defined</h2>
+  <p>Every headline number on the site is computed from the published files by a stated rule; nothing is smoothed or modeled.</p>
+  <ul>
+    <li><strong>Median gap between releases (the story counter)</strong>: the median of the gaps, in days, between consecutive releases across all tracked organizations, over a trailing 365 day window evaluated at each release date. It pools twelve organizations, which is why it saturates at a few days once the record densifies.</li>
+    <li><strong>Median gap this year (the tile)</strong>: the median of the gaps between consecutive releases dated within the current calendar year. A different window from the story counter, stated on each surface.</li>
+    <li><strong>Releases per year and per month</strong>: raw counts of release entries by date. Revisions are counted separately and excluded from release cadence.</li>
+    <li><strong>Days since the last release</strong>: calendar days from the newest release date to the last successful update.</li>
+    <li><strong>Releases with a paper link, or a system card link</strong>: the count of release entries whose disclosure row carries a link on record for that artifact.</li>
+    <li><strong>Under review</strong>: a disclosure artifact column renders "under review" when researched links exist in the registrar's queue but none has been approved onto the record. This is the registrar's own state, distinct from a lab's NOT_DISCLOSED, and it is never rendered as a zero or a percentage.</li>
+  </ul>
+
   <h2>Data sources and attribution</h2>
   <p>Backfilled release dates, organization mappings, parameter counts, availability classes, and independent benchmark numbers derive from Epoch AI's datasets, used under CC-BY 4.0:</p>
   <blockquote>Epoch AI, "Data on AI Models". Published online at epoch.ai. Retrieved from <a href="https://epoch.ai/data/ai-models" rel="external">https://epoch.ai/data/ai-models</a> [online resource].</blockquote>

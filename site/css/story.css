@@ -24,11 +24,29 @@
   margin-top: 26px;
 }
 
+/* The sticky column spans the viewport and flex-centers the stage, so
+   the chart sits in the middle of the free height instead of hugging
+   the top. align-self stays start: grid stretch would make the column
+   section-height and kill the pin travel. The trigger and the step map
+   measure the section and the steps, never the stage, so centering
+   cannot skew the scrub. */
 .stage-col {
   position: sticky;
-  top: 18px;
+  top: 0;
   align-self: start;
   min-width: 0;
+}
+
+@media (min-width: 701px) {
+  .stage-col {
+    height: 100vh;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  /* short viewports: the stage letterboxes instead of overflowing the pin */
+  .stage-svg { max-height: calc(100dvh - 110px); }
 }
 
 .stage {
@@ -53,6 +71,19 @@
   color: var(--ink-muted);
 }
 .stage-error[hidden] { display: none; }
+
+/* the persistent caption: present for the whole beat, so the stage
+   always states what it is showing without waiting on the animation */
+.stage-caption {
+  padding: 9px 14px 11px;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink-muted);
+  border-top: 1px solid var(--surface-edge);
+  min-height: 3.2em;
+}
+.stage-caption a { white-space: nowrap; }
+.beat-fig .stage-caption { min-height: 0; }
 
 .steps { min-width: 0; }
 
@@ -163,9 +194,11 @@ body.story-static .beat { margin-bottom: 44px; }
 .st-axis-line { stroke: var(--ink-faint); shape-rendering: crispEdges; }
 .st-tick { stroke: var(--ink-faint); shape-rendering: crispEdges; }
 .st-rule { stroke: var(--surface-edge); stroke-width: 1; shape-rendering: crispEdges; }
-.st-origin-tick { stroke: var(--ink); stroke-width: 2; }
+/* the origin marker commemorates an event: annotation ink, not data */
+.st-origin-tick { stroke: var(--annotation); stroke-width: 2; }
 .st-leader { stroke: var(--ink-faint); stroke-width: 1; }
-.st-mark { fill: var(--ink); }
+/* release marks are recorded data: entry ink (four-ink ledger) */
+.st-mark { fill: var(--entry); }
 .st-card { fill: var(--surface); stroke: var(--surface-edge); }
 
 .st-year { font-family: var(--mono); fill: var(--ink-muted); font-variant-numeric: tabular-nums; }
@@ -179,24 +212,35 @@ body.story-static .beat { margin-bottom: 44px; }
 .st-org-strong { font-family: var(--body); font-weight: 600; fill: var(--ink-muted); }
 .st-slab { font-family: var(--slab); font-weight: 700; fill: var(--ink); }
 .st-title { font-family: var(--slab); font-weight: 700; fill: var(--ink); }
-.st-region { font-family: var(--body); font-weight: 600; fill: var(--ink-muted); }
+.st-region { font-family: var(--body); font-weight: 600; fill: var(--annotation); }
 
 .st-counter-val { font-family: var(--slab); font-weight: 700; fill: var(--ink); font-variant-numeric: tabular-nums; }
-.st-playhead { stroke: var(--ink-muted); stroke-width: 1; stroke-dasharray: 3 3; }
+.st-playhead { stroke: var(--accent); stroke-width: 1; stroke-dasharray: 3 3; }
 
-.st-dot-solid { fill: var(--ink); }
+.st-dot-solid { fill: var(--entry); }
 .st-dot-hollow { fill: var(--surface); stroke: var(--ink); stroke-width: 1.4; }
+/* the newest revealed measurement: outlined annotation ring, no fill */
+.st-latest-ring { fill: none; stroke: var(--annotation); stroke-width: 1.6; }
 
 /* provenance tag: the same outlined chip as the entry cards */
 .st-tag-box { fill: none; stroke: var(--ink); }
 .st-tag { font-family: var(--mono); fill: var(--ink); letter-spacing: 0.08em; }
 
-/* era boundary: an outlined annotation layer, never a fill (rule 8) */
-.st-era-line { stroke: var(--ink-faint); stroke-dasharray: 4 3; }
+/* era boundary: an outlined annotation layer, never a fill (rule 8);
+   annotation ink, the registrar's second color */
+.st-era-line { stroke: var(--annotation); stroke-dasharray: 4 3; }
 
-/* the SPECIMEN stamp: the poster's labeled-specimen device */
-.st-stamp-box { fill: none; stroke: var(--ink-muted); stroke-dasharray: 4 3; }
-.st-stamp-text { font-family: var(--mono); fill: var(--ink-muted); letter-spacing: 0.2em; }
+/* the SPECIMEN stamp: the poster's labeled-specimen device, plus a
+   rotated watermark across the plot band so specimen marks can never
+   be skimmed as data */
+.st-stamp-box { fill: none; stroke: var(--annotation); stroke-dasharray: 4 3; }
+.st-stamp-text { font-family: var(--mono); fill: var(--annotation); letter-spacing: 0.2em; }
+.st-stamp-water {
+  font-family: var(--mono);
+  fill: var(--annotation);
+  opacity: 0.22;
+  letter-spacing: 0.34em;
+}
 
 /* a 0-count matrix cell: outlined, dashed, permanently unfilled;
    visually disjoint from any value (rule 2) */
