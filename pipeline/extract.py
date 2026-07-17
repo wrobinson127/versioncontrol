@@ -34,7 +34,7 @@ Return a single JSON object with exactly these fields:
   - "value": the reported number as a string, exactly as written.
   - "comparison_stated": any predecessor or competitor number the lab states alongside it, as a string, or null.
 - "disclosure_links": an object with keys "system_card", "model_card", "usage_policy", "paper". Each value is a URL found in the text for that artifact, or null if the announcement links no such artifact.
-- "summary": one paragraph, at most 80 words, in a neutral registrar voice. State what shipped, from whom, and how it is available. Attribute every claim to the lab by name ("X reports..."). No quality adjectives, no ranking language, no em dashes.
+- "summary": one paragraph, at most 80 words, in a neutral registrar voice. State what shipped, from whom, and how it is available. Attribute every claim to the lab by name ("X reports..."). Never reuse the announcement's promotional vocabulary, even inside an attributed claim: do not write state-of-the-art, best, leading, powerful, impressive, groundbreaking, cutting-edge, revolutionary, remarkable, or any quality or ranking language. Rephrase such claims with plain nouns ("OpenAI reports results on mathematics and coding benchmarks", never "OpenAI reports state-of-the-art performance"). No em dashes.
 
 Announcement text follows.
 
