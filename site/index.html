@@ -36,6 +36,65 @@
   <h1 class="visually-hidden">Timeline of release entries</h1>
   <p class="registry-scope" id="registry-scope">A public registry of AI model releases from 12 tracked organizations. Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>.</p>
 
+  <!-- ============ Explorer (P5a): pulse strip, measures, trajectory, disclosure record ============ -->
+
+  <section class="pulse" aria-labelledby="pulse-h">
+    <h2 class="explorer-head" id="pulse-h">Release pulse</h2>
+    <p class="pulse-summary" id="pulse-summary">Every entry in the record, as a mark on a shared time axis, one row per tracked organization. The strip loads with the dataset.</p>
+    <div class="pulse-strip" id="pulse-strip" aria-describedby="pulse-summary"></div>
+    <div class="pulse-range" role="group" aria-label="Date range">
+      <label for="range-from">From</label>
+      <input type="date" id="range-from">
+      <label for="range-to">To</label>
+      <input type="date" id="range-to">
+      <button type="button" class="ledger-btn" id="range-clear">Clear range</button>
+      <span class="pulse-range-hint">Selecting a range on the strip, or typing dates here, filters the timeline below.</span>
+    </div>
+  </section>
+
+  <section class="tiles" aria-label="Registry measures">
+    <div class="tile-row" id="tile-row">
+      <p class="tiles-loading">Registry measures load with the dataset.</p>
+    </div>
+    <p class="tiles-foot" id="tiles-foot"></p>
+  </section>
+
+  <section class="traj" aria-labelledby="traj-h">
+    <h2 class="explorer-head" id="traj-h">Measured trajectory</h2>
+    <div class="traj-legend" id="traj-legend">
+      <fieldset class="traj-bench">
+        <legend>Benchmark</legend>
+        <label><input type="radio" name="traj-bench" value="gpqa-diamond" checked> GPQA Diamond</label>
+        <label><input type="radio" name="traj-bench" value="swe-bench-verified"> SWE-Bench Verified</label>
+      </fieldset>
+      <fieldset class="traj-prov">
+        <legend>Provenance</legend>
+        <label><input type="checkbox" id="prov-independent" checked>
+          <svg class="key-mark" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4" class="key-solid"/></svg>
+          independent (solid)</label>
+        <label><input type="checkbox" id="prov-lab" checked>
+          <svg class="key-mark" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4" class="key-hollow"/></svg>
+          lab reported (hollow)</label>
+      </fieldset>
+    </div>
+    <p class="traj-caption" id="traj-caption">The trajectory chart loads with the dataset.</p>
+    <div class="traj-chart" id="traj-chart" aria-describedby="traj-alt"></div>
+    <p class="visually-hidden" id="traj-alt" aria-live="polite"></p>
+  </section>
+
+  <section class="matrix" aria-labelledby="matrix-h">
+    <h2 class="explorer-head" id="matrix-h">Disclosure record</h2>
+    <p class="matrix-lead">Disclosure links on record, by organization and artifact, releases only. A filled dot marks releases with a link on record; an outlined dot marks all releases recorded. Selecting a cell filters the timeline to that organization.</p>
+    <div class="matrix-scroll">
+      <div class="matrix-grid" id="matrix-grid" role="presentation"></div>
+    </div>
+    <div id="matrix-table-holder"></div>
+  </section>
+
+  <!-- ============ end explorer ============ -->
+
+  <div class="filter-note" id="filter-note" hidden></div>
+
   <section class="controls" aria-label="Filters">
     <label>Organization
       <select id="f-org">
@@ -79,6 +138,9 @@
   </div>
 </footer>
 
-<script src="./js/app.js"></script>
+<!-- D3 v7.9.0, pinned with a computed SRI hash (amendment D17). -->
+<script defer src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
+<script defer src="./js/explorer.js"></script>
+<script defer src="./js/app.js"></script>
 </body>
 </html>

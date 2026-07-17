@@ -295,6 +295,8 @@ a:hover { color: var(--ink); }
 .entry {
   content-visibility: auto;
   contain-intrinsic-size: auto 340px;
+  /* anchored scrolls clear the sticky filter bar */
+  scroll-margin-top: 60px;
 }
 
 .entry-name a { color: inherit; text-decoration: none; }
@@ -582,6 +584,302 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
 .site-foot .update { font-family: var(--mono); font-size: 0.8rem; color: var(--ink); }
 .site-foot .stale { font-weight: 700; }
 
+/* ---- explorer (amendment 1, D13-D17): pulse strip, registry measures,
+        measured trajectory, disclosure record. Everything inherits the
+        ledger identity: ink marks on surface panels, outlined annotations,
+        mono for genuine data, slab for headings and display values. ---- */
+
+.explorer-head {
+  margin: 30px 0 6px;
+  font-family: var(--slab);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.pulse-summary {
+  margin: 0 0 10px;
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+  max-width: 76ch;
+}
+
+/* Explorer panels reserve their rendered height so async chart injection
+   never shifts the page (deep-link anchors and CLS both depend on it). */
+.pulse-strip {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--surface-edge);
+  border-radius: 4px;
+  min-height: 208px;
+}
+.pulse-scroll { overflow-x: auto; }
+.pulse-svg { display: block; }
+.pulse-rule { stroke: var(--surface-edge); stroke-width: 1; shape-rendering: crispEdges; }
+.pulse-label { font-family: var(--body); font-size: 0.68rem; fill: var(--ink-muted); }
+.pulse-axis line { stroke: var(--ink-faint); shape-rendering: crispEdges; }
+.pulse-axis text,
+.traj-grid text,
+.traj-axis text {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  fill: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+/* marks are pointer-transparent; the brush overlay owns the gestures and
+   hover resolves against the nearest mark */
+.pulse-marks { pointer-events: none; }
+.pulse-mark { fill: var(--ink); }
+.pulse-mark.is-revision { fill: var(--ink-faint); }
+.pulse-brush .selection {
+  fill: var(--accent);
+  fill-opacity: 0.13;
+  stroke: var(--accent);
+  stroke-width: 1;
+  shape-rendering: crispEdges;
+}
+
+/* the shared hover annotation for pulse marks and trajectory points */
+.mark-tip {
+  position: absolute;
+  z-index: 12;
+  pointer-events: none;
+  background: var(--surface);
+  border: 1px solid var(--ink);
+  border-radius: 3px;
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  max-width: 250px;
+}
+.mark-tip span { display: block; }
+.mark-tip .tip-name { font-family: var(--slab); font-weight: 700; font-size: 0.86rem; }
+.mark-tip .tip-date { font-family: var(--mono); color: var(--ink); }
+.mark-tip .tip-val { font-family: var(--mono); color: var(--ink); }
+.mark-tip .tip-org { color: var(--ink-muted); }
+.mark-tip .tip-config {
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  color: var(--ink-faint);
+  overflow-wrap: anywhere;
+}
+/* provenance stays attached to the value, tooltip included (rule 1) */
+.mark-tip .tip-class {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  padding: 1px 4px 0;
+  margin-left: 4px;
+  vertical-align: 1px;
+}
+
+/* the keyboard equivalent of the brush: paired date inputs */
+.pulse-range {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin-top: 10px;
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+}
+.pulse-range input[type="date"] {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--surface-edge);
+  border-radius: 4px;
+  padding: 4px 6px;
+}
+.pulse-range-hint { flex-basis: 100%; font-size: 0.78rem; color: var(--ink-muted); }
+
+.ledger-btn {
+  font: inherit;
+  font-size: 0.82rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--ink-faint);
+  border-radius: 3px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: border-color 150ms ease;
+}
+.ledger-btn:hover { border-color: var(--ink); }
+
+/* registry measures */
+
+.tiles { margin-top: 20px; }
+.tile-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  min-height: 88px;
+}
+.tile {
+  background: var(--surface);
+  border: 1px solid var(--surface-edge);
+  border-radius: 4px;
+  padding: 12px 14px 10px;
+}
+.tile-value {
+  display: block;
+  font-family: var(--slab);
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+.tile-label {
+  display: block;
+  margin-top: 3px;
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+}
+.tiles-foot {
+  margin: 8px 0 0;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
+}
+.tiles-loading { margin: 0; font-size: 0.85rem; font-style: italic; color: var(--ink-faint); }
+
+/* measured trajectory */
+
+.traj-legend { display: flex; flex-wrap: wrap; gap: 10px 20px; margin: 6px 0 10px; }
+.traj-legend fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  margin: 0;
+  padding: 6px 12px 9px;
+  border: 1px solid var(--surface-edge);
+  border-radius: 4px;
+}
+.traj-legend legend { font-size: 0.75rem; color: var(--ink-muted); padding: 0 4px; }
+.traj-legend label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+.traj-legend input[type="radio"],
+.traj-legend input[type="checkbox"] { accent-color: var(--accent); }
+.key-mark { flex: none; }
+.key-solid { fill: var(--ink); }
+.key-hollow { fill: var(--surface); stroke: var(--ink); stroke-width: 1.4; }
+
+.traj-caption {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  max-width: 76ch;
+}
+.traj-chart {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--surface-edge);
+  border-radius: 4px;
+  min-height: 300px;
+}
+.traj-svg { display: block; width: 100%; height: auto; }
+.traj-grid line { stroke: var(--surface-edge); shape-rendering: crispEdges; }
+.traj-axis line { stroke: var(--ink-faint); shape-rendering: crispEdges; }
+.traj-eras line { stroke: var(--ink-faint); stroke-dasharray: 4 3; }
+.traj-eras text { font-family: var(--mono); font-size: 0.7rem; fill: var(--ink-muted); }
+
+.traj-point { cursor: pointer; }
+.traj-point .dot { transition: fill 150ms ease, stroke 150ms ease; }
+.dot-solid { fill: var(--ink); }
+.dot-hollow { fill: var(--surface); stroke: var(--ink); stroke-width: 1.4; }
+.traj-point:hover .dot-solid { fill: var(--accent); }
+.traj-point:hover .dot-hollow { stroke: var(--accent); }
+.traj-point .focus-ring { fill: none; stroke: none; }
+.traj-point:focus { outline: none; }
+.traj-point:focus-visible .focus-ring {
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  stroke-dasharray: 2 2;
+}
+
+.chart-unavailable {
+  margin: 0;
+  padding: 20px 16px;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--ink-faint);
+}
+
+/* disclosure record */
+
+.matrix-lead {
+  margin: 0 0 10px;
+  font-size: 0.88rem;
+  color: var(--ink-muted);
+  max-width: 76ch;
+}
+.matrix-scroll { overflow-x: auto; min-height: 446px; }
+.matrix-grid {
+  display: grid;
+  grid-template-columns: minmax(108px, max-content) repeat(var(--dm-cols, 4), minmax(78px, 1fr));
+  gap: 4px 6px;
+  min-width: 470px;
+}
+.dm-colhead {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  align-self: end;
+  padding: 0 2px 3px;
+}
+.dm-rowhead {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  align-self: center;
+  padding-right: 6px;
+}
+.dm-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font: inherit;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--surface-edge);
+  border-radius: 3px;
+  padding: 5px 8px;
+  cursor: pointer;
+  transition: border-color 150ms ease;
+}
+.dm-cell:hover { border-color: var(--ink); }
+.dm-dots { flex: none; }
+.dm-dot-filled { fill: var(--ink); }
+.dm-dot-hollow { fill: none; stroke: var(--ink); stroke-width: 1.2; }
+.dm-count {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* explorer-driven filter note: an outlined annotation layer (rule 8) */
+.filter-note[hidden] { display: none; }
+.filter-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  border: 1px dashed var(--ink-muted);
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin: 18px 0 0;
+  font-size: 0.88rem;
+  color: var(--ink);
+}
+
 /* ---- motion restraint ---- */
 
 @media (prefers-reduced-motion: reduce) {
@@ -602,4 +900,12 @@ html { scroll-behavior: smooth; }
   .disclosure { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .year-ruler { overflow-x: auto; }
   .year-ruler a { padding: 4px 10px 8px; }
+
+  /* explorer at narrow widths: the strip and the matrix scroll inside
+     their own containers, never the page; tiles wrap two-up */
+  .tile-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile-value { font-size: 1.6rem; }
+  .traj-legend { gap: 8px; }
+  .traj-legend fieldset { padding: 6px 10px 8px; }
+  .pulse-range { font-size: 0.85rem; }
 }
