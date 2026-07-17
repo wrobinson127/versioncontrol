@@ -289,12 +289,18 @@
 
     var DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
+    function validDate(s) {
+      if (!s || !DATE_RE.test(s)) { return false; }
+      var d = new Date(s + "T00:00:00Z");
+      return !isNaN(d) && d.toISOString().slice(0, 10) === s;
+    }
+
     function readRangeFromUrl() {
       var params = new URLSearchParams(location.search);
       var from = params.get("from");
       var to = params.get("to");
-      state.from = (from && DATE_RE.test(from)) ? from : null;
-      state.to = (to && DATE_RE.test(to)) ? to : null;
+      state.from = validDate(from) ? from : null;
+      state.to = validDate(to) ? to : null;
       if (state.from && state.to && state.from > state.to) {
         var t = state.from; state.from = state.to; state.to = t;
       }

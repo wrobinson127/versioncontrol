@@ -622,7 +622,10 @@
       html += '<div class="dm-rowhead" aria-hidden="true">' + esc(api.orgNames[org] || org) + "</div>";
       artifacts.forEach(function (a) {
         var c = agg[org][a];
-        var label = (api.orgNames[org] || org) + ", " + (ARTIFACT_NAMES[a] || a) + ": " +
+        // The visible text (e.g. "0/37") must appear inside the accessible
+        // name (WCAG 2.5.3 label-in-name).
+        var label = c.disclosed + "/" + c.total + ": " +
+          (api.orgNames[org] || org) + ", " + (ARTIFACT_NAMES[a] || a) + ", " +
           c.disclosed + " of " + c.total +
           " releases with a link on record. Filters the timeline to this organization's releases.";
         html += '<button type="button" class="dm-cell" data-org="' + esc(org) +

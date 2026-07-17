@@ -695,7 +695,7 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
   border-radius: 4px;
   padding: 4px 6px;
 }
-.pulse-range-hint { flex-basis: 100%; font-size: 0.78rem; color: var(--ink-faint); }
+.pulse-range-hint { flex-basis: 100%; font-size: 0.78rem; color: var(--ink-muted); }
 
 .ledger-btn {
   font: inherit;
@@ -744,7 +744,7 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
   font-family: var(--mono);
   font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
-  color: var(--ink-faint);
+  color: var(--ink-muted);
 }
 .tiles-loading { margin: 0; font-size: 0.85rem; font-style: italic; color: var(--ink-faint); }
 
