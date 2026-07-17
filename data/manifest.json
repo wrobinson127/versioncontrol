@@ -1,4 +1,15 @@
 {
+  "derived": {
+    "data/derived/deltas.json.gz": {
+      "sha256": "c1e426e582a8ae436182cb6d791019d4991c3d96b0d37559589d5974c055dd59"
+    },
+    "data/derived/site_meta.json": {
+      "sha256": "c918e1971d82bf1277f6ec980555706856a8f811f8aec67c67c2dbebfd24376d"
+    },
+    "data/derived/views.json.gz": {
+      "sha256": "18a313ba7fcf197981e10a07b017b4a63b7e6511c7b6021504ef5c08a86b8104"
+    }
+  },
   "entry_count": 292,
   "files": {
     "data/entries/2022.json.gz": {

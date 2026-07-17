@@ -585,6 +585,10 @@ def main():
         raise SystemExit(f"{len(problems)} validation problems; nothing written")
 
     manifest = store.write_entries(entries, root=args.root)
+    # Derived views rebuild in the same command so a backfill can never
+    # leave stale derived hashes behind the manifest guard.
+    from . import derive
+    derive.build(root=args.root, run_date=args.retrieval_date)
     report = {
         "entries_written": manifest["entry_count"],
         "with_independent_numbers": sum(1 for e in entries if e["benchmarks"]),

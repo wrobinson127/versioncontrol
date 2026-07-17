@@ -124,6 +124,12 @@ Verified by execution (test run: `python -m pytest pipeline/tests`, 13 passed):
 
 ---
 
+## Amendment 1 gate: D17 library licensing (verified 2026-07-17)
+
+- **GSAP + ScrollTrigger**: gsap.com/pricing states "GSAP is now 100% free for all users, thanks to Webflow's support", covering all plugins including ScrollTrigger. The Standard License grants a non-exclusive worldwide license for commercial use at no charge; prohibited uses are limited to building no-code animation tools competing with Webflow and removing proprietary notices. Vendoring/redistribution is not explicitly addressed in the license text, so this project pins GSAP from its official CDN with SRI hashes rather than vendoring (satisfies D17's "vendored or CDN-pinned with SRI").
+- **D3**: ISC license, permissive; pin with SRI.
+- **Scrollama** (approved fallback): MIT.
+
 ## FLAGs raised by Phase 0
 
 1. **Meta announcement source blocked.** All `ai.meta.com` surfaces return HTTP 400 to scripted fetches. Interim Meta coverage: HF `meta-llama` (open-weights signal), Epoch trailing detection, OpenRouter tripwire. Worth retesting from a GitHub Actions runner IP before launch; if still blocked, Meta's primary-source column stays empty by design and the methodology page says so.
