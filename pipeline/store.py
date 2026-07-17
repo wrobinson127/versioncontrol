@@ -3,8 +3,8 @@
 Committed data is aggregates only (invariant 9): per-year entry aggregates
 under data/entries/, derived views under data/derived/, and a manifest that
 indexes both. The manifest-drift guard (`check_manifest`) asserts every
-indexed entry resolves and every stored entry is indexed; the site build and
-CI both run it.
+indexed entry resolves and every stored entry is indexed; it is wired into
+the site build and CI when those land (P5/P6).
 """
 import gzip
 import hashlib

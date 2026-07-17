@@ -1,0 +1,113 @@
+{
+  "org": "moonshot",
+  "display": "Moonshot AI",
+  "reviewed_by_walker": false,
+  "instructions": "Fill each artifact cell with a URL or the literal NOT_DISCLOSED after checking the lab's site. A row publishes to its entry only when status is APPROVED.",
+  "rows": [
+    {
+      "entry_id": "moonshot--kimi-explorer",
+      "model_name": "Kimi Explorer",
+      "date": "2024-01-01",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": "Not researched this pass; artifacts unverified."
+    },
+    {
+      "entry_id": "moonshot--kimi-k1.5",
+      "model_name": "Kimi k1.5",
+      "date": "2025-01-22",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
+      "paper": "https://arxiv.org/abs/2501.12599",
+      "status": "DRAFT_FLAGGED",
+      "notes": "Paper verified this session: arxiv 2501.12599, Kimi k1.5: Scaling Reinforcement Learning with LLMs, Kimi Team (versionless URL substituted for the prior v1 link). Moonshot publishes no system or safety cards. Weights never released; moonshotai HF org listing checked this session, no k1.5 repo. Kimi terms of service fetched 200.",
+      "researched": true
+    },
+    {
+      "entry_id": "moonshot--kimi-dev-72b",
+      "model_name": "Kimi Dev 72b",
+      "date": "2025-06-16",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": "Not researched this pass; artifacts unverified."
+    },
+    {
+      "entry_id": "moonshot--kimi-k2",
+      "model_name": "Kimi K2",
+      "date": "2025-07-11",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/moonshotai/Kimi-K2-Instruct",
+      "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
+      "paper": "https://arxiv.org/abs/2507.20534",
+      "status": "DRAFT_FLAGGED",
+      "notes": "HF card fetched 200: official moonshotai repo, 1T parameter MoE, Modified MIT License. Paper verified this session: arxiv 2507.20534, Kimi K2: Open Agentic Intelligence, Kimi Team. Moonshot publishes no separate system or safety cards; disclosure is HF card plus tech report. Kimi terms fetched 200.",
+      "researched": true
+    },
+    {
+      "entry_id": "moonshot--kimi-linear",
+      "model_name": "Kimi Linear",
+      "date": "2025-10-30",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": "Not researched this pass; artifacts unverified."
+    },
+    {
+      "entry_id": "moonshot--kimi-k2-thinking",
+      "model_name": "Kimi K2 Thinking",
+      "date": "2025-11-06",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/moonshotai/Kimi-K2-Thinking",
+      "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
+      "paper": "NOT_DISCLOSED",
+      "status": "DRAFT_FLAGGED",
+      "notes": "HF card fetched 200: official moonshotai repo, reasoning variant with native INT4 and 256K context. No separate technical report for the Thinking release; web search this session surfaces only the K2 base report (arxiv 2507.20534) and blog material. No system card, consistent with Moonshot practice. Kimi terms fetched 200.",
+      "researched": true
+    },
+    {
+      "entry_id": "moonshot--kimi-k2.5",
+      "model_name": "Kimi K2.5",
+      "date": "2026-02-02",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/moonshotai/Kimi-K2.5",
+      "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
+      "paper": "https://arxiv.org/abs/2602.02276",
+      "status": "DRAFT_FLAGGED",
+      "notes": "HF card fetched 200: official moonshotai repo, native multimodal agentic model, Modified MIT License. Paper verified this session: arxiv 2602.02276, Kimi K2.5: Visual Agentic Intelligence, Kimi Team, submitted 2026-02-02. No system card, consistent with Moonshot practice. Kimi terms fetched 200.",
+      "researched": true
+    },
+    {
+      "entry_id": "moonshot--kimi-k2.6",
+      "model_name": "Kimi K2.6",
+      "date": "2026-04-20",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/moonshotai/Kimi-K2.6",
+      "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
+      "paper": "NOT_DISCLOSED",
+      "status": "DRAFT_FLAGGED",
+      "notes": "HF card fetched 200: official moonshotai repo, open weight multimodal agentic model, Modified MIT License. No K2.6 specific technical report found; web search this session returns only the K2 and K2.5 papers. No system card, consistent with Moonshot practice. Kimi terms fetched 200.",
+      "researched": true
+    },
+    {
+      "entry_id": "moonshot--kimi-k2.7-code",
+      "model_name": "Kimi K2.7 Code",
+      "date": "2026-06-12",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/moonshotai/Kimi-K2.7-Code",
+      "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
+      "paper": "NOT_DISCLOSED",
+      "status": "DRAFT_FLAGGED",
+      "notes": "HF card fetched 200: official moonshotai repo, coding focused agentic model built on K2.6, Modified MIT License. Release disclosed via HF card and blog only; no arxiv or tech report PDF found in web search this session. No system card, consistent with Moonshot practice. Kimi terms fetched 200.",
+      "researched": true
+    }
+  ]
+}

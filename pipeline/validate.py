@@ -39,8 +39,13 @@ PROVENANCE_FIELDS = (
 
 
 def make_entry_id(org_key: str, model_name: str) -> str:
-    """Stable entry id: registry key, double hyphen, model slug."""
-    slug = re.sub(r"[^a-z0-9.]+", "-", model_name.lower()).strip("-")
+    """Stable entry id: registry key, double hyphen, model slug.
+
+    "+" is meaningful in model names (Command R vs Command R+) and becomes
+    "-plus" rather than vanishing into the same slug.
+    """
+    slug = model_name.lower().replace("+", " plus")
+    slug = re.sub(r"[^a-z0-9.]+", "-", slug).strip("-")
     return f"{org_key}--{slug}"
 
 
