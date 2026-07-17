@@ -277,13 +277,21 @@ def test_replay_fixtures_through_full_path(tmp_path):
     assert "moonshot--kimi-k3" in ids
 
     # No candidate may be a date fragment (R1) or a published model (R2).
+    # The R2 check uses a curated list of models known to be in the dataset,
+    # independent of the suppression predicate correlate itself filters on.
     month_re = _re.compile(
         r"--(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*-?\d")
-    known = correlate.known_slugs(entries)
+    published = {"anthropic--claude-sonnet-5", "moonshot--kimi-k2.5",
+                 "moonshot--kimi-k2.6", "moonshot--kimi-k2-thinking",
+                 "mistral--mistral-small-3.1", "mistral--mistral-medium-3.5",
+                 "xai--grok-code-fast-1", "anthropic--claude-fable-5",
+                 "openai--gpt-5.5", "zai--glm-5.2"}
     for c in candidates:
         assert not month_re.search(c["id"]), f"date-fragment candidate {c['id']}"
-        assert not correlate.is_known(c["org"], c["base_slug"], known), \
-            f"published model resurfaced: {c['id']}"
+        assert c["id"] not in published, f"published model resurfaced: {c['id']}"
+        for pub in published:
+            org, _, k = pub.partition("--")
+            assert not (c["org"] == org and c["base_slug"] == k), c["id"]
 
     paths = pending.write_candidates(candidates, CAPTURE_DATE, root=str(tmp_path))
     assert len(paths) == len(candidates)
