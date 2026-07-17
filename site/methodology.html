@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Methodology: how to read this registry honestly</title>
+<meta name="description" content="How Version Control records AI model releases: provenance tags on every number, explicit non-disclosure marks, delta refusal semantics, and eval-version pinning.">
+<link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+<link rel="canonical" href="https://versioncontrol.walker-robinson.com/methodology.html">
+<!-- og:image points at a rendered PNG; the PNG render of assets/og-card.svg lands in a later phase. -->
+<meta property="og:title" content="Version Control: methodology">
+<meta property="og:description" content="How to read this registry honestly.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://versioncontrol.walker-robinson.com/methodology.html">
+<meta property="og:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
+<link rel="stylesheet" href="./css/site.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="masthead">
+  <div class="wrap mast-row">
+    <div class="mast-brand">
+      <a class="mast-title" href="./index.html">Version Control</a>
+      <p class="mast-tagline">The release record of the model era.</p>
+    </div>
+    <nav class="mast-nav" aria-label="Site">
+      <a href="./index.html">Timeline</a>
+      <a href="./methodology.html" aria-current="page">Methodology</a>
+      <a href="./about.html">About</a>
+      <a href="./data.html">Data</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="wrap prose">
+  <h1>How to read this registry honestly</h1>
+
+  <p>Version Control is a ledger, not a scoreboard. It records what shipped, what the releasing lab disclosed, and what independent evaluators measured. Four rules govern every number on the site.</p>
+
+  <h2>1. Every number carries its provenance</h2>
+  <p>Each benchmark value renders with a tag that cannot be separated from it: <span class="prov" title="LAB: reported by the releasing lab.">LAB</span> means the number was reported by the releasing lab, and <span class="prov" title="IND: measured by an independent evaluator.">IND</span> means it was measured by an independent evaluator. The tag links to the source, and the record stores the source URL, the benchmark name and version, and the retrieval date. A number with no source does not appear. There are no exceptions.</p>
+
+  <h2>2. Non-disclosure is a displayed signal</h2>
+  <p>When a lab publishes no system card, no model card, no usage policy, no paper, or no parameter count, the registry does not leave a blank. It renders an explicit outlined mark: <span class="nd">not disclosed</span>. The mark is visually distinct from a zero, from a value, and from data the registry has simply not yet collected. Absence of disclosure is part of the record.</p>
+
+  <h2>3. Deltas are computed once, and refused when dishonest</h2>
+  <p>A change against the predecessor renders as a delta chip only when the two measurements are comparable: the same benchmark, the same benchmark version, and the same source class. Deltas are computed in the data pipeline and published in a derived file; the site renders that file and never computes a comparison itself. When a predecessor was measured but the pair is not comparable, the registry refuses the comparison and says so in words, in place: <em>no comparable measurement</em>. When the predecessor was never measured at all, nothing renders; silence is not the same signal as refusal.</p>
+
+  <h2>4. Benchmark versions are pinned, permanently</h2>
+  <p>Benchmark labels always carry their version: <strong>GPQA Diamond</strong>, never a bare "GPQA"; <strong>SWE-Bench Verified</strong>, never a bare "SWE-Bench". A revised benchmark is a different measurement axis, and the registry never bridges versions with a delta, a chart, or any other visual. Where a lab's evaluation configuration is known, it renders verbatim beneath the number.</p>
+
+  <h2>Registry scope</h2>
+  <p>The registry records releases from a closed set of 12 organizations: OpenAI, Anthropic, Google DeepMind, Meta, xAI, Mistral, DeepSeek, Alibaba (Qwen), Moonshot AI, Z.ai (Zhipu), Cohere, and Amazon (Nova). The record begins on 2022-11-30.</p>
+  <p>The set can grow. An organization enters the registry when it ships a model meeting Epoch AI's notability bar or sustains top-tier leaderboard presence. Every change to the registry is logged with a date and a reason, and the log is append-only. Pending candidates have no public trace; an entry either exists in the record or it does not.</p>
+
+  <h2>Detection pipeline</h2>
+  <p>A nightly pipeline watches four independent signals for candidate releases: the Epoch AI models dataset, lab announcement feeds and page changes, model repository activity, and API catalog listings. Candidates that clear correlation and validation are drafted as entries. Nothing publishes without human approval; every entry in the record was reviewed by a person before it appeared.</p>
+
+  <h2>Benchmark pins</h2>
+  <p>The registry currently records two benchmarks, chosen for stable versioned definitions and sustained independent coverage:</p>
+  <ul>
+    <li><strong>GPQA Diamond</strong>: graduate-level science questions, diamond subset.</li>
+    <li><strong>SWE-Bench Verified</strong>: software engineering tasks, human-verified subset.</li>
+  </ul>
+  <p>Values are percentages on a 0 to 100 scale, recorded as published by their source.</p>
+
+  <h2>Data sources and attribution</h2>
+  <p>Backfilled release dates, organization mappings, parameter counts, availability classes, and independent benchmark numbers derive from Epoch AI's datasets, used under CC-BY 4.0:</p>
+  <blockquote>Epoch AI, "Data on AI Models". Published online at epoch.ai. Retrieved from <a href="https://epoch.ai/data/ai-models" rel="external">https://epoch.ai/data/ai-models</a> [online resource].</blockquote>
+  <p>Independent benchmark measurements come from Epoch AI's Benchmarking Hub. Lab-reported figures, where present, cite the lab's own publication.</p>
+
+  <h2>The OpenRouter posture</h2>
+  <p>Pricing and context-length figures shown on the site, where they appear, carry a "per OpenRouter" attribution and are display-only. They are never included in the downloadable dataset, because OpenRouter publishes no explicit redistribution license for its catalog data.</p>
+
+  <h2>Known limits</h2>
+  <ul>
+    <li>Lab-reported benchmark numbers arrive through the nightly pipeline path; the backfilled record is built from independent measurements, so recent entries may show independent numbers before lab-reported ones.</li>
+    <li>Benchmark coverage is sparse in the early record, because the pinned benchmarks did not exist or were not widely run. Sparsity displays as absence, not as zero.</li>
+    <li>Summaries state what the sources support and attribute lab claims to the lab. They carry no evaluation of quality.</li>
+  </ul>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p class="update" id="foot-update">Last successful update loads with the dataset.</p>
+    <p>Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>. Dataset licensed CC-BY 4.0 with Epoch AI attribution. <a href="./data.html">Download the dataset</a>.</p>
+  </div>
+</footer>
+
+<script src="./js/app.js"></script>
+</body>
+</html>
