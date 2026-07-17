@@ -1,0 +1,233 @@
+/* Version Control : story stylesheet (amendment 1, D13/D14, phase P5b)
+   Composes on top of site.css; same ledger identity, same tokens.
+   The stage pins with CSS position: sticky (the craft-notes canonical
+   pattern); GSAP ScrollTrigger only scrubs progress and never moves the
+   pinned element itself. Nothing here animates on entrance; the only
+   transition is the active-step opacity shift, which signals state. */
+
+/* the story spreads wider than the ledger column so the stage and the
+   steps can sit side by side */
+.story-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---- scrolly scaffold: sticky stage beside scrolling steps ---- */
+
+.scrolly {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 58fr) minmax(0, 38fr);
+  gap: 0 40px;
+  align-items: start;
+  margin-top: 26px;
+}
+
+.stage-col {
+  position: sticky;
+  top: 18px;
+  align-self: start;
+  min-width: 0;
+}
+
+.stage {
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--surface-edge);
+  border-radius: 4px;
+}
+
+.stage-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: pan-y;
+}
+
+.stage-error {
+  margin: 0;
+  padding: 16px;
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+.stage-error[hidden] { display: none; }
+
+.steps { min-width: 0; }
+
+.beat-head h2 {
+  margin: 0 0 4px;
+  font-family: var(--slab);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+/* a step is ordinary flowing prose; its height (set in JS from measured
+   innerHeight) is the scroll runway for the beat's transformation */
+.step {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 8px 0 24px;
+}
+.step p {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  max-width: 46ch;
+  background: var(--paper);
+}
+.step .num { font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+
+/* inactive steps recede while the scrubbed stage is live; the shift is
+   state signaling, not decoration. Content is fully visible by default:
+   the dimming exists only once the animated mode is running. 0.66 keeps
+   the dimmed ink at 5.1:1 against the paper ground (AA, measured). */
+.scrolly.is-live .step { opacity: 0.66; transition: opacity 180ms ease; }
+.scrolly.is-live .step.is-active { opacity: 1; }
+
+.thesis-line {
+  font-family: var(--slab);
+  font-style: italic;
+  font-size: 1.18rem;
+  line-height: 1.5;
+}
+
+/* between-beat keyboard skip links: quiet, real anchors */
+.beat-skip {
+  display: flex;
+  gap: 22px;
+  padding: 0 0 26px;
+}
+.beat-skip a {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+  border-bottom: 1px solid var(--surface-edge);
+}
+.beat-skip a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
+/* ---- reduced motion / no library: the complete static rendering ----
+   Every beat shows its final-state graphic above its full prose, stacked;
+   no pinning, no scrubbing, no dimming. */
+
+body.story-static .scrolly { display: block; }
+body.story-static .stage-col { display: none; }
+body.story-static .step { min-height: 0; }
+body.story-static .beat { margin-bottom: 44px; }
+
+.beat-fig {
+  margin: 8px 0 14px;
+  background: var(--surface);
+  border: 1px solid var(--surface-edge);
+  border-radius: 4px;
+}
+.beat-fig .stage-svg { width: 100%; height: auto; }
+
+/* ---- the landing: the story hands over the tool ---- */
+
+.story-landing {
+  margin: 26px 0 30px;
+  padding: 34px 0 8px;
+  border-top: 1px solid var(--surface-edge);
+}
+
+.enter-record {
+  display: inline-block;
+  font-family: var(--slab);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  padding: 14px 30px;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+.enter-record:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.enter-record:focus-visible { outline-offset: 4px; }
+
+.landing-links {
+  margin: 16px 0 0;
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+}
+.landing-links a { margin-right: 26px; }
+
+/* ---- the stage's SVG vocabulary: the ledger identity in marks ---- */
+
+.st-axis-line { stroke: var(--ink-faint); shape-rendering: crispEdges; }
+.st-tick { stroke: var(--ink-faint); shape-rendering: crispEdges; }
+.st-rule { stroke: var(--surface-edge); stroke-width: 1; shape-rendering: crispEdges; }
+.st-origin-tick { stroke: var(--ink); stroke-width: 2; }
+.st-leader { stroke: var(--ink-faint); stroke-width: 1; }
+.st-mark { fill: var(--ink); }
+.st-card { fill: var(--surface); stroke: var(--surface-edge); }
+
+.st-year { font-family: var(--mono); fill: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.st-grid-num { font-family: var(--mono); fill: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.st-mono-label { font-family: var(--mono); fill: var(--ink); font-variant-numeric: tabular-nums; }
+.st-mono-strong { font-family: var(--mono); font-weight: 600; fill: var(--ink); font-variant-numeric: tabular-nums; }
+.st-mono-faint { font-family: var(--mono); fill: var(--ink-faint); font-variant-numeric: tabular-nums; }
+.st-sub-label { font-family: var(--body); fill: var(--ink-muted); }
+.st-body { font-family: var(--body); fill: var(--ink); }
+.st-org { font-family: var(--body); fill: var(--ink-muted); }
+.st-org-strong { font-family: var(--body); font-weight: 600; fill: var(--ink-muted); }
+.st-slab { font-family: var(--slab); font-weight: 700; fill: var(--ink); }
+.st-title { font-family: var(--slab); font-weight: 700; fill: var(--ink); }
+.st-region { font-family: var(--body); font-weight: 600; fill: var(--ink-muted); }
+
+.st-counter-val { font-family: var(--slab); font-weight: 700; fill: var(--ink); font-variant-numeric: tabular-nums; }
+.st-playhead { stroke: var(--ink-muted); stroke-width: 1; stroke-dasharray: 3 3; }
+
+.st-dot-solid { fill: var(--ink); }
+.st-dot-hollow { fill: var(--surface); stroke: var(--ink); stroke-width: 1.4; }
+
+/* provenance tag: the same outlined chip as the entry cards */
+.st-tag-box { fill: none; stroke: var(--ink); }
+.st-tag { font-family: var(--mono); fill: var(--ink); letter-spacing: 0.08em; }
+
+/* era boundary: an outlined annotation layer, never a fill (rule 8) */
+.st-era-line { stroke: var(--ink-faint); stroke-dasharray: 4 3; }
+
+/* the SPECIMEN stamp: the poster's labeled-specimen device */
+.st-stamp-box { fill: none; stroke: var(--ink-muted); stroke-dasharray: 4 3; }
+.st-stamp-text { font-family: var(--mono); fill: var(--ink-muted); letter-spacing: 0.2em; }
+
+/* a 0-count matrix cell: outlined, dashed, permanently unfilled;
+   visually disjoint from any value (rule 2) */
+.st-cell-hollow { fill: none; stroke: var(--ink-faint); stroke-dasharray: 3 2; }
+
+.st-tile-val { font-family: var(--slab); font-weight: 700; fill: var(--ink); font-variant-numeric: tabular-nums; }
+
+/* ---- mobile: the stage pins to the top half; steps scroll beneath ---- */
+
+@media (max-width: 700px) {
+  .scrolly {
+    display: block;
+  }
+  .stage-col {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--paper);
+    padding: 8px 0 10px;
+    border-bottom: 1px solid var(--surface-edge);
+  }
+  body.story-static .stage-col { display: none; }
+  .steps { padding-top: 18px; }
+  .step p {
+    max-width: none;
+    background: var(--surface);
+    border: 1px solid var(--surface-edge);
+    border-radius: 4px;
+    padding: 12px 14px;
+  }
+  body.story-static .step p { background: var(--paper); border: 0; padding: 0; }
+  .beat-head h2 { font-size: 1.05rem; }
+  .enter-record { display: block; text-align: center; }
+}
