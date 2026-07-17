@@ -5,6 +5,18 @@
   "instructions": "Fill each artifact cell with a URL or the literal NOT_DISCLOSED after checking the lab's site. A row publishes to its entry only when status is APPROVED.",
   "rows": [
     {
+      "entry_id": "openai--chatgpt",
+      "model_name": "ChatGPT",
+      "date": "2022-11-30",
+      "system_card": "",
+      "model_card": "",
+      "usage_policy": "",
+      "paper": "",
+      "status": "DRAFT_FLAGGED",
+      "notes": "Row added 2026-07-17 for the D24 ChatGPT entry (pending candidate data/pending/openai--chatgpt.json). Not yet researched; fill during the content pass.",
+      "researched": false
+    },
+    {
       "entry_id": "openai--operator",
       "model_name": "Operator",
       "date": "2023-01-23",

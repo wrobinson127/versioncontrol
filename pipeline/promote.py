@@ -78,7 +78,9 @@ def candidate_to_entry(candidate: dict, existing_entries: list) -> dict:
         "predecessor": predecessor,
         "license_note": None,
         "sources": sources,
-        "origin": "nightly-pipeline",
+        # Manually drafted candidates (D24 gap entries) carry their honest
+        # origin; the validator holds it to ORIGIN_KINDS either way.
+        "origin": candidate.get("origin", "nightly-pipeline"),
         "retracted": False,
     }
     if draft.get("unpinned_claims"):
