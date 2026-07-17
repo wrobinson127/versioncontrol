@@ -514,19 +514,28 @@
       gGhost.appendChild(svgEl("text", { x: cardX + pad + F.gDate * 8.2 + F.gOrg * 4.2, y: headY, "class": "st-sub-label", "font-size": F.gKind }, "release"));
       var nameY = headY + 10 + F.gName;
       gGhost.appendChild(svgEl("text", { x: cardX + pad, y: nameY, "class": "st-slab", "font-size": F.gName }, d.first.name));
-      var summary = "Meta released OPT-IML (175B), available with open weights under a non-commercial license. The entry is backfilled from Epoch AI's models dataset.";
+      /* Derived from the row itself so the card can never drift from the
+         record if the first release ever changes (P5b review flag). */
+      var summary = "The record's first entry: " + d.first.name + ", " +
+        (ORG_NAMES[d.first.org] || d.first.org) + ", " + d.first.date +
+        ". The entry is backfilled from Epoch AI's models dataset.";
       var lines = wrapWords(compact ? summary.split(". ")[0] + "." : summary, compact ? 42 : 52, 3);
       var ly = nameY + 8 + F.gBody;
       lines.forEach(function (ln) {
         gGhost.appendChild(svgEl("text", { x: cardX + pad, y: ly, "class": "st-body", "font-size": F.gBody }, ln));
         ly += F.gBody * 1.45;
       });
-      var factY = cardY + cardH - 16;
-      gGhost.appendChild(svgEl("text", { x: cardX + pad, y: factY, "class": "st-sub-label", "font-size": F.gFact }, "availability:"));
-      gGhost.appendChild(svgEl("text", { x: cardX + pad + F.gFact * 6.6, y: factY, "class": "st-mono-label", "font-size": F.gFact }, "open weights"));
-      if (!compact) {
-        gGhost.appendChild(svgEl("text", { x: cardX + pad + F.gFact * 14.5, y: factY, "class": "st-sub-label", "font-size": F.gFact }, "parameters:"));
-        gGhost.appendChild(svgEl("text", { x: cardX + pad + F.gFact * 20.6, y: factY, "class": "st-mono-label", "font-size": F.gFact }, "175B"));
+      /* Facts the derived views do not carry (availability, parameters)
+         render only while the first release is the entry they were
+         verified against; a changed record hides them rather than lying. */
+      if (d.first.id === "meta--opt-iml-175b") {
+        var factY = cardY + cardH - 16;
+        gGhost.appendChild(svgEl("text", { x: cardX + pad, y: factY, "class": "st-sub-label", "font-size": F.gFact }, "availability:"));
+        gGhost.appendChild(svgEl("text", { x: cardX + pad + F.gFact * 6.6, y: factY, "class": "st-mono-label", "font-size": F.gFact }, "open weights"));
+        if (!compact) {
+          gGhost.appendChild(svgEl("text", { x: cardX + pad + F.gFact * 14.5, y: factY, "class": "st-sub-label", "font-size": F.gFact }, "parameters:"));
+          gGhost.appendChild(svgEl("text", { x: cardX + pad + F.gFact * 20.6, y: factY, "class": "st-mono-label", "font-size": F.gFact }, "175B"));
+        }
       }
       setGhost = makeVisSetter(gGhost);
     }
