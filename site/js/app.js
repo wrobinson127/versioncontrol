@@ -256,10 +256,11 @@
     var timeline = document.getElementById("timeline");
     if (!timeline) { return; }
 
-    var state = { org: "all", type: "all", measured: false };
+    var state = { org: "all", type: "all", measured: false, from: null, to: null };
     var entries = [];
     var deltas = {};
     var meta = null;
+    var rangeSync = null; /* set by the explorer so app-side changes reach the brush */
 
     function deltaItemsFor(id) { return deltas[id] || []; }
 
@@ -267,6 +268,8 @@
       if (state.org !== "all" && e.org !== state.org) { return false; }
       if (state.type !== "all" && e.entry_type !== state.type) { return false; }
       if (state.measured && !(e.benchmarks && e.benchmarks.length)) { return false; }
+      if (state.from && e.date < state.from) { return false; }
+      if (state.to && e.date > state.to) { return false; }
       return true;
     }
 
@@ -275,7 +278,57 @@
       if (state.org !== "all") { parts.push("organization " + (ORG_NAMES[state.org] || state.org)); }
       if (state.type !== "all") { parts.push("entry type “" + state.type + "”"); }
       if (state.measured) { parts.push("entries with benchmark measurements"); }
+      if (state.from || state.to) {
+        parts.push("date range " + (state.from || "the start of the record") +
+          " to " + (state.to || "the end of the record"));
+      }
       return parts.join(", ");
+    }
+
+    /* ---- permalink: ?from=YYYY-MM-DD&to=YYYY-MM-DD (amendment D13) ---- */
+
+    var DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+
+    function readRangeFromUrl() {
+      var params = new URLSearchParams(location.search);
+      var from = params.get("from");
+      var to = params.get("to");
+      state.from = (from && DATE_RE.test(from)) ? from : null;
+      state.to = (to && DATE_RE.test(to)) ? to : null;
+      if (state.from && state.to && state.from > state.to) {
+        var t = state.from; state.from = state.to; state.to = t;
+      }
+    }
+
+    function writeRangeToUrl() {
+      var params = new URLSearchParams(location.search);
+      if (state.from) { params.set("from", state.from); } else { params.delete("from"); }
+      if (state.to) { params.set("to", state.to); } else { params.delete("to"); }
+      var q = params.toString();
+      history.replaceState(null, "", location.pathname + (q ? "?" + q : "") + location.hash);
+    }
+
+    /* ---- explorer-driven filter note: an outlined annotation layer ---- */
+
+    function setFilterNote(text) {
+      var note = document.getElementById("filter-note");
+      if (!note) { return; }
+      if (!text) { note.hidden = true; note.innerHTML = ""; return; }
+      note.innerHTML = '<span class="filter-note-text">' + esc(text) + "</span> " +
+        '<button type="button" class="ledger-btn" id="filter-note-clear">Clear this filter</button>';
+      note.hidden = false;
+      var btn = document.getElementById("filter-note-clear");
+      if (btn) {
+        btn.addEventListener("click", function () {
+          state.org = "all"; state.type = "all";
+          var orgSel = document.getElementById("f-org");
+          var typeSel = document.getElementById("f-type");
+          if (orgSel) { orgSel.value = "all"; }
+          if (typeSel) { typeSel.value = "all"; }
+          setFilterNote(null);
+          render();
+        });
+      }
     }
 
     function render() {
@@ -340,14 +393,126 @@
           opt.textContent = ORG_NAMES[key];
           orgSel.appendChild(opt);
         });
-        orgSel.addEventListener("change", function () { state.org = orgSel.value; render(); });
+        orgSel.addEventListener("change", function () { state.org = orgSel.value; setFilterNote(null); render(); });
       }
       if (typeSel) {
-        typeSel.addEventListener("change", function () { state.type = typeSel.value; render(); });
+        typeSel.addEventListener("change", function () { state.type = typeSel.value; setFilterNote(null); render(); });
       }
       if (measChk) {
         measChk.addEventListener("change", function () { state.measured = measChk.checked; render(); });
       }
+    }
+
+    /* ---- deep-link restore: async sections above the timeline shift the
+       anchor after the browser's own fragment scroll, so the app re-scrolls
+       once layout settles, unless the reader has already scrolled ---- */
+
+    var userScrolled = false;
+    ["wheel", "touchstart", "keydown"].forEach(function (evt) {
+      window.addEventListener(evt, function () { userScrolled = true; }, { once: true, passive: true });
+    });
+
+    /* Cards above the target use content-visibility estimates until they
+       render, so a single scroll lands short or long. Scroll instantly and
+       re-settle until the card's position is stable. */
+    function scrollToCard(el) {
+      var last = null;
+      var tries = 0;
+      function step() {
+        el.scrollIntoView({ behavior: "instant", block: "start" });
+        var top = el.getBoundingClientRect().top;
+        if (last !== null && Math.abs(top - last) < 2) { return; }
+        last = top;
+        tries += 1;
+        if (tries < 12) { requestAnimationFrame(step); }
+      }
+      step();
+    }
+
+    function restoreHash() {
+      if (userScrolled || !location.hash) { return; }
+      var el = document.getElementById(location.hash.slice(1));
+      if (el && el.classList.contains("entry")) { scrollToCard(el); }
+    }
+
+    /* In-page anchor jumps to entry cards need the same settling, because
+       the native jump lands on content-visibility size estimates. */
+    window.addEventListener("hashchange", function () {
+      if (!location.hash) { return; }
+      var el = document.getElementById(location.hash.slice(1));
+      if (el && el.classList.contains("entry")) { scrollToCard(el); }
+    });
+
+    /* ---- the explorer API: brush, matrix and trajectory drive this one path ---- */
+
+    function applyRange(from, to) {
+      state.from = from || null;
+      state.to = to || null;
+      writeRangeToUrl();
+      render();
+    }
+
+    function revealEntry(id) {
+      var entry = null;
+      for (var i = 0; i < entries.length; i++) {
+        if (entries[i].id === id) { entry = entries[i]; break; }
+      }
+      if (!entry) { return; }
+      if (!document.getElementById(id)) {
+        /* the target card is filtered out; relax exactly the filters that hide it */
+        var orgSel = document.getElementById("f-org");
+        var typeSel = document.getElementById("f-type");
+        var measChk = document.getElementById("f-meas");
+        if (state.org !== "all" && state.org !== entry.org) {
+          state.org = "all"; if (orgSel) { orgSel.value = "all"; }
+        }
+        if (state.type !== "all" && state.type !== entry.entry_type) {
+          state.type = "all"; if (typeSel) { typeSel.value = "all"; }
+        }
+        if (state.measured && !(entry.benchmarks && entry.benchmarks.length)) {
+          state.measured = false; if (measChk) { measChk.checked = false; }
+        }
+        if ((state.from && entry.date < state.from) || (state.to && entry.date > state.to)) {
+          state.from = null; state.to = null;
+          writeRangeToUrl();
+          if (rangeSync) { rangeSync(null, null); }
+        }
+        setFilterNote(null);
+        render();
+      }
+      var el = document.getElementById(id);
+      if (!el) { return; }
+      if (location.hash !== "#" + id) { location.hash = id; }
+      scrollToCard(el);
+    }
+
+    function filterOrgReleases(org, note) {
+      var orgSel = document.getElementById("f-org");
+      var typeSel = document.getElementById("f-type");
+      state.org = org;
+      state.type = "release";
+      if (orgSel) { orgSel.value = org; }
+      if (typeSel) { typeSel.value = "release"; }
+      setFilterNote(note);
+      render();
+      var controls = document.querySelector(".controls");
+      if (controls) { controls.scrollIntoView({ block: "start" }); }
+    }
+
+    function startExplorer() {
+      if (!window.VCExplorer) { return; }
+      window.VCExplorer.init({
+        entries: entries,
+        meta: meta,
+        orgNames: ORG_NAMES,
+        loadGzJson: loadGzJson,
+        getRange: function () { return { from: state.from, to: state.to }; },
+        applyRange: applyRange,
+        revealEntry: revealEntry,
+        filterOrgReleases: filterOrgReleases,
+        registerRangeSync: function (fn) { rangeSync = fn; },
+        layoutSettled: restoreHash
+      });
     }
 
     Promise.all([
@@ -381,7 +546,10 @@
         return a.id < b.id ? -1 : 1;
       });
       bindControls();
+      readRangeFromUrl();
       render();
+      restoreHash();
+      startExplorer();
     }).catch(function (err) {
       timeline.innerHTML = '<div class="load-error"><p>The registry record could not be loaded in this session (' +
         esc(err && err.message ? err.message : "unknown error") +
