@@ -43,17 +43,46 @@
     <thead>
       <tr><th scope="col">File</th><th scope="col">Contents</th></tr>
     </thead>
-    <tbody>
+    <tbody id="file-rows">
       <tr><td><a href="./data/manifest.json">manifest.json</a></td><td>Index of entry files with per-file entry counts, ids, and SHA-256 checksums.</td></tr>
-      <tr><td><a href="./data/entries/2022.json.gz">entries/2022.json.gz</a></td><td>Entries dated 2022.</td></tr>
-      <tr><td><a href="./data/entries/2023.json.gz">entries/2023.json.gz</a></td><td>Entries dated 2023.</td></tr>
-      <tr><td><a href="./data/entries/2024.json.gz">entries/2024.json.gz</a></td><td>Entries dated 2024.</td></tr>
-      <tr><td><a href="./data/entries/2025.json.gz">entries/2025.json.gz</a></td><td>Entries dated 2025.</td></tr>
-      <tr><td><a href="./data/entries/2026.json.gz">entries/2026.json.gz</a></td><td>Entries dated 2026.</td></tr>
       <tr><td><a href="./data/derived/deltas.json.gz">derived/deltas.json.gz</a></td><td>Predecessor comparisons per entry: delta values or recorded refusals. The site renders this file verbatim.</td></tr>
       <tr><td><a href="./data/derived/site_meta.json">derived/site_meta.json</a></td><td>Record counts, date range, and the last successful update timestamp.</td></tr>
     </tbody>
   </table>
+  <script>
+    // The per-year rows come from the manifest so this table can never
+    // drift from the actual published files.
+    (async function () {
+      var bases = ["./data/", "../data/"];
+      for (var i = 0; i < bases.length; i++) {
+        try {
+          var res = await fetch(bases[i] + "manifest.json");
+          if (!res.ok) continue;
+          var manifest = await res.json();
+          var tbody = document.getElementById("file-rows");
+          var anchor = tbody.children[1];
+          Object.keys(manifest.files).sort().forEach(function (rel) {
+            var short = rel.replace(/^data\//, "");
+            var year = (short.match(/(\d{4})\.json\.gz$/) || [])[1] || "";
+            var tr = document.createElement("tr");
+            var td1 = document.createElement("td");
+            var a = document.createElement("a");
+            a.href = bases[i] + short.replace(/^entries\//, "entries/");
+            a.href = bases[i] + short;
+            a.textContent = short;
+            td1.appendChild(a);
+            var td2 = document.createElement("td");
+            td2.textContent = "Entries dated " + year + " (" +
+              manifest.files[rel].count + " entries).";
+            tr.appendChild(td1);
+            tr.appendChild(td2);
+            tbody.insertBefore(tr, anchor);
+          });
+          return;
+        } catch (e) { /* try the next base */ }
+      }
+    })();
+  </script>
 
   <h2>License</h2>
   <p>The published dataset (the gzipped JSON aggregates above, excluding any display-only fields marked otherwise) is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/" rel="external">Creative Commons Attribution 4.0 International License (CC-BY 4.0)</a>.</p>
