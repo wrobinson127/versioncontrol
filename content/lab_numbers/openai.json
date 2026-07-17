@@ -1,0 +1,74 @@
+{
+  "org": "openai",
+  "display": "OpenAI",
+  "reviewed_by_walker": false,
+  "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
+  "tranche": "1 (2026-07-17)",
+  "rows": [
+    {
+      "entry_id": "openai--gpt-5.5",
+      "model_name": "GPT-5.5",
+      "benchmark": "gpqa-diamond",
+      "value": 93.6,
+      "value_as_stated": "93.6%",
+      "benchmark_name_as_stated": "GPQA Diamond",
+      "configuration": "Evals of GPT were run with reasoning effort set to xhigh and were conducted in a research environment",
+      "source_url": "https://openai.com/index/introducing-gpt-5-5/",
+      "source_kind": "announcement",
+      "retrieval_date": "2026-07-17",
+      "quote": "GPQA Diamond 93.6% 92.8% - 94.4% 94.2% 94.3% (table columns: GPT-5.5, GPT-5.4, GPT-5.5 Pro, GPT-5.4 Pro, Claude Opus 4.7, Gemini 3.1 Pro)",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "openai--gpt-5.4",
+      "model_name": "GPT-5.4",
+      "benchmark": "gpqa-diamond",
+      "value": 92.8,
+      "value_as_stated": "92.8%",
+      "benchmark_name_as_stated": "GPQA Diamond",
+      "configuration": "Evals were run with reasoning effort set to xhigh, except where specified otherwise.",
+      "source_url": "https://openai.com/index/introducing-gpt-5-4/",
+      "source_kind": "announcement",
+      "retrieval_date": "2026-07-17",
+      "quote": "GPQA Diamond 92.8% 94.4% 92.6% 92.4% 93.2% (table columns: GPT-5.4, GPT-5.4 Pro, GPT-5.3-Codex, GPT-5.2, GPT-5.2 Pro)",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    }
+  ],
+  "unpinned_claims": [
+    {
+      "entry_id": "openai--gpt-5.5",
+      "benchmark_name_as_stated": "SWE-Bench",
+      "value_as_stated": "6+ percentage points more tasks (relative, no absolute score)",
+      "source_url": "https://openai.com/index/introducing-gpt-5-5/",
+      "quote": "On SWE-Bench, the model resolves 6+ percentage points more tasks (customer testimonial quoted on the announcement page, not an OpenAI-run eval; bare SWE-Bench, no Verified qualifier)"
+    }
+  ],
+  "not_found": [
+    {
+      "entry_id": "openai--gpt-5.5",
+      "benchmark": "swe-bench-verified",
+      "checked": [
+        "https://openai.com/index/introducing-gpt-5-5/",
+        "https://deploymentsafety.openai.com/gpt-5-5/gpt-5-5.pdf",
+        "https://openai.com/index/gpt-5-5-system-card/",
+        "https://developers.openai.com/api/docs/models/gpt-5.5",
+        "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/"
+      ]
+    },
+    {
+      "entry_id": "openai--gpt-5.4",
+      "benchmark": "swe-bench-verified",
+      "checked": [
+        "https://openai.com/index/introducing-gpt-5-4/",
+        "https://deploymentsafety.openai.com/gpt-5-4-thinking/gpt-5-4-thinking.pdf",
+        "https://developers.openai.com/api/docs/models/gpt-5.4",
+        "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/"
+      ]
+    }
+  ],
+  "context_notes": [
+    "OpenAI publicly stopped reporting SWE-bench Verified on 2026-02-23 ('Why SWE-bench Verified no longer measures frontier coding capabilities': 'This is why we have stopped reporting SWE-bench Verified scores'), predating both releases. Both announcements report 'SWE-Bench Pro (Public)' instead (GPT-5.5: 58.6%, GPT-5.4: 57.7%), a different benchmark, not recorded as SWE-bench Verified. Third-party sites attribute an '88.7% SWE-Bench Verified, OpenAI-reported' figure to GPT-5.5 with no citation; no official OpenAI source exists, so it was excluded. System card PDFs mention GPQA and SWE-Bench Verified only as components of a safety suite, with no capability scores."
+  ]
+}

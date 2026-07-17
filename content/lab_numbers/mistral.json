@@ -1,0 +1,36 @@
+{
+  "org": "mistral",
+  "display": "Mistral",
+  "reviewed_by_walker": false,
+  "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
+  "tranche": "1 (2026-07-17)",
+  "rows": [
+    {
+      "entry_id": "mistral--mistral-medium-3.5",
+      "model_name": "Mistral Medium 3.5",
+      "benchmark": "swe-bench-verified",
+      "value": 77.6,
+      "value_as_stated": "77.6%",
+      "benchmark_name_as_stated": "SWE-Bench Verified",
+      "configuration": null,
+      "source_url": "https://huggingface.co/mistralai/Mistral-Medium-3.5-128B",
+      "source_kind": "model_card",
+      "retrieval_date": "2026-07-17",
+      "quote": "It scores 91.4% on τ³-Telecom and 77.6% on SWE-Bench Verified. (Same number in the lab announcement: https://mistral.ai/news/vibe-remote-agents-mistral-medium-3-5/)",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    }
+  ],
+  "unpinned_claims": [],
+  "not_found": [
+    {
+      "entry_id": "mistral--mistral-medium-3.5",
+      "benchmark": "gpqa-diamond",
+      "checked": [
+        "https://mistral.ai/news/vibe-remote-agents-mistral-medium-3-5/ (no GPQA in any form)",
+        "https://huggingface.co/mistralai/Mistral-Medium-3.5-128B/raw/main/README.md (string GPQA absent)",
+        "https://docs.mistral.ai/models/model-cards/mistral-medium-3-5-26-04 (pricing/features only)"
+      ]
+    }
+  ]
+}

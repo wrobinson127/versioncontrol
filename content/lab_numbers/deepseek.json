@@ -1,0 +1,41 @@
+{
+  "org": "deepseek",
+  "display": "DeepSeek",
+  "reviewed_by_walker": false,
+  "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
+  "tranche": "1 (2026-07-17)",
+  "rows": [
+    {
+      "entry_id": "deepseek--deepseek-v4-pro",
+      "model_name": "DeepSeek-V4-Pro",
+      "benchmark": "gpqa-diamond",
+      "value": 90.1,
+      "value_as_stated": "90.1",
+      "benchmark_name_as_stated": "GPQA Diamond (Pass@1)",
+      "configuration": "DS-V4-Pro Max (Think Max reasoning mode), Pass@1; lab recommends context window of at least 384K tokens for Think Max",
+      "source_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro",
+      "source_kind": "model_card",
+      "retrieval_date": "2026-07-17",
+      "quote": "GPQA Diamond (Pass@1) — Opus-4.6 Max 91.3 | GPT-5.4 xHigh 93.0 | Gemini-3.1-Pro High 94.3 | K2.6 Thinking 90.5 | GLM-5.1 Thinking 86.2 | DS-V4-Pro Max 90.1 (table: 'DeepSeek-V4-Pro-Max vs Frontier Models')",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    },
+    {
+      "entry_id": "deepseek--deepseek-v4-pro",
+      "model_name": "DeepSeek-V4-Pro",
+      "benchmark": "swe-bench-verified",
+      "value": 80.6,
+      "value_as_stated": "80.6",
+      "benchmark_name_as_stated": "SWE Verified (Resolved)",
+      "configuration": "DS-V4-Pro Max (Think Max reasoning mode), metric = Resolved; lab abbreviation 'SWE Verified' pins the SWE-bench Verified subset",
+      "source_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro",
+      "source_kind": "model_card",
+      "retrieval_date": "2026-07-17",
+      "quote": "SWE Verified (Resolved) — Opus-4.6 Max 80.8 | Gemini-3.1-Pro High 80.6 | K2.6 Thinking 80.2 | DS-V4-Pro Max 80.6 (table: 'DeepSeek-V4-Pro-Max vs Frontier Models')",
+      "status": "DRAFT_FLAGGED",
+      "notes": ""
+    }
+  ],
+  "unpinned_claims": [],
+  "not_found": []
+}
