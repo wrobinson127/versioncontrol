@@ -102,6 +102,18 @@ def test_approved_candidate_publishes(tmp_path):
     assert (tmp_path / "data" / "derived" / "site_meta.json").exists()
 
 
+def test_manual_candidate_keeps_its_origin(tmp_path):
+    # D24 gap entries are drafted by hand; their candidate carries
+    # origin "manual" and the published entry keeps it honestly.
+    root = str(tmp_path)
+    _seed_entries(root)
+    _write_candidate(root, _candidate() | {"origin": "manual"})
+    report = promote.promote(RUN_DATE, root=root)
+    assert report["problems"] == []
+    entries = {e["id"]: e for e in store.read_entries(root=root)}
+    assert entries["openai--gpt-6"]["origin"] == "manual"
+
+
 def test_unapproved_candidate_stays_pending(tmp_path):
     root = str(tmp_path)
     _seed_entries(root)

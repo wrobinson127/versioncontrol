@@ -12,7 +12,10 @@ on:
 jobs:
   audit:
     runs-on: ubuntu-latest
-    if: vars.NIGHTLY_ENABLED == 'true'
+    # Scheduled runs stay dormant until launch (the nightly gate), but a
+    # manual dispatch may run pre-launch: the audit is key-gated, read-only,
+    # and emits only an artifact (Batch 0 / D24 needs it before the flip).
+    if: vars.NIGHTLY_ENABLED == 'true' || github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
