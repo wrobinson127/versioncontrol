@@ -16,6 +16,9 @@ Outputs (data/derived/views.json.gz), all keyed for direct rendering:
   tiles              metric tile values (explorer)
 """
 import datetime
+import glob
+import json
+import os
 import statistics
 
 from . import config, store, validate
@@ -27,6 +30,28 @@ class ViewsError(ValueError):
 
 def _date(d: str) -> datetime.date:
     return datetime.date.fromisoformat(d)
+
+
+def pending_link_counts(root: str = ".") -> dict:
+    """Disclosure links researched into content/disclosure_links/ but not
+    yet APPROVED by Walker. The site must render this registrar state as
+    'under review', never as a zero (DESIGN.md rule 2: 'not yet collected'
+    is visually disjoint from NOT_DISCLOSED and from any value)."""
+    counts = {a: 0 for a in validate.DISCLOSURE_ARTIFACTS}
+    table_dir = os.path.join(root, "content", "disclosure_links")
+    if not os.path.isdir(table_dir):
+        return counts
+    for path in sorted(glob.glob(os.path.join(table_dir, "*.json"))):
+        with open(path, encoding="utf-8") as fh:
+            table = json.load(fh)
+        for row in table.get("rows", []):
+            if row.get("status") == "APPROVED":
+                continue
+            for a in counts:
+                value = row.get(a)
+                if value and value != validate.NOT_DISCLOSED:
+                    counts[a] += 1
+    return counts
 
 
 def build_cadence(entries: list) -> dict:
@@ -49,7 +74,13 @@ def build_cadence(entries: list) -> dict:
         gaps = [(b - a).days for a, b in zip(window, window[1:])]
         median_gap.append({"date": d.isoformat(),
                            "days": round(statistics.median(gaps), 1)})
+    yearly = {}
+    for e in entries:
+        key = e["date"][:4]
+        y = yearly.setdefault(key, {"year": key, "releases": 0, "revisions": 0})
+        y["releases" if e["entry_type"] == "release" else "revisions"] += 1
     return {"monthly": sorted(monthly.values(), key=lambda m: m["month"]),
+            "yearly": sorted(yearly.values(), key=lambda y: y["year"]),
             "median_gap": median_gap}
 
 
@@ -89,6 +120,7 @@ def build_trajectory(entries: list) -> dict:
                 "model_name": e["model_name"],
                 "org": e["org"],
                 "source_url": prov["source_url"],
+                "retrieval_date": prov["retrieval_date"],
             }
             if num.get("configuration"):
                 point["configuration"] = num["configuration"]
@@ -106,8 +138,9 @@ def build_trajectory(entries: list) -> dict:
     }
 
 
-def build_disclosure_matrix(entries: list) -> dict:
+def build_disclosure_matrix(entries: list, pending: dict = None) -> dict:
     artifacts = list(validate.DISCLOSURE_ARTIFACTS)
+    pending = pending or {}
     rows = []
     counts = {a: {"disclosed": 0, "not_disclosed": 0} for a in artifacts}
     for e in sorted((e for e in entries if e["entry_type"] == "release"),
@@ -120,10 +153,20 @@ def build_disclosure_matrix(entries: list) -> dict:
             counts[a]["disclosed" if disclosed else "not_disclosed"] += 1
         rows.append({"entry_id": e["id"], "model_name": e["model_name"],
                      "org": e["org"], "date": e["date"], "cells": cells})
-    return {"artifacts": artifacts, "rows": rows, "counts": counts}
+    # An artifact column with zero links on record but researched rows
+    # awaiting approval is the registrar's pending state, not the labs'
+    # disclosure record; the site renders it as such.
+    artifact_status = {
+        a: {"links_on_record": counts[a]["disclosed"],
+            "pending_review": pending.get(a, 0)}
+        for a in artifacts
+    }
+    return {"artifacts": artifacts, "rows": rows, "counts": counts,
+            "artifact_status": artifact_status}
 
 
-def build_tiles(entries: list, run_date: str) -> dict:
+def build_tiles(entries: list, run_date: str, pending: dict = None) -> dict:
+    pending = pending or {}
     releases = sorted((e for e in entries if e["entry_type"] == "release"),
                       key=lambda e: e["date"])
     if not releases:
@@ -133,27 +176,35 @@ def build_tiles(entries: list, run_date: str) -> dict:
     year_dates = [_date(e["date"]) for e in releases
                   if e["date"].startswith(year)]
     year_gaps = [(b - a).days for a, b in zip(year_dates, year_dates[1:])]
-    with_card = sum(1 for e in releases
-                    if e["disclosure_links"].get("system_card",
-                                                 validate.NOT_DISCLOSED)
-                    != validate.NOT_DISCLOSED)
+
+    def with_link(artifact):
+        return sum(1 for e in releases
+                   if e["disclosure_links"].get(artifact,
+                                                validate.NOT_DISCLOSED)
+                   != validate.NOT_DISCLOSED)
+
     return {
         "releases_recorded": len(releases),
+        "entries_recorded": len(entries),
         "days_since_last_release": (_date(run_date) - last).days,
         "median_gap_days_this_year":
             round(statistics.median(year_gaps), 1) if year_gaps else None,
-        "share_with_system_card": round(with_card / len(releases), 3),
+        "share_with_system_card": round(with_link("system_card")
+                                        / len(releases), 3),
+        "papers_on_record": with_link("paper"),
+        "system_card_links_pending": pending.get("system_card", 0),
         "as_of": run_date,
     }
 
 
 def build_views(root: str = ".", run_date: str = None) -> dict:
     entries = store.read_entries(root=root)
+    pending = pending_link_counts(root=root)
     views = {
         "cadence": build_cadence(entries),
         "trajectory": build_trajectory(entries),
-        "disclosure_matrix": build_disclosure_matrix(entries),
-        "tiles": build_tiles(entries, run_date),
+        "disclosure_matrix": build_disclosure_matrix(entries, pending),
+        "tiles": build_tiles(entries, run_date, pending),
     }
     store.write_derived_json(views, "views.json.gz", root=root)
     return views

@@ -73,13 +73,14 @@
 
   /* =================== pulse strip (D13) =================== */
 
-  function initPulse(api, entries, meta) {
+  function initPulse(api, entries, meta, views) {
     var holder = document.getElementById("pulse-strip");
     if (!holder || !window.d3) { return; }
 
     var d3 = window.d3;
     var byId = {};
     entries.forEach(function (e) { byId[e.id] = e; });
+    var monthly = (views && views.cadence && views.cadence.monthly) || [];
 
     /* summary paragraph: count, span, densest year */
     var perYear = {};
@@ -115,10 +116,11 @@
     holder.appendChild(scroller);
     var tip = makeTip(holder);
 
+    var histH = monthly.length ? 62 : 0;
     var x, brush, brushG, rowH = 15, labelW = 128,
       margin = { top: 4, right: 10, bottom: 22 },
       innerH = REGISTRY_ORDER.length * rowH,
-      height = margin.top + innerH + margin.bottom;
+      height = margin.top + innerH + margin.bottom + histH;
 
     var suppressBrushEvents = false;
     var brushing = false;
@@ -179,6 +181,43 @@
           .attr("y", margin.top + innerH + 16)
           .text(t.getUTCFullYear());
       });
+
+      /* releases per month on the same time scale: the cadence itself,
+         as raw counts, beneath the strip. Bars are data marks. */
+      if (histH) {
+        var bars = svg.append("g").attr("class", "pulse-bars");
+        var histTop = margin.top + innerH + 26;
+        var histBase = histTop + histH - 26;
+        var maxCount = d3.max(monthly, function (m) { return m.releases; }) || 1;
+        var yBar = d3.scaleLinear().domain([0, maxCount]).range([0, histH - 34]);
+        bars.append("text")
+          .attr("class", "pulse-bar-label")
+          .attr("x", labelW - 8).attr("y", histBase - 1)
+          .attr("text-anchor", "end")
+          .text("releases per month");
+        bars.append("text")
+          .attr("class", "pulse-bar-max")
+          .attr("x", labelW - 8).attr("y", histBase - yBar(maxCount) + 3)
+          .attr("text-anchor", "end")
+          .text(maxCount);
+        bars.append("line")
+          .attr("class", "pulse-rule")
+          .attr("x1", labelW).attr("x2", width - margin.right)
+          .attr("y1", histBase).attr("y2", histBase);
+        monthly.forEach(function (m) {
+          if (!m.releases) { return; }
+          var t0m = parseDate(m.month + "-01");
+          var next = new Date(Date.UTC(t0m.getUTCFullYear(),
+                                       t0m.getUTCMonth() + 1, 1));
+          var bx = x(t0m);
+          var bw = Math.max(2, x(next) - bx - 1.5);
+          bars.append("rect")
+            .attr("class", "pulse-bar")
+            .attr("x", bx).attr("width", bw)
+            .attr("y", histBase - yBar(m.releases))
+            .attr("height", yBar(m.releases));
+        });
+      }
 
       /* the brush overlay owns every gesture on the strip: a drag selects
          a range, a plain click on a mark opens its entry card, a plain
@@ -348,23 +387,34 @@
     var t = views.tiles;
 
     var sharePct = Math.round((t.share_with_system_card || 0) * 1000) / 10;
-    var shareTitle = "System card links are pending review; the record currently shows " +
-      sharePct + "% of releases with a system card link.";
+
+    /* while system card links sit in the registrar's review queue, a 0%
+       headline would misstate the labs' record (DESIGN rule 2); the
+       papers measure is the honest tile until approvals land */
+    var pendingCards = (t.system_card_links_pending || 0) > 0 &&
+      !(t.share_with_system_card > 0);
+    var fourth = pendingCards
+      ? { value: String(t.papers_on_record), label: "releases with a paper link" }
+      : { value: sharePct + "%", label: "releases with a system card link" };
 
     var tiles = [
-      { value: String(t.releases_recorded), label: "releases recorded" },
+      { value: String(t.releases_recorded),
+        label: "releases recorded, of " + (t.entries_recorded || t.releases_recorded) + " entries" },
       { value: String(t.days_since_last_release), label: "days since the last release" },
       { value: String(t.median_gap_days_this_year), label: "median gap between releases this year, in days" },
-      { value: sharePct + "%", label: "releases with a system card link", title: shareTitle }
+      fourth
     ];
 
     row.innerHTML = tiles.map(function (tile) {
-      return '<div class="tile"' + (tile.title ? ' title="' + esc(tile.title) + '"' : "") + ">" +
+      return '<div class="tile">' +
         '<span class="tile-value">' + esc(tile.value) + "</span>" +
         '<span class="tile-label">' + esc(tile.label) + "</span></div>";
     }).join("");
 
-    if (foot) { foot.textContent = "Measures as of " + t.as_of + ", from the derived views file."; }
+    if (foot) {
+      foot.textContent = "Measures as of " + t.as_of + ", from the derived views file." +
+        (pendingCards ? " System card, model card, and usage policy links are under the registrar's review and not yet on record." : "");
+    }
   }
 
   /* =================== measured trajectory (D15) =================== */
@@ -444,6 +494,27 @@
       }).join(" ");
     }
 
+    function updateSource() {
+      /* the source and retrieval line, at point of use */
+      var srcEl = document.getElementById("traj-source");
+      if (!srcEl) { return; }
+      var vis = visibleSeries();
+      if (!vis.length) { srcEl.textContent = ""; return; }
+      var parts = [];
+      vis.forEach(function (s) {
+        var dates = s.points.map(function (p) { return p.retrieval_date; }).filter(Boolean);
+        var latest = dates.sort()[dates.length - 1];
+        if (s.source_class === "INDEPENDENT") {
+          parts.push("independent measurements: Epoch AI Benchmarking Hub" +
+            (latest ? ", retrieved " + latest : ""));
+        } else {
+          parts.push("lab reported numbers: the releasing labs' own publications" +
+            (latest ? ", retrieved " + latest : ""));
+        }
+      });
+      srcEl.textContent = "Sources: " + parts.join("; ") + ".";
+    }
+
     function draw() {
       chartMount.innerHTML = "";
       var width = Math.max(holder.clientWidth, 300);
@@ -455,7 +526,19 @@
       allBench.forEach(function (s) {
         s.points.forEach(function (p) { allDates.push(parseDate(p.date)); });
       });
-      if (!allDates.length) { return; }
+      var visNow = visibleSeries();
+      if (!allDates.length || !visNow.length) {
+        /* an empty selection states itself in the chart area; a silently
+           blank chart reads as broken */
+        var msg = !allDates.length ?
+          "No measurements on record for this benchmark." :
+          "No measurements in the selected provenance classes for this benchmark. The backfill carries independent numbers only; lab reported numbers accrue through the nightly path.";
+        chartMount.innerHTML = '<p class="chart-empty-note">' + esc(msg) + "</p>";
+        updateCaption();
+        updateAlt();
+        updateSource();
+        return;
+      }
       var monthPad = 40 * 86400000;
       var x = d3.scaleUtc()
         .domain([new Date(d3.min(allDates).getTime() - monthPad),
@@ -482,6 +565,11 @@
           .attr("text-anchor", "end")
           .text(v);
       });
+      /* the unit, stated on the axis itself */
+      svg.append("text")
+        .attr("class", "traj-unit")
+        .attr("x", margin.left).attr("y", y(100) - 5)
+        .text("score, on the benchmark's own scale");
 
       /* time axis: year ticks */
       var axis = svg.append("g").attr("class", "traj-axis");
@@ -522,7 +610,22 @@
       /* marks only: solid = INDEPENDENT, hollow = LAB_REPORTED (D15).
          Each point is a real link to its entry card, keyboard focusable. */
       var marksG = svg.append("g").attr("class", "traj-points");
-      visibleSeries().forEach(function (s) {
+      /* the chronologically newest visible measurement wears an outlined
+         annotation ring: orientation, never emphasis of value */
+      var newest = null;
+      visNow.forEach(function (s) {
+        s.points.forEach(function (p) {
+          if (!newest || p.date > newest.date) { newest = p; }
+        });
+      });
+      if (newest) {
+        marksG.append("circle")
+          .attr("class", "traj-latest-ring")
+          .attr("cx", x(parseDate(newest.date)))
+          .attr("cy", y(newest.value))
+          .attr("r", 7.5);
+      }
+      visNow.forEach(function (s) {
         var solid = s.source_class === "INDEPENDENT";
         s.points.forEach(function (p) {
           var a = marksG.append("a")
@@ -550,7 +653,8 @@
               ' <span class="tip-class">' + esc(CLASS_NAMES[s.source_class] || s.source_class) + "</span></span>" +
               '<span class="tip-date">' + esc(p.date) + "</span>" +
               '<span class="tip-org">' + esc(api.orgNames[p.org] || p.org) + "</span>" +
-              (p.configuration ? '<span class="tip-config">configuration: ' + esc(p.configuration) + "</span>" : ""),
+              (p.configuration ? '<span class="tip-config">configuration: ' + esc(p.configuration) + "</span>" : "") +
+              (p.retrieval_date ? '<span class="tip-config">retrieved ' + esc(p.retrieval_date) + "</span>" : ""),
               pt[0], pt[1]);
           }).on("mouseleave", tip.hide);
         });
@@ -559,6 +663,7 @@
       chartMount.appendChild(svg.node());
       updateCaption();
       updateAlt();
+      updateSource();
     }
 
     /* controls */
@@ -599,6 +704,15 @@
 
     var dm = views.disclosure_matrix;
     var artifacts = dm.artifacts || [];
+    var status = dm.artifact_status || {};
+
+    /* a column with zero links on record but researched rows awaiting
+       approval is the registrar's own pending state; it renders as
+       'under review', never as a wall of zeros (DESIGN rule 2) */
+    function isPendingCol(a) {
+      var st = status[a];
+      return !!(st && st.links_on_record === 0 && st.pending_review > 0);
+    }
 
     /* aggregate the per-release rows into organization x artifact counts */
     var agg = {};
@@ -614,30 +728,87 @@
       });
     });
 
+    /* the glyph legend, where a legend belongs (not inside data cells) */
+    var legendEl = document.getElementById("matrix-legend");
+    if (legendEl) {
+      legendEl.innerHTML =
+        '<span><svg width="9" height="8" viewBox="0 0 9 8" aria-hidden="true"><circle cx="4" cy="4" r="3" class="dm-dot-filled"/></svg> links on record</span>' +
+        '<span><svg width="9" height="8" viewBox="0 0 9 8" aria-hidden="true"><circle cx="4" cy="4" r="3" class="dm-dot-hollow"/></svg> none on record</span>' +
+        (artifacts.some(isPendingCol) ?
+          "<span><em>under review</em>: researched links awaiting the registrar's approval; no counts shown</span>" : "") +
+        (artifacts.some(function (a) {
+          var st = status[a];
+          return !!(st && st.links_on_record > 0 && st.pending_review > 0);
+        }) ? "<span><em>more under review</em>: counts shown are links on record; further researched links await approval</span>" : "");
+    }
+
+    /* a mixed column (some links on record, more researched rows in the
+       queue) states its own incompleteness so a true 0-count cell cannot
+       be misread as the lab's final record */
+    function isMixedCol(a) {
+      var st = status[a];
+      return !!(st && st.links_on_record > 0 && st.pending_review > 0);
+    }
+
     var html = '<div class="dm-corner" aria-hidden="true"></div>';
     artifacts.forEach(function (a) {
-      html += '<div class="dm-colhead" aria-hidden="true">' + esc(ARTIFACT_NAMES[a] || a) + "</div>";
+      var head = "";
+      if (isPendingCol(a)) { head = "under review"; }
+      else if (isMixedCol(a)) { head = "more under review"; }
+      html += '<div class="dm-colhead" aria-hidden="true">' + esc(ARTIFACT_NAMES[a] || a) +
+        (head ? '<span class="dm-head-status">' + head + "</span>" : "") + "</div>";
     });
     REGISTRY_ORDER.forEach(function (org) {
       html += '<div class="dm-rowhead" aria-hidden="true">' + esc(api.orgNames[org] || org) + "</div>";
       artifacts.forEach(function (a) {
         var c = agg[org][a];
-        // The visible text (e.g. "0/37") must appear inside the accessible
-        // name (WCAG 2.5.3 label-in-name).
+        if (isPendingCol(a)) {
+          var pLabel = "Under review: " + (api.orgNames[org] || org) + ", " +
+            (ARTIFACT_NAMES[a] || a) +
+            " links are researched and awaiting the registrar's approval; no count is on record. " +
+            "Filters the timeline to this organization's releases.";
+          html += '<button type="button" class="dm-cell is-pending" data-org="' + esc(org) +
+            '" data-artifact="' + esc(a) + '" aria-label="' + esc(pLabel) + '">' +
+            '<span class="dm-pending-word">under review</span></button>';
+          return;
+        }
+        // The visible text (e.g. "9/37") must appear inside the accessible
+        // name (WCAG 2.5.3 label-in-name). The single glyph encodes the
+        // cell's state: filled = links on record, hollow = none.
         var label = c.disclosed + "/" + c.total + ": " +
           (api.orgNames[org] || org) + ", " + (ARTIFACT_NAMES[a] || a) + ", " +
           c.disclosed + " of " + c.total +
           " releases with a link on record. Filters the timeline to this organization's releases.";
+        var glyph = c.disclosed > 0
+          ? '<circle cx="4" cy="4" r="3" class="dm-dot-filled"/>'
+          : '<circle cx="4" cy="4" r="3" class="dm-dot-hollow"/>';
         html += '<button type="button" class="dm-cell" data-org="' + esc(org) +
           '" data-artifact="' + esc(a) + '" aria-label="' + esc(label) + '">' +
-          '<svg class="dm-dots" width="17" height="8" viewBox="0 0 17 8" aria-hidden="true">' +
-          '<circle cx="4" cy="4" r="3" class="dm-dot-filled"/>' +
-          '<circle cx="13" cy="4" r="3" class="dm-dot-hollow"/></svg>' +
+          '<svg class="dm-dots" width="9" height="8" viewBox="0 0 9 8" aria-hidden="true">' +
+          glyph + "</svg>" +
           '<span class="dm-count">' + c.disclosed + "/" + c.total + "</span></button>";
       });
     });
     grid.innerHTML = html;
     grid.style.setProperty("--dm-cols", String(artifacts.length));
+
+    /* the disclosure record's time dimension: paper links by year (the
+       only artifact fully on record today), raw counts, no smoothing */
+    var yearsEl = document.getElementById("matrix-years");
+    if (yearsEl) {
+      var byYear = {};
+      (dm.rows || []).forEach(function (r) {
+        var yKey = r.date.slice(0, 4);
+        var b = byYear[yKey] = byYear[yKey] || { with_paper: 0, total: 0 };
+        b.total += 1;
+        if (r.cells && r.cells.paper) { b.with_paper += 1; }
+      });
+      var segs = Object.keys(byYear).sort().map(function (yKey) {
+        return yKey + " " + byYear[yKey].with_paper + " of " + byYear[yKey].total;
+      });
+      yearsEl.textContent = segs.length ?
+        "Releases with a paper link, by year: " + segs.join(", ") + "." : "";
+    }
 
     grid.addEventListener("click", function (event) {
       var cell = event.target.closest ? event.target.closest(".dm-cell") : null;
@@ -648,14 +819,21 @@
       api.filterOrgReleases(org,
         "Timeline filtered to " + (api.orgNames[org] || org) + " releases from the disclosure record. " +
         "Selected artifact: " + (ARTIFACT_NAMES[artifact] || artifact) + ", " +
-        c.disclosed + " of " + c.total + " releases with a link on record.");
+        (isPendingCol(artifact) ?
+          "links under the registrar's review, not yet on record." :
+          c.disclosed + " of " + c.total + " releases with a link on record."));
     });
 
     /* text alternative: a real table with the same counts. The clipping
        class sits on the wrapper div; table boxes do not honor overflow. */
     if (tableHolder) {
       tableHolder.className = "visually-hidden";
-      var t = '<table><caption>Disclosure links on record by organization and artifact, releases only. Each value is the count of releases with a link on record, out of all releases recorded.</caption><thead><tr><th scope="col">Organization</th>';
+      var pendingNote = artifacts.some(function (a) {
+        var st = status[a];
+        return !!(st && st.pending_review > 0);
+      }) ? " Some researched links await the registrar's approval and are not yet counted." : "";
+      var t = '<table><caption>Disclosure links on record by organization and artifact, releases only. Each value is the count of releases with a link on record, out of all releases recorded.' +
+        esc(pendingNote) + '</caption><thead><tr><th scope="col">Organization</th>';
       artifacts.forEach(function (a) {
         t += '<th scope="col">' + esc(ARTIFACT_NAMES[a] || a) + "</th>";
       });
@@ -664,7 +842,8 @@
         t += '<tr><th scope="row">' + esc(api.orgNames[org] || org) + "</th>";
         artifacts.forEach(function (a) {
           var c = agg[org][a];
-          t += "<td>" + c.disclosed + " of " + c.total + "</td>";
+          t += "<td>" + (isPendingCol(a) ? "under review" :
+            c.disclosed + " of " + c.total) + "</td>";
         });
         t += "</tr>";
       });
@@ -685,7 +864,7 @@
           return;
         }
         parseDate = function (s) { return new Date(s + "T00:00:00Z"); };
-        initPulse(api, api.entries.slice().reverse(), api.meta);
+        initPulse(api, api.entries.slice().reverse(), api.meta, views);
         initTrajectory(api, views);
         initMatrix(api, views);
         if (api.layoutSettled) { api.layoutSettled(); }

@@ -24,6 +24,7 @@
       <p class="mast-tagline">The release record of the model era.</p>
     </div>
     <nav class="mast-nav" aria-label="Site">
+      <a href="./story.html">Story</a>
       <a href="./index.html" aria-current="page">Timeline</a>
       <a href="./methodology.html">Methodology</a>
       <a href="./about.html">About</a>
@@ -79,15 +80,18 @@
     </div>
     <p class="traj-caption" id="traj-caption">The trajectory chart loads with the dataset.</p>
     <div class="traj-chart" id="traj-chart" aria-describedby="traj-alt"></div>
+    <p class="chart-source" id="traj-source"></p>
     <p class="visually-hidden" id="traj-alt" aria-live="polite"></p>
   </section>
 
   <section class="matrix" aria-labelledby="matrix-h">
     <h2 class="explorer-head" id="matrix-h">Disclosure record</h2>
-    <p class="matrix-lead">Disclosure links on record, by organization and artifact, releases only. A filled dot marks releases with a link on record; an outlined dot marks all releases recorded. Selecting a cell filters the timeline to that organization.</p>
+    <p class="matrix-lead">Disclosure links on record, by organization and artifact, releases only. Each cell counts releases with a link on record, out of releases recorded. Rows in registry entry order. Selecting a cell filters the timeline to that organization.</p>
+    <div class="dm-legend" id="matrix-legend" aria-hidden="true"></div>
     <div class="matrix-scroll">
       <div class="matrix-grid" id="matrix-grid" role="presentation"></div>
     </div>
+    <p class="matrix-years" id="matrix-years"></p>
     <div id="matrix-table-holder"></div>
   </section>
 

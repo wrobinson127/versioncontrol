@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Version Control: the story of the record</title>
+<meta name="description" content="Seven passages through the release record's own data: what shipped, how fast, what was measured, what was disclosed, and where every number comes from.">
+<link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
+<link rel="canonical" href="https://versioncontrol.walker-robinson.com/story.html">
+<meta property="og:title" content="Version Control: the story of the record">
+<meta property="og:description" content="Every number tells you where it came from, or it does not appear. Seven passages through the record's own data.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://versioncontrol.walker-robinson.com/story.html">
+<meta property="og:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
+<link rel="stylesheet" href="./css/site.css">
+<link rel="stylesheet" href="./css/story.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to the story</a>
+
+<header class="masthead">
+  <div class="wrap mast-row">
+    <div class="mast-brand">
+      <a class="mast-title" href="./index.html">Version Control</a>
+      <p class="mast-tagline">The release record of the model era.</p>
+    </div>
+    <nav class="mast-nav" aria-label="Site">
+      <a href="./story.html" aria-current="page">Story</a>
+      <a href="./index.html">Timeline</a>
+      <a href="./methodology.html">Methodology</a>
+      <a href="./about.html">About</a>
+      <a href="./data.html">Data</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Narrative prose is claim-bearing content: the beat prose below renders
+     content/narrative_beats.md verbatim and is DRAFT, FLAGGED FOR WALKER
+     APPROVAL LINE BY LINE before any public flip (Amendment 1). -->
+
+<main id="main" class="story-wrap">
+  <h1 class="visually-hidden">The story of the record</h1>
+
+  <section class="scrolly" id="scrolly" aria-label="The story, in seven passages">
+    <div class="stage-col">
+      <figure class="stage" id="stage">
+        <!-- The cold first paint: the Beat 1 static state, rendered inline
+             so the opening frame needs no script and no library. The
+             story script redraws this same state from the derived data. -->
+        <svg id="stage-svg" class="stage-svg" viewBox="0 0 720 480" aria-hidden="true">
+          <g class="st-axis"><line class="st-axis-line" x1="132" y1="420" x2="700" y2="420"/></g>
+          <g class="st-years">
+            <line class="st-tick" x1="149.83" y1="420" x2="149.83" y2="426"/>
+            <text class="st-year" font-size="12" x="153.83" y="439">2023</text>
+            <line class="st-tick" x1="304.78" y1="420" x2="304.78" y2="426"/>
+            <text class="st-year" font-size="12" x="308.78" y="439">2024</text>
+            <line class="st-tick" x1="460.15" y1="420" x2="460.15" y2="426"/>
+            <text class="st-year" font-size="12" x="464.15" y="439">2025</text>
+            <line class="st-tick" x1="615.1" y1="420" x2="615.1" y2="426"/>
+            <text class="st-year" font-size="12" x="619.1" y="439">2026</text>
+          </g>
+          <g class="st-origin">
+            <line class="st-origin-tick" x1="136.25" y1="412" x2="136.25" y2="428"/>
+            <text class="st-mono-label" font-size="11" x="132" y="457">2022-11-30</text>
+            <text class="st-sub-label" font-size="11" x="132" y="471.85">ChatGPT released. The record begins.</text>
+          </g>
+          <g class="st-first"><rect class="st-mark" x="143.83" y="404" width="3.5" height="16"/></g>
+          <g class="st-ghost" opacity="0.62">
+            <line class="st-leader" x1="145.58" y1="402" x2="145.58" y2="302"/>
+            <rect class="st-card" x="176" y="118" width="330" height="184" rx="6"/>
+            <text class="st-mono-label" font-size="12" x="196" y="150">2022-12-22</text>
+            <text class="st-org-strong" font-size="12" x="294.4" y="150">Meta</text>
+            <text class="st-sub-label" font-size="11" x="344.8" y="150">release</text>
+            <text class="st-slab" font-size="20" x="196" y="180">OPT-IML (175B)</text>
+            <text class="st-body" font-size="11.5" x="196" y="199.5">Meta released OPT-IML (175B), available with open</text>
+            <text class="st-body" font-size="11.5" x="196" y="216.18">weights under a non-commercial license. The entry is</text>
+            <text class="st-body" font-size="11.5" x="196" y="232.85">backfilled from Epoch AI's models dataset.</text>
+            <text class="st-sub-label" font-size="11" x="196" y="286">availability:</text>
+            <text class="st-mono-label" font-size="11" x="268.6" y="286">open weights</text>
+            <text class="st-sub-label" font-size="11" x="355.5" y="286">parameters:</text>
+            <text class="st-mono-label" font-size="11" x="422.6" y="286">175B</text>
+          </g>
+        </svg>
+        <p class="stage-error" id="stage-error" hidden></p>
+        <figcaption class="stage-caption" id="stage-caption">The record's time axis. The marked origin: 2022-11-30, ChatGPT released.</figcaption>
+      </figure>
+      <p class="visually-hidden" id="stage-live" aria-live="polite"></p>
+    </div>
+
+    <div class="steps">
+
+      <section class="beat" id="beat-1" aria-labelledby="beat-1-h">
+        <header class="beat-head"><h2 id="beat-1-h">The record begins</h2></header>
+        <div class="step"><p>On 2022-11-30, OpenAI released ChatGPT, and the release of a large AI model became a public event. This site is the record of what shipped after that day.</p></div>
+        <div class="step"><p>It is a registry, not a review. A pipeline watches four independent signals nightly; a person approves every entry before it appears. Each entry states what shipped, from whom, how it can be used, and what the lab disclosed.</p></div>
+        <div class="step"><p>Every number in the record carries a tag naming where it came from. That rule is the whole design. The rest of this page shows you how to read it.</p></div>
+        <nav class="beat-skip" aria-label="From beat 1">
+          <a href="#beat-2">Next: The pulse builds</a>
+        </nav>
+      </section>
+
+      <section class="beat" id="beat-2" aria-labelledby="beat-2-h">
+        <header class="beat-head"><h2 id="beat-2-h">The pulse builds</h2></header>
+        <div class="step"><p>Each mark is one release from one of <span class="num" data-slot="org_count">12</span> tracked organizations. The record holds <span class="num" data-slot="releases_recorded">281</span> of them, from <span class="num" data-slot="first_date">2022-12-22</span> to <span class="num" data-slot="last_date">2026-06-30</span>.</p></div>
+        <div class="step"><p>The spacing is the story the record tells on its own. In the record's first full year, the median gap between releases across all tracked organizations was <span class="num" data-slot="median_gap_first_year">4</span> days.</p></div>
+        <div class="step"><p>This year it is <span class="num" data-slot="median_gap_this_year">3</span> days. The counter beside the strip is computed from the release dates you are looking at; nothing else feeds it.</p></div>
+        <nav class="beat-skip" aria-label="From beat 2">
+          <a href="#beat-1">Back: The record begins</a>
+          <a href="#beat-3">Next: The climb</a>
+        </nav>
+      </section>
+
+      <section class="beat" id="beat-3" aria-labelledby="beat-3-h">
+        <header class="beat-head"><h2 id="beat-3-h">The climb</h2></header>
+        <div class="step"><p>The record pins two benchmarks: GPQA Diamond and SWE-Bench Verified. Each point on this chart is one model's score, placed at its release date.</p></div>
+        <div class="step"><p>A solid mark is an independent measurement, run by an evaluator that is not the releasing lab. In v1 of the record, these come from Epoch AI's Benchmarking Hub.</p></div>
+        <div class="step"><p>A hollow mark is a number the releasing lab reported for its own model. The record keeps both, and never lets one dress as the other. The tag travels with the number at every size, on every surface.</p></div>
+        <nav class="beat-skip" aria-label="From beat 3">
+          <a href="#beat-2">Back: The pulse builds</a>
+          <a href="#beat-4">Next: The treadmill</a>
+        </nav>
+      </section>
+
+      <section class="beat" id="beat-4" aria-labelledby="beat-4-h">
+        <header class="beat-head"><h2 id="beat-4-h">The treadmill</h2></header>
+        <div class="step"><p>Benchmarks age. Scores crowd a ceiling, the test stops separating models, and the field moves to a harder ruler.</p></div>
+        <div class="step"><p>When that happens, the record does not stitch the old ruler to the new one. The era closes with a labeled boundary, and the axis that follows is a different axis.</p></div>
+        <div class="step"><p>"GPQA Diamond" is permanently a different measurement from "GPQA." A number on one never compares to a number on the other, here or anywhere in the record. Where a comparison cannot be made honestly, the record says so, in words.</p></div>
+        <nav class="beat-skip" aria-label="From beat 4">
+          <a href="#beat-3">Back: The climb</a>
+          <a href="#beat-5">Next: Two numbers</a>
+        </nav>
+      </section>
+
+      <section class="beat" id="beat-5" aria-labelledby="beat-5-h">
+        <header class="beat-head"><h2 id="beat-5-h">Two numbers</h2></header>
+        <div class="step"><p>One model, one benchmark, two numbers: the one the lab reported, and the one an independent evaluator measured. They are often different. Neither is deleted.</p></div>
+        <div class="step"><p class="thesis-line">Every number tells you where it came from, or it does not appear.</p></div>
+        <nav class="beat-skip" aria-label="From beat 5">
+          <a href="#beat-4">Back: The treadmill</a>
+          <a href="#beat-6">Next: The paperwork</a>
+        </nav>
+      </section>
+
+      <section class="beat" id="beat-6" aria-labelledby="beat-6-h">
+        <header class="beat-head"><h2 id="beat-6-h">The paperwork</h2></header>
+        <div class="step"><p>Models ship with paperwork, or without it: a system card, a model card, a usage policy, a paper. The record tracks each artifact for each release, as a link.</p></div>
+        <div class="step"><p>Where a lab published nothing, the cell stays hollow, and it stays hollow on purpose. "Not disclosed" is recorded signal, not missing data. It is never rendered as a zero.</p></div>
+        <nav class="beat-skip" aria-label="From beat 6">
+          <a href="#beat-5">Back: Two numbers</a>
+          <a href="#beat-7">Next: The landing</a>
+        </nav>
+      </section>
+
+      <section class="beat" id="beat-7" aria-labelledby="beat-7-h">
+        <header class="beat-head"><h2 id="beat-7-h">The landing</h2></header>
+        <div class="step"><p>This is the record. It re-checks its sources nightly, drafts candidate entries, and waits for a person to approve them; nothing publishes on its own.</p></div>
+        <div class="step"><p>Everything above is built from the same files you can download below: the entries, the derived comparisons, and a manifest with checksums. The methodology page states the rules; the data page carries the record itself. From here, it is yours to search.</p></div>
+        <nav class="beat-skip" aria-label="From beat 7">
+          <a href="#beat-6">Back: The paperwork</a>
+          <a href="#landing">Next: Enter the record</a>
+        </nav>
+      </section>
+
+    </div>
+  </section>
+
+  <section class="story-landing" id="landing" aria-label="Enter the record">
+    <a class="enter-record" href="./index.html">Enter the record</a>
+    <p class="landing-links">
+      <a href="./methodology.html">How to read this registry</a>
+      <a href="./data.html">Download the dataset</a>
+    </p>
+  </section>
+</main>
+
+<!-- Step runway sizes apply before first paint so the pinned layout does
+     not shift when the deferred story script arrives. Measured innerHeight,
+     not CSS vh (craft notes); skipped under reduced motion, where the
+     static stacked rendering needs no runway. -->
+<script>
+(function () {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) { return; }
+  var h = Math.max(420, Math.round(window.innerHeight * (window.innerWidth <= 700 ? 0.62 : 0.85)));
+  var steps = document.querySelectorAll("#scrolly .step");
+  for (var i = 0; i < steps.length; i++) { steps[i].style.minHeight = h + "px"; }
+})();
+</script>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <p class="update" id="foot-update">Last successful update loads with the dataset.</p>
+    <p>Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>. Dataset licensed CC-BY 4.0 with Epoch AI attribution. <a href="./data.html">Download the dataset</a>.</p>
+  </div>
+</footer>
+
+<!-- GSAP core + ScrollTrigger 3.13.0, pinned with self-computed SRI hashes
+     (amendment D17; hashes computed from the exact files at pin time).
+     The scripts defer; the Beat 1 static state above needs neither. -->
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" integrity="sha384-HOvlOYPIs/zjoIkWUGXkVmXsjr8GuZLV+Q+rcPwmJOVZVpvTSXQChiN4t9Euv9Vc" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" integrity="sha384-P8VzCVnT9NBUkMrpcIZrJbA7EBjJvh/fJS6PmP+4nLIM284DtsImIv8D0fFjIkeh" crossorigin="anonymous"></script>
+<script defer src="./js/story.js"></script>
+</body>
+</html>

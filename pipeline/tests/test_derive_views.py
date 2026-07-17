@@ -58,6 +58,9 @@ def test_series_partition_by_version_and_class():
     assert keys == {("diamond", "INDEPENDENT", 2), ("diamond", "LAB_REPORTED", 1)}
     for s in t["series"]:
         assert s["points"] == sorted(s["points"], key=lambda p: p["date"])
+        # every point carries its provenance retrieval date for the site's
+        # per-chart source lines
+        assert all(p["retrieval_date"] == "2026-07-16" for p in s["points"])
 
 
 def test_seeded_mixed_series_is_refused():
@@ -101,6 +104,7 @@ def test_cadence_monthly_and_median_gap():
     c = derive_views.build_cadence(entries)
     assert {"month": "2024-01", "releases": 2, "revisions": 0} in c["monthly"]
     assert {"month": "2024-03", "releases": 2, "revisions": 1} in c["monthly"]
+    assert c["yearly"] == [{"year": "2024", "releases": 4, "revisions": 1}]
     # median over gaps [30, 30] then [30, 30, 10]
     assert c["median_gap"][0] == {"date": "2024-03-01", "days": 30}
     assert c["median_gap"][1] == {"date": "2024-03-11", "days": 30}
@@ -123,6 +127,38 @@ def test_matrix_counts_presence_only():
     assert set(m["rows"][0]["cells"].values()) <= {True, False}
 
 
+def test_matrix_artifact_status_carries_pending_review():
+    # Zero links on record plus researched-but-unapproved rows is the
+    # registrar's pending state; the site renders it as 'under review',
+    # never as a zero (DESIGN rule 2).
+    entries = [_entry("openai--a1", "2024-01-01")]
+    m = derive_views.build_disclosure_matrix(entries, {"system_card": 5})
+    assert m["artifact_status"]["system_card"] == {
+        "links_on_record": 0, "pending_review": 5}
+    assert m["artifact_status"]["paper"] == {
+        "links_on_record": 0, "pending_review": 0}
+
+
+def test_pending_link_counts_reads_draft_tables(tmp_path):
+    d = tmp_path / "content" / "disclosure_links"
+    d.mkdir(parents=True)
+    (d / "openai.json").write_text(json.dumps({"rows": [
+        {"system_card": "https://example.com/card", "model_card": "NOT_DISCLOSED",
+         "usage_policy": "https://example.com/aup", "paper": "NOT_DISCLOSED",
+         "status": "DRAFT_FLAGGED"},
+        {"system_card": "https://example.com/approved", "model_card": "NOT_DISCLOSED",
+         "usage_policy": "NOT_DISCLOSED", "paper": "NOT_DISCLOSED",
+         "status": "APPROVED"},  # approved rows are not pending
+    ]}), encoding="utf-8")
+    counts = derive_views.pending_link_counts(root=str(tmp_path))
+    assert counts["system_card"] == 1
+    assert counts["usage_policy"] == 1
+    assert counts["model_card"] == 0
+    # no content dir at all: zeros, never an error
+    assert derive_views.pending_link_counts(root=str(tmp_path / "nowhere")) == {
+        a: 0 for a in validate.DISCLOSURE_ARTIFACTS}
+
+
 def test_tiles():
     entries = [
         _entry("openai--a1", "2026-01-01",
@@ -130,11 +166,15 @@ def test_tiles():
         _entry("openai--a2", "2026-01-21"),
         _entry("openai--a3", "2026-02-10"),
     ]
-    t = derive_views.build_tiles(entries, "2026-02-20")
+    t = derive_views.build_tiles(entries, "2026-02-20",
+                                 {"system_card": 7})
     assert t["releases_recorded"] == 3
+    assert t["entries_recorded"] == 3
     assert t["days_since_last_release"] == 10
     assert t["median_gap_days_this_year"] == 20
     assert t["share_with_system_card"] == round(1 / 3, 3)
+    assert t["papers_on_record"] == 0
+    assert t["system_card_links_pending"] == 7
 
 
 # ------------------------------------------- integration + manifest guard
