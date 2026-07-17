@@ -1,0 +1,51 @@
+name: promote
+
+# Walker's approval mechanic (D11): mark a candidate "approved": true in its
+# data/pending JSON on the nightly-pending branch (GitHub web editor), then
+# run this workflow. It converts approved candidates into validated entries
+# on the same branch; merging the branch publishes them.
+
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: "Candidate ids to promote (space-separated); empty = every approved candidate"
+        required: false
+        default: ""
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: nightly-pending
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Promote approved candidates
+        env:
+          # Never template the input into the script: expression substitution
+          # into run: is the canonical shell-injection pattern.
+          IDS: ${{ inputs.ids }}
+        run: |
+          if [ -n "$IDS" ]; then
+            # shellcheck disable=SC2086
+            python -m pipeline.promote --run-date "$(date -u +%F)" --ids $IDS
+          else
+            python -m pipeline.promote --run-date "$(date -u +%F)"
+          fi
+      - name: Commit the promotion
+        run: |
+          git config user.name "versioncontrol-nightly"
+          git config user.email "nightly@users.noreply.github.com"
+          git add -A -- data
+          if git diff --cached --quiet; then
+            echo "Nothing promoted."
+            exit 0
+          fi
+          git commit -m "promote: approved candidates into the dataset $(date -u +%F)"
+          git push origin nightly-pending

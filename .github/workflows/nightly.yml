@@ -1,0 +1,98 @@
+name: nightly
+
+on:
+  schedule:
+    - cron: "20 8 * * *"   # 08:20 UTC daily; quiet hour for lab announcements
+  workflow_dispatch:
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    # Dormant until Walker sets the repository variable NIGHTLY_ENABLED=true
+    # on his launch checklist. The job-level gate covers both cron and
+    # manual dispatch.
+    if: vars.NIGHTLY_ENABLED == 'true'
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+
+      - name: Configure git identity
+        # Before any merge: a non-fast-forward merge creates a commit and
+        # dies without identity (P6 review R1).
+        run: |
+          git config user.name "versioncontrol-nightly"
+          git config user.email "nightly@users.noreply.github.com"
+
+      - name: Sync the rolling pending branch
+        run: |
+          git checkout -B nightly-pending origin/main
+          if git ls-remote --exit-code origin nightly-pending >/dev/null 2>&1; then
+            git fetch origin nightly-pending
+            # Only the branch-absent first night is tolerated (the guard
+            # above); a real merge failure here must fail the run loudly.
+            git merge --no-edit FETCH_HEAD
+          fi
+
+      - name: Detect, correlate, extract, write pending
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python -m pipeline.nightly --report-path morning_report.md
+
+      - name: Upload morning report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: morning-report
+          path: morning_report.md
+
+      - name: Commit candidates and ledger to the pending branch
+        # Runs even when detection failed so recorded LLM spend and written
+        # candidates are never discarded with the runner (P6 review R2/R3);
+        # the job still goes red on failure, this step only preserves state.
+        if: always()
+        run: |
+          # Never complete a conflicted merge with candidate files full of
+          # conflict markers: bail and leave the red run for human eyes.
+          if git rev-parse -q --verify MERGE_HEAD >/dev/null; then
+            echo "Merge in progress after a conflict; not committing."
+            exit 0
+          fi
+          mkdir -p data/pending
+          git add -A -- data/pending
+          if [ -f data/derived/llm_ledger.json ]; then
+            git add data/derived/llm_ledger.json
+          fi
+          if git diff --cached --quiet; then
+            echo "Nothing new to commit."
+            exit 0
+          fi
+          git commit -m "nightly: candidate releases awaiting review $(date -u +%F)"
+          git push origin nightly-pending
+
+      - name: Open or refresh the review PR
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if ! git ls-remote --exit-code origin nightly-pending >/dev/null 2>&1; then
+            exit 0
+          fi
+          existing=$(gh pr list --head nightly-pending --state open \
+                     --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            if [ -f morning_report.md ]; then
+              gh pr edit "$existing" --body-file morning_report.md
+            fi
+          elif ! git diff --quiet origin/main origin/nightly-pending -- data/pending; then
+            gh pr create --base main --head nightly-pending \
+              --title "Pending release candidates" \
+              --body-file morning_report.md
+          fi

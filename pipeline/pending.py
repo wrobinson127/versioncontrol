@@ -80,10 +80,12 @@ def morning_report(candidates: list, run_date: str, detector_errors: list,
                 f"| {c['confidence']}/5 | {c['date_hint'] or 'unknown'} "
                 f"| {anchor} |")
         lines.append("")
-        lines.append("Each candidate has a file under data/pending/. "
-                     "Approval is merging this branch. Deleting a candidate "
-                     "file rejects it for now; to reject it permanently, add "
-                     "its id to data/pending/rejected.json.")
+        lines.append("Each candidate has a file under data/pending/. To "
+                     "publish one: set \"approved\": true in its file, run "
+                     "the promote workflow, review the diff, and merge this "
+                     "branch. To reject one permanently, add its id to "
+                     "data/pending/rejected.json; deleting the file alone "
+                     "only rejects it until the next detection run.")
     else:
         lines.append("No new candidate releases detected.")
 
