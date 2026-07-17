@@ -1,0 +1,29 @@
+name: weekly-audit
+
+# D19 (Amendment 2): Artificial Analysis coverage audit. Weekly, never
+# nightly; free tier; key-gated. Models they track that the registry lacks
+# become detection-QA FLAGs in the audit artifact.
+
+on:
+  schedule:
+    - cron: "40 9 * * 1"   # Mondays 09:40 UTC
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    if: vars.NIGHTLY_ENABLED == 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Coverage audit against Artificial Analysis
+        env:
+          ARTIFICIALANALYSIS_API_KEY: ${{ secrets.ARTIFICIALANALYSIS_API_KEY }}
+        run: python -m pipeline.aa_audit --run-date "$(date -u +%F)" --out aa_audit.md
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aa-coverage-audit
+          path: aa_audit.md

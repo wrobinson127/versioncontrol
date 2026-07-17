@@ -130,6 +130,10 @@ Verified by execution (test run: `python -m pytest pipeline/tests`, 13 passed):
 - **D3**: ISC license, permissive; pin with SRI.
 - **Scrollama** (approved fallback): MIT.
 
+## Amendment 2 gate: D19 Artificial Analysis (verified 2026-07-17)
+
+Docs at artificialanalysis.ai/data-api/docs, fetched live: base URL `https://artificialanalysis.ai/api/v2`, auth via `x-api-key` header, free tier 100 requests per day, attribution required across all tiers, redistribution rights require contacting them (confirming the D19 display-only posture). The free models endpoint `/language/models/free` returns ids, names, creator slugs, and evaluation scores including `gpqa_diamond`. Their stated convention, verbatim: "Nulls mean 'not measured' or 'not applicable'. They never mean zero." The live API call itself awaits the key (FLAG: Walker creates a free-tier key and adds it as the ARTIFICIALANALYSIS_API_KEY Actions secret, or vetoes D19's key exception); the audit job degrades to a stated no-run note without it.
+
 ## FLAGs raised by Phase 0
 
 1. **Meta announcement source blocked.** All `ai.meta.com` surfaces return HTTP 400 to scripted fetches. Interim Meta coverage: HF `meta-llama` (open-weights signal), Epoch trailing detection, OpenRouter tripwire. Worth retesting from a GitHub Actions runner IP before launch; if still blocked, Meta's primary-source column stays empty by design and the methodology page says so.

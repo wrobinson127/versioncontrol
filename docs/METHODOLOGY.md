@@ -27,6 +27,7 @@ A nightly pipeline reads four independent signal classes: official lab announcem
 - **Epoch AI, "Data on AI Models"** and **"AI Benchmarking Hub"**: CC-BY 4.0, attribution in `DATA_LICENSE.md`. Backfilled entries and all independent benchmark numbers derive from these.
 - **Lab announcements**: facts and links only; no republication of announcement text beyond short attributed fragments.
 - **OpenRouter**: used for detection and cross-checking. Pricing and context-length figures shown on the site carry "per OpenRouter" attribution and are **never included in the downloadable dataset**, because OpenRouter publishes no redistribution license for its catalog.
+- **Artificial Analysis**: used for a weekly coverage audit (models they track that this registry lacks become review flags) and, where shown, as an additional independent measurement source with "per Artificial Analysis" attribution. Independent sources are never averaged or merged; when two disagree, both render, each attributed. Their free tier grants no redistribution rights, so their data is display-only and never enters the downloadable dataset. Their documentation states that nulls mean not measured, never zero, a convention this registry shares.
 - The published dataset is CC-BY 4.0. The code is MIT.
 
 ## Known limits
