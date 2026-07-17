@@ -289,6 +289,14 @@ a:hover { color: var(--ink); }
   font-weight: 700;
   line-height: 1.25;
 }
+/* Offscreen cards skip layout and paint; the intrinsic size keeps the
+   scrollbar and year-ruler jumps stable. Deep links still resolve: the
+   browser renders a card when it is scrolled to. */
+.entry {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 340px;
+}
+
 .entry-name a { color: inherit; text-decoration: none; }
 .entry-name a:hover { color: var(--accent); }
 
