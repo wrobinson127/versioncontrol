@@ -296,23 +296,25 @@
       "entry_id": "openai--gpt-5.1-codex",
       "model_name": "GPT-5.1-Codex",
       "date": "2025-11-12",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://openai.com/policies/usage-policies/",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "No dedicated system card. The Deployment Safety Hub sitemap fetched 200 this session lists no GPT-5.1-Codex card; the GPT-5.1 addendum PDF fetched this session covers Instant and Thinking only and the GPT-5.1-Codex-Max card does not mention GPT-5.1-Codex. No standalone model card or technical report. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "openai--gpt-5.1-codex-mini",
       "model_name": "GPT-5.1-Codex-mini",
       "date": "2025-11-12",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://openai.com/policies/usage-policies/",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "No dedicated system card. The Deployment Safety Hub sitemap fetched 200 this session lists no GPT-5.1-Codex-mini card; the GPT-5.1 addendum PDF fetched this session covers Instant and Thinking only and the GPT-5.1-Codex-Max card does not mention Codex-mini. No standalone model card or technical report. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "openai--gpt-5.1",
@@ -330,78 +332,85 @@
       "entry_id": "openai--gpt-5.1-codex-max",
       "model_name": "GPT-5.1-Codex-Max",
       "date": "2025-11-19",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://cdn.openai.com/pdf/2a7d98b1-57e5-4147-8d0e-683894d782ae/5p1_codex_max_card_03.pdf",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://openai.com/policies/usage-policies/",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "GPT-5.1-Codex-Max System Card PDF fetched 200 this session; title page reads November 18, 2025, one day before the row date. No standalone model card or technical report. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "openai--gpt-5.2-pro",
       "model_name": "GPT-5.2 Pro",
       "date": "2025-12-11",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://cdn.openai.com/pdf/3a4153c8-c748-4b71-8e31-aecbde944f8d/oai_5_2_system-card.pdf",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://openai.com/policies/usage-policies/",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Update to GPT-5 System Card: GPT-5.2 PDF fetched 200 this session; it is the safety document for the GPT-5.2 family that shipped with Pro on this date, but it reports evaluations for gpt-5.2-instant and gpt-5.2-thinking and does not name GPT-5.2 Pro anywhere in the PDF. No standalone model card or technical report. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "openai--gpt-5.2-codex",
       "model_name": "GPT-5.2 Codex",
       "date": "2025-12-18",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://cdn.openai.com/pdf/ac7c37ae-7f4c-4442-b741-2eabdeaf77e0/oai_5_2_Codex.pdf",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://openai.com/policies/usage-policies/",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "Addendum to GPT-5.2 System Card: GPT-5.2-Codex PDF fetched 200 this session; title page reads December 18, 2025, matching the row date. No standalone model card or technical report. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "openai--gpt-5.3-codex",
       "model_name": "GPT-5.3 Codex",
       "date": "2026-02-05",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://cdn.openai.com/pdf/23eca107-a9b1-4d2c-b156-7deb4fbc697c/GPT-5-3-Codex-System-Card-02.pdf",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://openai.com/policies/usage-policies/",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "GPT-5.3-Codex System Card PDF fetched 200 this session; title page reads February 5, 2026, matching the row date. No standalone model card or technical report. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "openai--gpt-5.4",
       "model_name": "GPT-5.4",
       "date": "2026-03-05",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://deploymentsafety.openai.com/gpt-5-4-thinking/gpt-5-4-thinking.pdf",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://openai.com/policies/usage-policies/",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "GPT-5.4 Thinking System Card PDF fetched 200 this session; title page reads March 5, 2026, matching the row date. OpenAI now publishes system cards on its Deployment Safety Hub rather than cdn.openai.com. No standalone model card or technical report. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "openai--gpt-5.4-mini",
       "model_name": "GPT-5.4 Mini",
       "date": "2026-03-17",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://deploymentsafety.openai.com/gpt-5-4-thinking/gpt-5-4-thinking.pdf",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://openai.com/policies/usage-policies/",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "GPT-5.4 Thinking System Card PDF fetched 200 this session; it covers GPT-5.4 mini in an appendix, and the mini and nano launch post fetched this session links that appendix as the safety reference. No dedicated mini card, standalone model card, or technical report. Usage policy page fetched 200.",
+      "researched": true
     },
     {
       "entry_id": "openai--gpt-5.5",
       "model_name": "GPT-5.5",
       "date": "2026-04-23",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "https://deploymentsafety.openai.com/gpt-5-5/gpt-5-5.pdf",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://openai.com/policies/usage-policies/",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": ""
+      "notes": "GPT-5.5 System Card PDF fetched 200 this session on the Deployment Safety Hub; title page reads April 23, 2026, matching the row date, and the card also names GPT-5.5 Pro. No standalone model card or technical report. Usage policy page fetched 200.",
+      "researched": true
     }
   ]
 }

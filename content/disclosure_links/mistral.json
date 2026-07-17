@@ -327,56 +327,61 @@
       "entry_id": "mistral--magistral-medium-1.2",
       "model_name": "Magistral Medium 1.2",
       "date": "2025-09-18",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "NOT_DISCLOSED",
+      "usage_policy": "https://legal.mistral.ai/terms/usage-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": "Not researched this pass; Magistral line represented by the Small 1.1 row above."
+      "researched": true,
+      "notes": "Magistral Medium 1.2 ships API-only as magistral-medium-2509; weights were not released so no official mistralai HF card exists. No system card, consistent with the lab-wide pattern reconfirmed this session. No dedicated paper; the Magistral arxiv report covers the 1.0 release only. Usage policy fetched HTTP 200 this session."
     },
     {
       "entry_id": "mistral--magistral-small-1.2",
       "model_name": "Magistral Small 1.2",
       "date": "2025-09-18",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/mistralai/Magistral-Small-2509",
+      "usage_policy": "https://legal.mistral.ai/terms/usage-policy",
+      "paper": "https://arxiv.org/abs/2506.10910",
       "status": "DRAFT_FLAGGED",
-      "notes": "Not researched this pass; Magistral line represented by the Small 1.1 row above."
+      "researched": true,
+      "notes": "No system card published for the Magistral line. Official mistralai HF card for Magistral-Small-2509 fetched HTTP 200 this session under Apache 2.0; the card itself cites the Magistral arxiv paper, whose abstract was also fetched HTTP 200. The paper documents the original 1.0 training recipe, not the 1.2 update. Usage policy fetched HTTP 200 this session."
     },
     {
       "entry_id": "mistral--mistral-3-large",
       "model_name": "Mistral 3 Large",
       "date": "2025-12-02",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/mistralai/Mistral-Large-3-675B-Instruct-2512",
+      "usage_policy": "https://legal.mistral.ai/terms/usage-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": "Not researched this pass; candidate for the next research cycle."
+      "researched": true,
+      "notes": "No system card, consistent with the lab-wide pattern. Official mistralai HF card for the 675B instruct weights fetched HTTP 200 this session under Apache 2.0. No paper; the card links only the Mistral 3 announcement blog, and the Ministral 3 arxiv report covers the 3B, 8B, and 14B line rather than Large 3. Usage policy fetched HTTP 200 this session."
     },
     {
       "entry_id": "mistral--devstral-2-123b",
       "model_name": "Devstral 2 (123B)",
       "date": "2025-12-09",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/mistralai/Devstral-2-123B-Instruct-2512",
+      "usage_policy": "https://legal.mistral.ai/terms/usage-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": "Not researched this pass; specialist coding model outside the top-priority set."
+      "researched": true,
+      "notes": "No system card, consistent with the lab-wide pattern. Official mistralai HF card fetched HTTP 200 this session under a Modified MIT license with a revenue clause. No paper; the card carries benchmarks and deployment guidance only and links no arxiv report. Usage policy fetched HTTP 200 this session."
     },
     {
       "entry_id": "mistral--mistral-medium-3.5",
       "model_name": "Mistral Medium 3.5",
       "date": "2026-04-29",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
+      "system_card": "NOT_DISCLOSED",
+      "model_card": "https://huggingface.co/mistralai/Mistral-Medium-3.5-128B",
+      "usage_policy": "https://legal.mistral.ai/terms/usage-policy",
+      "paper": "NOT_DISCLOSED",
       "status": "DRAFT_FLAGGED",
-      "notes": "Not researched this pass; candidate for the next research cycle."
+      "researched": true,
+      "notes": "No system card, consistent with the lab-wide pattern. Official mistralai HF card for the 128B open weights fetched HTTP 200 this session under a Modified MIT license. No paper; the card links only the announcement blog for the merged flagship release. Usage policy fetched HTTP 200 this session."
     }
   ]
 }
