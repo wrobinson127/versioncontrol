@@ -54,6 +54,8 @@ color:var(--ink-muted);border:0;cursor:pointer;border-right:1px solid var(--surf
 
 .mk-cell{opacity:0.10;transition:opacity 200ms var(--ease-out)}
 .mk-cell.on{opacity:1}
+.mk-cell.kbd{opacity:1!important;stroke:var(--annotation);stroke-width:2}
+.chart:focus-visible{outline:2px solid var(--verified);outline-offset:2px}
 .rule{stroke:var(--surface-edge)}.yrgrid{stroke:var(--surface-edge);opacity:0.55}
 .orglab{font-family:var(--body);font-size:10px;fill:var(--ink-muted)}
 .pcount{font-family:var(--slab);font-size:17px;font-weight:700;fill:var(--verified);font-variant-numeric:tabular-nums}
@@ -222,6 +224,25 @@ function showTip(el,x,y){
 }
 inst.addEventListener("mousemove",function(e){showTip(e.target.closest?e.target.closest(".mk-cell"):null,e.clientX,e.clientY);});
 inst.addEventListener("mouseleave",function(){tip.style.opacity="0";});
+// keyboard detail-on-demand: focus a chart, arrow through its marks (4 tab
+// stops, not 390) with a live readout — the keyboard/AT path for hover
+document.querySelectorAll(".panel .chart").forEach(function(svg){
+  var p=svg.closest(".panel");svg.setAttribute("tabindex","0");
+  svg.setAttribute("aria-label",(p.querySelector(".p-title")||{}).textContent+", arrow keys explore the marks");
+  var ci=-1;
+  function marks(){ return [].filter.call(p.querySelectorAll(".mk-cell"),function(m){var bn=m.closest(".bench");return !bn||bn.classList.contains("show");}); }
+  svg.addEventListener("keydown",function(e){
+    var ms=marks();if(!ms.length)return;
+    if(e.key==="ArrowRight"||e.key==="ArrowDown"){ci=(ci+1)%ms.length;e.preventDefault();}
+    else if(e.key==="ArrowLeft"||e.key==="ArrowUp"){ci=(ci-1+ms.length)%ms.length;e.preventDefault();}
+    else if(e.key==="Escape"){ms.forEach(function(m){m.classList.remove("kbd");});tip.style.opacity="0";ci=-1;return;}
+    else return;
+    ms.forEach(function(m){m.classList.remove("kbd");});
+    var m=ms[ci];m.classList.add("kbd");var r=m.getBoundingClientRect();
+    showTip(m,r.left+r.width/2,r.top);
+  });
+  svg.addEventListener("blur",function(){marks().forEach(function(m){m.classList.remove("kbd");});tip.style.opacity="0";});
+});
 
 // benchmark toggle + mini-rail (real buttons, keyboard-operable)
 panels.traj.querySelectorAll("#traj-controls button").forEach(function(btn){
