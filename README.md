@@ -1,6 +1,6 @@
 # Version Control
 
-**The release record of the model era.** Version Control is a public registry of major AI model releases: what shipped, what changed against the predecessor, what the lab disclosed, and where every number comes from. It tracks the versions of frontier AI models, not source code, and it is not an MLOps tool.
+**The release record of the AI model era.** Version Control is a public registry of major AI model releases: what shipped, what changed against the predecessor, what the lab disclosed, and where every number comes from. It tracks the versions of frontier AI models, not source code, and it is not an MLOps tool.
 
 Live site: [versioncontrol.walker-robinson.com](https://versioncontrol.walker-robinson.com) (goes live at launch; the site in `site/` renders the committed dataset).
 

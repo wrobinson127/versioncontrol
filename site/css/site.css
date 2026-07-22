@@ -27,7 +27,7 @@
   --surface-edge: #dde1cd;
   --ink: #1d211a;
   --ink-muted: #57604e;
-  --ink-faint: #6b7361; /* AA-checked against --surface for small data text */
+  --ink-faint: #646c5a; /* AA-checked against paper (4.89) and surface (5.17) */
   --accent: #2e4a38;
   --entry: #2f5d46;       /* recorded-datum green; 6.75:1 on paper, marks + large numerals only */
   --entry-faint: #6f8a78; /* revision marks; 3.36:1 on paper, graphical marks only */
