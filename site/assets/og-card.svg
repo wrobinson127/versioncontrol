@@ -1,6 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Version Control: the release record of the model era">
-  <!-- Version Control OG card. A PNG render of this file ships as assets/og.png
-       in a later phase; the meta tags already reference that path. -->
+  <!-- Version Control OG card. Source for the rendered assets/og.png. -->
   <style>
     .slab { font-family: Rockwell, "Rockwell Nova", "Roboto Slab", "DejaVu Serif", Georgia, serif; }
     .body { font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }

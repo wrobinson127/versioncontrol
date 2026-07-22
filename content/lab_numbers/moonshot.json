@@ -1,35 +1,35 @@
 {
-  "org": "moonshot",
-  "display": "Moonshot AI",
-  "reviewed_by_walker": false,
-  "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
-  "tranche": "1 (2026-07-17)",
-  "rows": [],
-  "unpinned_claims": [],
-  "not_found": [
-    {
-      "entry_id": "moonshot--kimi-k2.7-code",
-      "benchmark": "gpqa-diamond",
-      "checked": [
-        "https://huggingface.co/moonshotai/Kimi-K2.7-Code",
-        "https://www.kimi.com/blog",
-        "https://www.kimi.com/resources/kimi-k2-7-code",
-        "https://github.com/MoonshotAI",
-        "https://github.com/MoonshotAI/Kimi-K2.7-Code (404)",
-        "https://www.moonshot.ai/"
-      ]
-    },
-    {
-      "entry_id": "moonshot--kimi-k2.7-code",
-      "benchmark": "swe-bench-verified",
-      "checked": [
-        "https://huggingface.co/moonshotai/Kimi-K2.7-Code",
-        "https://www.kimi.com/blog",
-        "https://www.kimi.com/resources/kimi-k2-7-code",
-        "https://github.com/MoonshotAI",
-        "https://github.com/MoonshotAI/Kimi-K2.7-Code (404)",
-        "https://www.moonshot.ai/"
-      ]
-    }
-  ]
+ "org": "moonshot",
+ "display": "Moonshot AI",
+ "reviewed_by_walker": true,
+ "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
+ "tranche": "1 (2026-07-17)",
+ "rows": [],
+ "unpinned_claims": [],
+ "not_found": [
+  {
+   "entry_id": "moonshot--kimi-k2.7-code",
+   "benchmark": "gpqa-diamond",
+   "checked": [
+    "https://huggingface.co/moonshotai/Kimi-K2.7-Code",
+    "https://www.kimi.com/blog",
+    "https://www.kimi.com/resources/kimi-k2-7-code",
+    "https://github.com/MoonshotAI",
+    "https://github.com/MoonshotAI/Kimi-K2.7-Code (404)",
+    "https://www.moonshot.ai/"
+   ]
+  },
+  {
+   "entry_id": "moonshot--kimi-k2.7-code",
+   "benchmark": "swe-bench-verified",
+   "checked": [
+    "https://huggingface.co/moonshotai/Kimi-K2.7-Code",
+    "https://www.kimi.com/blog",
+    "https://www.kimi.com/resources/kimi-k2-7-code",
+    "https://github.com/MoonshotAI",
+    "https://github.com/MoonshotAI/Kimi-K2.7-Code (404)",
+    "https://www.moonshot.ai/"
+   ]
+  }
+ ]
 }

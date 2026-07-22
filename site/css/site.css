@@ -1,9 +1,6 @@
 /* Version Control : site stylesheet
    ---------------------------------------------------------------
-   FLAGGED DESIGN CHOICE (type stacks, per DESIGN.md "strong serif or
-   slab for entry dates and model names ... propose specifics as a
-   flagged design pass"):
-
+   Type stacks (all system fonts; nothing is fetched):
      Registrar slab (masthead, model names, year markers):
        Rockwell, "Rockwell Nova", "Roboto Slab", "DejaVu Serif",
        "Sitka Small", Georgia, serif
@@ -12,27 +9,16 @@
      Data chrome (dates, values, tags, configuration strings):
        ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Menlo,
        "DejaVu Sans Mono", monospace
-
-   All three are system stacks; nothing is fetched. The slab carries
-   the registrar identity; mono is used only where the content is
-   genuinely data (timestamps, measured values, provenance tags).
-
-   FLAGGED DESIGN CHOICE (the one permitted commit-log nod, DESIGN.md):
-   entry dates render in the data monospace, giving the timeline a
-   quiet log-line rhythm. No other git-culture styling exists.
+   The slab carries the registrar identity; mono is used only where
+   the content is genuinely data (timestamps, measured values, tags).
+   Entry dates render in the data monospace for a quiet log-line rhythm.
    ---------------------------------------------------------------
-   Palette: pale ledger-green paper (the tint of ruled accounting
-   ledger stock), warm green-black ink, deep desaturated ledger green
-   as the only tonal accent. Saturated red (--retracted) carries
-   exactly one meaning: retracted or corrected data.
-
-   FLAGGED DESIGN CHOICE (four-ink ledger, 2026-07-17 color pass;
-   logged in DESIGN.md approved additions): black ink is the
-   registrar's frame and text; entry green is the recorded datum
-   (every data mark: pulse marks, trajectory dots, matrix fills);
-   annotation blue is the registrar's stamp ink (era boundaries,
-   SPECIMEN, origin marker), always outlined, never a data fill;
-   red stays reserved for retraction. Provenance remains shape-first
+   Four-ink palette: pale ledger-green paper, warm green-black ink,
+   deep desaturated ledger green as the recorded datum (every data
+   mark: pulse marks, trajectory dots, matrix fills), and annotation
+   blue as the stamp ink (era boundaries, origin marker) always
+   outlined, never a data fill. Saturated red is reserved for exactly
+   one meaning: retracted or corrected data. Provenance is shape-first
    (solid/hollow), so every chart survives full desaturation. */
 
 :root {

@@ -1,39 +1,39 @@
 {
-  "org": "zai",
-  "display": "Z.ai (Zhipu)",
-  "reviewed_by_walker": false,
-  "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
-  "tranche": "1 (2026-07-17)",
-  "rows": [
-    {
-      "entry_id": "zai--glm-5.2",
-      "model_name": "GLM-5.2",
-      "benchmark": "gpqa-diamond",
-      "value": 91.2,
-      "value_as_stated": "91.2",
-      "benchmark_name_as_stated": "GPQA-Diamond",
-      "configuration": "No per-benchmark configuration stated for GPQA-Diamond. Card footnote for reasoning tasks: sampling temperature=1.0, top_p=0.95.",
-      "source_url": "https://huggingface.co/zai-org/GLM-5.2",
-      "source_kind": "model_card",
-      "retrieval_date": "2026-07-17",
-      "quote": "|GPQA-Diamond|91.2|86.2|90|93|90.1|93.6|93.6|94.3| (header: |Benchmark|GLM-5.2|GLM-5.1|Qwen3.7-Max|MiniMax M3|DeepSeek-V4-Pro|Claude Opus 4.8|GPT-5.5|Gemini 3.1 Pro|)",
-      "status": "DRAFT_FLAGGED",
-      "notes": ""
-    }
-  ],
-  "unpinned_claims": [],
-  "not_found": [
-    {
-      "entry_id": "zai--glm-5.2",
-      "benchmark": "swe-bench-verified",
-      "checked": [
-        "https://huggingface.co/zai-org/GLM-5.2 (full eval table enumerated; SWE-bench Verified absent; SWE-bench Pro 62.1 is a different benchmark and was not recorded)",
-        "https://huggingface.co/zai-org/GLM-5.2/raw/main/README.md",
-        "https://github.com/zai-org/GLM-5",
-        "https://docs.z.ai/guides/llm/glm-5.2",
-        "https://docs.z.ai/release-notes",
-        "https://z.ai/blog/glm-5.2 (JS-rendered shell; no benchmark text retrievable)"
-      ]
-    }
-  ]
+ "org": "zai",
+ "display": "Z.ai (Zhipu)",
+ "reviewed_by_walker": true,
+ "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
+ "tranche": "1 (2026-07-17)",
+ "rows": [
+  {
+   "entry_id": "zai--glm-5.2",
+   "model_name": "GLM-5.2",
+   "benchmark": "gpqa-diamond",
+   "value": 91.2,
+   "value_as_stated": "91.2",
+   "benchmark_name_as_stated": "GPQA-Diamond",
+   "configuration": "No per-benchmark configuration stated for GPQA-Diamond. Card footnote for reasoning tasks: sampling temperature=1.0, top_p=0.95.",
+   "source_url": "https://huggingface.co/zai-org/GLM-5.2",
+   "source_kind": "model_card",
+   "retrieval_date": "2026-07-17",
+   "quote": "|GPQA-Diamond|91.2|86.2|90|93|90.1|93.6|93.6|94.3| (header: |Benchmark|GLM-5.2|GLM-5.1|Qwen3.7-Max|MiniMax M3|DeepSeek-V4-Pro|Claude Opus 4.8|GPT-5.5|Gemini 3.1 Pro|)",
+   "status": "APPROVED",
+   "notes": ""
+  }
+ ],
+ "unpinned_claims": [],
+ "not_found": [
+  {
+   "entry_id": "zai--glm-5.2",
+   "benchmark": "swe-bench-verified",
+   "checked": [
+    "https://huggingface.co/zai-org/GLM-5.2 (full eval table enumerated; SWE-bench Verified absent; SWE-bench Pro 62.1 is a different benchmark and was not recorded)",
+    "https://huggingface.co/zai-org/GLM-5.2/raw/main/README.md",
+    "https://github.com/zai-org/GLM-5",
+    "https://docs.z.ai/guides/llm/glm-5.2",
+    "https://docs.z.ai/release-notes",
+    "https://z.ai/blog/glm-5.2 (JS-rendered shell; no benchmark text retrievable)"
+   ]
+  }
+ ]
 }

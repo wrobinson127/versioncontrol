@@ -1,91 +1,91 @@
 {
-  "org": "amazon",
-  "display": "Amazon (Nova)",
-  "reviewed_by_walker": false,
-  "instructions": "Fill each artifact cell with a URL or the literal NOT_DISCLOSED after checking the lab's site. A row publishes to its entry only when status is APPROVED.",
-  "rows": [
-    {
-      "entry_id": "amazon--amazon-titan",
-      "model_name": "Amazon Titan",
-      "date": "2023-09-28",
-      "system_card": "",
-      "model_card": "https://docs.aws.amazon.com/bedrock/latest/userguide/titan-models.html",
-      "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
-      "paper": "NOT_DISCLOSED",
-      "status": "DRAFT_FLAGGED",
-      "notes": "System card: an AI Service Card for Titan Text was announced Nov 2023 but the docs.aws.amazon.com HTML and PDF paths now return 404, so no live URL can be cited; reviewer should decide on an archive link. Model card is the live Bedrock Titan family overview, verified this session; it now lists only embeddings and image models after Titan Text pages were removed. Usage policy is the AWS Responsible AI Policy, verified. Paper: Amazon released no technical report for Titan.",
-      "researched": true
-    },
-    {
-      "entry_id": "amazon--amazon-titan-text-lite",
-      "model_name": "Amazon Titan Text Lite",
-      "date": "2023-11-29",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
-      "paper": "NOT_DISCLOSED",
-      "status": "DRAFT_FLAGGED",
-      "notes": "System card: the Titan Text Lite and Express AI Service Card formerly at docs.aws.amazon.com/ai/responsible-ai/titan-text returns 404 as of this check. Model card: the Bedrock Titan Text models docs page now redirects to the user guide root; Titan Text pages were withdrawn after deprecation, no live URL. Usage policy is the AWS Responsible AI Policy, verified this session. Paper: no Titan technical report was published.",
-      "researched": true
-    },
-    {
-      "entry_id": "amazon--amazon-q-developer",
-      "model_name": "Amazon Q Developer",
-      "date": "2024-04-30",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "",
-      "paper": "",
-      "status": "DRAFT_FLAGGED",
-      "notes": "Outside flagship scope for this pass (product, not a foundation model release). Not researched."
-    },
-    {
-      "entry_id": "amazon--amazon-titan-text-premier",
-      "model_name": "Amazon Titan Text Premier",
-      "date": "2024-05-07",
-      "system_card": "",
-      "model_card": "",
-      "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
-      "paper": "NOT_DISCLOSED",
-      "status": "DRAFT_FLAGGED",
-      "notes": "System card: AWS announced an AI Service Card for Titan Text Premier, but the docs.aws.amazon.com/ai/responsible-ai/titan-text-premier paths return 404 as of this check; no live URL. Model card: Bedrock Titan Text model pages were removed and now redirect, no live URL. Usage policy is the AWS Responsible AI Policy, verified this session. Paper: no Titan technical report was published.",
-      "researched": true
-    },
-    {
-      "entry_id": "amazon--amazon-nova-pro",
-      "model_name": "Amazon Nova Pro",
-      "date": "2024-12-03",
-      "system_card": "https://docs.aws.amazon.com/ai/responsible-ai/nova-micro-lite-pro/overview.html",
-      "model_card": "https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html",
-      "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
-      "paper": "https://www.amazon.science/publications/the-amazon-nova-family-of-models-technical-report-and-model-card",
-      "status": "DRAFT_FLAGGED",
-      "notes": "System card is the AWS AI Service Card for Nova Micro, Lite, Pro, and Premier, verified this session with full responsible AI content. Model card is the Nova user guide overview with the Pro spec table, verified. Usage policy is the AWS Responsible AI Policy, verified. Paper is the Nova family technical report and model card on Amazon Science, verified.",
-      "researched": true
-    },
-    {
-      "entry_id": "amazon--amazon-nova-premier",
-      "model_name": "Amazon Nova Premier",
-      "date": "2025-04-30",
-      "system_card": "https://docs.aws.amazon.com/ai/responsible-ai/nova-micro-lite-pro/overview.html",
-      "model_card": "https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html",
-      "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
-      "paper": "https://www.amazon.science/publications/the-amazon-nova-family-of-models-technical-report-and-model-card",
-      "status": "DRAFT_FLAGGED",
-      "notes": "System card is the shared Nova service card, verified this session; it explicitly covers Premier as of April 30, 2025 and includes the frontier safety evaluations run on Premier. Model card is the Nova user guide with Premier specs, verified. Usage policy is the AWS Responsible AI Policy, verified. Paper is the Nova family technical report; the publication page notes a Premier addendum from April 2025, verified.",
-      "researched": true
-    },
-    {
-      "entry_id": "amazon--nova-2",
-      "model_name": "Nova 2",
-      "date": "2025-12-02",
-      "system_card": "https://docs.aws.amazon.com/ai/responsible-ai/nova-2-lite/overview.html",
-      "model_card": "https://docs.aws.amazon.com/nova/latest/nova2-userguide/what-is-nova-2.html",
-      "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
-      "paper": "https://www.amazon.science/publications/amazon-nova-2-multimodal-reasoning-and-generation-models",
-      "status": "DRAFT_FLAGGED",
-      "notes": "System card is the Nova 2 Lite AI Service Card dated December 2, 2025, verified this session; a Nova 2 Sonic card is also listed on the AWS responsible AI resources page, no card found for Nova 2 Pro or Omni. Model card is the Nova 2 user guide overview listing Nova 2 Lite, Sonic, and Multimodal Embeddings, verified. Usage policy is the AWS Responsible AI Policy, verified. Paper is the Nova 2 technical report on Amazon Science, published December 2, 2025, verified.",
-      "researched": true
-    }
-  ]
+ "org": "amazon",
+ "display": "Amazon (Nova)",
+ "reviewed_by_walker": true,
+ "instructions": "Fill each artifact cell with a URL or the literal NOT_DISCLOSED after checking the lab's site. A row publishes to its entry only when status is APPROVED.",
+ "rows": [
+  {
+   "entry_id": "amazon--amazon-titan",
+   "model_name": "Amazon Titan",
+   "date": "2023-09-28",
+   "system_card": "",
+   "model_card": "https://docs.aws.amazon.com/bedrock/latest/userguide/titan-models.html",
+   "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "System card: an AI Service Card for Titan Text was announced Nov 2023 but the docs.aws.amazon.com HTML and PDF paths now return 404, so no live URL can be cited; reviewer should decide on an archive link. Model card is the live Bedrock Titan family overview, verified this session; it now lists only embeddings and image models after Titan Text pages were removed. Usage policy is the AWS Responsible AI Policy, verified. Paper: Amazon released no technical report for Titan.",
+   "researched": true
+  },
+  {
+   "entry_id": "amazon--amazon-titan-text-lite",
+   "model_name": "Amazon Titan Text Lite",
+   "date": "2023-11-29",
+   "system_card": "",
+   "model_card": "",
+   "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "System card: the Titan Text Lite and Express AI Service Card formerly at docs.aws.amazon.com/ai/responsible-ai/titan-text returns 404 as of this check. Model card: the Bedrock Titan Text models docs page now redirects to the user guide root; Titan Text pages were withdrawn after deprecation, no live URL. Usage policy is the AWS Responsible AI Policy, verified this session. Paper: no Titan technical report was published.",
+   "researched": true
+  },
+  {
+   "entry_id": "amazon--amazon-q-developer",
+   "model_name": "Amazon Q Developer",
+   "date": "2024-04-30",
+   "system_card": "",
+   "model_card": "",
+   "usage_policy": "",
+   "paper": "",
+   "status": "DRAFT_FLAGGED",
+   "notes": "Outside flagship scope for this pass (product, not a foundation model release). Not researched."
+  },
+  {
+   "entry_id": "amazon--amazon-titan-text-premier",
+   "model_name": "Amazon Titan Text Premier",
+   "date": "2024-05-07",
+   "system_card": "",
+   "model_card": "",
+   "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "System card: AWS announced an AI Service Card for Titan Text Premier, but the docs.aws.amazon.com/ai/responsible-ai/titan-text-premier paths return 404 as of this check; no live URL. Model card: Bedrock Titan Text model pages were removed and now redirect, no live URL. Usage policy is the AWS Responsible AI Policy, verified this session. Paper: no Titan technical report was published.",
+   "researched": true
+  },
+  {
+   "entry_id": "amazon--amazon-nova-pro",
+   "model_name": "Amazon Nova Pro",
+   "date": "2024-12-03",
+   "system_card": "https://docs.aws.amazon.com/ai/responsible-ai/nova-micro-lite-pro/overview.html",
+   "model_card": "https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html",
+   "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
+   "paper": "https://www.amazon.science/publications/the-amazon-nova-family-of-models-technical-report-and-model-card",
+   "status": "APPROVED",
+   "notes": "System card is the AWS AI Service Card for Nova Micro, Lite, Pro, and Premier, verified this session with full responsible AI content. Model card is the Nova user guide overview with the Pro spec table, verified. Usage policy is the AWS Responsible AI Policy, verified. Paper is the Nova family technical report and model card on Amazon Science, verified.",
+   "researched": true
+  },
+  {
+   "entry_id": "amazon--amazon-nova-premier",
+   "model_name": "Amazon Nova Premier",
+   "date": "2025-04-30",
+   "system_card": "https://docs.aws.amazon.com/ai/responsible-ai/nova-micro-lite-pro/overview.html",
+   "model_card": "https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html",
+   "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
+   "paper": "https://www.amazon.science/publications/the-amazon-nova-family-of-models-technical-report-and-model-card",
+   "status": "APPROVED",
+   "notes": "System card is the shared Nova service card, verified this session; it explicitly covers Premier as of April 30, 2025 and includes the frontier safety evaluations run on Premier. Model card is the Nova user guide with Premier specs, verified. Usage policy is the AWS Responsible AI Policy, verified. Paper is the Nova family technical report; the publication page notes a Premier addendum from April 2025, verified.",
+   "researched": true
+  },
+  {
+   "entry_id": "amazon--nova-2",
+   "model_name": "Nova 2",
+   "date": "2025-12-02",
+   "system_card": "https://docs.aws.amazon.com/ai/responsible-ai/nova-2-lite/overview.html",
+   "model_card": "https://docs.aws.amazon.com/nova/latest/nova2-userguide/what-is-nova-2.html",
+   "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
+   "paper": "https://www.amazon.science/publications/amazon-nova-2-multimodal-reasoning-and-generation-models",
+   "status": "APPROVED",
+   "notes": "System card is the Nova 2 Lite AI Service Card dated December 2, 2025, verified this session; a Nova 2 Sonic card is also listed on the AWS responsible AI resources page, no card found for Nova 2 Pro or Omni. Model card is the Nova 2 user guide overview listing Nova 2 Lite, Sonic, and Multimodal Embeddings, verified. Usage policy is the AWS Responsible AI Policy, verified. Paper is the Nova 2 technical report on Amazon Science, published December 2, 2025, verified.",
+   "researched": true
+  }
+ ]
 }

@@ -7,7 +7,6 @@
 <meta name="description" content="Download the Version Control dataset: gzipped JSON entry files, derived deltas, and the manifest, licensed CC-BY 4.0 with Epoch AI attribution.">
 <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
 <link rel="canonical" href="https://versioncontrol.walker-robinson.com/data.html">
-<!-- og:image points at a rendered PNG; the PNG render of assets/og-card.svg lands in a later phase. -->
 <meta property="og:title" content="Version Control: dataset">
 <meta property="og:description" content="The full release record, downloadable under CC-BY 4.0.">
 <meta property="og:type" content="article">
@@ -22,7 +21,7 @@
   <div class="wrap mast-row">
     <div class="mast-brand">
       <a class="mast-title" href="./index.html">Version Control</a>
-      <p class="mast-tagline">The release record of the model era.</p>
+      <p class="mast-tagline">The release record of the AI model era.</p>
     </div>
     <nav class="mast-nav" aria-label="Site">
       <a href="./story.html">Story</a>
@@ -69,7 +68,6 @@
             var tr = document.createElement("tr");
             var td1 = document.createElement("td");
             var a = document.createElement("a");
-            a.href = bases[i] + short.replace(/^entries\//, "entries/");
             a.href = bases[i] + short;
             a.textContent = short;
             td1.appendChild(a);
@@ -93,17 +91,17 @@
   <h2>Required attribution for Epoch AI derived fields</h2>
   <p>Portions of the dataset are derived from Epoch AI's "Data on AI Models", used under CC-BY 4.0. If you redistribute or build on those fields, you must retain the following attribution:</p>
   <blockquote>Epoch AI, "Data on AI Models". Published online at epoch.ai. Retrieved from <a href="https://epoch.ai/data/ai-models" rel="external">https://epoch.ai/data/ai-models</a> [online resource].</blockquote>
-  <p>In general: backfilled release dates, organization mappings, parameter counts, accessibility classes, and independent benchmark numbers sourced from Epoch's Benchmarking Hub carry Epoch attribution.</p>
+  <p>Backfilled release dates, organization mappings, parameter counts, availability classes, and independent benchmark numbers sourced from Epoch AI's Benchmarking Hub carry Epoch attribution.</p>
 
   <h2>Attribution for this dataset</h2>
   <p>If you use the Version Control dataset, please attribute:</p>
-  <blockquote>Version Control, "The release record of the model era". Walker Robinson. versioncontrol.walker-robinson.com</blockquote>
+  <blockquote>Version Control, "The release record of the AI model era". Walker Robinson. versioncontrol.walker-robinson.com</blockquote>
 
   <h2>What the dataset does not contain</h2>
   <p>Pricing and context-length figures displayed on the site with a "per OpenRouter" attribution are display-only and are not included in the downloadable dataset, because OpenRouter publishes no explicit redistribution license for its catalog data.</p>
 
   <h2>Cost of operation</h2>
-  <p>The registry runs on static hosting and scheduled jobs at zero infrastructure cost, plus a small metered LLM cost for the nightly drafting step, expected to stay under one dollar per month. Costs are stated here so the record's independence is checkable.</p>
+  <p>The registry runs on static hosting and scheduled jobs at zero infrastructure cost, plus a small metered LLM cost for the nightly drafting step.</p>
 </main>
 
 <footer class="site-foot">
