@@ -153,8 +153,11 @@
     html += '<div class="entry-head">';
     html += '<time class="entry-date" datetime="' + esc(e.date) + '">' + esc(e.date) + "</time>";
     html += '<span class="entry-org">' + esc(org) + "</span>";
-    html += '<span class="entry-kind' + (e.entry_type === "revision" ? " is-revision" : "") + '">' +
-      esc(e.entry_type) + "</span>";
+    /* "release" is the default and appears on nearly every card, so it is dropped
+       as noise; only the exceptions (revisions) carry a tag. */
+    if (e.entry_type === "revision") {
+      html += '<span class="entry-kind is-revision">revision</span>';
+    }
     if (e.retracted) {
       html += '<span class="entry-retracted">retracted or corrected</span>';
     }
@@ -521,6 +524,22 @@
       });
     }
 
+    /* the most-recent release on record: a callout above the pulse. entries are
+       sorted newest-first, so entries[0] is it. Shows model, date and org; days-
+       since lives in the measures tile, so it is not repeated here. */
+    function renderLatest(e) {
+      if (!e) { return; }
+      var card = document.getElementById("latest-release");
+      var nameEl = document.getElementById("latest-name");
+      var metaEl = document.getElementById("latest-meta");
+      if (!card || !nameEl || !metaEl) { return; }
+      nameEl.textContent = e.model_name;
+      metaEl.textContent = e.date + " · " + (ORG_NAMES[e.org] || e.org);
+      card.setAttribute("href", "#" + e.id);
+      card.hidden = false;
+      card.addEventListener("click", function (ev) { ev.preventDefault(); revealEntry(e.id); });
+    }
+
     Promise.all([
       loadJson("manifest.json"),
       loadGzJson("derived/deltas.json.gz"),
@@ -551,6 +570,7 @@
         if (a.date !== b.date) { return a.date < b.date ? 1 : -1; }
         return a.id < b.id ? -1 : 1;
       });
+      renderLatest(entries[0]);
       bindControls();
       readRangeFromUrl();
       render();

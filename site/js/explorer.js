@@ -82,20 +82,11 @@
     entries.forEach(function (e) { byId[e.id] = e; });
     var monthly = (views && views.cadence && views.cadence.monthly) || [];
 
-    /* summary paragraph: count, span, densest year */
-    var perYear = {};
-    entries.forEach(function (e) {
-      var y = e.date.slice(0, 4);
-      perYear[y] = (perYear[y] || 0) + 1;
-    });
-    var densest = Object.keys(perYear).sort(function (a, b) { return perYear[b] - perYear[a]; })[0];
+    /* the pulse legend: one concise line; counts and dates live in the measures
+       tiles and on the chart itself, so they are not repeated in prose here. */
     var summaryEl = document.getElementById("pulse-summary");
     if (summaryEl) {
-      summaryEl.textContent = entries.length + " entries from 12 tracked organizations, " +
-        meta.first_date + " to " + meta.last_date + ", one row per organization. " +
-        "Releases render as filled marks, revisions as smaller light marks. " +
-        "The densest year on record is " + densest + " with " + perYear[densest] + " entries. " +
-        "The date inputs below select the same range as the strip.";
+      summaryEl.textContent = "One mark per entry, one row per lab. Filled marks are releases, faint marks revisions. Drag to filter the timeline below.";
     }
 
     var domainStart = parseDate(meta.first_date);

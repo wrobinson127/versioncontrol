@@ -20,25 +20,34 @@
 <body>
 <a class="skip-link" href="#main">Skip to the timeline</a>
 
+<nav class="storynav" aria-label="Site">
+  <a class="storynav-brand" href="./index.html">Version Control</a>
+  <div class="storynav-links">
+    <a href="./story.html">Story</a>
+    <a href="./index.html" aria-current="page">Timeline</a>
+    <a href="./methodology.html">Methodology</a>
+    <a href="./about.html">About</a>
+    <a href="./data.html">Data</a>
+  </div>
+</nav>
+
 <header class="masthead">
   <div class="wrap mast-row">
     <div class="mast-brand">
       <a class="mast-title" href="./index.html">Version Control</a>
       <p class="mast-tagline">The release record of the AI model era.</p>
     </div>
-    <nav class="mast-nav" aria-label="Site">
-      <a href="./story.html">Story</a>
-      <a href="./index.html" aria-current="page">Timeline</a>
-      <a href="./methodology.html">Methodology</a>
-      <a href="./about.html">About</a>
-      <a href="./data.html">Data</a>
-    </nav>
   </div>
 </header>
 
 <main id="main" class="wrap">
   <h1 class="visually-hidden">Timeline of release entries</h1>
-  <p class="registry-scope" id="registry-scope">A public registry of AI model releases from 12 tracked organizations. Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>.</p>
+
+  <a class="latest" id="latest-release" href="#" hidden>
+    <span class="latest-label">Most recent release on record</span>
+    <span class="latest-name" id="latest-name"></span>
+    <span class="latest-meta" id="latest-meta"></span>
+  </a>
 
   <!-- ============ Explorer (P5a): pulse strip, measures, trajectory, disclosure record ============ -->
 
