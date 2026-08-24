@@ -1,9 +1,6 @@
 /* Version Control : site stylesheet
    ---------------------------------------------------------------
-   FLAGGED DESIGN CHOICE (type stacks, per DESIGN.md "strong serif or
-   slab for entry dates and model names ... propose specifics as a
-   flagged design pass"):
-
+   Type stacks (all system fonts; nothing is fetched):
      Registrar slab (masthead, model names, year markers):
        Rockwell, "Rockwell Nova", "Roboto Slab", "DejaVu Serif",
        "Sitka Small", Georgia, serif
@@ -12,27 +9,16 @@
      Data chrome (dates, values, tags, configuration strings):
        ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Menlo,
        "DejaVu Sans Mono", monospace
-
-   All three are system stacks; nothing is fetched. The slab carries
-   the registrar identity; mono is used only where the content is
-   genuinely data (timestamps, measured values, provenance tags).
-
-   FLAGGED DESIGN CHOICE (the one permitted commit-log nod, DESIGN.md):
-   entry dates render in the data monospace, giving the timeline a
-   quiet log-line rhythm. No other git-culture styling exists.
+   The slab carries the registrar identity; mono is used only where
+   the content is genuinely data (timestamps, measured values, tags).
+   Entry dates render in the data monospace for a quiet log-line rhythm.
    ---------------------------------------------------------------
-   Palette: pale ledger-green paper (the tint of ruled accounting
-   ledger stock), warm green-black ink, deep desaturated ledger green
-   as the only tonal accent. Saturated red (--retracted) carries
-   exactly one meaning: retracted or corrected data.
-
-   FLAGGED DESIGN CHOICE (four-ink ledger, 2026-07-17 color pass;
-   logged in DESIGN.md approved additions): black ink is the
-   registrar's frame and text; entry green is the recorded datum
-   (every data mark: pulse marks, trajectory dots, matrix fills);
-   annotation blue is the registrar's stamp ink (era boundaries,
-   SPECIMEN, origin marker), always outlined, never a data fill;
-   red stays reserved for retraction. Provenance remains shape-first
+   Four-ink palette: pale ledger-green paper, warm green-black ink,
+   deep desaturated ledger green as the recorded datum (every data
+   mark: pulse marks, trajectory dots, matrix fills), and annotation
+   blue as the stamp ink (era boundaries, origin marker) always
+   outlined, never a data fill. Saturated red is reserved for exactly
+   one meaning: retracted or corrected data. Provenance is shape-first
    (solid/hollow), so every chart survives full desaturation. */
 
 :root {
@@ -41,12 +27,13 @@
   --surface-edge: #dde1cd;
   --ink: #1d211a;
   --ink-muted: #57604e;
-  --ink-faint: #6b7361; /* AA-checked against --surface for small data text */
+  --ink-faint: #646c5a; /* AA-checked against paper (4.89) and surface (5.17) */
   --accent: #2e4a38;
   --entry: #2f5d46;       /* recorded-datum green; 6.75:1 on paper, marks + large numerals only */
   --entry-faint: #6f8a78; /* revision marks; 3.36:1 on paper, graphical marks only */
   --annotation: #3d5a70;  /* registrar's stamp ink; 6.47:1 on paper */
   --retracted: #b3261e;
+  --nav-h: 46px;
   --slab: Rockwell, "Rockwell Nova", "Roboto Slab", "DejaVu Serif", "Sitka Small", Georgia, serif;
   --body: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   --mono: ui-monospace, "Cascadia Mono", Consolas, "SF Mono", Menlo, "DejaVu Sans Mono", monospace;
@@ -96,9 +83,31 @@ a:hover { color: var(--ink); }
 }
 .skip-link:focus { top: 0; color: var(--paper); }
 
+/* ---- persistent top nav: identical slim sticky bar on every page (matches the
+   story page). The masthead below it carries the page title; this bar carries the
+   section links and stays put through the whole scroll. ---- */
+.storynav {
+  position: sticky; top: 0; z-index: 45;
+  background: var(--paper);
+  border-bottom: 1px solid var(--ink);
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; padding: 0 26px; height: var(--nav-h);
+}
+.storynav-brand { font-family: var(--slab); font-weight: 700; color: var(--ink); text-decoration: none; font-size: 15px; }
+.storynav-links { display: flex; gap: 15px; flex-wrap: wrap; }
+.storynav-links a { color: var(--annotation); text-decoration: none; font-size: 13px; }
+.storynav-links a[aria-current="page"] { color: var(--ink); font-weight: 700; text-decoration: underline; }
+.storynav-links a:hover { text-decoration: underline; }
+@media (max-width: 720px) {
+  .storynav { padding: 0 14px; }
+  .storynav-brand { font-size: 13px; }
+  .storynav-links { gap: 11px; }
+  .storynav-links a { font-size: 12px; }
+}
+
 /* ---- masthead: registrar ledger head with a Scotch rule (thick over thin) ---- */
 
-.masthead { padding-top: 34px; }
+.masthead { padding-top: 20px; }
 
 .mast-row {
   display: flex;
@@ -153,6 +162,40 @@ a:hover { color: var(--ink); }
   font-size: 0.95rem;
 }
 .registry-scope .num { font-family: var(--mono); color: var(--ink); }
+
+/* ---- most-recent release callout: a card above the pulse (aligned with the
+   story page's surface cards) that names the newest release on record. ---- */
+.latest {
+  display: block;
+  margin: 16px 0 8px;
+  padding: 14px 20px;
+  background: var(--surface);
+  border: 1px solid var(--surface-edge);
+  border-left: 4px solid var(--entry);
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+.latest:hover { border-color: var(--surface-edge); border-left-color: var(--accent); transform: translateY(-1px); }
+.latest-label {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+.latest-name {
+  display: block;
+  font-family: var(--slab);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 3px 0 2px;
+  color: var(--ink);
+}
+.latest-meta { display: block; font-family: var(--mono); font-size: 0.82rem; color: var(--ink-muted); }
 
 /* ---- controls ---- */
 
@@ -254,10 +297,10 @@ a:hover { color: var(--ink); }
 .entry {
   background: var(--surface);
   border: 1px solid var(--surface-edge);
-  border-radius: 4px;
+  border-radius: 10px;
   box-shadow: 0 1px 0 rgba(29, 33, 26, 0.05);
-  padding: 18px 22px 16px;
-  margin: 0 0 14px;
+  padding: 20px 24px 18px;
+  margin: 0 0 16px;
   transition: border-color 140ms ease, background-color 140ms ease;
 }
 .entry:hover { border-color: #c9cfb4; }
@@ -621,7 +664,7 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
   position: relative;
   background: var(--surface);
   border: 1px solid var(--surface-edge);
-  border-radius: 4px;
+  border-radius: 10px;
   min-height: 270px; /* strip rows + the releases-per-month band */
 }
 .pulse-scroll { overflow-x: auto; }
@@ -750,8 +793,8 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
 .tile {
   background: var(--surface);
   border: 1px solid var(--surface-edge);
-  border-radius: 4px;
-  padding: 12px 14px 10px;
+  border-radius: 10px;
+  padding: 14px 16px 12px;
 }
 .tile-value {
   display: block;
@@ -812,7 +855,7 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
   position: relative;
   background: var(--surface);
   border: 1px solid var(--surface-edge);
-  border-radius: 4px;
+  border-radius: 10px;
   min-height: 300px;
 }
 .traj-svg { display: block; width: 100%; height: auto; }

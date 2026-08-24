@@ -45,6 +45,26 @@ def fetch(url: str):
     return r.status_code, r.content
 
 
+class SignalList(list):
+    """Signals from one detector, plus how many records it examined.
+
+    A detector returning zero signals is ambiguous on its own: the source may
+    have handed back nothing at all, or it may have handed back plenty and
+    none of it was recent. Those look identical in a bare count and the 2026
+    07-26 run proved the cost of that: a healthy HuggingFace adapter reported
+    0 for all twelve orgs on a genuinely quiet fortnight and was written up as
+    broken. Carrying the examined count lets the morning report tell a quiet
+    night from a dead source.
+
+    Subclasses list so every existing caller (len, iteration, +=, equality
+    against a plain list) keeps working unchanged.
+    """
+
+    def __init__(self, items=(), examined=0):
+        super().__init__(items)
+        self.examined = examined
+
+
 # Title verbs and articles that the multi-word capture may swallow ahead of
 # the actual model name ("Introducing Claude Sonnet 5").
 _LEAD_WORDS = {

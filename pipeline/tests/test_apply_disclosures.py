@@ -12,7 +12,18 @@ def _root(tmp_path):
     shutil.copytree("data/entries", tmp_path / "data" / "entries")
     shutil.copy("data/manifest.json", tmp_path / "data" / "manifest.json")
     (tmp_path / "content" / "disclosure_links").mkdir(parents=True)
-    return str(tmp_path)
+    root = str(tmp_path)
+    # Clean-slate the disclosure baseline so these logic tests assert against a
+    # known state, not the mutable published disclosure data (which the content
+    # pass fills). Every artifact starts NOT_DISCLOSED; the tests then verify how
+    # apply_disclosures transitions it. (Content pass 2026-07-20.)
+    from pipeline import validate
+    entries = store.read_entries(root=root)
+    for e in entries:
+        e["disclosure_links"] = {a: "NOT_DISCLOSED"
+                                 for a in validate.DISCLOSURE_ARTIFACTS}
+    store.write_entries(entries, root=root)
+    return root
 
 
 def _write_table(root, rows, org="openai"):

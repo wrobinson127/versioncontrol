@@ -115,6 +115,18 @@ def call_extraction(announcement_html: str, client=None):
     The client parameter exists for tests; production passes None and the
     SDK resolves ANTHROPIC_API_KEY from the environment.
     """
+    text, tokens_in, tokens_out, _ = call_extraction_detailed(
+        announcement_html, client)
+    return (text, tokens_in, tokens_out)
+
+
+def call_extraction_detailed(announcement_html: str, client=None):
+    """As call_extraction, but also returns the API stop_reason.
+
+    The reason matters for diagnosis: output cut off at the token ceiling
+    arrives as unparseable JSON, and reporting that as a generic parse error
+    sends the reader hunting for a prompt bug that is not there.
+    """
     if client is None:
         import anthropic
         client = anthropic.Anthropic()
@@ -127,7 +139,8 @@ def call_extraction(announcement_html: str, client=None):
                  if getattr(b, "type", "") == "text"), "")
     # The prompt demands a bare JSON object; tolerate a fenced block.
     text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip())
-    return (text, response.usage.input_tokens, response.usage.output_tokens)
+    return (text, response.usage.input_tokens, response.usage.output_tokens,
+            getattr(response, "stop_reason", None))
 
 
 def extract_candidate(candidate: dict, announcement_html: str, run_date: str,
@@ -142,14 +155,23 @@ def extract_candidate(candidate: dict, announcement_html: str, run_date: str,
     from . import lint_voice, spend
     if not spend.can_spend(run_date, root=root):
         return None, spend.cap_flag(run_date, root=root)
-    raw, tokens_in, tokens_out = call_extraction(announcement_html, client)
+    raw, tokens_in, tokens_out, stop_reason = call_extraction_detailed(
+        announcement_html, client)
     spend.record_call(run_date, tokens_in, tokens_out, root=root)
+    # Name the two failure shapes that are not the model's fault before the
+    # parser turns them into a misleading syntax complaint.
+    if not raw.strip():
+        return None, (f"model returned no text output "
+                      f"(stop_reason={stop_reason}); no draft written")
+    if stop_reason == "max_tokens":
+        return None, (f"output hit the {config.LLM_MAX_OUTPUT_TOKENS}-token "
+                      f"ceiling and was cut off mid-JSON; no draft written")
     try:
         draft = parse_extraction(raw, candidate["announcement_url"],
                                  retrieval_date=run_date)
     except ExtractionError as e:
         return None, f"extraction output rejected: {e}"
-    violations = lint_voice.lint_text(draft["summary"], context="summary")
+    violations = lint_voice.lint_entry_prose(draft)
     if violations:
         cats = ", ".join(sorted({v["category"] for v in violations}))
         return None, f"draft summary failed voice lint ({cats}); no draft written"

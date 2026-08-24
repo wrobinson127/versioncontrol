@@ -15,7 +15,8 @@ def test_derive_against_real_dataset(tmp_path):
     shutil.copy("data/manifest.json", tmp_path / "data" / "manifest.json")
 
     meta = derive.build(root=str(tmp_path), run_date="2026-07-16")
-    assert meta["entry_count"] == 292
+    # 293 = 292 backfilled entries + the promoted ChatGPT origin entry (content pass 2026-07-20)
+    assert meta["entry_count"] == 293
     assert meta["delta_chips"] > 0
     assert meta["last_successful_update"] == "2026-07-16"
 
@@ -29,9 +30,14 @@ def test_derive_against_real_dataset(tmp_path):
             assert chip["kind"] in ("delta", "REFUSED_COMPARISON")
             if chip["kind"] == "delta":
                 # The chip's arithmetic must reconcile with the entry's own
-                # stored value (single-implementation check).
-                stored = {b["benchmark"]: b["value"] for b in e["benchmarks"]}
-                assert abs(stored[chip["benchmark"]] - chip["current"]) < 1e-9
+                # stored value (single-implementation check). Key by benchmark
+                # AND source_class: an entry can now carry both a LAB_REPORTED
+                # and an INDEPENDENT number for the same benchmark (the pairs
+                # from the content pass), and each has its own delta chip.
+                stored = {(b["benchmark"], b["provenance"]["source_class"]): b["value"]
+                          for b in e["benchmarks"]}
+                assert abs(stored[(chip["benchmark"], chip["source_class"])]
+                           - chip["current"]) < 1e-9
 
 
 def test_gpt4o_aug_revision_has_a_real_chip(tmp_path):

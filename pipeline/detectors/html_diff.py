@@ -65,7 +65,7 @@ def parse_index(org: str, content: bytes, base_url: str) -> list:
         signals.append(common.signal(
             "html_diff", org, common.model_hint_from(text),
             url=url, title=text))
-    return signals
+    return common.SignalList(signals, examined=len(parser.anchors))
 
 
 def detect(org: str, news_cfg: dict) -> list:

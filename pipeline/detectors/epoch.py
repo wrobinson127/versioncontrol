@@ -28,6 +28,10 @@ def parse_csv(csv_text: str, lookback_days: int, now_date: str) -> list:
     from .hf_orgs import _shift_date
     horizon = _shift_date(now_date, -lookback_days)
     signals = []
+    # Rows belonging to a registry org are what this detector actually
+    # examines; the rest of Epoch's catalog is out of scope, so counting it
+    # would make a quiet night look busy.
+    examined = 0
     name_to_org = {}
     for key, org in config.REGISTRY.items():
         for n in org["epoch_names"]:
@@ -36,6 +40,7 @@ def parse_csv(csv_text: str, lookback_days: int, now_date: str) -> list:
         org = name_to_org.get((r["Organization"] or "").split(",")[0].strip())
         if org is None:
             continue
+        examined += 1
         modified = (r.get("Last modified") or "")[:10]
         published = (r.get("Publication date") or "").strip()
         recent = (modified and modified >= horizon) or \
@@ -48,7 +53,7 @@ def parse_csv(csv_text: str, lookback_days: int, now_date: str) -> list:
             "epoch", org, r["Model"].strip(),
             url=links[0].strip() if links else None,
             date_hint=published or None, title=r["Model"].strip()))
-    return signals
+    return common.SignalList(signals, examined=examined)
 
 
 def detect(lookback_days: int, now_date: str) -> list:

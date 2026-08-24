@@ -1,64 +1,64 @@
 {
-  "org": "xai",
-  "display": "xAI",
-  "reviewed_by_walker": false,
-  "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
-  "tranche": "1 (2026-07-17)",
-  "rows": [],
-  "unpinned_claims": [],
-  "not_found": [
-    {
-      "entry_id": "xai--grok-4.3-beta",
-      "benchmark": "gpqa-diamond",
-      "checked": [
-        "https://x.ai/news (index; no Grok 4.3 announcement post exists)",
-        "https://x.ai/sitemap.xml (confirms no /news/grok-4-3* page)",
-        "https://docs.x.ai/developers/models/grok-4.3 (specs/pricing only)",
-        "https://docs.x.ai/developers/release-notes",
-        "https://x.ai/news/grok-4-5 (comparison charts cover Grok 4.5 only)",
-        "https://data.x.ai/ (no Grok 4.3 model card PDF; slug patterns 404)",
-        "https://x.com/xai/status/2051703217697010103 (launch post cites third-party leaderboard rankings only)"
-      ]
-    },
-    {
-      "entry_id": "xai--grok-4.3-beta",
-      "benchmark": "swe-bench-verified",
-      "checked": [
-        "https://x.ai/news",
-        "https://x.ai/sitemap.xml",
-        "https://docs.x.ai/developers/models/grok-4.3",
-        "https://docs.x.ai/developers/release-notes",
-        "https://x.ai/news/grok-4-5 (uses 'SWE Bench Pro' and only for Grok 4.5)",
-        "https://data.x.ai/",
-        "https://x.com/xai/status/2051703217697010103"
-      ]
-    },
-    {
-      "entry_id": "xai--grok-4.20",
-      "benchmark": "gpqa-diamond",
-      "checked": [
-        "https://x.ai/news (no Grok 4.20 announcement post exists)",
-        "https://x.ai/sitemap.xml",
-        "https://docs.x.ai/developers/models/grok-4.20 (specs/pricing only)",
-        "https://docs.x.ai/developers/release-notes (live-announcement entry carries no numbers)",
-        "https://data.x.ai/",
-        "web searches for official @xai posts (circulating 88.5%/91.1% figures are third-party)"
-      ]
-    },
-    {
-      "entry_id": "xai--grok-4.20",
-      "benchmark": "swe-bench-verified",
-      "checked": [
-        "https://x.ai/news",
-        "https://x.ai/sitemap.xml",
-        "https://docs.x.ai/developers/models/grok-4.20",
-        "https://docs.x.ai/developers/release-notes",
-        "https://data.x.ai/",
-        "web searches for official @xai posts (the widely cited 78% figure is third-party reporting)"
-      ]
-    }
-  ],
-  "context_notes": [
-    "Both models released without benchmark-bearing official xAI materials. All circulating figures are third-party measurements and do not qualify as LAB_REPORTED."
-  ]
+ "org": "xai",
+ "display": "xAI",
+ "reviewed_by_walker": true,
+ "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
+ "tranche": "1 (2026-07-17)",
+ "rows": [],
+ "unpinned_claims": [],
+ "not_found": [
+  {
+   "entry_id": "xai--grok-4.3-beta",
+   "benchmark": "gpqa-diamond",
+   "checked": [
+    "https://x.ai/news (index; no Grok 4.3 announcement post exists)",
+    "https://x.ai/sitemap.xml (confirms no /news/grok-4-3* page)",
+    "https://docs.x.ai/developers/models/grok-4.3 (specs/pricing only)",
+    "https://docs.x.ai/developers/release-notes",
+    "https://x.ai/news/grok-4-5 (comparison charts cover Grok 4.5 only)",
+    "https://data.x.ai/ (no Grok 4.3 model card PDF; slug patterns 404)",
+    "https://x.com/xai/status/2051703217697010103 (launch post cites third-party leaderboard rankings only)"
+   ]
+  },
+  {
+   "entry_id": "xai--grok-4.3-beta",
+   "benchmark": "swe-bench-verified",
+   "checked": [
+    "https://x.ai/news",
+    "https://x.ai/sitemap.xml",
+    "https://docs.x.ai/developers/models/grok-4.3",
+    "https://docs.x.ai/developers/release-notes",
+    "https://x.ai/news/grok-4-5 (uses 'SWE Bench Pro' and only for Grok 4.5)",
+    "https://data.x.ai/",
+    "https://x.com/xai/status/2051703217697010103"
+   ]
+  },
+  {
+   "entry_id": "xai--grok-4.20",
+   "benchmark": "gpqa-diamond",
+   "checked": [
+    "https://x.ai/news (no Grok 4.20 announcement post exists)",
+    "https://x.ai/sitemap.xml",
+    "https://docs.x.ai/developers/models/grok-4.20 (specs/pricing only)",
+    "https://docs.x.ai/developers/release-notes (live-announcement entry carries no numbers)",
+    "https://data.x.ai/",
+    "web searches for official @xai posts (circulating 88.5%/91.1% figures are third-party)"
+   ]
+  },
+  {
+   "entry_id": "xai--grok-4.20",
+   "benchmark": "swe-bench-verified",
+   "checked": [
+    "https://x.ai/news",
+    "https://x.ai/sitemap.xml",
+    "https://docs.x.ai/developers/models/grok-4.20",
+    "https://docs.x.ai/developers/release-notes",
+    "https://data.x.ai/",
+    "web searches for official @xai posts (the widely cited 78% figure is third-party reporting)"
+   ]
+  }
+ ],
+ "context_notes": [
+  "Both models released without benchmark-bearing official xAI materials. All circulating figures are third-party measurements and do not qualify as LAB_REPORTED."
+ ]
 }

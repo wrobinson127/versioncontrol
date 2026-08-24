@@ -143,6 +143,15 @@ def validate_entry(entry) -> list:
             errors.append(f"summary fails registrar voice lint: {v['category']} "
                           f"({v['match']!r})")
 
+    # model_name renders on every card and heading, so the em-dash rule
+    # applies to it too. Name fields are exempt from the vocabulary list: the
+    # registrar records a name as the lab writes it.
+    if isinstance(entry.get("model_name"), str):
+        for v in lint_voice.lint_identifier(entry["model_name"],
+                                            context="model_name"):
+            errors.append(f"model_name fails the em-dash prohibition "
+                          f"({v['match']!r})")
+
     if not isinstance(entry["benchmarks"], list):
         errors.append("benchmarks must be a list")
     else:

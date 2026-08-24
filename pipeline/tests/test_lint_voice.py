@@ -56,3 +56,35 @@ def test_entry_prose_lint_covers_summary_field():
     entry = {"summary": "An incredible model.", "notes": "Plain factual note."}
     violations = lint_voice.lint_entry_prose(entry)
     assert any(v["context"] == "summary" for v in violations)
+
+
+# --- name fields: em-dash only, never the vocabulary list ------------------
+
+def test_model_name_em_dash_is_caught():
+    """Observed 2026-08-24: 'TIPS <emdash> L/14' passed a summary-only lint
+    and landed in a draft reported clean."""
+    entry = {"summary": "Google released a vision encoder.",
+             "model_name": "TIPS \u2014 L/14 (v1)"}
+    violations = lint_voice.lint_entry_prose(entry)
+    assert [v["category"] for v in violations] == ["em-dash"]
+    assert violations[0]["context"] == "model_name"
+
+
+def test_model_name_keeps_vocabulary_the_lab_chose():
+    """A lab may ship something called Ultra or Max. The registrar records
+    the name it was given; only prose is held to the voice rules."""
+    for name in ("Grok 4.5 Best-in-class Edition", "Command A+ Powerful"):
+        assert lint_voice.lint_identifier(name) == []
+
+
+def test_prose_still_gets_the_full_lint():
+    entry = {"summary": "OpenAI reports state-of-the-art results.",
+             "model_name": "GPT-6"}
+    cats = {v["category"] for v in lint_voice.lint_entry_prose(entry)}
+    assert "quality-adjective" in cats
+
+
+def test_clean_entry_passes():
+    entry = {"summary": "Anthropic reports scores on two benchmarks.",
+             "model_name": "Claude Opus 5"}
+    assert lint_voice.lint_entry_prose(entry) == []

@@ -124,3 +124,53 @@ def test_benchmark_alias_matching_is_exact_about_versions():
     assert extract.match_pinned_benchmark("GPQA Diamond") == "gpqa-diamond"
     assert extract.match_pinned_benchmark("SWE-bench Verified") == "swe-bench-verified"
     assert extract.match_pinned_benchmark("SWE-bench") is None
+
+
+# --- truncation and empty output are named, not passed off as bad JSON -----
+
+class _FakeResponse:
+    def __init__(self, text, stop_reason):
+        self.content = [type("B", (), {"type": "text", "text": text})()]
+        self.usage = type("U", (), {"input_tokens": 100, "output_tokens": 50})()
+        self.stop_reason = stop_reason
+
+
+class _FakeClient:
+    def __init__(self, text, stop_reason):
+        self._r = _FakeResponse(text, stop_reason)
+        self.messages = self
+
+    def create(self, **kwargs):
+        self.kwargs = kwargs
+        return self._r
+
+
+def _candidate():
+    return {"id": "openai--gpt-6",
+            "announcement_url": "https://example.com/a"}
+
+
+def test_truncated_output_reports_the_ceiling(tmp_path):
+    """A draft cut off at max_tokens must say so. Reported as a JSON syntax
+    error it sends the reader hunting for a prompt bug that is not there."""
+    client = _FakeClient('{"model_name": "GPT-6", "summ', "max_tokens")
+    draft, note = extract.extract_candidate(
+        _candidate(), "<html>x</html>", "2026-08-24",
+        client=client, root=str(tmp_path))
+    assert draft is None
+    assert "ceiling" in note and str(config.LLM_MAX_OUTPUT_TOKENS) in note
+
+
+def test_empty_output_reports_itself(tmp_path):
+    client = _FakeClient("", "end_turn")
+    draft, note = extract.extract_candidate(
+        _candidate(), "<html>x</html>", "2026-08-24",
+        client=client, root=str(tmp_path))
+    assert draft is None
+    assert "no text output" in note
+
+
+def test_output_ceiling_is_high_enough_for_a_real_draft():
+    """1024 truncated 11 of 52 drafts in production; dense extraction JSON
+    runs about 2.8 characters per token."""
+    assert config.LLM_MAX_OUTPUT_TOKENS >= 2048

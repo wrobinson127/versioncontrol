@@ -1,5 +1,6 @@
 """Nightly orchestrator unit tests (P6): draft attachment respects the key,
 the fetch status, and the spend cap; failures become notes, never guesses."""
+import json
 import os
 from unittest import mock
 
@@ -48,3 +49,94 @@ def test_extraction_exception_becomes_note(tmp_path, monkeypatch):
         notes = nightly.extract_drafts(cands, "2026-07-16", str(tmp_path))
     assert cands[0].get("draft_entry") is None
     assert any("api down" in n for n in notes)
+
+
+# --- adapter flags: a quiet night must not read as a broken adapter --------
+
+def test_quiet_source_is_not_flagged():
+    """Zero signals from a source that examined a full catalog is a quiet
+    night. Flagging it is what made a healthy HF adapter look broken."""
+    counts = {"hf_orgs openai": 0, "hf_orgs meta": 0, "epoch": 3}
+    examined = {"hf_orgs openai": 30, "hf_orgs meta": 30, "epoch": 312}
+    assert nightly.adapter_flags(counts, examined) == []
+
+
+def test_class_examining_nothing_anywhere_is_flagged():
+    counts = {"hf_orgs openai": 0, "hf_orgs meta": 0, "epoch": 3}
+    examined = {"hf_orgs openai": 0, "hf_orgs meta": 0, "epoch": 312}
+    flags = nightly.adapter_flags(counts, examined)
+    assert len(flags) == 1
+    assert flags[0].startswith("hf_orgs:")
+
+
+def test_one_empty_source_among_populated_peers_is_not_flagged():
+    """Anthropic publishes no open weights, so its HF listing is empty every
+    night. A permanent flag there would be noise, not signal."""
+    counts = {"hf_orgs anthropic": 0, "hf_orgs meta": 0}
+    examined = {"hf_orgs anthropic": 0, "hf_orgs meta": 30}
+    assert nightly.adapter_flags(counts, examined) == []
+
+
+def test_errored_source_is_left_to_the_error_section():
+    counts = {"epoch": "ERROR"}
+    examined = {"epoch": None}
+    assert nightly.adapter_flags(counts, examined) == []
+
+
+# --- redraft: a candidate whose first draft failed must be retryable -------
+
+def _write_pending(tmp_path, draft=None, url="https://example.com/a"):
+    d = tmp_path / "data" / "pending"
+    d.mkdir(parents=True)
+    payload = {"id": "openai--gpt-6", "org": "openai",
+               "announcement_url": url, "draft_entry": draft,
+               "status": "pending-review"}
+    (d / "openai--gpt-6.json").write_text(json.dumps(payload), encoding="utf-8")
+    return d / "openai--gpt-6.json"
+
+
+def test_redraft_fills_a_missing_draft(tmp_path, monkeypatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    path = _write_pending(tmp_path)
+    with mock.patch("pipeline.detectors.common.fetch",
+                    return_value=(200, b"<html>GPT-6</html>")), \
+         mock.patch("pipeline.extract.extract_candidate",
+                    return_value=({"model_name": "GPT-6"}, "drafted")):
+        notes = nightly.redraft_pending("2026-08-24", str(tmp_path))
+    saved = json.loads(path.read_text(encoding="utf-8"))
+    assert saved["draft_entry"] == {"model_name": "GPT-6"}
+    assert saved["draft_attempts"] == 1
+    assert any("drafted" in n for n in notes)
+
+
+def test_redraft_leaves_an_existing_draft_alone(tmp_path, monkeypatch):
+    """Never re-bill a candidate that already has a draft."""
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    path = _write_pending(tmp_path, draft={"model_name": "already here"})
+    with mock.patch("pipeline.detectors.common.fetch") as fetched:
+        nightly.redraft_pending("2026-08-24", str(tmp_path))
+    assert not fetched.called
+    saved = json.loads(path.read_text(encoding="utf-8"))
+    assert saved["draft_entry"] == {"model_name": "already here"}
+    assert "draft_attempts" not in saved
+
+
+def test_redraft_records_the_attempt_even_when_it_fails(tmp_path, monkeypatch):
+    """A candidate that fails every night must show its attempts, not look
+    untried."""
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    path = _write_pending(tmp_path)
+    with mock.patch("pipeline.detectors.common.fetch",
+                    return_value=(403, b"")):
+        nightly.redraft_pending("2026-08-24", str(tmp_path))
+    saved = json.loads(path.read_text(encoding="utf-8"))
+    assert saved["draft_entry"] is None
+    assert saved["draft_attempts"] == 1
+
+
+def test_redraft_without_key_does_nothing(tmp_path, monkeypatch):
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+    path = _write_pending(tmp_path)
+    notes = nightly.redraft_pending("2026-08-24", str(tmp_path))
+    assert any("absent" in n for n in notes)
+    assert json.loads(path.read_text(encoding="utf-8"))["draft_entry"] is None

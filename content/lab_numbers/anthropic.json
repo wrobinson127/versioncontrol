@@ -1,62 +1,62 @@
 {
-  "org": "anthropic",
-  "display": "Anthropic",
-  "reviewed_by_walker": false,
-  "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
-  "tranche": "1 (2026-07-17)",
-  "rows": [
-    {
-      "entry_id": "anthropic--claude-sonnet-5",
-      "model_name": "Claude Sonnet 5",
-      "benchmark": "swe-bench-verified",
-      "value": 85.2,
-      "value_as_stated": "85.2%",
-      "benchmark_name_as_stated": "SWE-bench Verified",
-      "configuration": "Average over five trials; standard SWE-bench configuration with thinking blocks included in the sampling results; 500-problem human-verified subset",
-      "source_url": "https://www-cdn.anthropic.com/283ef97c476cf442c91d9a37d5b214242a55bb92/Claude%20Sonnet%205%20System%20Card.pdf",
-      "source_kind": "system_card",
-      "retrieval_date": "2026-07-17",
-      "quote": "SWE-bench Verified is a 500-problem subset, each verified by human engineers as solvable. Claude Sonnet 5 achieved 85.2%. ... All SWE-bench variants use the standard configuration, with thinking blocks included in the sampling results.",
-      "status": "DRAFT_FLAGGED",
-      "notes": ""
-    },
-    {
-      "entry_id": "anthropic--claude-fable-5",
-      "model_name": "Claude Fable 5",
-      "benchmark": "swe-bench-verified",
-      "value": 95.0,
-      "value_as_stated": "95%",
-      "benchmark_name_as_stated": "SWE-bench Verified",
-      "configuration": "Average over 5 trials; standard SWE-bench configuration with thinking blocks included in the sampling results; 500-problem human-verified subset",
-      "source_url": "https://www-cdn.anthropic.com/57a52ea7d8f0e54e8a542e908266086df425cdf5/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf",
-      "source_kind": "system_card",
-      "retrieval_date": "2026-07-17",
-      "quote": "SWE-bench Verified is a 500-problem subset, each verified by human engineers as solvable. Mythos 5 achieved 95.5% and Fable 5 achieved 95%. ... All SWE-bench variants use the standard configuration, with thinking blocks included in the sampling results.",
-      "status": "DRAFT_FLAGGED",
-      "notes": ""
-    }
-  ],
-  "unpinned_claims": [],
-  "not_found": [
-    {
-      "entry_id": "anthropic--claude-sonnet-5",
-      "benchmark": "gpqa-diamond",
-      "checked": [
-        "https://www.anthropic.com/news/claude-sonnet-5 (announcement; benchmark table rows are SWE-bench Pro, Terminal-Bench 2.1, Humanity's Last Exam, OSWorld-Verified, GDPval-AA v2 only)",
-        "https://www-cdn.anthropic.com/283ef97c476cf442c91d9a37d5b214242a55bb92/Claude%20Sonnet%205%20System%20Card.pdf (full text extracted; zero occurrences of GPQA)",
-        "https://www.anthropic.com/claude/sonnet"
-      ],
-      "note": "Anthropic reported no GPQA number for Sonnet 5 in any official material. The Fable 5 and Mythos 5 system card (2026-06-09) states: 'We consider GPQA Diamond to be a saturated evaluation and plan to stop reporting the performance of future models on it.' Third-party pages circulating 96.2% GPQA Diamond and 92.4% SWE-bench Verified for Sonnet 5 match no official Anthropic publication and were excluded."
-    },
-    {
-      "entry_id": "anthropic--claude-fable-5",
-      "benchmark": "gpqa-diamond",
-      "checked": [
-        "https://www.anthropic.com/news/claude-fable-5-mythos-5 (announcement; no GPQA row)",
-        "https://www-cdn.anthropic.com/57a52ea7d8f0e54e8a542e908266086df425cdf5/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf (Section 8.8 reports GPQA Diamond only for Claude Mythos 5: 94.1%, averaged over 5 trials; no Fable 5 score anywhere)",
-        "https://www.anthropic.com/claude/fable"
-      ],
-      "note": "The only official GPQA Diamond number in Fable 5 materials (94.1%) is attributed to Claude Mythos 5, a different model, so it was not recorded for the Fable 5 entry. The same card declares GPQA Diamond saturated and no longer reported going forward."
-    }
-  ]
+ "org": "anthropic",
+ "display": "Anthropic",
+ "reviewed_by_walker": true,
+ "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
+ "tranche": "1 (2026-07-17)",
+ "rows": [
+  {
+   "entry_id": "anthropic--claude-sonnet-5",
+   "model_name": "Claude Sonnet 5",
+   "benchmark": "swe-bench-verified",
+   "value": 85.2,
+   "value_as_stated": "85.2%",
+   "benchmark_name_as_stated": "SWE-bench Verified",
+   "configuration": "Average over five trials; standard SWE-bench configuration with thinking blocks included in the sampling results; 500-problem human-verified subset",
+   "source_url": "https://www-cdn.anthropic.com/283ef97c476cf442c91d9a37d5b214242a55bb92/Claude%20Sonnet%205%20System%20Card.pdf",
+   "source_kind": "system_card",
+   "retrieval_date": "2026-07-17",
+   "quote": "SWE-bench Verified is a 500-problem subset, each verified by human engineers as solvable. Claude Sonnet 5 achieved 85.2%. ... All SWE-bench variants use the standard configuration, with thinking blocks included in the sampling results.",
+   "status": "APPROVED",
+   "notes": ""
+  },
+  {
+   "entry_id": "anthropic--claude-fable-5",
+   "model_name": "Claude Fable 5",
+   "benchmark": "swe-bench-verified",
+   "value": 95.0,
+   "value_as_stated": "95%",
+   "benchmark_name_as_stated": "SWE-bench Verified",
+   "configuration": "Average over 5 trials; standard SWE-bench configuration with thinking blocks included in the sampling results; 500-problem human-verified subset",
+   "source_url": "https://www-cdn.anthropic.com/57a52ea7d8f0e54e8a542e908266086df425cdf5/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf",
+   "source_kind": "system_card",
+   "retrieval_date": "2026-07-17",
+   "quote": "SWE-bench Verified is a 500-problem subset, each verified by human engineers as solvable. Mythos 5 achieved 95.5% and Fable 5 achieved 95%. ... All SWE-bench variants use the standard configuration, with thinking blocks included in the sampling results.",
+   "status": "APPROVED",
+   "notes": ""
+  }
+ ],
+ "unpinned_claims": [],
+ "not_found": [
+  {
+   "entry_id": "anthropic--claude-sonnet-5",
+   "benchmark": "gpqa-diamond",
+   "checked": [
+    "https://www.anthropic.com/news/claude-sonnet-5 (announcement; benchmark table rows are SWE-bench Pro, Terminal-Bench 2.1, Humanity's Last Exam, OSWorld-Verified, GDPval-AA v2 only)",
+    "https://www-cdn.anthropic.com/283ef97c476cf442c91d9a37d5b214242a55bb92/Claude%20Sonnet%205%20System%20Card.pdf (full text extracted; zero occurrences of GPQA)",
+    "https://www.anthropic.com/claude/sonnet"
+   ],
+   "note": "Anthropic reported no GPQA number for Sonnet 5 in any official material. The Fable 5 and Mythos 5 system card (2026-06-09) states: 'We consider GPQA Diamond to be a saturated evaluation and plan to stop reporting the performance of future models on it.' Third-party pages circulating 96.2% GPQA Diamond and 92.4% SWE-bench Verified for Sonnet 5 match no official Anthropic publication and were excluded."
+  },
+  {
+   "entry_id": "anthropic--claude-fable-5",
+   "benchmark": "gpqa-diamond",
+   "checked": [
+    "https://www.anthropic.com/news/claude-fable-5-mythos-5 (announcement; no GPQA row)",
+    "https://www-cdn.anthropic.com/57a52ea7d8f0e54e8a542e908266086df425cdf5/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf (Section 8.8 reports GPQA Diamond only for Claude Mythos 5: 94.1%, averaged over 5 trials; no Fable 5 score anywhere)",
+    "https://www.anthropic.com/claude/fable"
+   ],
+   "note": "The only official GPQA Diamond number in Fable 5 materials (94.1%) is attributed to Claude Mythos 5, a different model, so it was not recorded for the Fable 5 entry. The same card declares GPQA Diamond saturated and no longer reported going forward."
+  }
+ ]
 }

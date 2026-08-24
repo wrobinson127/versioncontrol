@@ -29,8 +29,9 @@ PROVIDER_TO_ORG = {
 
 def parse_catalog(payload: dict, lookback_days: int, now_ts: float) -> list:
     signals = []
+    catalog = payload.get("data", [])
     horizon = now_ts - lookback_days * 86400
-    for m in payload.get("data", []):
+    for m in catalog:
         created = m.get("created") or 0
         if created < horizon:
             continue
@@ -46,7 +47,7 @@ def parse_catalog(payload: dict, lookback_days: int, now_ts: float) -> list:
             "openrouter", org, name,
             url=f"https://openrouter.ai/{slug}",
             date_hint=date_hint, title=m.get("name", slug)))
-    return signals
+    return common.SignalList(signals, examined=len(catalog))
 
 
 def detect(lookback_days: int, now_ts: float) -> list:

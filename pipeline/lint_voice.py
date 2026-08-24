@@ -112,11 +112,37 @@ def lint_text(text: str, context: str = "") -> list:
     return violations
 
 
+def lint_identifier(text: str, context: str = "") -> list:
+    """Em-dash check only, for fields that are names rather than prose.
+
+    A model name is recorded as the lab writes it, so the banned-vocabulary
+    list must not apply here: a lab is free to ship something called Ultra and
+    the registrar's job is to record that, not to object to it. The em-dash
+    prohibition still holds, because it is a rendering rule rather than a voice
+    one. In practice an em-dash in a scraped name is a mangled page title
+    rather than the real name (observed 2026-08-24: "TIPS - L/14" arrived as
+    "TIPS <emdash> L/14"), so this flags it for a human instead of guessing at
+    the correct name.
+    """
+    return [v for v in lint_text(text, context=context)
+            if v["category"] == "em-dash"]
+
+
 def lint_entry_prose(entry: dict) -> list:
-    """Lint every prose-bearing field of a draft entry dict."""
+    """Lint every publicly rendered field of a draft entry dict.
+
+    Prose fields get the full voice lint; name fields get the em-dash rule
+    only. model_name is included because it renders on every card and in every
+    heading: leaving it unlinted let two em-dashes through the 2026-08-24 run
+    on drafts that were otherwise reported clean.
+    """
     violations = []
     for field in ("summary", "notes"):
         value = entry.get(field)
         if isinstance(value, str):
             violations.extend(lint_text(value, context=field))
+    for field in ("model_name",):
+        value = entry.get(field)
+        if isinstance(value, str):
+            violations.extend(lint_identifier(value, context=field))
     return violations

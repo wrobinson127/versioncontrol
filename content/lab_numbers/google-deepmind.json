@@ -1,63 +1,63 @@
 {
-  "org": "google-deepmind",
-  "display": "Google DeepMind",
-  "reviewed_by_walker": false,
-  "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
-  "tranche": "1 (2026-07-17)",
-  "rows": [
-    {
-      "entry_id": "google-deepmind--gemma-4-12b",
-      "model_name": "Gemma 4 12B",
-      "benchmark": "gpqa-diamond",
-      "value": 78.8,
-      "value_as_stated": "78.8%",
-      "benchmark_name_as_stated": "GPQA Diamond",
-      "configuration": "Instruction-tuned model, evaluated as 'Gemma 4 12B Unified'; the Gemma 4 Technical Report (arXiv 2607.02770, Table 5, same value) states all models are in thinking mode unless explicitly stated",
-      "source_url": "https://ai.google.dev/gemma/docs/core/model_card_4",
-      "source_kind": "model_card",
-      "retrieval_date": "2026-07-17",
-      "quote": "GPQA Diamond | 84.3% | 82.3% | 78.8% | 58.6% | 43.4% | 42.4% (columns: Gemma 4 31B, Gemma 4 26B A4B, Gemma 4 12B Unified, Gemma 4 E4B, Gemma 4 E2B, Gemma 3 27B (no think))",
-      "status": "DRAFT_FLAGGED",
-      "notes": ""
-    },
-    {
-      "entry_id": "google-deepmind--gemini-3.0-flash-lite",
-      "model_name": "Gemini 3.1 Flash-Lite",
-      "benchmark": "gpqa-diamond",
-      "value": 86.9,
-      "value_as_stated": "86.9%",
-      "benchmark_name_as_stated": "GPQA Diamond",
-      "configuration": "No tools; per the official model-evaluation PDF: single attempt (pass@1), model id gemini-3.1-flash-lite-preview, default sampling, high thinking",
-      "source_url": "https://deepmind.google/models/model-cards/gemini-3-1-flash-lite/",
-      "source_kind": "model_card",
-      "retrieval_date": "2026-07-17",
-      "quote": "GPQA Diamond Scientific knowledge No tools 86.9%",
-      "status": "DRAFT_FLAGGED",
-      "notes": "The registry entry is named 'Gemini 3.0 Flash-lite' but Google's official materials name this model 'Gemini 3.1 Flash-Lite' (launched as gemini-3.1-flash-lite-preview, per the Gemini API changelog 'the first Flash-Lite model in the Gemini 3 series'); no model named Gemini 3.0 Flash-Lite exists in official materials. This corroborates the existing naming judgment item on the board; Walker's naming ruling gates this row's approval."
-    }
-  ],
-  "unpinned_claims": [],
-  "not_found": [
-    {
-      "entry_id": "google-deepmind--gemma-4-12b",
-      "benchmark": "swe-bench-verified",
-      "checked": [
-        "https://ai.google.dev/gemma/docs/core/model_card_4",
-        "https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/",
-        "https://developers.googleblog.com/gemma-4-12b-the-developer-guide/",
-        "https://deepmind.google/models/gemma/gemma-4/",
-        "https://arxiv.org/pdf/2607.02770 (Gemma 4 Technical Report; no SWE-bench occurrence; coding benchmarks reported are LiveCodeBench v6, Codeforces Elo, SciCode, Terminal Bench Hard, Tau2)"
-      ]
-    },
-    {
-      "entry_id": "google-deepmind--gemini-3.0-flash-lite",
-      "benchmark": "swe-bench-verified",
-      "checked": [
-        "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-lite/",
-        "https://deepmind.google/models/model-cards/gemini-3-1-flash-lite/ (no SWE string; coding benchmark reported is LiveCodeBench 72.0%)",
-        "https://storage.googleapis.com/deepmind-media/gemini/gemini_3-1_flash-lite_model_evaluation.pdf (no SWE-bench occurrence)",
-        "https://ai.google.dev/gemini-api/docs/changelog"
-      ]
-    }
-  ]
+ "org": "google-deepmind",
+ "display": "Google DeepMind",
+ "reviewed_by_walker": true,
+ "instructions": "LAB_REPORTED benchmark numbers researched from official lab materials only (D22 stretch, tranche 1, newest-and-most-notable-first). A row publishes to its entry only when status is APPROVED; then run python -m pipeline.apply_lab_numbers --run-date <date>. The applied number carries the pinned benchmark name and version; the benchmark_name_as_stated and quote fields are the evidence trail. unpinned_claims and not_found are records of the research, never applied.",
+ "tranche": "1 (2026-07-17)",
+ "rows": [
+  {
+   "entry_id": "google-deepmind--gemma-4-12b",
+   "model_name": "Gemma 4 12B",
+   "benchmark": "gpqa-diamond",
+   "value": 78.8,
+   "value_as_stated": "78.8%",
+   "benchmark_name_as_stated": "GPQA Diamond",
+   "configuration": "Instruction-tuned model, evaluated as 'Gemma 4 12B Unified'; the Gemma 4 Technical Report (arXiv 2607.02770, Table 5, same value) states all models are in thinking mode unless explicitly stated",
+   "source_url": "https://ai.google.dev/gemma/docs/core/model_card_4",
+   "source_kind": "model_card",
+   "retrieval_date": "2026-07-17",
+   "quote": "GPQA Diamond | 84.3% | 82.3% | 78.8% | 58.6% | 43.4% | 42.4% (columns: Gemma 4 31B, Gemma 4 26B A4B, Gemma 4 12B Unified, Gemma 4 E4B, Gemma 4 E2B, Gemma 3 27B (no think))",
+   "status": "APPROVED",
+   "notes": ""
+  },
+  {
+   "entry_id": "google-deepmind--gemini-3.0-flash-lite",
+   "model_name": "Gemini 3.1 Flash-Lite",
+   "benchmark": "gpqa-diamond",
+   "value": 86.9,
+   "value_as_stated": "86.9%",
+   "benchmark_name_as_stated": "GPQA Diamond",
+   "configuration": "No tools; per the official model-evaluation PDF: single attempt (pass@1), model id gemini-3.1-flash-lite-preview, default sampling, high thinking",
+   "source_url": "https://deepmind.google/models/model-cards/gemini-3-1-flash-lite/",
+   "source_kind": "model_card",
+   "retrieval_date": "2026-07-17",
+   "quote": "GPQA Diamond Scientific knowledge No tools 86.9%",
+   "status": "APPROVED",
+   "notes": "The registry entry is named 'Gemini 3.0 Flash-lite' but Google's official materials name this model 'Gemini 3.1 Flash-Lite' (launched as gemini-3.1-flash-lite-preview, per the Gemini API changelog 'the first Flash-Lite model in the Gemini 3 series'); no model named Gemini 3.0 Flash-Lite exists in official materials. This corroborates the existing naming judgment item on the board; Walker's naming ruling gates this row's approval."
+  }
+ ],
+ "unpinned_claims": [],
+ "not_found": [
+  {
+   "entry_id": "google-deepmind--gemma-4-12b",
+   "benchmark": "swe-bench-verified",
+   "checked": [
+    "https://ai.google.dev/gemma/docs/core/model_card_4",
+    "https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/",
+    "https://developers.googleblog.com/gemma-4-12b-the-developer-guide/",
+    "https://deepmind.google/models/gemma/gemma-4/",
+    "https://arxiv.org/pdf/2607.02770 (Gemma 4 Technical Report; no SWE-bench occurrence; coding benchmarks reported are LiveCodeBench v6, Codeforces Elo, SciCode, Terminal Bench Hard, Tau2)"
+   ]
+  },
+  {
+   "entry_id": "google-deepmind--gemini-3.0-flash-lite",
+   "benchmark": "swe-bench-verified",
+   "checked": [
+    "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-lite/",
+    "https://deepmind.google/models/model-cards/gemini-3-1-flash-lite/ (no SWE string; coding benchmark reported is LiveCodeBench 72.0%)",
+    "https://storage.googleapis.com/deepmind-media/gemini/gemini_3-1_flash-lite_model_evaluation.pdf (no SWE-bench occurrence)",
+    "https://ai.google.dev/gemini-api/docs/changelog"
+   ]
+  }
+ ]
 }

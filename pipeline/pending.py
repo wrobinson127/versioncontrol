@@ -55,9 +55,21 @@ def write_candidates(candidates: list, run_date: str, root: str = ".") -> list:
     return paths
 
 
+def _source_line(label, count, examined: dict) -> str:
+    """One source's tally. A zero always says what it is made of: nothing
+    examined reads as a dead source, plenty examined reads as a quiet night.
+    """
+    n = (examined or {}).get(label)
+    if n is None:
+        return f"{label}: {count}"
+    noun = "record" if n == 1 else "records"
+    return f"{label}: {count} of {n} {noun} examined"
+
+
 def morning_report(candidates: list, run_date: str, detector_errors: list,
                    flags: list, llm_note: str = "",
-                   source_counts: dict = None) -> str:
+                   source_counts: dict = None,
+                   source_examined: dict = None) -> str:
     """Markdown artifact summarizing the night. Registrar voice."""
     lines = [f"# Morning report, {run_date} (UTC)", ""]
     if not candidates and not detector_errors and not flags:
@@ -65,7 +77,8 @@ def morning_report(candidates: list, run_date: str, detector_errors: list,
         if source_counts:
             lines.append("")
             lines.append("Signals by source: " + ", ".join(
-                f"{k}={v}" for k, v in sorted(source_counts.items())))
+                _source_line(k, v, source_examined)
+                for k, v in sorted(source_counts.items())))
         return "\n".join(lines) + "\n"
 
     if candidates:
@@ -110,6 +123,6 @@ def morning_report(candidates: list, run_date: str, detector_errors: list,
         lines.append("")
         lines.append("## Signals by source")
         for k, v in sorted(source_counts.items()):
-            lines.append(f"- {k}: {v}")
+            lines.append(f"- {_source_line(k, v, source_examined)}")
 
     return "\n".join(lines) + "\n"

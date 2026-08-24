@@ -28,7 +28,7 @@ def parse_feed(org: str, content: bytes, lookback_days: int,
         signals.append(common.signal(
             "rss", org, common.model_hint_from(title),
             url=item.get("link"), date_hint=date_hint, title=title))
-    return signals
+    return common.SignalList(signals, examined=len(feed.entries))
 
 
 def detect(org: str, news_cfg: dict, lookback_days: int, now_ts: float) -> list:

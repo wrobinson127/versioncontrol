@@ -315,3 +315,35 @@ def test_replay_fixtures_through_full_path(tmp_path):
 def test_morning_report_quiet_night():
     report = pending.morning_report([], CAPTURE_DATE, [], [])
     assert "No new candidate releases" in report
+
+
+# --- examined counts: a zero must say what it is made of -------------------
+
+def test_hf_listing_reports_records_examined():
+    models = json.loads(_read("hf_zai_org_60.json"))
+    recent = hf_orgs.parse_listing("zai", models, lookback_days=45,
+                                   now_date=CAPTURE_DATE)
+    stale = hf_orgs.parse_listing("zai", models, lookback_days=5,
+                                  now_date=CAPTURE_DATE)
+    # Same catalog either way: the signal count moves, examined does not.
+    assert recent.examined == len(models)
+    assert stale.examined == len(models)
+    assert len(stale) < len(recent)
+
+
+def test_openrouter_reports_records_examined():
+    payload = json.loads(_read("openrouter_models.json"))
+    signals = openrouter.parse_catalog(payload, lookback_days=30,
+                                       now_ts=CAPTURE_TS)
+    assert signals.examined == len(payload["data"])
+
+
+def test_empty_listing_examines_nothing():
+    """The distinction the morning report depends on: no records at all is
+    not the same fact as records that were all too old."""
+    assert hf_orgs.parse_listing("zai", [], 45, CAPTURE_DATE).examined == 0
+
+
+def test_signal_list_behaves_as_a_plain_list():
+    sl = common.SignalList([1, 2], examined=7)
+    assert sl == [1, 2] and len(sl) == 2 and list(sl) == [1, 2]

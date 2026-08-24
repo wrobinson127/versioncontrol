@@ -190,7 +190,8 @@ def test_build_views_against_real_dataset_and_guard(tmp_path):
         json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     views = derive_views.build_views(root=str(tmp_path), run_date="2026-07-16")
 
-    assert views["tiles"]["releases_recorded"] == 281
+    # 282 = 281 + the promoted ChatGPT origin release (content pass 2026-07-20)
+    assert views["tiles"]["releases_recorded"] == 282
     assert views["trajectory"]["series"], "real data yields series"
     for s in views["trajectory"]["series"]:
         assert s["source_class"] in ("INDEPENDENT", "LAB_REPORTED")

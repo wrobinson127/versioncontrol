@@ -7,30 +7,36 @@
 <meta name="description" content="How Version Control records AI model releases: provenance tags on every number, explicit non-disclosure marks, delta refusal semantics, and eval-version pinning.">
 <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
 <link rel="canonical" href="https://versioncontrol.walker-robinson.com/methodology.html">
-<!-- og:image points at a rendered PNG; the PNG render of assets/og-card.svg lands in a later phase. -->
 <meta property="og:title" content="Version Control: methodology">
 <meta property="og:description" content="How to read this registry honestly.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://versioncontrol.walker-robinson.com/methodology.html">
 <meta property="og:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
 <link rel="stylesheet" href="./css/site.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 
+<nav class="storynav" aria-label="Site">
+  <a class="storynav-brand" href="./index.html">Version Control</a>
+  <div class="storynav-links">
+    <a href="./story.html">Story</a>
+    <a href="./index.html">Timeline</a>
+    <a href="./methodology.html" aria-current="page">Methodology</a>
+    <a href="./about.html">About</a>
+    <a href="./data.html">Data</a>
+  </div>
+</nav>
+
 <header class="masthead">
   <div class="wrap mast-row">
     <div class="mast-brand">
       <a class="mast-title" href="./index.html">Version Control</a>
-      <p class="mast-tagline">The release record of the model era.</p>
+      <p class="mast-tagline">The release record of the AI model era.</p>
     </div>
-    <nav class="mast-nav" aria-label="Site">
-      <a href="./story.html">Story</a>
-      <a href="./index.html">Timeline</a>
-      <a href="./methodology.html" aria-current="page">Methodology</a>
-      <a href="./about.html">About</a>
-      <a href="./data.html">Data</a>
-    </nav>
   </div>
 </header>
 
@@ -40,13 +46,13 @@
   <p>Version Control is a ledger, not a scoreboard. It records what shipped, what the releasing lab disclosed, and what independent evaluators measured. Four rules govern every number on the site.</p>
 
   <h2>1. Every number carries its provenance</h2>
-  <p>Each benchmark value renders with a tag that cannot be separated from it: <span class="prov" title="LAB: reported by the releasing lab.">LAB</span> means the number was reported by the releasing lab, and <span class="prov" title="IND: measured by an independent evaluator.">IND</span> means it was measured by an independent evaluator. The tag links to the source, and the record stores the source URL, the benchmark name and version, and the retrieval date. A number with no source does not appear. There are no exceptions.</p>
+  <p>Each benchmark value renders with a tag that cannot be separated from it: <span class="prov" title="LAB: reported by the releasing lab.">LAB</span> means the number was reported by the releasing lab, and <span class="prov" title="IND: measured by an independent evaluator.">IND</span> means it was measured by an independent evaluator. The tag links to the source, and the record stores the source URL, the benchmark name and version, and the retrieval date. A number with no source does not appear.</p>
 
   <h2>2. Non-disclosure is a displayed signal</h2>
   <p>When a lab publishes no system card, no model card, no usage policy, no paper, or no parameter count, the registry does not leave a blank. It renders an explicit outlined mark: <span class="nd">not disclosed</span>. The mark is visually distinct from a zero, from a value, and from data the registry has simply not yet collected. Absence of disclosure is part of the record.</p>
 
   <h2>3. Deltas are computed once, and refused when dishonest</h2>
-  <p>A change against the predecessor renders as a delta chip only when the two measurements are comparable: the same benchmark, the same benchmark version, and the same source class. Deltas are computed in the data pipeline and published in a derived file; the site renders that file and never computes a comparison itself. When a predecessor was measured but the pair is not comparable, the registry refuses the comparison and says so in words, in place: <em>no comparable measurement</em>. When the predecessor was never measured at all, nothing renders; silence is not the same signal as refusal.</p>
+  <p>A change against the predecessor renders as a delta chip only when the two measurements are comparable: the same benchmark, the same benchmark version, and the same source class. Deltas are computed in the data pipeline and published in a derived file; the site renders that file and computes nothing itself. When a predecessor was measured but the pair is not comparable, the registry refuses the comparison and says so in words, in place: <em>no comparable measurement</em>. When the predecessor was never measured at all, nothing renders; silence is not the same signal as refusal.</p>
 
   <h2>4. Benchmark versions are pinned, permanently</h2>
   <p>Benchmark labels always carry their version: <strong>GPQA Diamond</strong>, never a bare "GPQA"; <strong>SWE-Bench Verified</strong>, never a bare "SWE-Bench". A revised benchmark is a different measurement axis, and the registry never bridges versions with a delta, a chart, or any other visual. Where a lab's evaluation configuration is known, it renders verbatim beneath the number.</p>
@@ -55,22 +61,23 @@
   <p>The registry records releases from a closed set of 12 organizations: OpenAI, Anthropic, Google DeepMind, Meta, xAI, Mistral, DeepSeek, Alibaba (Qwen), Moonshot AI, Z.ai (Zhipu), Cohere, and Amazon (Nova). The record begins on 2022-11-30.</p>
   <p>The set can grow. An organization enters the registry when it ships a model meeting Epoch AI's notability bar or sustains top-tier leaderboard presence. Every change to the registry is logged with a date and a reason, and the log is append-only. Pending candidates have no public trace; an entry either exists in the record or it does not.</p>
   <p>A tracked release is a new named model or versioned variant that is publicly usable: open weights, public API, or public service. Excluded: third-party fine-tunes, quantizations and reposts, no-access research previews, and models whose domain classification in Epoch AI's dataset includes neither language nor multimodal capability. A multimodal model with a language component is in scope, which is why audio-language and vision-language entries appear in the record.</p>
+  <p>Each organization's country of origin is recorded as context. It is a facet for the explorer and methodology, not a dimension the story ranks or groups by.</p>
 
   <h2>Detection pipeline</h2>
   <p>A nightly pipeline watches four independent signals for candidate releases: the Epoch AI models dataset, lab announcement feeds and page changes, model repository activity, and API catalog listings. Candidates that clear correlation and validation are drafted as entries. Nothing publishes without human approval; every entry in the record was reviewed by a person before it appeared.</p>
 
   <h2>Benchmark pins</h2>
-  <p>The registry currently records two benchmarks, chosen for stable versioned definitions and sustained independent coverage:</p>
+  <p>The registry records two benchmarks, each with a stable, versioned definition maintained by its originators and sustained independent coverage. The definition of each benchmark comes from its own makers; the registry only pins the version and records measurements of it.</p>
   <ul>
-    <li><strong>GPQA Diamond</strong>: graduate-level science questions, diamond subset.</li>
-    <li><strong>SWE-Bench Verified</strong>: software engineering tasks, human-verified subset.</li>
+    <li><strong>GPQA Diamond</strong>: the expert-validated "diamond" subset of GPQA, a graduate-level science-question benchmark introduced by Rein et al. (2023) and designed to stay hard even with web access.</li>
+    <li><strong>SWE-Bench Verified</strong>: a human-validated subset of SWE-bench (Jimenez et al., 2023), a real-world software-engineering benchmark drawn from GitHub issues; the Verified subset was screened by OpenAI (2024) for solvable, well-specified tasks.</li>
   </ul>
-  <p>Values are percentages on a 0 to 100 scale, recorded as published by their source.</p>
+  <p>Values are percentages on a 0 to 100 scale, recorded as published by their source. A benchmark decays: as a model's training data grows, a fixed test set can leak into it. The registry favors versioned, independently-run benchmarks and watches contamination-resistant harnesses such as LiveCodeBench (Jain et al., 2024), which draws fresh problems dated after a model's training cutoff, as the state of the art in resisting benchmark gaming.</p>
 
   <h2>The measures, defined</h2>
   <p>Every headline number on the site is computed from the published files by a stated rule; nothing is smoothed or modeled.</p>
   <ul>
-    <li><strong>Median gap between releases (the story counter)</strong>: the median of the gaps, in days, between consecutive releases across all tracked organizations, over a trailing 365 day window evaluated at each release date. It pools twelve organizations, which is why it saturates at a few days once the record densifies.</li>
+    <li><strong>Median gap between releases (the story counter)</strong>: the median of the gaps, in days, between consecutive releases across all tracked organizations, over a trailing 365 day window evaluated at each release date. It pools 12 organizations, which is why it falls to a few days once the record fills in.</li>
     <li><strong>Median gap this year (the tile)</strong>: the median of the gaps between consecutive releases dated within the current calendar year. A different window from the story counter, stated on each surface.</li>
     <li><strong>Releases per year and per month</strong>: raw counts of release entries by date. Revisions are counted separately and excluded from release cadence.</li>
     <li><strong>Days since the last release</strong>: calendar days from the newest release date to the last successful update.</li>
@@ -79,12 +86,14 @@
   </ul>
 
   <h2>Data sources and attribution</h2>
-  <p>Backfilled release dates, organization mappings, parameter counts, availability classes, and independent benchmark numbers derive from Epoch AI's datasets, used under CC-BY 4.0:</p>
+  <p>Backfilled release dates, organization mappings, parameter counts, availability classes, and the independent benchmark numbers sourced from Epoch AI's Benchmarking Hub derive from Epoch AI's datasets, used under CC-BY 4.0:</p>
   <blockquote>Epoch AI, "Data on AI Models". Published online at epoch.ai. Retrieved from <a href="https://epoch.ai/data/ai-models" rel="external">https://epoch.ai/data/ai-models</a> [online resource].</blockquote>
-  <p>Independent benchmark measurements come from Epoch AI's Benchmarking Hub. Lab-reported figures, where present, cite the lab's own publication.</p>
+  <p>Independent benchmark measurements come from a single independent evaluator, Epoch AI's Benchmarking Hub. That is a real limit, stated plainly rather than hidden: every "independent" number here is Epoch-measured, and the lab-versus-independent view compares each lab's own report against Epoch specifically, not against a consensus of evaluators. A second independent evaluator that publishes per-benchmark numbers openly would strengthen this; those are scarce, and the registry will not pad the count with composite or ranking leaderboards, which blend measurements into a single score and are exactly what this record refuses to do. If a second source that measures the pinned benchmarks openly becomes available, its numbers will carry their own attribution and will never be averaged into Epoch's. Lab-reported figures, where present, cite the lab's own publication.</p>
+  <p>One display mapping: where this site labels an availability class (open weights, public API, or public service), it is showing Epoch AI's "Model accessibility" field under the name "availability". The values are Epoch's; only the label differs.</p>
+  <p>Parameter counts are overwhelmingly lab-stated. A small number on record (about nine across the whole record) are Epoch AI estimates rather than a value the lab disclosed; they are carried as recorded. The parameter-disclosure figures count whether a release states a parameter value at all, and the decline holds under every definition, including one that excludes the flagged estimates.</p>
 
-  <h2>The OpenRouter posture</h2>
-  <p>Pricing and context-length figures shown on the site, where they appear, carry a "per OpenRouter" attribution and are display-only. They are never included in the downloadable dataset, because OpenRouter publishes no explicit redistribution license for its catalog data.</p>
+  <h2>Pricing and context-length figures</h2>
+  <p>Pricing and context-length figures shown on the site carry a "per OpenRouter" attribution and are display-only. They are never included in the downloadable dataset, because OpenRouter publishes no explicit redistribution license for its catalog data.</p>
 
   <h2>Known limits</h2>
   <ul>
