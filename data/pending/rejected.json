@@ -1,0 +1,147 @@
+[
+  {
+    "id": "xai--composer-2.5",
+    "reason": "Epoch attributes Composer to Cursor, not xAI. Out of the twelve-organization registry.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "openai--gpt-5.5-cyber",
+    "reason": "Epoch domain classification is Cybersecurity only: neither language nor multimodal.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "amazon--nova-2.0-pro-preview",
+    "reason": "No-access preview. AWS limits Nova 2 Pro to Nova Forge early access; only Nova 2 Lite is generally available. See content/scope_exclusions.json.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "google-deepmind--gemini-3.5-flash-cyber",
+    "reason": "No-access preview. Offered to governments and trusted partners under a limited pilot, not generally available.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "google-deepmind--tipsv1-b14",
+    "reason": "TIPS is a contrastive vision-language encoder that embeds images and text; it does not generate text.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "google-deepmind--tipsv1-g14",
+    "reason": "TIPS is a contrastive vision-language encoder that embeds images and text; it does not generate text.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "google-deepmind--tipsv1-g14-lowres",
+    "reason": "TIPS is a contrastive vision-language encoder that embeds images and text; it does not generate text.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "google-deepmind--tipsv1-l14",
+    "reason": "TIPS is a contrastive vision-language encoder that embeds images and text; it does not generate text.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "google-deepmind--tipsv1-s14",
+    "reason": "TIPS is a contrastive vision-language encoder that embeds images and text; it does not generate text.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "google-deepmind--tipsv1-so400m14",
+    "reason": "TIPS is a contrastive vision-language encoder that embeds images and text; it does not generate text.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "xai--grok-imagine-1.5",
+    "reason": "Image generation; no language component.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "xai--voice-think-fast-1.0",
+    "reason": "Voice model; no language component in the tracked sense.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "xai--voice-think-fast-2.0",
+    "reason": "Voice model; no language component in the tracked sense.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "mistral--mistral-ocr-3",
+    "reason": "OCR model; no language component in the tracked sense.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "mistral--mistral-ocr-4",
+    "reason": "OCR model; no language component in the tracked sense.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "anthropic--claude-opus-5-fast",
+    "reason": "Effort-mode toggle on Claude Opus 5, same weights served differently. Not a separate model.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "meta--muse-spark-1.2-contributor",
+    "reason": "Pricing tier of Muse Spark 1.2, same model. Not a separate release.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "google-deepmind--gemini-3.7-flash-batch",
+    "reason": "Batch endpoint for Gemini 3.7 Flash, same model. Not a separate release.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "xai--github-copilot-grok-4.5",
+    "reason": "Availability announcement: Grok 4.5 becoming available in GitHub Copilot. Not a new model.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "xai--bringing-grok-4.5",
+    "reason": "Availability announcement. Grok 4.5 is on record at 2026-07-08.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "mistral--mistral-3",
+    "reason": "Family announcement post. Mistral Large 3 and Ministral 3 14B are both on record.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "alibaba-qwen--qwen3.5-a3b",
+    "reason": "Duplicate slug for Qwen3.5-35B-A3B, on record at 2026-02-24.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "alibaba-qwen--qwen3.6",
+    "reason": "Duplicate slug for Qwen3.6 27B, on record at 2026-04-22.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "alibaba-qwen--qwen3.8",
+    "reason": "FP8 quantization of Qwen3.8-27B. Quantizations are excluded outright.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "alibaba-qwen--qwen-3.8",
+    "reason": "Duplicate slug for Qwen 3.8 27B, on record at 2026-08-14.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "google-deepmind--gemini-3.5",
+    "reason": "Duplicate slug for Gemini 3.5 Flash, on record at 2026-05-19.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "google-deepmind--gemini-3.6",
+    "reason": "Duplicate slug for Gemini 3.6 Flash, on record at 2026-07-21.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "google-deepmind--gemini-3.7",
+    "reason": "Duplicate slug for Gemini 3.7 Flash, on record at 2026-08-13.",
+    "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "anthropic--anthropic-lm",
+    "reason": "arXiv 2204.05862 is a 2022 RLHF research paper, not a publicly usable released model. Also predates the 2022-11-30 backfill start.",
+    "rejected_on": "2026-08-24"
+  }
+]

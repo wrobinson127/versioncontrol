@@ -4,13 +4,13 @@
       "sha256": "3a8df9ae94e23e14003ca212c5aefe1be45edc5e708e2da2f6b71656e1962525"
     },
     "data/derived/site_meta.json": {
-      "sha256": "58f665802b33a0d57c151b13f59e485dd1dfc10cc8269fa2656d8c75a24d74c1"
+      "sha256": "cf0c08e490c33e87571891ef7a6d763dac978f0931dde4f075d3f454c1f322ef"
     },
     "data/derived/views.json.gz": {
-      "sha256": "5e589cf3277ca11a9302eed82f7b45168b69081f0d2283f8eec95c997760696b"
+      "sha256": "68655d4749e7058d90ac024b56eab5e7f0f01d632d54d071aecc41bb3e423918"
     }
   },
-  "entry_count": 326,
+  "entry_count": 335,
   "files": {
     "data/entries/2022.json.gz": {
       "count": 2,
@@ -174,7 +174,7 @@
       "sha256": "40783ef6276092263b11fecb995c3d3bcb52abcf017f31f2effcec543eebb6c0"
     },
     "data/entries/2025.json.gz": {
-      "count": 123,
+      "count": 125,
       "ids": [
         "deepseek--deepseek-r1",
         "alibaba-qwen--gte-modernbert",
@@ -234,6 +234,7 @@
         "google-deepmind--gemini-2.5-pro-jun-2025",
         "mistral--devstral-medium",
         "mistral--magistral-small-1.0",
+        "openai--o3-pro",
         "google-deepmind--gemini-2.5-flash-lite",
         "mistral--mistral-small-3.2",
         "moonshot--kimi-dev-72b",
@@ -246,6 +247,7 @@
         "google-deepmind--aeneas",
         "mistral--magistral-small-1.1",
         "alibaba-qwen--qwen3-235b-a22b-jul-2025",
+        "mistral--codestral-25.08",
         "cohere--command-a-vision",
         "google-deepmind--gemini-2.5-deep-think",
         "anthropic--claude-opus-4.1",
@@ -300,10 +302,10 @@
         "openai--gpt-5.2-codex",
         "zai--glm-4.7"
       ],
-      "sha256": "022be3ebd0b2c2b31b3a0e333c171783ba582fdf3797ac2b4b679ef07527f7ac"
+      "sha256": "675b7bf5511dc6b9628daaa8b0a69268c5d66bf83e8aa28ed0a109a0de01e167"
     },
     "data/entries/2026.json.gz": {
-      "count": 60,
+      "count": 67,
       "ids": [
         "zai--glm-4.7-flash",
         "alibaba-qwen--qwen3-max-thinking",
@@ -348,25 +350,32 @@
         "moonshot--kimi-k2.7-code",
         "zai--glm-5.2",
         "anthropic--claude-sonnet-5",
+        "mistral--leanstral-1.5",
         "xai--grok-4.5",
         "meta--muse-spark-1.1",
+        "openai--gpt-5.6-luna",
         "openai--gpt-5.6-sol",
+        "openai--gpt-5.6-terra",
         "moonshot--kimi-k3",
         "alibaba-qwen--qwen-3.8-max",
+        "google-deepmind--gemini-3.5-flash-lite",
         "google-deepmind--gemini-3.6-flash",
         "anthropic--claude-opus-5",
         "alibaba-qwen--qwen3.7-flash",
+        "google-deepmind--gemini-robotics-er-2",
         "deepseek--deepseek-v4-flash-0731",
         "meta--muse-spark-1.2",
         "alibaba-qwen--qwen3.8-2.4t-a95b",
+        "cohere--north-micro-vision-instruct",
         "meta--muse-glimmer",
         "openai--gpt-5.6-cyber",
+        "deepseek--deepseek-v4-pro-0813",
         "xai--grok-4.6",
         "google-deepmind--gemini-3.7-flash",
         "alibaba-qwen--qwen-3.8-27b",
         "zai--glm-5.3"
       ],
-      "sha256": "cdf36034889aa6f857591b2615e9cc88d25c365f9fdc385851fa9beed56b5f81"
+      "sha256": "18ebd6c3f5c1d37e7a9d753226fdedcf322abb28ba87120927c9d3360bd7bacb"
     }
   },
   "schema_version": 1
