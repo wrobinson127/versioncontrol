@@ -26,6 +26,12 @@ def existing_pending_ids(root: str = ".") -> set:
         with open(rejected, encoding="utf-8") as f:
             ids |= {r["id"] if isinstance(r, dict) else r
                     for r in json.load(f)}
+    # A model ruled out of scope for the record is also not a candidate. The
+    # ruling lives in one place and must bind both paths: without this,
+    # amazon--nova-2.0-pro-preview is excluded from the record by backfill and
+    # then re-proposed by detection every single night, forever.
+    from .backfill import load_scope_exclusions  # local: backfill is heavy
+    ids |= set(load_scope_exclusions(root))
     return ids
 
 

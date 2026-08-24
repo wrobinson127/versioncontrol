@@ -170,7 +170,13 @@ def extract_candidate(candidate: dict, announcement_html: str, run_date: str,
         draft = parse_extraction(raw, candidate["announcement_url"],
                                  retrieval_date=run_date)
     except ExtractionError as e:
-        return None, f"extraction output rejected: {e}"
+        # A parse error with no sight of the output is undiagnosable: two
+        # candidates on the 2026-08-24 redraft failed at "line 1 column 1"
+        # with a non-empty response, which means prose or a refusal where JSON
+        # was asked for, and nothing in the report said which. The opening
+        # characters are enough to tell those apart without pasting a page.
+        head = " ".join(raw.split())[:120]
+        return None, f"extraction output rejected: {e} | output began: {head!r}"
     violations = lint_voice.lint_entry_prose(draft)
     if violations:
         cats = ", ".join(sorted({v["category"] for v in violations}))
