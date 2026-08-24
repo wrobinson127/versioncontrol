@@ -4,6 +4,16 @@ on:
   schedule:
     - cron: "20 8 * * *"   # 08:20 UTC daily; quiet hour for lab announcements
   workflow_dispatch:
+    inputs:
+      redraft_pending:
+        # The API key lives here as an Actions secret and nowhere else, which
+        # is the point: secrets are write-only, so no local checkout can read
+        # it. A queued candidate that never got a draft therefore has to be
+        # redrafted from inside a run. Off by default so the nightly cron
+        # never re-bills the queue on its own.
+        description: "Also retry drafting for queued candidates that have none"
+        type: boolean
+        default: false
 
 jobs:
   detect:
@@ -44,7 +54,15 @@ jobs:
       - name: Detect, correlate, extract, write pending
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python -m pipeline.nightly --report-path morning_report.md
+          REDRAFT: ${{ inputs.redraft_pending }}
+        run: |
+          # inputs is empty on a schedule event, so REDRAFT is "" and the
+          # nightly cron keeps its normal single-pass behaviour.
+          args=""
+          if [ "$REDRAFT" = "true" ]; then
+            args="--redraft-pending"
+          fi
+          python -m pipeline.nightly --report-path morning_report.md $args
 
       - name: Upload morning report artifact
         if: always()
