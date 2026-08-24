@@ -4,7 +4,7 @@ import json
 import os
 from unittest import mock
 
-from pipeline import nightly
+from pipeline import nightly, pending
 
 
 def _cand(url="https://example.com/announce"):
@@ -182,3 +182,21 @@ def test_reaping_never_touches_the_durable_rejection_list(tmp_path):
 
 def test_reaping_an_absent_directory_is_a_no_op(tmp_path):
     assert nightly.reap_published_candidates([{"id": "x"}], str(tmp_path)) == []
+
+
+# --- a scope ruling binds detection too ------------------------------------
+
+def test_scope_exclusions_suppress_candidates(tmp_path):
+    """amazon--nova-2.0-pro-preview is excluded from the record by backfill.
+    Without this the detector re-proposes it every night, forever."""
+    content = tmp_path / "content"
+    content.mkdir()
+    (content / "scope_exclusions.json").write_text(
+        json.dumps([{"id": "amazon--nova-2.0-pro-preview",
+                     "reason": "no-access preview"}]), encoding="utf-8")
+    ids = pending.existing_pending_ids(str(tmp_path))
+    assert "amazon--nova-2.0-pro-preview" in ids
+
+
+def test_no_exclusions_file_is_fine(tmp_path):
+    assert pending.existing_pending_ids(str(tmp_path)) == set()
