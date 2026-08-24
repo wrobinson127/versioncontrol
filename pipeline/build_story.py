@@ -25,6 +25,12 @@ from collections import defaultdict
 ROOT = pathlib.Path(".")
 V = json.loads(gzip.decompress((ROOT / "data/derived/views.json.gz").read_bytes()))
 tiles = V["tiles"]
+# Rendered dates come from the data. Three were hardcoded to 2026-07-16 and
+# survived the 2026-08-24 capture refresh, including a "retrieved" line,
+# which states provenance and so must never be a stale literal. --check
+# cannot catch this class on its own: a constant inside the generator
+# rebuilds identically every time and stays self-consistent while wrong.
+AS_OF = tiles["as_of"]
 REG = ["openai", "anthropic", "google-deepmind", "meta", "xai", "mistral",
        "deepseek", "alibaba-qwen", "moonshot", "zai", "cohere", "amazon"]
 NM = {"openai": "OpenAI", "anthropic": "Anthropic", "google-deepmind": "Google DeepMind",
@@ -906,7 +912,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
 </nav>
 <div class="wrap">
 <div class="masthead"><div><h1>Version Control</h1><p>The release record of the AI model era.</p></div>
-<div class="mast-by">Maintained by <a href="https://walker-robinson.com">Walker Robinson</a> &#183; <a href="./methodology.html">methodology &amp; sources</a> &#183; <span class="mast-asof">the record as of 2026-07-16</span></div></div>
+<div class="mast-by">Maintained by <a href="https://walker-robinson.com">Walker Robinson</a> &#183; <a href="./methodology.html">methodology &amp; sources</a> &#183; <span class="mast-asof">the record as of {AS_OF}</span></div></div>
 <section class="hero" id="hero">
   <div class="hero-inner">
     <p class="hero-head">A public registry of AI model releases.<br>Arriving faster every year.</p>
@@ -940,7 +946,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
       <g class="closelines">{closelines}</g>
     </svg>
     <div class="bignum" id="bignum" aria-hidden="true"><b id="bignumN">1</b><small>releases on record</small></div>
-    <div class="source" id="src">Releases: Epoch AI, Data on AI Models &#183; independent scores: Epoch AI Benchmarking Hub &#183; retrieved 2026-07-16</div>
+    <div class="source" id="src">Releases: Epoch AI, Data on AI Models &#183; independent scores: Epoch AI Benchmarking Hub &#183; retrieved {AS_OF}</div>
   </div></div>
   <div class="notecol">
     <div class="notewrap" id="notewrap" aria-live="polite"></div>
@@ -968,7 +974,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
       <a class="enddoor" href="./data.html"><b>Data</b><span>download the dataset, CC-BY 4.0 &#8594;</span></a>
     </div>
   </div>
-  <span class="protonote">Parameter values are counts on record; a small share are Epoch estimates, footnoted in methodology. Data current as of 2026-07-16.</span></div>
+  <span class="protonote">Parameter values are counts on record; a small share are Epoch estimates, footnoted in methodology. Data current as of {AS_OF}.</span></div>
 </div>
 <div class="hovertip" id="tip"></div>
 <script>
