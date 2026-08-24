@@ -271,10 +271,13 @@ def test_replay_fixtures_through_full_path(tmp_path):
                                      pending.existing_pending_ids(str(tmp_path)))
     assert candidates, "capture window contains releases newer than the dataset"
 
-    # Known truth: kimi-k3 (OpenRouter, created the capture day) is a real
-    # release the dataset lacks.
+    # Naming a specific model as "must be a candidate" is self-destructing:
+    # the assertion holds only until that model is published. kimi-k3 was the
+    # example here and it entered the record in the 2026-08-24 refresh, so the
+    # property is asserted instead of the instance, and kimi-k3 moves to the
+    # published set below where it now tests suppression rather than detection.
     ids = {c["id"] for c in candidates}
-    assert "moonshot--kimi-k3" in ids
+    assert ids, "the capture window should surface at least one candidate"
 
     # No candidate may be a date fragment (R1) or a published model (R2).
     # The R2 check uses a curated list of models known to be in the dataset,
@@ -285,7 +288,10 @@ def test_replay_fixtures_through_full_path(tmp_path):
                  "moonshot--kimi-k2.6", "moonshot--kimi-k2-thinking",
                  "mistral--mistral-small-3.1", "mistral--mistral-medium-3.5",
                  "xai--grok-code-fast-1", "anthropic--claude-fable-5",
-                 "openai--gpt-5.5", "zai--glm-5.2"}
+                 "openai--gpt-5.5", "zai--glm-5.2",
+                 # Entered the record in the 2026-08-24 capture refresh.
+                 "moonshot--kimi-k3", "anthropic--claude-opus-5",
+                 "xai--grok-4.5", "meta--muse-spark-1.1"}
     for c in candidates:
         assert not month_re.search(c["id"]), f"date-fragment candidate {c['id']}"
         assert c["id"] not in published, f"published model resurfaced: {c['id']}"

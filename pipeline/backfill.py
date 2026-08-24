@@ -24,6 +24,7 @@ import argparse
 import csv
 import io
 import json
+import os
 import re
 import zipfile
 from collections import Counter
@@ -107,6 +108,39 @@ def load_epoch_rows(csv_text: str) -> list:
     if missing:
         raise ValueError(f"Epoch schema drift, consumed columns missing: {missing}")
     return list(csv.DictReader(io.StringIO(csv_text)))
+
+
+SCOPE_EXCLUSIONS_PATH = os.path.join("content", "scope_exclusions.json")
+
+
+def load_scope_exclusions(root: str = ".") -> dict:
+    path = os.path.join(root, SCOPE_EXCLUSIONS_PATH)
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding="utf-8") as f:
+        return {r["id"]: r for r in json.load(f)}
+
+
+def apply_scope_exclusions(entries: list, root: str = ".") -> list:
+    """Drop entries ruled out of scope by hand, with the reason on record.
+
+    The D3 filter reads Epoch's own fields, and those fields are occasionally
+    wrong about access: Epoch lists Amazon's Nova 2.0 Pro Preview as "API
+    access" when AWS's own announcement states it is gated behind Nova Forge
+    enrollment, which makes it the no-access preview the methodology excludes.
+    A rule that cannot see that needs a documented override rather than a
+    silent hand-edit, so every exclusion carries a reason and a source URL in
+    content/scope_exclusions.json and is applied here where it is visible.
+
+    Returns the entries dropped, so the caller can report them.
+    """
+    ruled = load_scope_exclusions(root)
+    if not ruled:
+        return []
+    dropped = [e for e in entries if e["id"] in ruled]
+    if dropped:
+        entries[:] = [e for e in entries if e["id"] not in ruled]
+    return dropped
 
 
 def carry_manual_entries(entries: list, root: str = ".") -> list:
@@ -652,6 +686,10 @@ def main():
             print("INVALID:", p)
         raise SystemExit(f"{len(problems)} validation problems; nothing written")
 
+    excluded = apply_scope_exclusions(entries, root=args.root)
+    for e in excluded:
+        print(f"EXCLUDED (ruled out of scope): {e['id']}")
+
     carried = carry_manual_entries(entries, root=args.root)
     for e in carried:
         print(f"CARRIED (manual, not in this capture): {e['id']}")
@@ -668,6 +706,7 @@ def main():
         "revisions": sum(1 for e in entries if e["entry_type"] == "revision"),
         "with_predecessor": sum(1 for e in entries if e["predecessor"]),
         "carried_manual": sorted(e["id"] for e in carried),
+        "scope_excluded": sorted(e["id"] for e in excluded),
         "refusals": dict(sorted(refusals.items())),
     }
     print(json.dumps(report, indent=2))

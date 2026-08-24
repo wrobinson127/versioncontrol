@@ -190,8 +190,13 @@ def test_build_views_against_real_dataset_and_guard(tmp_path):
         json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     views = derive_views.build_views(root=str(tmp_path), run_date="2026-07-16")
 
-    # 282 = 281 + the promoted ChatGPT origin release (content pass 2026-07-20)
-    assert views["tiles"]["releases_recorded"] == 282
+    # Counted from the dataset rather than pinned: a literal breaks on every
+    # capture refresh (2026-08-24 moved this from 282 to 315) and teaches the
+    # reader to bump the number instead of asking why it moved.
+    expected_releases = sum(1 for e in store.read_entries(root=str(tmp_path))
+                            if e["entry_type"] == "release")
+    assert views["tiles"]["releases_recorded"] == expected_releases
+    assert expected_releases > 280, "the real dataset should be substantial"
     assert views["trajectory"]["series"], "real data yields series"
     for s in views["trajectory"]["series"]:
         assert s["source_class"] in ("INDEPENDENT", "LAB_REPORTED")

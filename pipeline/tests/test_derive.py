@@ -15,8 +15,13 @@ def test_derive_against_real_dataset(tmp_path):
     shutil.copy("data/manifest.json", tmp_path / "data" / "manifest.json")
 
     meta = derive.build(root=str(tmp_path), run_date="2026-07-16")
-    # 293 = 292 backfilled entries + the promoted ChatGPT origin entry (content pass 2026-07-20)
-    assert meta["entry_count"] == 293
+    # Counted from the dataset, not pinned to a literal. A pinned count breaks
+    # on every Epoch capture refresh, which trains the reader to bump the
+    # number rather than ask why it moved; the 2026-08-24 refresh took this
+    # from 293 to 326. What matters is that derive counts what is there.
+    expected = len(store.read_entries(root=str(tmp_path)))
+    assert meta["entry_count"] == expected
+    assert expected > 290, "the real dataset should be substantial"
     assert meta["delta_chips"] > 0
     assert meta["last_successful_update"] == "2026-07-16"
 

@@ -1,0 +1,11 @@
+[
+  {
+    "id": "amazon--nova-2.0-pro-preview",
+    "model_name": "Nova 2.0 Pro Preview",
+    "org": "amazon",
+    "epoch_says": "API access",
+    "reason": "No-access preview. Epoch records this row as API access, but AWS's own launch announcement states Nova 2 Pro is in preview with early access limited to Amazon Nova Forge customers, while only Nova 2 Lite is generally available in Bedrock. The methodology excludes no-access research previews, the same rule that keeps Claude Mythos 5 and Gemini 3.5 Flash Cyber off the record. If Nova 2 Pro reaches general availability it enters then, dated to that event, not to this one.",
+    "source_url": "https://aws.amazon.com/about-aws/whats-new/2025/12/nova-2-foundation-models-amazon-bedrock",
+    "ruled_on": "2026-08-24"
+  }
+]
