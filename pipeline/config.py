@@ -83,7 +83,14 @@ REGISTRY = {
     },
     "cohere": {
         "display": "Cohere",
-        "epoch_names": ["Cohere", "Cohere for AI"],
+        # Epoch renamed "Cohere for AI" to "Cohere Labs (formerly Cohere for
+        # AI)" between the 2026-07-16 and 2026-08-24 captures. Both spellings
+        # are pinned: the old one so historical captures still replay, the new
+        # one so the three Aya entries keep matching. Caught by
+        # backfill.check_org_names, which now fails the run on an unmatched
+        # spelling rather than dropping the rows.
+        "epoch_names": ["Cohere", "Cohere for AI",
+                        "Cohere Labs (formerly Cohere for AI)"],
         "hf_handles": ["CohereLabs"],
         "news": {"kind": "html_diff", "url": "https://cohere.com/blog"},
     },
@@ -101,6 +108,14 @@ REGISTRY = {
 # --------------------------------------------------------------------------
 # Epoch adapter
 # --------------------------------------------------------------------------
+
+# Organization spellings Epoch has retired. Rows are still matched under them
+# so an older capture replays identically, but backfill.check_org_names does
+# not require them to appear: a retired name matching nothing is expected, and
+# failing on it would make the drift tripwire fire every run.
+EPOCH_NAMES_HISTORICAL = {
+    "Cohere for AI",   # renamed to "Cohere Labs (formerly Cohere for AI)"
+}
 
 EPOCH_CSV_URL = "https://epoch.ai/data/all_ai_models.csv"
 

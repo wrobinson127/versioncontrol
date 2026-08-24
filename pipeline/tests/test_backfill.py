@@ -252,3 +252,57 @@ def test_summaries_pass_voice_lint_for_every_shape():
         text = backfill.build_summary("OpenAI", "GPT-5 (Mar 2026)", entry_type,
                                       availability, access_raw, has_ind)
         assert lint_voice.lint_text(text) == [], text
+
+
+# --- org-name drift: a renamed lab must not silently delete its entries ----
+
+def test_org_drift_is_detected():
+    """Epoch renamed 'Cohere for AI' between the 2026-07-16 and 2026-08-24
+    captures and three Aya entries silently vanished from the rebuild."""
+    rows = [{"Organization": "Cohere"}, {"Organization": "OpenAI"}]
+    unmatched = backfill.check_org_names(rows)
+    names = {n for _, n in unmatched}
+    assert "Mistral AI" in names          # pinned, absent from this capture
+    assert "Cohere" not in names          # pinned and present
+
+
+def test_historical_spellings_are_exempt():
+    """A retired spelling matching nothing is expected; requiring it would
+    make the tripwire fire on every run."""
+    rows = [{"Organization": "Cohere Labs (formerly Cohere for AI)"}]
+    unmatched = {n for _, n in backfill.check_org_names(rows)}
+    assert "Cohere for AI" not in unmatched
+
+
+def test_primary_org_is_taken_before_the_comma():
+    rows = [{"Organization": "Cohere Labs (formerly Cohere for AI),Brown"}]
+    unmatched = {n for _, n in backfill.check_org_names(rows)}
+    assert "Cohere Labs (formerly Cohere for AI)" not in unmatched
+
+
+# --- manual entries survive a rebuild -------------------------------------
+
+def test_manual_entry_is_carried(tmp_path, monkeypatch):
+    """openai--chatgpt is origin 'manual' because Epoch does not carry it.
+    write_entries replaces the record wholesale, so a rebuild would drop it."""
+    manual = {"id": "openai--chatgpt", "date": "2022-11-30", "origin": "manual",
+              "org": "openai", "model_name": "ChatGPT"}
+    monkeypatch.setattr(backfill.store, "read_entries", lambda root=".": [manual])
+    entries = [{"id": "openai--gpt-4", "date": "2023-03-14", "origin": "epoch"}]
+    carried = backfill.carry_manual_entries(entries, root=str(tmp_path))
+    assert [e["id"] for e in carried] == ["openai--chatgpt"]
+    assert {e["id"] for e in entries} == {"openai--chatgpt", "openai--gpt-4"}
+    assert [e["date"] for e in entries] == ["2022-11-30", "2023-03-14"]
+
+
+def test_epoch_derived_entry_wins_over_a_manual_one(tmp_path, monkeypatch):
+    manual = {"id": "openai--chatgpt", "date": "2022-11-30", "origin": "manual"}
+    monkeypatch.setattr(backfill.store, "read_entries", lambda root=".": [manual])
+    entries = [{"id": "openai--chatgpt", "date": "2022-11-30", "origin": "epoch"}]
+    assert backfill.carry_manual_entries(entries, root=str(tmp_path)) == []
+    assert len(entries) == 1 and entries[0]["origin"] == "epoch"
+
+
+def test_carry_is_a_no_op_on_an_empty_root(tmp_path):
+    entries = [{"id": "openai--gpt-4", "date": "2023-03-14"}]
+    assert backfill.carry_manual_entries(entries, root=str(tmp_path)) == []

@@ -109,6 +109,58 @@ def load_epoch_rows(csv_text: str) -> list:
     return list(csv.DictReader(io.StringIO(csv_text)))
 
 
+def carry_manual_entries(entries: list, root: str = ".") -> list:
+    """Keep manually authored entries that the capture cannot produce.
+
+    An entry with origin "manual" exists precisely because Epoch does not carry
+    it: openai--chatgpt, the 2022-11-30 origin entry the whole record is dated
+    from, is the standing example. store.write_entries replaces the record
+    wholesale, so without this a rebuild deletes it without a word.
+
+    An Epoch-derived entry of the same id always wins; this only fills gaps.
+    Returns the entries carried, so the caller can report them.
+    """
+    try:
+        existing = store.read_entries(root=root)
+    except Exception:
+        return []
+    have = {e["id"] for e in entries}
+    carried = [e for e in existing
+               if e.get("origin") == "manual" and e["id"] not in have]
+    if carried:
+        entries.extend(carried)
+        entries.sort(key=lambda e: (e["date"], e["id"]))
+    return carried
+
+
+def check_org_names(rows: list) -> list:
+    """Pinned Epoch organization spellings that match no row in the capture.
+
+    The schema tripwire covers column drift loudly, but organization-name
+    drift was silent and it deletes entries: Epoch renamed "Cohere for AI" to
+    "Cohere Labs (formerly Cohere for AI)" between the 2026-07-16 and
+    2026-08-24 captures, and the three Aya entries simply stopped matching and
+    vanished from the rebuild. Losing a published entry is exactly what this
+    project exists not to do, so an unmatched spelling is reported rather than
+    absorbed.
+
+    Returns a list of (org_key, pinned_name) pairs that matched nothing.
+    """
+    seen = set()
+    for r in rows:
+        primary = (r.get("Organization") or "").split(",")[0].strip()
+        if primary:
+            seen.add(primary)
+    unmatched = []
+    for key, org in config.REGISTRY.items():
+        for name in org["epoch_names"]:
+            if name in config.EPOCH_NAMES_HISTORICAL:
+                continue
+            if name not in seen:
+                unmatched.append((key, name))
+    return unmatched
+
+
 def d3_filter(rows: list):
     """Apply the D3 inclusion test. Returns (kept_rows, refusal_counter)."""
     refusals = Counter()
@@ -570,12 +622,28 @@ def main():
     ap.add_argument("--hub-zip", required=True)
     ap.add_argument("--retrieval-date", required=True)
     ap.add_argument("--root", default=".")
+    ap.add_argument("--allow-org-drift", action="store_true",
+                    help="proceed even though a pinned Epoch organization "
+                         "spelling matches no row; only correct when the lab "
+                         "genuinely has no rows in the capture")
     ap.add_argument("--report", default=None,
                     help="write a JSON refusal/summary report here")
     args = ap.parse_args()
 
     with open(args.epoch_csv, encoding="utf-8-sig", newline="") as f:
         rows = load_epoch_rows(f.read())
+
+    unmatched = check_org_names(rows)
+    if unmatched and not args.allow_org_drift:
+        for key, name in unmatched:
+            print(f"ORG DRIFT: {key}: pinned Epoch spelling {name!r} matches "
+                  f"no row in this capture")
+        raise SystemExit(
+            f"{len(unmatched)} pinned organization spelling(s) match nothing; "
+            f"every row under them would be dropped and the entries built from "
+            f"them would disappear. Update epoch_names in config deliberately, "
+            f"or pass --allow-org-drift if the lab genuinely has no rows.")
+
     hub_rows = load_hub_rows(args.hub_zip, args.retrieval_date)
     entries, refusals, problems = build_entries(rows, hub_rows,
                                                 args.retrieval_date)
@@ -583,6 +651,10 @@ def main():
         for p in problems:
             print("INVALID:", p)
         raise SystemExit(f"{len(problems)} validation problems; nothing written")
+
+    carried = carry_manual_entries(entries, root=args.root)
+    for e in carried:
+        print(f"CARRIED (manual, not in this capture): {e['id']}")
 
     manifest = store.write_entries(entries, root=args.root)
     # Derived views rebuild in the same command so a backfill can never
@@ -595,6 +667,7 @@ def main():
         "releases": sum(1 for e in entries if e["entry_type"] == "release"),
         "revisions": sum(1 for e in entries if e["entry_type"] == "revision"),
         "with_predecessor": sum(1 for e in entries if e["predecessor"]),
+        "carried_manual": sorted(e["id"] for e in carried),
         "refusals": dict(sorted(refusals.items())),
     }
     print(json.dumps(report, indent=2))
