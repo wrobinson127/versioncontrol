@@ -111,6 +111,33 @@ def extract_drafts(candidates: list, run_date: str, root: str) -> list:
     return notes
 
 
+def reap_published_candidates(entries: list, root: str) -> list:
+    """Delete queued candidates whose model is now on the record.
+
+    correlate stops a published model becoming a NEW candidate, but nothing
+    removed one that was already queued when it got published. A candidate can
+    reach the record by a route other than its own approval: the 2026-08-24
+    Epoch refresh backfilled 26 of the 64 queued candidates in one go, and
+    every one of them stayed in the queue afterwards, where a reviewer could
+    approve a model the record already held.
+
+    Returns the ids reaped, for the morning report.
+    """
+    published = {e["id"] for e in entries}
+    directory = os.path.join(root, pending.PENDING_DIR)
+    if not os.path.isdir(directory):
+        return []
+    reaped = []
+    for name in sorted(os.listdir(directory)):
+        if not name.endswith(".json") or name == "rejected.json":
+            continue
+        candidate_id = name[:-5]
+        if candidate_id in published:
+            os.remove(os.path.join(directory, name))
+            reaped.append(candidate_id)
+    return reaped
+
+
 def redraft_pending(run_date: str, root: str) -> list:
     """Retry drafting for pending candidates that still have none.
 
@@ -174,6 +201,9 @@ def main():
 
     signals, errors, counts, examined = run_detectors(now_ts, now_date)
     entries = store.read_entries(root=args.root)
+    # Before correlating, so a candidate that reached the record by another
+    # route stops occupying the queue and suppressing its own re-detection.
+    reaped = reap_published_candidates(entries, args.root)
     pending_ids = pending.existing_pending_ids(args.root)
     candidates = correlate.correlate(signals, entries, pending_ids)
 
@@ -182,6 +212,10 @@ def main():
     manifest_problems = store.check_manifest(root=args.root)
     flags = [f"manifest drift: {p}" for p in manifest_problems]
     flags.extend(adapter_flags(counts, examined))
+    if reaped:
+        flags.append(
+            f"reaped {len(reaped)} queued candidate(s) already on the record: "
+            + ", ".join(reaped))
 
     pending.write_candidates(candidates, now_date, root=args.root)
 

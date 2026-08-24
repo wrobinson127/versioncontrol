@@ -140,3 +140,45 @@ def test_redraft_without_key_does_nothing(tmp_path, monkeypatch):
     notes = nightly.redraft_pending("2026-08-24", str(tmp_path))
     assert any("absent" in n for n in notes)
     assert json.loads(path.read_text(encoding="utf-8"))["draft_entry"] is None
+
+
+# --- reaping candidates that reached the record another way ---------------
+
+def _pending_file(tmp_path, candidate_id):
+    d = tmp_path / "data" / "pending"
+    d.mkdir(parents=True, exist_ok=True)
+    p = d / f"{candidate_id}.json"
+    p.write_text(json.dumps({"id": candidate_id, "status": "pending-review"}),
+                 encoding="utf-8")
+    return p
+
+
+def test_published_candidate_is_reaped(tmp_path):
+    """The 2026-08-24 Epoch refresh backfilled 26 of 64 queued candidates in
+    one go; every one stayed in the queue where it could be approved twice."""
+    p = _pending_file(tmp_path, "anthropic--claude-opus-5")
+    entries = [{"id": "anthropic--claude-opus-5"}]
+    reaped = nightly.reap_published_candidates(entries, str(tmp_path))
+    assert reaped == ["anthropic--claude-opus-5"]
+    assert not p.exists()
+
+
+def test_unpublished_candidate_survives(tmp_path):
+    p = _pending_file(tmp_path, "openai--gpt-9")
+    reaped = nightly.reap_published_candidates([{"id": "openai--gpt-8"}],
+                                               str(tmp_path))
+    assert reaped == []
+    assert p.exists()
+
+
+def test_reaping_never_touches_the_durable_rejection_list(tmp_path):
+    d = tmp_path / "data" / "pending"
+    d.mkdir(parents=True)
+    rejected = d / "rejected.json"
+    rejected.write_text('["openai--some-tool"]', encoding="utf-8")
+    nightly.reap_published_candidates([{"id": "rejected"}], str(tmp_path))
+    assert rejected.exists(), "rejected.json is durable state, not a candidate"
+
+
+def test_reaping_an_absent_directory_is_a_no_op(tmp_path):
+    assert nightly.reap_published_candidates([{"id": "x"}], str(tmp_path)) == []
