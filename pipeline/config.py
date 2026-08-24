@@ -185,8 +185,18 @@ PROVENANCE_CLASSES = ("LAB_REPORTED", "INDEPENDENT")
 LLM_MODEL_ID = "claude-haiku-4-5-20251001"   # pinned snapshot, verified 2026-07-16
 LLM_PRICE_INPUT_PER_MTOK = 1.00              # USD, verified 2026-07-16
 LLM_PRICE_OUTPUT_PER_MTOK = 5.00             # USD, verified 2026-07-16
-LLM_MAX_OUTPUT_TOKENS = 1024
-LLM_MONTHLY_CALL_CAP = 300                   # 300 * ~$0.006 = $1.80 <= $2.00 hard cap
+# 1024 truncated 11 of 52 drafts on the 2026-08-24 production run: dense
+# extraction JSON runs about 2.8 characters per token, so a long benchmark
+# table hit the ceiling mid-string and the draft was thrown away as malformed.
+# Measured output on that run averaged 398 tokens, so 2048 is headroom rather
+# than a new normal.
+LLM_MAX_OUTPUT_TOKENS = 2048
+# Measured 2026-08-24: 50 calls, $0.2486, about $0.005 each, so a full 300-call
+# month costs roughly $1.50. A worst case where every call fills the raised
+# output ceiling would cost about $0.014 each, which the spend cap below stops
+# at $2.00 well before the call cap is reached. The spend cap is the real gate;
+# the call cap is a second, coarser one.
+LLM_MONTHLY_CALL_CAP = 300
 LLM_MONTHLY_SPEND_CAP_USD = 2.00             # D8 hard cap; skip-with-FLAG at cap
 LLM_SPEND_LEDGER_PATH = "data/derived/llm_ledger.json"
 

@@ -27,7 +27,7 @@ def parse_listing(org: str, models: list, lookback_days: int,
             "hf_orgs", org, name,
             url=f"https://huggingface.co/{repo}",
             date_hint=created, title=repo))
-    return signals
+    return common.SignalList(signals, examined=len(models))
 
 
 def _shift_date(date_str: str, days: int) -> str:
@@ -38,6 +38,7 @@ def _shift_date(date_str: str, days: int) -> str:
 
 def detect(org: str, handles: list, lookback_days: int, now_date: str) -> list:
     signals = []
+    examined = 0
     for handle in handles:
         r = requests.get(
             config.HF_API_URL,
@@ -47,5 +48,7 @@ def detect(org: str, handles: list, lookback_days: int, now_date: str) -> list:
             headers={"User-Agent": config.USER_AGENT})
         if r.status_code != 200:
             raise RuntimeError(f"hf_orgs {org}/{handle}: HTTP {r.status_code}")
-        signals.extend(parse_listing(org, r.json(), lookback_days, now_date))
-    return signals
+        listing = r.json()
+        examined += len(listing)
+        signals.extend(parse_listing(org, listing, lookback_days, now_date))
+    return common.SignalList(signals, examined=examined)
