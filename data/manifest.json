@@ -1,16 +1,16 @@
 {
   "derived": {
     "data/derived/deltas.json.gz": {
-      "sha256": "a416accc5ba8bdf613f057febbde2c82ef0542e1e659429c99fceb406d28e38f"
+      "sha256": "3a8df9ae94e23e14003ca212c5aefe1be45edc5e708e2da2f6b71656e1962525"
     },
     "data/derived/site_meta.json": {
-      "sha256": "ab42c9a9db033b8b1d963a184ff09f7d3de8dd02535fe5064d3743a897488ed6"
+      "sha256": "58f665802b33a0d57c151b13f59e485dd1dfc10cc8269fa2656d8c75a24d74c1"
     },
     "data/derived/views.json.gz": {
-      "sha256": "f723e357b5730d23d127375985e7f0fb770d161e43de2affd6c26ed17b6c9143"
+      "sha256": "5e589cf3277ca11a9302eed82f7b45168b69081f0d2283f8eec95c997760696b"
     }
   },
-  "entry_count": 293,
+  "entry_count": 326,
   "files": {
     "data/entries/2022.json.gz": {
       "count": 2,
@@ -18,7 +18,7 @@
         "openai--chatgpt",
         "meta--opt-iml-175b"
       ],
-      "sha256": "bb2d4b11b055a28e1bb9702ce417755f6a8a8791daf17dcc087c970dafded695"
+      "sha256": "a7494a7f34c2d44c6ceca9c8320ebf861fdcfd239ca9acab11d981461b4bdff3"
     },
     "data/entries/2023.json.gz": {
       "count": 44,
@@ -68,10 +68,10 @@
         "google-deepmind--funsearch",
         "google-deepmind--gemini-nano-1"
       ],
-      "sha256": "b39d64c43776c4bfc6c5f28766670ee2377fe5eb2fc7b531d38148e9e47fd332"
+      "sha256": "216ee0629ce7492cd42e0db3417ebe995b7cf4b7d68aa424577b18c5a9f0bd72"
     },
     "data/entries/2024.json.gz": {
-      "count": 98,
+      "count": 97,
       "ids": [
         "moonshot--kimi-explorer",
         "deepseek--deepseek-llm-67b",
@@ -86,7 +86,6 @@
         "alibaba-qwen--qwen1.5-7b",
         "alibaba-qwen--qwen1.5-32b",
         "deepseek--deepseekmath-7b",
-        "google-deepmind--gemini-2.0-flash-lite",
         "alibaba-qwen--qwen-plus",
         "cohere--aya",
         "google-deepmind--gemini-1.0-pro-vision",
@@ -172,10 +171,10 @@
         "deepseek--deepseek-v3",
         "alibaba-qwen--qvq"
       ],
-      "sha256": "31eb7b0e6b8e432092314d7e2fd0f6b196aadf34e4672f522f49b131936418e0"
+      "sha256": "40783ef6276092263b11fecb995c3d3bcb52abcf017f31f2effcec543eebb6c0"
     },
     "data/entries/2025.json.gz": {
-      "count": 119,
+      "count": 123,
       "ids": [
         "deepseek--deepseek-r1",
         "alibaba-qwen--gte-modernbert",
@@ -188,6 +187,7 @@
         "openai--gpt-4o-jan-2025",
         "mistral--mistral-small-3",
         "openai--o3-mini",
+        "google-deepmind--gemini-2.0-flash-lite",
         "mistral--mistral-saba",
         "xai--grok-3",
         "alibaba-qwen--qwen2.5-vl-72b",
@@ -233,7 +233,7 @@
         "alibaba-qwen--qwen3-reranker",
         "google-deepmind--gemini-2.5-pro-jun-2025",
         "mistral--devstral-medium",
-        "mistral--magistral-small-1.1",
+        "mistral--magistral-small-1.0",
         "google-deepmind--gemini-2.5-flash-lite",
         "mistral--mistral-small-3.2",
         "moonshot--kimi-dev-72b",
@@ -244,6 +244,7 @@
         "openai--chatgpt-agent",
         "alibaba-qwen--qwen3-coder-480b-a35b",
         "google-deepmind--aeneas",
+        "mistral--magistral-small-1.1",
         "alibaba-qwen--qwen3-235b-a22b-jul-2025",
         "cohere--command-a-vision",
         "google-deepmind--gemini-2.5-deep-think",
@@ -291,17 +292,20 @@
         "anthropic--claude-opus-4.5",
         "deepseek--deepseekmath-v2",
         "amazon--nova-2",
-        "mistral--mistral-3-large",
+        "mistral--ministral-3-14b",
+        "mistral--mistral-large-3",
         "mistral--devstral-2-123b",
+        "mistral--devstral-small-2",
         "openai--gpt-5.2-pro",
         "openai--gpt-5.2-codex",
         "zai--glm-4.7"
       ],
-      "sha256": "1a26c1d940727dabf6ab958fc4ab568d6d12b787c406af6478abf3b37584116f"
+      "sha256": "022be3ebd0b2c2b31b3a0e333c171783ba582fdf3797ac2b4b679ef07527f7ac"
     },
     "data/entries/2026.json.gz": {
-      "count": 30,
+      "count": 60,
       "ids": [
+        "zai--glm-4.7-flash",
         "alibaba-qwen--qwen3-max-thinking",
         "alibaba-qwen--qwen3-coder-next",
         "moonshot--kimi-k2.5",
@@ -313,27 +317,56 @@
         "xai--grok-4.20",
         "google-deepmind--gemini-3.1-pro",
         "alibaba-qwen--qwen3.5-122b-a10b",
+        "alibaba-qwen--qwen3.5-35b-a3b",
         "google-deepmind--gemini-3.0-flash-lite",
         "openai--gpt-5.4",
+        "mistral--mistral-small-4",
         "openai--gpt-5.4-mini",
         "alibaba-qwen--qwen3.5-omni-plus",
         "alibaba-qwen--qwen-3.6-plus",
+        "google-deepmind--gemma-4-26b-a4b",
         "google-deepmind--gemma-4-31b-it",
+        "zai--glm-5.1",
         "meta--muse-spark",
+        "google-deepmind--gemini-robotics-er-1.6",
         "anthropic--claude-opus-4.7",
         "xai--grok-4.3-beta",
         "moonshot--kimi-k2.6",
+        "alibaba-qwen--qwen3.6-27b",
         "openai--gpt-5.5",
         "deepseek--deepseek-v4-pro",
         "mistral--mistral-medium-3.5",
+        "openai--gpt-5.5-instant",
+        "alibaba-qwen--qwen3.7-max",
+        "google-deepmind--gemini-3.5-flash",
+        "cohere--command-a-plus",
+        "anthropic--claude-opus-4.8",
+        "xai--grok-build-0.1",
         "google-deepmind--gemma-4-12b",
         "anthropic--claude-fable-5",
         "cohere--north-mini-code",
         "moonshot--kimi-k2.7-code",
         "zai--glm-5.2",
-        "anthropic--claude-sonnet-5"
+        "anthropic--claude-sonnet-5",
+        "xai--grok-4.5",
+        "meta--muse-spark-1.1",
+        "openai--gpt-5.6-sol",
+        "moonshot--kimi-k3",
+        "alibaba-qwen--qwen-3.8-max",
+        "google-deepmind--gemini-3.6-flash",
+        "anthropic--claude-opus-5",
+        "alibaba-qwen--qwen3.7-flash",
+        "deepseek--deepseek-v4-flash-0731",
+        "meta--muse-spark-1.2",
+        "alibaba-qwen--qwen3.8-2.4t-a95b",
+        "meta--muse-glimmer",
+        "openai--gpt-5.6-cyber",
+        "xai--grok-4.6",
+        "google-deepmind--gemini-3.7-flash",
+        "alibaba-qwen--qwen-3.8-27b",
+        "zai--glm-5.3"
       ],
-      "sha256": "ba0468832b8f51fb290f2eb22dd1891a90b907457a17954cf8aafe22692a17c7"
+      "sha256": "cdf36034889aa6f857591b2615e9cc88d25c365f9fdc385851fa9beed56b5f81"
     }
   },
   "schema_version": 1

@@ -348,8 +348,8 @@
    "notes": "No system card published for the Magistral line. Official mistralai HF card for Magistral-Small-2509 fetched HTTP 200 this session under Apache 2.0; the card itself cites the Magistral arxiv paper, whose abstract was also fetched HTTP 200. The paper documents the original 1.0 training recipe, not the 1.2 update. Usage policy fetched HTTP 200 this session."
   },
   {
-   "entry_id": "mistral--mistral-3-large",
-   "model_name": "Mistral 3 Large",
+   "entry_id": "mistral--mistral-large-3",
+   "model_name": "Mistral Large 3",
    "date": "2025-12-02",
    "system_card": "NOT_DISCLOSED",
    "model_card": "https://huggingface.co/mistralai/Mistral-Large-3-675B-Instruct-2512",
@@ -357,7 +357,7 @@
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
    "researched": true,
-   "notes": "No system card, consistent with the lab-wide pattern. Official mistralai HF card for the 675B instruct weights fetched HTTP 200 this session under Apache 2.0. No paper; the card links only the Mistral 3 announcement blog, and the Ministral 3 arxiv report covers the 3B, 8B, and 14B line rather than Large 3. Usage policy fetched HTTP 200 this session."
+   "notes": "No system card, consistent with the lab-wide pattern. Official mistralai HF card for the 675B instruct weights fetched HTTP 200 this session under Apache 2.0. No paper; the card links only the Mistral 3 announcement blog, and the Ministral 3 arxiv report covers the 3B, 8B, and 14B line rather than Large 3. Usage policy fetched HTTP 200 this session. Entry id changed from mistral--mistral-3-large on 2026-08-24: Epoch renamed the row from 'Mistral 3 Large' to 'Mistral Large 3', which matches the lab's own HF card slug. Same model, same date, renamed upstream."
   },
   {
    "entry_id": "mistral--devstral-2-123b",
