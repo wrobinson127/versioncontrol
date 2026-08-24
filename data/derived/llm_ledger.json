@@ -1,0 +1,10 @@
+{
+  "months": {
+    "2026-08": {
+      "calls": 68,
+      "input_tokens": 218299,
+      "output_tokens": 30936,
+      "usd": 0.372979
+    }
+  }
+}
