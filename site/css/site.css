@@ -93,8 +93,17 @@ a:hover { color: var(--ink); }
   display: flex; justify-content: space-between; align-items: center;
   gap: 16px; padding: 0 26px; height: var(--nav-h);
 }
-.storynav-brand { font-family: var(--slab); font-weight: 700; color: var(--ink); text-decoration: none; font-size: 15px; }
-.storynav-links { display: flex; gap: 15px; flex-wrap: wrap; }
+/* The bar is a fixed var(--nav-h) tall, so nothing inside it may wrap: a
+   wrapped brand or a second row of links overflows the bar instead of growing
+   it. Below about 420px the five links plus the wordmark genuinely exceed the
+   width, so they stay on one line and the row scrolls rather than breaking. */
+.storynav-brand { font-family: var(--slab); font-weight: 700; color: var(--ink); text-decoration: none; font-size: 15px; white-space: nowrap; }
+.storynav-links {
+  display: flex; gap: 15px; flex-wrap: nowrap;
+  overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
+}
+.storynav-links::-webkit-scrollbar { display: none; }
+.storynav-links a { white-space: nowrap; }
 .storynav-links a { color: var(--annotation); text-decoration: none; font-size: 13px; }
 .storynav-links a[aria-current="page"] { color: var(--ink); font-weight: 700; text-decoration: underline; }
 .storynav-links a:hover { text-decoration: underline; }
@@ -103,6 +112,15 @@ a:hover { color: var(--ink); }
   .storynav-brand { font-size: 13px; }
   .storynav-links { gap: 11px; }
   .storynav-links a { font-size: 12px; }
+}
+/* Measured: at 390px the row needs 370px against 362px available, so it
+   overflowed by 8px; at 360px by 29px. Tightening the gap and the link size
+   buys back more than that, and the nowrap rule above keeps the bar intact
+   below even this. */
+@media (max-width: 430px) {
+  .storynav { padding: 0 12px; gap: 10px; }
+  .storynav-links { gap: 9px; }
+  .storynav-links a { font-size: 11.5px; }
 }
 
 /* ---- masthead: registrar ledger head with a Scotch rule (thick over thin) ---- */
@@ -568,7 +586,11 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
 
 /* ---- prose pages (methodology, about, data) ---- */
 
-.prose { padding: 30px 0 40px; max-width: 68ch; }
+/* Vertical only. The prose pages are <main class="wrap prose">, and a padding
+   shorthand here resets .wrap's `padding: 0 20px`, which put every line of body
+   copy hard against the left rim at mobile widths while the masthead above it
+   stayed inset. Invisible on desktop, where max-width centres the column. */
+.prose { padding-top: 30px; padding-bottom: 40px; max-width: 68ch; }
 .prose h1 {
   font-family: var(--slab);
   font-size: 1.85rem;
