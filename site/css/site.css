@@ -601,6 +601,8 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
   font-family: var(--slab);
   font-size: 1.25rem;
   margin: 34px 0 10px;
+  /* in-page links to a section clear the fixed top nav */
+  scroll-margin-top: 62px;
 }
 .prose p, .prose li { font-size: 0.97rem; }
 .prose ul { padding-left: 1.3em; }
@@ -620,14 +622,6 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
   border-radius: 3px;
   padding: 1px 5px;
 }
-.prose .thesis {
-  font-family: var(--slab);
-  font-style: italic;
-  font-size: 1.18rem;
-  line-height: 1.45;
-  margin: 20px 0;
-}
-
 /* inline demonstrations of marks inside prose */
 .prose .prov, .prose .nd { vertical-align: 1px; }
 
