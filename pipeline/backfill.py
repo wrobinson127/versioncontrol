@@ -143,13 +143,28 @@ def apply_scope_exclusions(entries: list, root: str = ".") -> list:
     return dropped
 
 
-def carry_manual_entries(entries: list, root: str = ".") -> list:
-    """Keep manually authored entries that the capture cannot produce.
+# Origins the Epoch capture cannot reproduce, so a rebuild must carry them
+# forward rather than let store.write_entries drop them.
+#
+# "manual" was the original member: openai--chatgpt, the 2022-11-30 origin
+# entry the whole record is dated from, exists precisely because Epoch does
+# not carry it.
+#
+# "nightly-pipeline" belongs here for the same reason and was missing.
+# Detection exists to record releases before Epoch does, so a nightly entry
+# is by definition absent from the capture until Epoch catches up, which can
+# take weeks: DiffusionGemma 26B-A4B shipped 2026-06-10 and reached Epoch on
+# 2026-08-31. Carrying only "manual" meant the next backfill would delete
+# every nightly entry Epoch had not yet caught up on, silently and wholesale.
+# Eleven entries were in that state on 2026-08-31.
+CARRIED_ORIGINS = ("manual", "nightly-pipeline")
 
-    An entry with origin "manual" exists precisely because Epoch does not carry
-    it: openai--chatgpt, the 2022-11-30 origin entry the whole record is dated
-    from, is the standing example. store.write_entries replaces the record
-    wholesale, so without this a rebuild deletes it without a word.
+
+def carry_manual_entries(entries: list, root: str = ".") -> list:
+    """Keep entries the capture cannot produce.
+
+    store.write_entries replaces the record wholesale, so without this a
+    rebuild deletes them without a word.
 
     An Epoch-derived entry of the same id always wins; this only fills gaps.
     Returns the entries carried, so the caller can report them.
@@ -160,7 +175,7 @@ def carry_manual_entries(entries: list, root: str = ".") -> list:
         return []
     have = {e["id"] for e in entries}
     carried = [e for e in existing
-               if e.get("origin") == "manual" and e["id"] not in have]
+               if e.get("origin") in CARRIED_ORIGINS and e["id"] not in have]
     if carried:
         entries.extend(carried)
         entries.sort(key=lambda e: (e["date"], e["id"]))
@@ -686,13 +701,16 @@ def main():
             print("INVALID:", p)
         raise SystemExit(f"{len(problems)} validation problems; nothing written")
 
+    # Carry before excluding, so a scope ruling binds carried entries too.
+    # The other order let a carried entry re-enter the record every rebuild
+    # no matter what it had been ruled.
+    carried = carry_manual_entries(entries, root=args.root)
+    for e in carried:
+        print(f"CARRIED ({e.get('origin')}, not in this capture): {e['id']}")
+
     excluded = apply_scope_exclusions(entries, root=args.root)
     for e in excluded:
         print(f"EXCLUDED (ruled out of scope): {e['id']}")
-
-    carried = carry_manual_entries(entries, root=args.root)
-    for e in carried:
-        print(f"CARRIED (manual, not in this capture): {e['id']}")
 
     manifest = store.write_entries(entries, root=args.root)
     # Derived views rebuild in the same command so a backfill can never

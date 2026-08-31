@@ -143,5 +143,20 @@
     "id": "anthropic--anthropic-lm",
     "reason": "arXiv 2204.05862 is a 2022 RLHF research paper, not a publicly usable released model. Also predates the 2022-11-30 backfill start.",
     "rejected_on": "2026-08-24"
+  },
+  {
+    "id": "zai--glm-5.3-flash-batch",
+    "reason": "Batch endpoint for GLM-5.3-Flash, same model. OpenRouter lists z-ai/glm-5.3-flash:batch with the same description and the same created timestamp as z-ai/glm-5.3-flash. Same weights served differently is not a separate release; see google-deepmind--gemini-3.7-flash-batch.",
+    "rejected_on": "2026-08-31"
+  },
+  {
+    "id": "google-deepmind--timesfm-3.0-pytorch",
+    "reason": "Time-series forecasting model; no language component. Absent from Epoch AI's dataset, so the blank-classification rule sends it to hand resolution, and by hand it is out of scope. The -pytorch repository is also a format variant of TimesFM 3.0 rather than a distinct model.",
+    "rejected_on": "2026-08-31"
+  },
+  {
+    "id": "google-deepmind--gemini-omni-1.1",
+    "reason": "Video generation. The announcement states inputs of text, video, and images, and output of video only, with no language output. Epoch AI classifies the comparable models as Video (Sora) and Video,Vision (Veo), neither language nor multimodal, and none of Veo 1/2/3/3.1 or Sora/Sora Turbo/Sora 2.0 is on the record. Source: https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-omni-1-1-flash/",
+    "rejected_on": "2026-08-31"
   }
 ]

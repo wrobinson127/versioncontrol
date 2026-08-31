@@ -306,3 +306,35 @@ def test_epoch_derived_entry_wins_over_a_manual_one(tmp_path, monkeypatch):
 def test_carry_is_a_no_op_on_an_empty_root(tmp_path):
     entries = [{"id": "openai--gpt-4", "date": "2023-03-14"}]
     assert backfill.carry_manual_entries(entries, root=str(tmp_path)) == []
+
+
+def test_nightly_entries_are_carried_too(tmp_path, monkeypatch):
+    """Detection exists to record releases before Epoch does.
+
+    A nightly entry is therefore absent from the capture until Epoch catches
+    up, which can take weeks: DiffusionGemma 26B-A4B shipped 2026-06-10 and
+    reached Epoch on 2026-08-31. Carrying only origin 'manual' meant a rebuild
+    deleted every nightly entry in that window, silently. Eleven entries were
+    in that state when this was found.
+    """
+    nightly = {"id": "zai--glm-5.3-flash", "date": "2026-08-25",
+               "origin": "nightly-pipeline", "org": "zai",
+               "model_name": "GLM-5.3-Flash"}
+    monkeypatch.setattr(backfill.store, "read_entries", lambda root=".": [nightly])
+    entries = [{"id": "openai--gpt-4", "date": "2023-03-14",
+                "origin": "backfill-epoch"}]
+    carried = backfill.carry_manual_entries(entries, root=str(tmp_path))
+    assert [e["id"] for e in carried] == ["zai--glm-5.3-flash"]
+    assert {e["id"] for e in entries} == {"openai--gpt-4", "zai--glm-5.3-flash"}
+
+
+def test_backfill_origin_entries_are_not_carried(tmp_path, monkeypatch):
+    """A backfill-epoch entry absent from a fresh capture was removed upstream
+    or fell out of scope. Carrying it would resurrect it forever."""
+    stale = {"id": "openai--withdrawn", "date": "2024-01-01",
+             "origin": "backfill-epoch"}
+    monkeypatch.setattr(backfill.store, "read_entries", lambda root=".": [stale])
+    entries = [{"id": "openai--gpt-4", "date": "2023-03-14",
+                "origin": "backfill-epoch"}]
+    assert backfill.carry_manual_entries(entries, root=str(tmp_path)) == []
+    assert [e["id"] for e in entries] == ["openai--gpt-4"]

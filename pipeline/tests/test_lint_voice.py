@@ -18,6 +18,20 @@ SEEDED_VIOLATIONS = [
     ("Users delve into the details.", "corporate-speak"),
     ("The lab shipped the model — a large one.", "em-dash"),
     ("The lab merged the release into production.", "git-metaphor"),
+    # Cross-model comparison in prose. The verbatim draft that passed lint on
+    # the 2026-08-31 run is the first case; the rest are the same move in
+    # other words. Attribution to the lab does not make any of them a
+    # measurement, and none carries a benchmark, a version, or a source.
+    ("The organization reports the model outperforms GLM-5.2 across "
+     "benchmarks and approaches Claude Opus 4.8 on coding and agentic "
+     "benchmarks while costing one-tenth as much.", "comparative-claim"),
+    ("The model surpasses its predecessor on reasoning.", "comparative-claim"),
+    ("Performance is on par with the previous generation.", "comparative-claim"),
+    ("It rivals larger models at a fraction of the cost.", "comparative-claim"),
+    ("The model is competitive with Gemini 3.7 Flash.", "comparative-claim"),
+    ("Throughput is faster than the prior release.", "comparative-claim"),
+    ("Accuracy matches Claude Opus 5 on agentic tasks.", "comparative-claim"),
+    ("The score exceeds GPT-5.6 on the pinned benchmark.", "comparative-claim"),
 ]
 
 CLEAN_STRINGS = [
@@ -26,6 +40,12 @@ CLEAN_STRINGS = [
     "Meta released the weights under a restricted-use license.",
     "No comparable measurement exists for this pair.",
     "Mistral reports 84.2 on SWE-Bench Verified; the predecessor entry records 79.1.",
+    # The comparative patterns must not swallow the ordinary verbs. These are
+    # statements of fact about one model, not rankings against another.
+    "The context window approaches the one million token limit.",
+    "Usage approaches the rate ceiling during peak hours.",
+    "The configuration matches the one recorded for the predecessor.",
+    "Z.ai released GLM-5.3-Flash, available as open weights and by public API.",
 ]
 
 

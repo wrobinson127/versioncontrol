@@ -154,6 +154,41 @@ def test_epoch_detects_recent_registry_rows_only():
     assert signals[0]["url"] == "https://openai.com/index/gpt-6/"
 
 
+def test_epoch_detector_applies_the_scope_domain_rule():
+    """The domain rule binds detection, not just backfill.
+
+    Without this, a Video or Vision row from a registry org is proposed as a
+    candidate every night it is touched, rejected by hand, and proposed again:
+    the Nova loop. Veo and Sora are registry-org rows and are classified
+    exactly this way in Epoch's dataset.
+    """
+    text = _epoch_csv([
+        {"Model": "Veo 9", "Organization": "Google DeepMind",
+         "Domain": "Video,Vision", "Publication date": "2026-07-10",
+         "Last modified": "2026-07-11"},
+        {"Model": "Imagen 5", "Organization": "Google DeepMind",
+         "Domain": "Vision", "Publication date": "2026-07-10",
+         "Last modified": "2026-07-11"},
+        {"Model": "Gemini 9", "Organization": "Google DeepMind",
+         "Domain": "Language,Vision,Multimodal",
+         "Publication date": "2026-07-10", "Last modified": "2026-07-11"},
+        {"Model": "Gemma 5", "Organization": "Google DeepMind",
+         "Domain": "Language", "Publication date": "2026-07-10",
+         "Last modified": "2026-07-11"},
+        # Blank domain still reaches a human: an absent field is not evidence
+        # about the model. This is the rule the o3-pro entry rests on.
+        {"Model": "Unclassified 1", "Organization": "Google DeepMind",
+         "Domain": "", "Publication date": "2026-07-10",
+         "Last modified": "2026-07-11"},
+    ])
+    signals = epoch.parse_csv(text, 14, CAPTURE_DATE)
+    assert [s["model_hint"] for s in signals] == [
+        "Gemini 9", "Gemma 5", "Unclassified 1"]
+    # Out-of-domain rows are still counted as examined: they were looked at
+    # and ruled out, which is not the same as a source going dark.
+    assert signals.examined == 5
+
+
 # --------------------------------------------------------------- correlate
 
 def _sig(detector, org, hint, url=None, date=None):

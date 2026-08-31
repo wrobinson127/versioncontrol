@@ -4,13 +4,13 @@
       "sha256": "3a8df9ae94e23e14003ca212c5aefe1be45edc5e708e2da2f6b71656e1962525"
     },
     "data/derived/site_meta.json": {
-      "sha256": "cf0c08e490c33e87571891ef7a6d763dac978f0931dde4f075d3f454c1f322ef"
+      "sha256": "f99a0c3bb49add76ff426b686faabee30a211d8a73606569c6790b33244ca717"
     },
     "data/derived/views.json.gz": {
-      "sha256": "68655d4749e7058d90ac024b56eab5e7f0f01d632d54d071aecc41bb3e423918"
+      "sha256": "3b008117bed9ad1d881e489c9d1f5d929098f3677de8cddb503dc32a5891c07b"
     }
   },
-  "entry_count": 335,
+  "entry_count": 339,
   "files": {
     "data/entries/2022.json.gz": {
       "count": 2,
@@ -305,7 +305,7 @@
       "sha256": "675b7bf5511dc6b9628daaa8b0a69268c5d66bf83e8aa28ed0a109a0de01e167"
     },
     "data/entries/2026.json.gz": {
-      "count": 67,
+      "count": 71,
       "ids": [
         "zai--glm-4.7-flash",
         "alibaba-qwen--qwen3-max-thinking",
@@ -347,6 +347,7 @@
         "google-deepmind--gemma-4-12b",
         "anthropic--claude-fable-5",
         "cohere--north-mini-code",
+        "google-deepmind--diffusiongemma-26b-a4b",
         "moonshot--kimi-k2.7-code",
         "zai--glm-5.2",
         "anthropic--claude-sonnet-5",
@@ -373,9 +374,12 @@
         "xai--grok-4.6",
         "google-deepmind--gemini-3.7-flash",
         "alibaba-qwen--qwen-3.8-27b",
-        "zai--glm-5.3"
+        "zai--glm-5.3",
+        "alibaba-qwen--qwen3.8-flash-next",
+        "zai--glm-5.3-flash",
+        "alibaba-qwen--qwen3.8-flash"
       ],
-      "sha256": "18ebd6c3f5c1d37e7a9d753226fdedcf322abb28ba87120927c9d3360bd7bacb"
+      "sha256": "1d106d9ac364a577974702f9e4775739d0cc545de337f1b64d56b4c9547b1c68"
     }
   },
   "schema_version": 1

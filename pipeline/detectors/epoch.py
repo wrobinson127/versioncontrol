@@ -21,6 +21,27 @@ def check_schema(header: list) -> None:
             f"dropped={dropped}; update the pin deliberately, not silently")
 
 
+def in_scope_domain(domain: str) -> bool:
+    """The scope rule, applied where candidates are proposed.
+
+    backfill.py applies this same test when building the record, but the
+    detector did not, so every Video, Vision, or forecasting row from a
+    registry org was eligible to become a candidate on any night it was
+    touched. Veo, Sora, and Imagen are all registry-org rows; they stayed out
+    of the queue only because they sat outside the recency window, and the
+    next release in any of those lines would have come straight through. That
+    is the Nova loop again: rejected by hand, re-proposed forever.
+
+    A blank domain still passes. An absent field is not evidence about the
+    model, so it reaches a human rather than being silently dropped; that is
+    the rule the o3-pro entry rests on.
+    """
+    dom = (domain or "").strip().lower()
+    if not dom:
+        return True
+    return "language" in dom or "multimodal" in dom
+
+
 def parse_csv(csv_text: str, lookback_days: int, now_date: str) -> list:
     reader = csv.reader(io.StringIO(csv_text))
     check_schema(next(reader))
@@ -41,6 +62,8 @@ def parse_csv(csv_text: str, lookback_days: int, now_date: str) -> list:
         if org is None:
             continue
         examined += 1
+        if not in_scope_domain(r.get("Domain")):
+            continue
         modified = (r.get("Last modified") or "")[:10]
         published = (r.get("Publication date") or "").strip()
         recent = (modified and modified >= horizon) or \
