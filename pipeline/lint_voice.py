@@ -43,6 +43,35 @@ BANNED_PATTERNS = [
     (r"\bbeats\b", "ranking"),
     (r"\bcrushes\b", "ranking"),
     (r"\bdominates\b", "ranking"),
+    # Cross-model comparative claims. The registry publishes deltas only for
+    # comparable pairs and refuses everything else in words, so a summary that
+    # ranks one model against another in prose smuggles back exactly the
+    # comparison the delta rules refuse, with no benchmark, no version, and no
+    # provenance. Caught on the 2026-08-31 run: a GLM-5.3-Flash draft passed
+    # lint carrying "outperforms GLM-5.2 across benchmarks and approaches
+    # Claude Opus 4.8 on coding and agentic benchmarks while costing
+    # one-tenth as much". Attributing it to the lab does not make it a
+    # measurement. A lab's comparative claim belongs in a benchmark row with a
+    # source, or nowhere.
+    (r"\boutperform(s|ing|ed)?\b", "comparative-claim"),
+    (r"\bsurpass(es|ing|ed)?\b", "comparative-claim"),
+    (r"\brival(s|ing|ed)?\b", "comparative-claim"),
+    (r"\bon par with\b", "comparative-claim"),
+    (r"\bcompetitive with\b", "comparative-claim"),
+    (r"\bbetter than\b", "comparative-claim"),
+    (r"\bcheaper than\b", "comparative-claim"),
+    (r"\bfaster than\b", "comparative-claim"),
+    (r"\bat a fraction of\b", "comparative-claim"),
+    (r"\bone[- ](tenth|fifth|quarter|half)\b", "comparative-claim"),
+    # Followed by a capital letter: comparison against a named model, not the
+    # ordinary verb ("approaches the context limit" stays legal). The capital
+    # is load-bearing, so the lookahead turns IGNORECASE off for itself:
+    # without (?-i:...) the whole list's re.I makes [A-Z] match any letter and
+    # the pattern swallows every ordinary use of the verb.
+    (r"\bapproach(es|ing)\s+(?=(?-i:[A-Z]))", "comparative-claim"),
+    (r"\bmatch(es|ing)\s+(?=(?-i:[A-Z]))", "comparative-claim"),
+    (r"\bexceeds?\s+(?=(?-i:[A-Z]))", "comparative-claim"),
+    (r"\bclose to\s+(?=(?-i:[A-Z]))", "comparative-claim"),
     # editorial characterization
     (r"\bdisappointing\b", "editorial"),
     (r"\bunderwhelming\b", "editorial"),

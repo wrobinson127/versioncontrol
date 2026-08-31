@@ -29,6 +29,27 @@ def _numeric(value: str) -> float:
     return float(m.group(1))
 
 
+def _parameters(draft: dict):
+    """Total parameter count from the draft, or NOT_DISCLOSED.
+
+    Absent and unparseable both resolve to NOT_DISCLOSED, which is the honest
+    reading: the registrar has no count it can source. A stated count is
+    recorded as a number so it joins the disclosure measure on the same terms
+    as a backfilled one.
+    """
+    raw = draft.get("parameters")
+    if raw in (None, "", validate.NOT_DISCLOSED):
+        return validate.NOT_DISCLOSED
+    if isinstance(raw, (int, float)):
+        return float(raw) if float(raw) > 0 else validate.NOT_DISCLOSED
+    m = re.match(r"^\s*([0-9]+(?:\.[0-9]+)?)\s*([BbMmTt])?\s*$", str(raw))
+    if not m:
+        return validate.NOT_DISCLOSED
+    scale = {"b": 1e9, "m": 1e6, "t": 1e12}.get((m.group(2) or "").lower(), 1)
+    value = float(m.group(1)) * scale
+    return value if value > 0 else validate.NOT_DISCLOSED
+
+
 def candidate_to_entry(candidate: dict, existing_entries: list) -> dict:
     """Build a schema-valid entry from an approved candidate's draft.
 
@@ -71,7 +92,13 @@ def candidate_to_entry(candidate: dict, existing_entries: list) -> dict:
         "org": org,
         "date": date,
         "availability_class": availability,
-        "parameters": validate.NOT_DISCLOSED,
+        # A lab-stated count is recorded when the draft carries one. Hardcoding
+        # NOT_DISCLOSED here asserted that the lab disclosed nothing, which is
+        # a claim about the lab, not an absence of data: GLM-5.3-Flash states
+        # 320B total on its own model card. Parameter disclosure is one of the
+        # two headline findings on the site, so a promoted entry that
+        # under-reports it biases the exact number the story rests on.
+        "parameters": _parameters(draft),
         "summary": draft["summary"],
         "benchmarks": benchmarks,
         "disclosure_links": draft["disclosure_links"],
