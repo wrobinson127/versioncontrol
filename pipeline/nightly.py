@@ -229,10 +229,15 @@ def main():
             llm_notes.append("Redraft of queued candidates:")
             llm_notes.extend(redraft_notes)
 
+    # After write_candidates, so tonight's ids are on disk and excluded: what
+    # is left is genuinely carried over from an earlier run.
+    held = pending.held_candidates({c["id"] for c in candidates}, args.root)
+
     report = pending.morning_report(candidates, now_date, errors, flags,
                                     llm_note="\n".join(llm_notes),
                                     source_counts=counts,
-                                    source_examined=examined)
+                                    source_examined=examined,
+                                    held=held)
     with open(os.path.join(args.root, args.report_path), "w",
               encoding="utf-8", newline="\n") as f:
         f.write(report)

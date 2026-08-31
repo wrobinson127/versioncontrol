@@ -35,6 +35,30 @@ def existing_pending_ids(root: str = ".") -> set:
     return ids
 
 
+def held_candidates(new_ids: set, root: str = ".") -> list:
+    """Candidates sitting in the queue from an earlier run.
+
+    correlate() suppresses ids that are already pending, so a candidate only
+    ever appears in the run that first detected it. Without this, one held
+    overnight is in no report ever again: it stays on disk, unreviewed and
+    unmentioned, and the only trace is a file nobody is looking at.
+    deepseek--deepseek-v4-flash-vision-exp sat that way for ten days.
+    """
+    path = os.path.join(root, PENDING_DIR)
+    if not os.path.isdir(path):
+        return []
+    held = []
+    for name in sorted(os.listdir(path)):
+        if not name.endswith(".json") or name == "rejected.json":
+            continue
+        if name[:-5] in new_ids:
+            continue
+        with open(os.path.join(path, name), encoding="utf-8") as f:
+            c = json.load(f)
+        held.append(c)
+    return held
+
+
 def write_candidates(candidates: list, run_date: str, root: str = ".") -> list:
     """One JSON file per candidate event. Returns the paths written."""
     os.makedirs(os.path.join(root, PENDING_DIR), exist_ok=True)
@@ -75,10 +99,12 @@ def _source_line(label, count, examined: dict) -> str:
 def morning_report(candidates: list, run_date: str, detector_errors: list,
                    flags: list, llm_note: str = "",
                    source_counts: dict = None,
-                   source_examined: dict = None) -> str:
+                   source_examined: dict = None,
+                   held: list = None) -> str:
     """Markdown artifact summarizing the night. Registrar voice."""
+    held = held or []
     lines = [f"# Morning report, {run_date} (UTC)", ""]
-    if not candidates and not detector_errors and not flags:
+    if not candidates and not held and not detector_errors and not flags:
         lines.append("No new candidate releases detected. All detectors ran clean.")
         if source_counts:
             lines.append("")
@@ -88,7 +114,7 @@ def morning_report(candidates: list, run_date: str, detector_errors: list,
         return "\n".join(lines) + "\n"
 
     if candidates:
-        lines.append(f"## Candidates awaiting review: {len(candidates)}")
+        lines.append(f"## Detected tonight: {len(candidates)}")
         lines.append("")
         lines.append("| Candidate | Org | Signals | Confidence | Date hint | Anchor |")
         lines.append("|---|---|---|---|---|---|")
@@ -107,6 +133,27 @@ def morning_report(candidates: list, run_date: str, detector_errors: list,
                      "only rejects it until the next detection run.")
     else:
         lines.append("No new candidate releases detected.")
+
+    if held:
+        lines.append("")
+        lines.append(f"## Held from earlier runs: {len(held)}")
+        lines.append("")
+        lines.append("Queued on a previous night and still unreviewed. These "
+                     "are not re-detected, so this is the only place they "
+                     "appear.")
+        lines.append("")
+        lines.append("| Candidate | Org | Detected | Date hint | Draft |")
+        lines.append("|---|---|---|---|---|")
+        for c in held:
+            lines.append(
+                f"| {c.get('id', 'unknown')} | {c.get('org', 'unknown')} "
+                f"| {c.get('detected_on', 'unknown')} "
+                f"| {c.get('date_hint') or 'unknown'} "
+                f"| {'yes' if c.get('draft_entry') else 'none'} |")
+
+    total = len(candidates) + len(held)
+    lines.append("")
+    lines.append(f"**Awaiting review in total: {total}.**")
 
     if detector_errors:
         lines.append("")

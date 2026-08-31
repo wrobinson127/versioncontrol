@@ -307,9 +307,41 @@ def test_replay_fixtures_through_full_path(tmp_path):
 
     report = pending.morning_report(candidates, CAPTURE_DATE,
                                     detector_errors=[], flags=["test flag"])
-    assert "Candidates awaiting review" in report
+    assert "Detected tonight" in report
     assert candidates[0]["id"] in report
     assert "FLAGS" in report
+    assert f"Awaiting review in total: {len(candidates)}." in report
+
+    # A candidate held from an earlier run is suppressed by correlate() and so
+    # never reappears in a later night's candidate list. It must still be named
+    # in the report, or it sits in the queue unreviewed and unmentioned.
+    held = pending.held_candidates({c["id"] for c in candidates},
+                                   root=str(tmp_path))
+    assert held == [], "nothing is held on a fresh queue"
+
+    stale = {"id": "someorg--held-model", "org": "someorg",
+             "detected_on": "2000-01-01", "date_hint": "2000-01-01",
+             "draft_entry": None, "status": "pending-review"}
+    with open(os.path.join(str(tmp_path), "data", "pending",
+                           "someorg--held-model.json"), "w",
+              encoding="utf-8") as f:
+        json.dump(stale, f)
+    held = pending.held_candidates({c["id"] for c in candidates},
+                                   root=str(tmp_path))
+    assert [c["id"] for c in held] == ["someorg--held-model"]
+
+    report = pending.morning_report(candidates, CAPTURE_DATE,
+                                    detector_errors=[], flags=[], held=held)
+    assert "Held from earlier runs: 1" in report
+    assert "someorg--held-model" in report
+    assert f"Awaiting review in total: {len(candidates) + 1}." in report
+
+    # The held candidate is also reported on a night that detects nothing new,
+    # which is the night it would otherwise vanish on.
+    quiet = pending.morning_report([], CAPTURE_DATE, detector_errors=[],
+                                   flags=[], held=held)
+    assert "someorg--held-model" in quiet
+    assert "Awaiting review in total: 1." in quiet
 
     # Idempotence of the pending state: a second correlate run sees the
     # written candidates and produces nothing new.
