@@ -16,7 +16,7 @@ Every number tells you where it came from, or it does not appear. Every benchmar
 4. **Human approval.** Candidates queue on a review branch. Nothing publishes without explicit approval; merging the branch is publication (`pipeline/pending.py`, `pipeline/promote.py`).
 5. **The record.** 293 entries reaching back to 2022-11-30: seeded from Epoch AI's CC-BY data, with independent benchmark numbers from Epoch's Benchmarking Hub, and extended by the nightly pipeline. Committed data is gzipped aggregates plus a checksummed manifest (`data/`), guarded against drift in CI.
 
-Tests: `python -m pytest pipeline/tests` (129 tests). CI runs them plus the manifest-drift guard on every push (`.github/workflows/ci.yml`).
+Tests: `python -m pytest pipeline/tests` (170 tests). CI runs them plus the manifest-drift guard on every push (`.github/workflows/ci.yml`).
 
 ## Licensing
 
