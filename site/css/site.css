@@ -1080,3 +1080,19 @@ html { scroll-behavior: smooth; }
   .traj-legend fieldset { padding: 6px 10px 8px; }
   .pulse-range { font-size: 0.85rem; }
 }
+
+/* ---- back to top: always present, bottom right, on every page. A quiet
+   square in the ledger's own inks; no shadow bloom, no pill, no gradient.
+   Sits above content on the z stack but below the sticky nav. ---- */
+.totop {
+  position: fixed; right: 18px; bottom: 18px; z-index: 40;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--paper); color: var(--ink);
+  border: 1px solid var(--ink); border-radius: 3px;
+  font-family: var(--mono); font-size: 18px; line-height: 1;
+  text-decoration: none;
+}
+.totop:hover { background: var(--ink); color: var(--paper); }
+@media (max-width: 720px) { .totop { right: 12px; bottom: 12px; width: 36px; height: 36px; font-size: 16px; } }
+@media print { .totop { display: none; } }

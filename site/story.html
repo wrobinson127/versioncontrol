@@ -271,6 +271,21 @@ html:not(.js) .nfallback{position:static;width:auto;height:auto;overflow:visible
    animation off, marks revealed instantly; the sticky canvas stays visible and
    each beat's arrangement simply appears as you scroll. setBeat shows all note
    boxes when reduce is set, so the stacking notes still populate. */
+/* ---- back to top: always present, bottom right, on every page. A quiet
+   square in the ledger's own inks; no shadow bloom, no pill, no gradient.
+   Sits above content on the z stack but below the sticky nav. ---- */
+.totop {
+  position: fixed; right: 18px; bottom: 18px; z-index: 40;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--paper); color: var(--ink);
+  border: 1px solid var(--ink); border-radius: 3px;
+  font-family: var(--mono); font-size: 18px; line-height: 1;
+  text-decoration: none;
+}
+.totop:hover { background: var(--ink); color: var(--paper); }
+@media (max-width: 720px) { .totop { right: 12px; bottom: 12px; width: 36px; height: 36px; font-size: 16px; } }
+@media print { .totop { display: none; } }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important}.rmk,.ax-pulse,.ax-traj,.ax-disc,.frontier,.conn{transition:none}.hero{min-height:auto;padding:40px 20px}.hero-scroll span{animation:none}.bignum{display:none}.hbar{animation:none;transform:none}.hbar-n{animation:none;opacity:1}
   html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){opacity:0.9}}
 /* mobile: sticky GRAPHIC on top (canvas capped so the notes have room), a sticky
@@ -574,4 +589,6 @@ canvas.addEventListener("mousemove",function(e){ var t=e.target;
 canvas.addEventListener("mouseleave",function(){setHot(null);showTip(null);setYearBand(null);spotlight(null,null);});
 setBeat("pulse");
 })();
-</script></body></html>
+</script>
+<a class="totop" href="#" aria-label="Back to top">&uarr;</a>
+</body></html>
