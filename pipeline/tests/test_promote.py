@@ -205,3 +205,24 @@ def test_unknown_explicit_predecessor_is_a_problem(tmp_path):
     report = promote.promote(RUN_DATE, root=root)
     assert report["promoted"] == []
     assert any("does-not-exist" in p for p in report["problems"])
+
+
+def test_promote_never_asserts_a_lab_silence_it_did_not_research(tmp_path):
+    """Extraction reads one announcement page. It can find a link; it cannot
+    establish that a lab published nothing. So a draft's NOT_DISCLOSED lands
+    on the record as NOT_RESEARCHED, and only an APPROVED row in
+    content/disclosure_links/ can turn that into a researched absence."""
+    root = str(tmp_path)
+    _seed_entries(root)
+    cand = _candidate()
+    cand["draft_entry"]["disclosure_links"] = {
+        "system_card": "https://example.com/card.pdf",
+        "model_card": "NOT_DISCLOSED", "usage_policy": "NOT_DISCLOSED",
+        "paper": "NOT_DISCLOSED"}
+    _write_candidate(root, cand)
+    report = promote.promote(RUN_DATE, root=root)
+    assert report["problems"] == []
+    e = {x["id"]: x for x in store.read_entries(root=root)}["openai--gpt-6"]
+    assert e["disclosure_links"]["system_card"] == "https://example.com/card.pdf"
+    for a in ("model_card", "usage_policy", "paper"):
+        assert e["disclosure_links"][a] == validate.NOT_RESEARCHED

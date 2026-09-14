@@ -16,6 +16,13 @@ from . import config, lint_voice
 ENTRY_TYPES = ("release", "revision")
 AVAILABILITY_CLASSES = ("open_weights", "public_api", "public_service")
 NOT_DISCLOSED = "NOT_DISCLOSED"
+# The registrar has not researched this artifact for this release. Distinct
+# from NOT_DISCLOSED, which is a researched claim that the lab published
+# nothing. Until 2026-09-14 the two were one value, so 475 never-researched
+# cells read on the site as "the lab did not disclose". The registrar cannot
+# assert a lab's silence it has not looked for.
+NOT_RESEARCHED = "NOT_RESEARCHED"
+DISCLOSURE_ABSENT = (NOT_DISCLOSED, NOT_RESEARCHED)
 DISCLOSURE_ARTIFACTS = ("system_card", "model_card", "usage_policy", "paper")
 ORIGIN_KINDS = ("backfill-epoch", "nightly-pipeline", "manual")
 
@@ -166,10 +173,11 @@ def validate_entry(entry) -> list:
             v = links.get(artifact)
             if v is None:
                 errors.append(f"disclosure_links.{artifact} is null; absence must be "
-                              f"the explicit {NOT_DISCLOSED!r} (invariant 4)")
-            elif v != NOT_DISCLOSED and not (isinstance(v, str) and _URL_RE.match(v)):
-                errors.append(f"disclosure_links.{artifact} must be a URL or "
-                              f"{NOT_DISCLOSED!r}, got {v!r}")
+                              f"the explicit {NOT_DISCLOSED!r} or "
+                              f"{NOT_RESEARCHED!r} (invariant 4)")
+            elif v not in DISCLOSURE_ABSENT and not (isinstance(v, str) and _URL_RE.match(v)):
+                errors.append(f"disclosure_links.{artifact} must be a URL, "
+                              f"{NOT_DISCLOSED!r}, or {NOT_RESEARCHED!r}, got {v!r}")
         for k in links:
             if k not in DISCLOSURE_ARTIFACTS:
                 errors.append(f"disclosure_links has unknown artifact {k!r}")

@@ -120,6 +120,12 @@
     return '<span class="nd" title="The lab has not disclosed this. Absence is the recorded signal, not a zero.">not disclosed</span>';
   }
 
+  /* The registrar has not looked yet. Rendered as plain words, apart from
+     the not-disclosed mark: a gap in the record is not a claim about the lab. */
+  function nrMark() {
+    return '<span class="nr" title="Not yet researched by the registrar. This is a gap in the record, not a statement about the lab.">not yet researched</span>';
+  }
+
   function benchRow(b, deltaItems) {
     var p = b.provenance || {};
     var label = p.benchmark_name || b.benchmark;
@@ -211,10 +217,12 @@
       var labelTxt = DISCLOSURE_SLOTS[s][1];
       var v = (e.disclosure_links || {})[key];
       html += '<div class="disc"><span class="disc-label">' + labelTxt + "</span>";
-      if (v && v !== "NOT_DISCLOSED") {
+      if (v && v !== "NOT_DISCLOSED" && v !== "NOT_RESEARCHED") {
         html += '<a href="' + esc(v) + '" rel="external">link</a>';
-      } else {
+      } else if (v === "NOT_DISCLOSED") {
         html += ndMark();
+      } else {
+        html += nrMark();
       }
       html += "</div>";
     }

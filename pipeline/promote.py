@@ -114,7 +114,14 @@ def candidate_to_entry(candidate: dict, existing_entries: list) -> dict:
         "parameters": _parameters(draft),
         "summary": draft["summary"],
         "benchmarks": benchmarks,
-        "disclosure_links": draft["disclosure_links"],
+        # Extraction reads one announcement page; it can find a link but it
+        # cannot establish that a lab published nothing. Anything that is not
+        # a URL is recorded as not researched. NOT_DISCLOSED enters only through
+        # an APPROVED row in content/disclosure_links/.
+        "disclosure_links": {
+            a: (v if isinstance(v, str) and v.startswith("http")
+                else validate.NOT_RESEARCHED)
+            for a, v in draft["disclosure_links"].items()},
         "predecessor": predecessor,
         "license_note": None,
         "sources": sources,

@@ -625,6 +625,15 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
 /* inline demonstrations of marks inside prose */
 .prose .prov, .prose .nd { vertical-align: 1px; }
 
+/* not yet researched: the registrar's own gap. Plain muted words, no
+   outline, so it never reads as the dashed not-disclosed mark or as a value. */
+.nr {
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  font-style: italic;
+}
+
 /* data file table: genuine data, mono is earned here */
 .file-table { width: 100%; border-collapse: collapse; margin: 14px 0; }
 .file-table th, .file-table td {

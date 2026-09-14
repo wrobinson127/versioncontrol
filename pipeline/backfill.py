@@ -176,6 +176,13 @@ def carry_manual_entries(entries: list, root: str = ".") -> list:
     have = {e["id"] for e in entries}
     carried = [e for e in existing
                if e.get("origin") in CARRIED_ORIGINS and e["id"] not in have]
+    # A carried entry's NOT_DISCLOSED predates the third state and was never
+    # a researched claim; it reverts to not-researched here and is restored
+    # to NOT_DISCLOSED by apply_disclosures wherever an APPROVED row says so.
+    for e in carried:
+        for a, v in list(e.get("disclosure_links", {}).items()):
+            if v == validate.NOT_DISCLOSED:
+                e["disclosure_links"][a] = validate.NOT_RESEARCHED
     if carried:
         entries.extend(carried)
         entries.sort(key=lambda e: (e["date"], e["id"]))
@@ -584,11 +591,15 @@ def build_entries(rows: list, hub_rows: list, retrieval_date: str):
             "parameters": _params(flagship),
             "summary": "",  # set after hub numbers attach
             "benchmarks": [],
+            # The capture can establish a paper link (Epoch records arXiv
+            # links). It cannot establish that a lab published nothing, so
+            # every other artifact starts as not researched; apply_disclosures
+            # turns that into NOT_DISCLOSED only where an APPROVED row says so.
             "disclosure_links": {
-                "system_card": validate.NOT_DISCLOSED,
-                "model_card": validate.NOT_DISCLOSED,
-                "usage_policy": validate.NOT_DISCLOSED,
-                "paper": paper or validate.NOT_DISCLOSED,
+                "system_card": validate.NOT_RESEARCHED,
+                "model_card": validate.NOT_RESEARCHED,
+                "usage_policy": validate.NOT_RESEARCHED,
+                "paper": paper or validate.NOT_RESEARCHED,
             },
             "predecessor": None,
             "license_note": _clean_license_note(

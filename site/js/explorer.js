@@ -386,7 +386,9 @@
       !(t.share_with_system_card > 0);
     var fourth = pendingCards
       ? { value: String(t.papers_on_record), label: "releases with a paper link" }
-      : { value: sharePct + "%", label: "releases with a system card link" };
+      : { value: sharePct + "%",
+          label: "of " + (t.system_card_researched || 0) +
+            " researched releases carry a system card link" };
 
     var tiles = [
       { value: String(t.releases_recorded),
@@ -709,13 +711,19 @@
     var agg = {};
     REGISTRY_ORDER.forEach(function (org) {
       agg[org] = {};
-      artifacts.forEach(function (a) { agg[org][a] = { disclosed: 0, total: 0 }; });
+      artifacts.forEach(function (a) { agg[org][a] = { disclosed: 0, total: 0, not_researched: 0 }; });
     });
     (dm.rows || []).forEach(function (r) {
       if (!agg[r.org]) { return; }
       artifacts.forEach(function (a) {
+        /* Three states per cell. "not_researched" is the registrar's own gap
+           and is excluded from every share: the denominator is releases the
+           registrar looked at, never all releases. A lab's silence nobody has
+           checked for is not a lab's silence. */
+        var state = r.cells ? r.cells[a] : "not_researched";
+        if (state === "not_researched") { agg[r.org][a].not_researched += 1; return; }
         agg[r.org][a].total += 1;
-        if (r.cells && r.cells[a]) { agg[r.org][a].disclosed += 1; }
+        if (state === "disclosed") { agg[r.org][a].disclosed += 1; }
       });
     });
 
@@ -769,7 +777,9 @@
         var label = c.disclosed + "/" + c.total + ": " +
           (api.orgNames[org] || org) + ", " + (ARTIFACT_NAMES[a] || a) + ", " +
           c.disclosed + " of " + c.total +
-          " releases with a link on record. Filters the timeline to this organization's releases.";
+          " researched releases with a link on record" +
+          (c.not_researched ? ", " + c.not_researched + " not yet researched" : "") +
+          ". Filters the timeline to this organization's releases.";
         var glyph = c.disclosed > 0
           ? '<circle cx="4" cy="4" r="3" class="dm-dot-filled"/>'
           : '<circle cx="4" cy="4" r="3" class="dm-dot-hollow"/>';
@@ -791,11 +801,13 @@
       (dm.rows || []).forEach(function (r) {
         var yKey = r.date.slice(0, 4);
         var b = byYear[yKey] = byYear[yKey] || { with_paper: 0, total: 0 };
+        var ps = r.cells ? r.cells.paper : "not_researched";
+        if (ps === "not_researched") { return; }
         b.total += 1;
-        if (r.cells && r.cells.paper) { b.with_paper += 1; }
+        if (ps === "disclosed") { b.with_paper += 1; }
       });
       var segs = Object.keys(byYear).sort().map(function (yKey) {
-        return yKey + " " + byYear[yKey].with_paper + " of " + byYear[yKey].total;
+        return yKey + " " + byYear[yKey].with_paper + " of " + byYear[yKey].total + " researched";
       });
       yearsEl.textContent = segs.length ?
         "Releases with a paper link, by year: " + segs.join(", ") + "." : "";
@@ -812,7 +824,7 @@
         "Selected artifact: " + (ARTIFACT_NAMES[artifact] || artifact) + ", " +
         (isPendingCol(artifact) ?
           "links under the registrar's review, not yet on record." :
-          c.disclosed + " of " + c.total + " releases with a link on record."));
+          c.disclosed + " of " + c.total + " researched releases with a link on record."));
     });
 
     /* text alternative: a real table with the same counts. The clipping

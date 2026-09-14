@@ -155,3 +155,17 @@ def test_make_entry_id_is_stable_and_wellformed():
     entry["id"] = validate.make_entry_id("openai", "GPT-5")
     assert entry["id"] == "openai--gpt-5"
     assert validate.validate_entry(entry) == []
+
+
+def test_disclosure_links_accept_not_researched_and_reject_null():
+    """Two absences, both explicit. NOT_DISCLOSED is a researched claim about
+    the lab; NOT_RESEARCHED is the registrar's own gap. Null is neither and
+    is refused, so a gap can never be silent."""
+    import copy
+    e = copy.deepcopy(_valid_entry())
+    e["disclosure_links"]["system_card"] = validate.NOT_RESEARCHED
+    assert validate.validate_entry(e) == []
+    e["disclosure_links"]["system_card"] = None
+    assert any("null" in x for x in validate.validate_entry(e))
+    e["disclosure_links"]["system_card"] = "unknown"
+    assert any("NOT_RESEARCHED" in x for x in validate.validate_entry(e))
