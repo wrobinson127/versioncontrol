@@ -5,6 +5,12 @@
       "input_tokens": 236775,
       "output_tokens": 32511,
       "usd": 0.39933
+    },
+    "2026-09": {
+      "calls": 29,
+      "input_tokens": 94180,
+      "output_tokens": 10914,
+      "usd": 0.14875
     }
   }
 }

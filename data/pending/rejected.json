@@ -158,5 +158,120 @@
     "id": "google-deepmind--gemini-omni-1.1",
     "reason": "Video generation. The announcement states inputs of text, video, and images, and output of video only, with no language output. Epoch AI classifies the comparable models as Video (Sora) and Video,Vision (Veo), neither language nor multimodal, and none of Veo 1/2/3/3.1 or Sora/Sora Turbo/Sora 2.0 is on the record. Source: https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-omni-1-1-flash/",
     "rejected_on": "2026-08-31"
+  },
+  {
+    "id": "openai--gpt-6-astra-pro",
+    "reason": "Same underlying model as GPT-6 Astra. OpenRouter states verbatim it is served with reasoning.mode set to pro. Same weights served differently is not a separate release.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "openai--gpt-6-astra-batch",
+    "reason": "Batch endpoint for GPT-6 Astra, same model.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "openai--gpt-6-astra-pro-batch",
+    "reason": "Batch endpoint for the GPT-6 Astra pro reasoning mode, same model.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "anthropic--claude-fable-5.1-batch",
+    "reason": "Batch endpoint for Claude Fable 5.1, same model.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "google-deepmind--gemini-3.8-flash-batch",
+    "reason": "Batch endpoint for Gemini 3.8 Flash, same model.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "meta--muse-spark-1.3-contributor",
+    "reason": "Pricing tier of Muse Spark 1.3, same model. See meta--muse-spark-1.2-contributor.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "google-deepmind--gemini-3.8",
+    "reason": "Duplicate slug for Gemini 3.8 Flash, from the same announcement post.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "openai--gpt-6",
+    "reason": "Duplicate slug for GPT-6 Astra. The RSS item is a customer story, not a release.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "alibaba-qwen--qwen-3.5-flash-hosted-a3b",
+    "reason": "Hosted form of Qwen3.5-35B-A3B, on record at 2026-02-24. Same weights served differently.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "anthropic--claude-mythos-5",
+    "reason": "Epoch accessibility: Unreleased. Anthropic states Mythos is available only to a set of US organizations under verification programs. Standing ruling; see content/scope_exclusions.json note.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "anthropic--claude-mythos-preview",
+    "reason": "Epoch accessibility: Unreleased. No-access preview.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "meta--llama-4-behemoth-preview",
+    "reason": "Epoch accessibility: Unreleased. Previewed, never made publicly usable.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "openai--chatgpt-images-2.5",
+    "reason": "Epoch domain: Image generation,Vision. No language component.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "google-deepmind--weathernext-3",
+    "reason": "Weather forecasting model. No language component.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "google-deepmind--gnm-v3",
+    "reason": "3D parametric head-mesh model (HF tags: 3d, computer-vision, human-head, 3dmm). No language component.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "alibaba-qwen--qwen-drive-1.0",
+    "reason": "First-party fine-tune of Qwen3.5-4B for autonomous driving (HF base_model: Qwen/Qwen3.5-4B; tags: autonomous-driving, motion-planning). Task-specific derivative of an existing base, not a new model.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "google-deepmind--big-lstm-pluscnn-inputs",
+    "reason": "Published 2016-02-11, before the record begins on 2022-11-30.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "google-deepmind--gshard-dense",
+    "reason": "Published 2020-06-30, before the record begins on 2022-11-30. Also Unreleased.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "openai--gpt-3.5-davinci-003",
+    "reason": "Published 2022-11-28, two days before the record begins on 2022-11-30.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "openai--1password",
+    "reason": "Partnership announcement, not a model.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "openai--gpt-5.4-cyber",
+    "reason": "Epoch accessibility: Unreleased. Trusted-access program, not publicly usable. GPT-5.6 Cyber is on record because Epoch records it as API access; GPT-5.5 Cyber and GPT-5.4-Cyber are not.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "cohere--tiny-aya-en-thinker",
+    "reason": "Recorded as a variant of the single Tiny Aya entry (cohere--tiny-aya), not as its own release.",
+    "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "cohere--tiny-aya-l2-thinker",
+    "reason": "Recorded as a variant of the single Tiny Aya entry (cohere--tiny-aya), not as its own release.",
+    "rejected_on": "2026-09-14"
   }
 ]
