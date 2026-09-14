@@ -14,7 +14,7 @@ Every number tells you where it came from, or it does not appear. Every benchmar
 2. **Correlation.** Signals cluster into candidate release events; sibling repositories collapse into one event; anything already in the record is suppressed (`pipeline/correlate.py`).
 3. **Drafting.** On detection-positive nights a small language model drafts a structured entry under a hard monthly spend cap; drafts must pass a registrar-voice lint before they attach (`pipeline/extract.py`, `pipeline/lint_voice.py`, `pipeline/spend.py`).
 4. **Human approval.** Candidates queue on a review branch. Nothing publishes without explicit approval; merging the branch is publication (`pipeline/pending.py`, `pipeline/promote.py`).
-5. **The record.** 293 entries reaching back to 2022-11-30: seeded from Epoch AI's CC-BY data, with independent benchmark numbers from Epoch's Benchmarking Hub, and extended by the nightly pipeline. Committed data is gzipped aggregates plus a checksummed manifest (`data/`), guarded against drift in CI.
+5. **The record.** Entries reaching back to 2022-11-30: seeded from Epoch AI's CC-BY data, with independent benchmark numbers from Epoch's Benchmarking Hub, and extended by the nightly pipeline. Committed data is gzipped aggregates plus a checksummed manifest (`data/`), guarded against drift in CI.
 
 Tests: `python -m pytest pipeline/tests` (170 tests). CI runs them plus the manifest-drift guard on every push (`.github/workflows/ci.yml`).
 

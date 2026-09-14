@@ -18,7 +18,7 @@
         "openai--chatgpt",
         "meta--opt-iml-175b"
       ],
-      "sha256": "e243cb4341f3bb81568de98a429a995e6712e99a2e81e5cb20391facedff8392"
+      "sha256": "2fda631ae8b81f965a53bb2a6e8686ddbad9dc500b08a548add78b06cc14708f"
     },
     "data/entries/2023.json.gz": {
       "count": 44,
