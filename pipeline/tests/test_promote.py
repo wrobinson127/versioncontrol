@@ -160,3 +160,48 @@ def test_ids_filter_limits_promotion(tmp_path):
     _write_candidate(root, _candidate())
     report = promote.promote(RUN_DATE, ids=["some--other"], root=root)
     assert report["promoted"] == [] and "openai--gpt-6" in report["skipped"]
+
+
+def test_draft_variants_sources_and_predecessor_are_honoured(tmp_path):
+    """Three draft fields promote previously ignored.
+
+    variants: a release shipped as several repositories (Tiny Aya: three) is
+    one entry with variants, per the one-mark-one-release rule, not three.
+    extra_sources: each of those repositories is cited, the way a backfilled
+    entry cites every Epoch link.
+    predecessor: a revision of a model recorded under a different name
+    (Qwen3.8-Max-0902 revising Qwen3.8-2.4T-A95B) has no family match, so the
+    heuristic would leave it unchained; an explicit predecessor wins, and one
+    that is not on the record is a problem, not a guess.
+    """
+    root = str(tmp_path)
+    _seed_entries(root)
+    cand = _candidate()
+    # A name with no family match to the seeded GPT-5.5, so only an explicit
+    # predecessor can chain it.
+    cand["draft_entry"]["model_name"] = "Astra"
+    cand["draft_entry"]["variants"] = ["Astra Mini", "Astra Nano"]
+    cand["draft_entry"]["extra_sources"] = ["https://example.com/astra-mini",
+                                           "https://example.com/astra-nano"]
+    cand["draft_entry"]["predecessor"] = "openai--gpt-5.5"
+    _write_candidate(root, cand)
+    report = promote.promote(RUN_DATE, root=root)
+    assert report["problems"] == []
+    e = {x["id"]: x for x in store.read_entries(root=root)}["openai--astra"]
+    assert validate.validate_entry(e) == []
+    assert e["variants"] == ["Astra Mini", "Astra Nano"]
+    assert [s["url"] for s in e["sources"][1:]] == [
+        "https://example.com/astra-mini", "https://example.com/astra-nano"]
+    assert all(s["kind"] == "lab_link" for s in e["sources"][1:])
+    assert e["predecessor"] == "openai--gpt-5.5"
+
+
+def test_unknown_explicit_predecessor_is_a_problem(tmp_path):
+    root = str(tmp_path)
+    _seed_entries(root)
+    cand = _candidate()
+    cand["draft_entry"]["predecessor"] = "openai--does-not-exist"
+    _write_candidate(root, cand)
+    report = promote.promote(RUN_DATE, root=root)
+    assert report["promoted"] == []
+    assert any("does-not-exist" in p for p in report["problems"])

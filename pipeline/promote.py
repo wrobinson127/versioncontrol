@@ -74,16 +74,29 @@ def candidate_to_entry(candidate: dict, existing_entries: list) -> dict:
     for b in draft.get("benchmarks", []):
         benchmarks.append({**b, "value": _numeric(b["value"])})
 
-    predecessor = None
-    fam = family_key(model_name)
-    for e in sorted(existing_entries, key=lambda e: e["date"]):
-        if e["org"] == org and family_key(e["model_name"]) == fam \
-                and e["date"] < date:
-            predecessor = e["id"]
+    # An explicit predecessor in the draft wins over the family heuristic. A
+    # revision of a model recorded under a different name (Qwen3.8-Max-0902
+    # revising the Qwen3.8-2.4T-A95B entry) has no family match, and the
+    # heuristic would leave it unchained.
+    predecessor = draft.get("predecessor") or None
+    if predecessor and not any(e["id"] == predecessor for e in existing_entries):
+        raise PromotionError(f"predecessor {predecessor!r} is not on the record")
+    if not predecessor:
+        fam = family_key(model_name)
+        for e in sorted(existing_entries, key=lambda e: e["date"]):
+            if e["org"] == org and family_key(e["model_name"]) == fam \
+                    and e["date"] < date:
+                predecessor = e["id"]
 
+    retrieval = draft["extraction"]["retrieval_date"]
     sources = [{"kind": "lab_announcement",
                 "url": candidate["announcement_url"],
-                "retrieval_date": draft["extraction"]["retrieval_date"]}]
+                "retrieval_date": retrieval}]
+    # A release shipped as several repositories (Tiny Aya: three) cites each
+    # of them, the same way a backfilled entry cites every Epoch link.
+    for url in draft.get("extra_sources") or []:
+        sources.append({"kind": "lab_link", "url": url,
+                        "retrieval_date": retrieval})
 
     entry = {
         "id": entry_id,
@@ -112,6 +125,8 @@ def candidate_to_entry(candidate: dict, existing_entries: list) -> dict:
     }
     if draft.get("unpinned_claims"):
         entry["unpinned_claims"] = draft["unpinned_claims"]
+    if draft.get("variants"):
+        entry["variants"] = list(draft["variants"])
     return entry
 
 
