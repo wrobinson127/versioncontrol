@@ -501,13 +501,13 @@ ACCEL_COPY = {
  "openai": ("OpenAI", f"From about {_stat('accel','openai')[0]} days between releases to about {_stat('accel','openai')[1]}. Roughly two months down to three weeks."),
  "anthropic": ("Anthropic", f"A similar compression: about {_stat('accel','anthropic')[0]} days between releases early on, about {_stat('accel','anthropic')[1]} lately."),
  "google-deepmind": ("Google DeepMind", f"From about {_stat('accel','google-deepmind')[0]} days to about {_stat('accel','google-deepmind')[1]} between releases, the same downward pull."),
- "alibaba-qwen": ("Qwen", f"Alibaba's Qwen started fast and stayed fast: about {_stat('accel','alibaba-qwen')[0]} days then, about {_stat('accel','alibaba-qwen')[1]} now. The American labs converged toward a pace it had set."),
+ "alibaba-qwen": ("Qwen", f"Alibaba's Qwen started fast and stayed fast: about {_stat('accel','alibaba-qwen')[0]} days then, about {_stat('accel','alibaba-qwen')[1]} now. The American labs moved toward a similar pace."),
 }
 TRAJ_COPY = {
  "openai": ("OpenAI", f"GPT-4 opened at {_stat('traj','openai')[0]} on GPQA Diamond; the latest OpenAI model on record sits at {_stat('traj','openai')[1]}."),
  "anthropic": ("Anthropic", f"Claude's independently measured score climbed from {_stat('traj','anthropic')[0]} to {_stat('traj','anthropic')[1]} over the same window."),
  "google-deepmind": ("Google DeepMind", f"From {_stat('traj','google-deepmind')[0]} to {_stat('traj','google-deepmind')[1]}. Fewer models on record, the same steep climb."),
- "alibaba-qwen": ("Qwen", f"Qwen rose from {_stat('traj','alibaba-qwen')[0]} to {_stat('traj','alibaba-qwen')[1]}, tracking the frontier from open weights."),
+ "alibaba-qwen": ("Qwen", f"Qwen rose from {_stat('traj','alibaba-qwen')[0]} to {_stat('traj','alibaba-qwen')[1]}, with open weights the whole way."),
 }
 # per-lab SWE-Bench Verified copy (the company-specific second-benchmark climb).
 # n>=3 reads as a trajectory; n==2 is stated as two scores on record, not a trend.
@@ -552,9 +552,9 @@ TRAJ_THR = {y: sum(1 for d in scored_dates if d < f"{y}-01-01") for y in ["2023"
 # header teach line, so the two don't restate each other on screen. Rates are
 # COMPUTED from the record (2022 is folded out of the waffle, so the trend is
 # framed over the columns shown, 2023-2026).
-def _paperpct(y): return round(100 * byyr_pap[y] / byyr_n[y]) if byyr_n[y] else 0
+def _paperpct(y): return round(100 * byyr_pap[y] / byyr_pap_res[y]) if byyr_pap_res[y] else 0
 def _parampct(y): return round(100 * byyr_par[y] / byyr_n[y]) if byyr_n[y] else 0
-DPAPER_NOTE = f"In 2023, {_paperpct('2023')}% of releases had a paper on record; by 2026, {_paperpct('2026')}%."
+DPAPER_NOTE = f"In 2023, {_paperpct('2023')}% of researched releases had a paper on record; by 2026, {_paperpct('2026')}%."
 DPARAM_NOTE = f"In 2023, {_parampct('2023')}% stated a parameter count; by 2026, {_parampct('2026')}%. A separate decline, on a different signal."
 NOTES = {
  "pulse": [{"y": y, "h": h, "b": b} for (y, h, b) in PULSE_NOTES],
@@ -949,7 +949,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
 <div class="scrolly">
   <div class="stage-col"><div class="instrument">
     <div class="ctitle" id="ctitle">Every model release since ChatGPT</div>
-    <p class="teach" id="teach">One mark = one model release, placed by the lab that shipped it (down the side) and when (across). The record opens at ChatGPT's launch; {tiles["releases_recorded"]} releases follow.</p>
+    <p class="teach" id="teach">One mark = one model release, placed by lab (down the side) and by date (across). The record opens at ChatGPT's launch; {tiles["releases_recorded"]} releases follow.</p>
     <div class="controls" id="controls"><span class="clab" id="hint">hover any mark for its record</span></div>
     <svg class="canvas" id="canvas" data-beat="pulse" viewBox="0 0 {W} {H}" role="img"
       aria-label="One canvas of {tiles["releases_recorded"]} release marks moving between four views: the release timeline, independent benchmark scores, the gap between lab-reported and independent numbers, and the yearly disclosure decline. Across the four years, the highest independent score rises while the share of researched releases with a paper on record falls. The full narrative in words follows below.">
@@ -984,7 +984,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
   <div class="endsum">
     <h2 class="endsum-h">What the record shows, in four findings</h2>
     <ul class="endsum-list">
-      <li><b>Cadence</b>{yearly["2023"]} releases in 2023, {yearly["2025"]} in 2025. The time between one release and the next keeps shrinking.</li>
+      <li><b>Cadence</b>{yearly["2023"]} releases in 2023, {yearly["2025"]} in 2025. The time between one release and the next shrank every year through 2025.</li>
       <li><b>Independent scores</b>The highest independent GPQA Diamond score rose from {_cap_vals[0]} to {_cap_vals[-1]}; SWE-Bench Verified from {swe_lo} to {swe_hi}. Every figure measured by Epoch.</li>
       <li><b>Lab beside independent</b>{n_pair_models} releases were graded both ways; {near} of {len(PAIRS)} comparisons fall within a single point. Both numbers are kept, neither is averaged.</li>
       <li><b>Disclosure</b>Releases arriving with a paper on record fell from {_dis_vals[0]}% to {_dis_vals[-1]}%; those stating a parameter count from {_parampct("2023")}% to {_parampct("2026")}%.</li>
