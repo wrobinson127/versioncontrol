@@ -22,7 +22,7 @@ def check_schema(header: list) -> None:
 
 
 def in_scope_domain(domain: str) -> bool:
-    """The scope rule, applied where candidates are proposed.
+    """The domain half of the scope rule, applied where candidates are proposed.
 
     backfill.py applies this same test when building the record, but the
     detector did not, so every Video, Vision, or forecasting row from a
@@ -30,7 +30,7 @@ def in_scope_domain(domain: str) -> bool:
     touched. Veo, Sora, and Imagen are all registry-org rows; they stayed out
     of the queue only because they sat outside the recency window, and the
     next release in any of those lines would have come straight through. That
-    is the Nova loop again: rejected by hand, re-proposed forever.
+    is the Nova loop: rejected by hand, re-proposed forever.
 
     A blank domain still passes. An absent field is not evidence about the
     model, so it reaches a human rather than being silently dropped; that is
@@ -40,6 +40,39 @@ def in_scope_domain(domain: str) -> bool:
     if not dom:
         return True
     return "language" in dom or "multimodal" in dom
+
+
+def in_scope_row(r: dict) -> bool:
+    """The whole scope rule, applied where candidates are proposed.
+
+    Three tests, each mirroring backfill.py, each passing a blank field
+    through to a human:
+
+    - domain: language or multimodal (see in_scope_domain).
+    - date: on or after the record's start. A row published before
+      2022-11-30 cannot be a release the record covers, whatever its
+      Last-modified says. Rows from 2016 (BIG LSTM+CNN), 2020 (GShard) and
+      2022-11-28 (davinci-003) were all proposed on the 2026-09 nights
+      because Epoch had touched them recently.
+    - accessibility: a value the record can map (open weights, public API,
+      or hosted service). "Unreleased" is a positive statement that the
+      model is not publicly usable, and it fails the test; Claude Mythos 5,
+      Mythos Preview and Llama 4 Behemoth (preview) all carry it and were
+      all proposed anyway.
+
+    Five of the 33 candidates queued between 2026-09-02 and 2026-09-11 would
+    have been stopped here.
+    """
+    from ..backfill import ACCESSIBILITY_MAP  # local: backfill is heavy
+    if not in_scope_domain(r.get("Domain")):
+        return False
+    published = (r.get("Publication date") or "").strip()
+    if published and published < config.BACKFILL_START:
+        return False
+    access = (r.get("Model accessibility") or "").strip()
+    if access and access not in ACCESSIBILITY_MAP:
+        return False
+    return True
 
 
 def parse_csv(csv_text: str, lookback_days: int, now_date: str) -> list:
@@ -62,7 +95,7 @@ def parse_csv(csv_text: str, lookback_days: int, now_date: str) -> list:
         if org is None:
             continue
         examined += 1
-        if not in_scope_domain(r.get("Domain")):
+        if not in_scope_row(r):
             continue
         modified = (r.get("Last modified") or "")[:10]
         published = (r.get("Publication date") or "").strip()

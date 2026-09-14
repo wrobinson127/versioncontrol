@@ -189,6 +189,43 @@ def test_epoch_detector_applies_the_scope_domain_rule():
     assert signals.examined == 5
 
 
+def test_epoch_detector_applies_the_date_window_and_accessibility_rules():
+    """The other two halves of the scope rule, also mirrored from backfill.
+
+    Epoch touches old rows constantly, and the recency test keys on Last
+    modified, so rows from 2016, 2020 and 2022-11-28 were all proposed as
+    release candidates on the 2026-09 nights. "Unreleased" is a positive
+    statement that a model is not publicly usable; Claude Mythos 5 and Llama
+    4 Behemoth (preview) carry it and were proposed anyway. Blank fields still
+    pass: an absent value is not evidence about the model.
+    """
+    text = _epoch_csv([
+        {"Model": "Old Thing", "Organization": "Google DeepMind",
+         "Domain": "Language", "Publication date": "2016-02-11",
+         "Model accessibility": "", "Last modified": "2026-07-11"},
+        {"Model": "Day Before", "Organization": "OpenAI",
+         "Domain": "Language", "Publication date": "2022-11-28",
+         "Model accessibility": "", "Last modified": "2026-07-11"},
+        {"Model": "Day Of", "Organization": "OpenAI",
+         "Domain": "Language", "Publication date": "2022-11-30",
+         "Model accessibility": "", "Last modified": "2026-07-11"},
+        {"Model": "Locked Away", "Organization": "Anthropic",
+         "Domain": "Language,Multimodal", "Publication date": "2026-06-09",
+         "Model accessibility": "Unreleased", "Last modified": "2026-07-11"},
+        {"Model": "App Only", "Organization": "Google DeepMind",
+         "Domain": "Language", "Publication date": "2026-07-10",
+         "Model accessibility": "Hosted access (no API)",
+         "Last modified": "2026-07-11"},
+        {"Model": "Blank Everything", "Organization": "Google DeepMind",
+         "Domain": "", "Publication date": "", "Model accessibility": "",
+         "Last modified": "2026-07-11"},
+    ])
+    signals = epoch.parse_csv(text, 14, CAPTURE_DATE)
+    assert [s["model_hint"] for s in signals] == [
+        "Day Of", "App Only", "Blank Everything"]
+    assert signals.examined == 6
+
+
 # --------------------------------------------------------------- correlate
 
 def _sig(detector, org, hint, url=None, date=None):
