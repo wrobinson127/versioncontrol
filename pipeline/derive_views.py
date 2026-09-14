@@ -142,15 +142,24 @@ def build_disclosure_matrix(entries: list, pending: dict = None) -> dict:
     artifacts = list(validate.DISCLOSURE_ARTIFACTS)
     pending = pending or {}
     rows = []
-    counts = {a: {"disclosed": 0, "not_disclosed": 0} for a in artifacts}
+    # Three states per cell, rendered verbatim by the site. "not_researched"
+    # is the registrar's own gap and is excluded from every share; it is
+    # never a lab's silence and never a zero.
+    counts = {a: {"disclosed": 0, "not_disclosed": 0, "not_researched": 0}
+              for a in artifacts}
     for e in sorted((e for e in entries if e["entry_type"] == "release"),
                     key=lambda e: (e["date"], e["id"])):
         cells = {}
         for a in artifacts:
-            disclosed = e["disclosure_links"].get(a, validate.NOT_DISCLOSED) \
-                != validate.NOT_DISCLOSED
-            cells[a] = disclosed
-            counts[a]["disclosed" if disclosed else "not_disclosed"] += 1
+            v = e["disclosure_links"].get(a, validate.NOT_RESEARCHED)
+            if v == validate.NOT_RESEARCHED:
+                state = "not_researched"
+            elif v == validate.NOT_DISCLOSED:
+                state = "not_disclosed"
+            else:
+                state = "disclosed"
+            cells[a] = state
+            counts[a][state] += 1
         rows.append({"entry_id": e["id"], "model_name": e["model_name"],
                      "org": e["org"], "date": e["date"], "cells": cells})
     # An artifact column with zero links on record but researched rows
@@ -158,6 +167,8 @@ def build_disclosure_matrix(entries: list, pending: dict = None) -> dict:
     # disclosure record; the site renders it as such.
     artifact_status = {
         a: {"links_on_record": counts[a]["disclosed"],
+            "researched": counts[a]["disclosed"] + counts[a]["not_disclosed"],
+            "not_researched": counts[a]["not_researched"],
             "pending_review": pending.get(a, 0)}
         for a in artifacts
     }
@@ -180,17 +191,29 @@ def build_tiles(entries: list, run_date: str, pending: dict = None) -> dict:
     def with_link(artifact):
         return sum(1 for e in releases
                    if e["disclosure_links"].get(artifact,
-                                                validate.NOT_DISCLOSED)
-                   != validate.NOT_DISCLOSED)
+                                                validate.NOT_RESEARCHED)
+                   not in validate.DISCLOSURE_ABSENT)
 
+    def researched(artifact):
+        # A share is a fraction of the releases the registrar actually looked
+        # at. Never-researched releases are not in the denominator: the
+        # registrar cannot count a lab's silence it has not looked for.
+        return sum(1 for e in releases
+                   if e["disclosure_links"].get(artifact,
+                                                validate.NOT_RESEARCHED)
+                   != validate.NOT_RESEARCHED)
+
+    sc_researched = researched("system_card")
     return {
         "releases_recorded": len(releases),
         "entries_recorded": len(entries),
         "days_since_last_release": (_date(run_date) - last).days,
         "median_gap_days_this_year":
             round(statistics.median(year_gaps), 1) if year_gaps else None,
-        "share_with_system_card": round(with_link("system_card")
-                                        / len(releases), 3),
+        "share_with_system_card": (round(with_link("system_card")
+                                         / sc_researched, 3)
+                                   if sc_researched else None),
+        "system_card_researched": sc_researched,
         "papers_on_record": with_link("paper"),
         "system_card_links_pending": pending.get("system_card", 0),
         "as_of": run_date,

@@ -338,3 +338,24 @@ def test_backfill_origin_entries_are_not_carried(tmp_path, monkeypatch):
                 "origin": "backfill-epoch"}]
     assert backfill.carry_manual_entries(entries, root=str(tmp_path)) == []
     assert [e["id"] for e in entries] == ["openai--gpt-4"]
+
+
+def test_carried_entries_revert_unresearched_absence(tmp_path, monkeypatch):
+    """A carried entry's NOT_DISCLOSED predates the third state and was never
+    a researched claim. It reverts to NOT_RESEARCHED on carry; a URL is kept.
+    apply_disclosures restores NOT_DISCLOSED afterwards wherever an APPROVED
+    row says so, which is the only path that can assert a lab's silence."""
+    nightly = {"id": "zai--glm-5.3-flash", "date": "2026-08-25",
+               "origin": "nightly-pipeline", "org": "zai",
+               "model_name": "GLM-5.3-Flash",
+               "disclosure_links": {"system_card": "NOT_DISCLOSED",
+                                    "model_card": "https://example.com/mc",
+                                    "usage_policy": "NOT_DISCLOSED",
+                                    "paper": "NOT_RESEARCHED"}}
+    monkeypatch.setattr(backfill.store, "read_entries", lambda root=".": [nightly])
+    entries = [{"id": "openai--gpt-4", "date": "2023-03-14", "origin": "backfill-epoch"}]
+    backfill.carry_manual_entries(entries, root=str(tmp_path))
+    carried = {e["id"]: e for e in entries}["zai--glm-5.3-flash"]
+    assert carried["disclosure_links"] == {
+        "system_card": "NOT_RESEARCHED", "model_card": "https://example.com/mc",
+        "usage_policy": "NOT_RESEARCHED", "paper": "NOT_RESEARCHED"}

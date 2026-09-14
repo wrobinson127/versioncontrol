@@ -112,19 +112,28 @@ def test_cadence_monthly_and_median_gap():
 
 # ------------------------------------------------------ matrix and tiles
 
-def test_matrix_counts_presence_only():
+def test_matrix_cells_carry_three_states_and_no_values():
+    """A cell is one of three words. "not_researched" is the registrar's own
+    gap: it is counted separately and never read as the lab's silence."""
     entries = [
         _entry("openai--a1", "2024-01-01",
                system_card="https://example.com/card.pdf"),
-        _entry("openai--a2", "2024-02-01"),
+        _entry("openai--a2", "2024-02-01"),                       # researched, none
+        _entry("openai--a3", "2024-02-15", system_card="NOT_RESEARCHED"),
         _entry("openai--r1", "2024-03-01", entry_type="revision"),  # excluded
     ]
     m = derive_views.build_disclosure_matrix(entries)
-    assert len(m["rows"]) == 2
-    assert m["counts"]["system_card"] == {"disclosed": 1, "not_disclosed": 1}
-    assert m["rows"][0]["cells"]["system_card"] is True
-    # presence booleans only, no values or scores anywhere in a cell
-    assert set(m["rows"][0]["cells"].values()) <= {True, False}
+    assert len(m["rows"]) == 3
+    assert m["counts"]["system_card"] == {
+        "disclosed": 1, "not_disclosed": 1, "not_researched": 1}
+    assert [r["cells"]["system_card"] for r in m["rows"]] == [
+        "disclosed", "not_disclosed", "not_researched"]
+    # state words only, no values or scores anywhere in a cell
+    for r in m["rows"]:
+        assert set(r["cells"].values()) <= {"disclosed", "not_disclosed",
+                                            "not_researched"}
+    assert m["artifact_status"]["system_card"]["researched"] == 2
+    assert m["artifact_status"]["system_card"]["not_researched"] == 1
 
 
 def test_matrix_artifact_status_carries_pending_review():
@@ -134,9 +143,31 @@ def test_matrix_artifact_status_carries_pending_review():
     entries = [_entry("openai--a1", "2024-01-01")]
     m = derive_views.build_disclosure_matrix(entries, {"system_card": 5})
     assert m["artifact_status"]["system_card"] == {
-        "links_on_record": 0, "pending_review": 5}
+        "links_on_record": 0, "researched": 1, "not_researched": 0,
+        "pending_review": 5}
     assert m["artifact_status"]["paper"] == {
-        "links_on_record": 0, "pending_review": 0}
+        "links_on_record": 0, "researched": 1, "not_researched": 0,
+        "pending_review": 0}
+
+
+def test_share_divides_by_researched_releases_only():
+    """One link, one researched absence, two never researched: the share is
+    1 of 2, not 1 of 4. The registrar cannot count a lab's silence it has
+    not looked for. Found on the 2026-09-14 gauntlet: 733 never-researched
+    cells were reading on the site as 'the lab did not disclose'."""
+    entries = [
+        _entry("openai--a1", "2024-01-01",
+               system_card="https://example.com/card.pdf"),
+        _entry("openai--a2", "2024-02-01"),
+        _entry("openai--a3", "2024-03-01", system_card="NOT_RESEARCHED"),
+        _entry("openai--a4", "2024-04-01", system_card="NOT_RESEARCHED"),
+    ]
+    t = derive_views.build_tiles(entries, "2024-05-01")
+    assert t["system_card_researched"] == 2
+    assert t["share_with_system_card"] == 0.5
+    # nothing researched at all: no share, rather than a false zero
+    none = [_entry("openai--a5", "2024-01-01", system_card="NOT_RESEARCHED")]
+    assert derive_views.build_tiles(none, "2024-05-01")["share_with_system_card"] is None
 
 
 def test_pending_link_counts_reads_draft_tables(tmp_path):

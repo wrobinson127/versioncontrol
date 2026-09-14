@@ -7,7 +7,7 @@
       "sha256": "fd2e48341e060d3db9856d5e5e341ab7892369be224f83fc852bea258edb40a0"
     },
     "data/derived/views.json.gz": {
-      "sha256": "4bc2c30e0bc9a9d3a6904fd992e61a6e16c293988167d13026337fc64d11fef2"
+      "sha256": "fd12aa792b5b713b05c99f9a1fdee2b7b4f35208b74bb575ae4d2202e7cc860b"
     }
   },
   "entry_count": 348,
@@ -18,7 +18,7 @@
         "openai--chatgpt",
         "meta--opt-iml-175b"
       ],
-      "sha256": "a7494a7f34c2d44c6ceca9c8320ebf861fdcfd239ca9acab11d981461b4bdff3"
+      "sha256": "e243cb4341f3bb81568de98a429a995e6712e99a2e81e5cb20391facedff8392"
     },
     "data/entries/2023.json.gz": {
       "count": 44,
@@ -68,7 +68,7 @@
         "google-deepmind--funsearch",
         "google-deepmind--gemini-nano-1"
       ],
-      "sha256": "216ee0629ce7492cd42e0db3417ebe995b7cf4b7d68aa424577b18c5a9f0bd72"
+      "sha256": "f381c56b8b36ec78b9a3662ffb4b0ad91074ae1beb04d196e74d75d03f70f674"
     },
     "data/entries/2024.json.gz": {
       "count": 97,
@@ -171,7 +171,7 @@
         "deepseek--deepseek-v3",
         "alibaba-qwen--qvq"
       ],
-      "sha256": "40783ef6276092263b11fecb995c3d3bcb52abcf017f31f2effcec543eebb6c0"
+      "sha256": "eacbefb3c4869fba739776545f376c0d8ade884f27895ec06cd39e46f3d8111c"
     },
     "data/entries/2025.json.gz": {
       "count": 126,
@@ -303,7 +303,7 @@
         "openai--gpt-5.2-codex",
         "zai--glm-4.7"
       ],
-      "sha256": "bee858a02fbc82236d5cefa6327295c16ed20fd18a53defcf506d4e29b4ddd25"
+      "sha256": "5372d7fe740005fa740ca8aced3e5b396e57464e2ef326c9346f8bef0f190e88"
     },
     "data/entries/2026.json.gz": {
       "count": 79,
@@ -388,7 +388,7 @@
         "openai--gpt-6-astra",
         "deepseek--deepseek-v4.1-flash"
       ],
-      "sha256": "9f426d4db96718ff54967399715ebbddc56e8e3be49029af0dbfad1c6aaf37b2"
+      "sha256": "f186e363ba7e016f26d61739e2595f1c49eb68537d50a8c1100102d8c81e6b78"
     }
   },
   "schema_version": 1

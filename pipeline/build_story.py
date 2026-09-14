@@ -45,7 +45,12 @@ score_by_entry = {p["entry_id"]: p["value"] for p in gpqa_pts}
 # second benchmark for the story: SWE-Bench Verified, independent (also Epoch-measured)
 swe_pts = sorted(series["swe-bench-verified|INDEPENDENT"]["points"], key=lambda p: p["date"])
 swe_by_entry = {p["entry_id"]: p["value"] for p in swe_pts}
-paper_by_entry = {r["entry_id"]: bool(r["cells"]["paper"]) for r in V["disclosure_matrix"]["rows"]}
+# Three paper states, straight from the derived matrix: "disclosed" (filled),
+# "not_disclosed" (a researched absence, dashed), "not_researched" (the
+# registrar's own gap, faint, and never in a denominator).
+paper_state = {r["entry_id"]: r["cells"]["paper"] for r in V["disclosure_matrix"]["rows"]}
+paper_by_entry = {k: v == "disclosed" for k, v in paper_state.items()}
+paper_researched = {k: v != "not_researched" for k, v in paper_state.items()}
 param_by_entry = {}
 yearly = {y["year"]: y["releases"] for y in V["cadence"]["yearly"]}
 # real lab-vs-independent pairs, computed from the record (same entry + same
@@ -175,7 +180,8 @@ for r in rel:
         swx, swy, hasswe = xp(r["date"]), PARK, 0; swetip = ""  # hidden in swe beat; no tip needed
     yr = r["date"][:4]
     pp = paper_pos.get(eid, (X0 - 30, PARK)); mp = param_pos.get(eid, (X0 - 30, PARK))
-    pap = 1 if paper_by_entry.get(eid) else 0
+    # 1 = paper on record, 0 = researched and none, 2 = not yet researched
+    pap = 1 if paper_by_entry.get(eid) else (0 if paper_researched.get(eid) else 2)
     par = 1 if param_by_entry.get(eid) else 0
     wsc = YMK.get(yr, 1.0)  # scale 8px base to fill the (uniform) waffle cell
     marks += (f'<rect class="rmk" data-org="{r["org"]}" data-yr="{yr}" data-scored="{scored}" data-paper="{pap}" data-param="{par}" data-wsc="{wsc}" '
@@ -233,6 +239,12 @@ for o in SWE_CASE_ORDER:
     _sd = "M " + " L ".join(f"{x:.1f} {y:.1f}" for x, y in _pts)
     sweconns += f'<path class="sweconn" data-org="{o}" d="{_sd}" fill="none"/>'
 
+# hero line: the first and last COMPLETE years on record, read from the data.
+# "Arriving faster every year" was a constant here until 2026-09-14; the drift
+# guard rebuilt it identically while 2026 ran below 2025's pace.
+_hero_years = sorted(y for y in yearly if y != "2022" and y < AS_OF[:4])
+_hero_first_y, _hero_last_y = _hero_years[0], _hero_years[-1]
+_hero_first_n, _hero_last_n = yearly[_hero_first_y], yearly[_hero_last_y]
 # hero visual: releases logged per year as a small bar chart (Walker's pick). A real,
 # legible chart that shows both "AI model releases" and the acceleration that opens
 # the story. Green bars = data (colour law); the partial current year is dimmed and
@@ -308,9 +320,13 @@ ax_swe += f'<text x="{X1-4}" y="{TOP+14}" text-anchor="end" class="frontlbl">a s
 # disclosure axis: year labels + the disclosed SHARE per year (updated per beat
 # so the different-sized blocks read as a share, not as raw volume)
 byyr_n = defaultdict(int); byyr_pap = defaultdict(int); byyr_par = defaultdict(int)
+# The paper share's denominator is releases the registrar has researched,
+# never all releases: a lab's silence nobody checked for is not a lab's silence.
+byyr_pap_res = defaultdict(int)
 for r in rel:
     if r["org"] not in ro: continue
     y = r["date"][:4]; byyr_n[y] += 1
+    if paper_researched.get(r["entry_id"]): byyr_pap_res[y] += 1
     if paper_by_entry.get(r["entry_id"]): byyr_pap[y] += 1
     if param_by_entry.get(r["entry_id"]): byyr_par[y] += 1
 # a loud variable tag so the two disclosure movements read as DIFFERENT cuts,
@@ -319,7 +335,7 @@ ax_disc = f'<text x="{X0-10}" y="{TOP+2}" class="discvar" id="discvar">on record
 ax_disc += f'<text x="{X0-10}" y="{TOP+22}" class="foldnote">2022 is folded out: its two releases sit before the yearly columns shown here.</text>'
 for si, y in enumerate(slots):
     cx = X0 + si * slotw + slotw / 2
-    pp = round(100 * byyr_pap[y] / byyr_n[y]) if byyr_n[y] else 0
+    pp = round(100 * byyr_pap[y] / byyr_pap_res[y]) if byyr_pap_res[y] else 0
     pm = round(100 * byyr_par[y] / byyr_n[y]) if byyr_n[y] else 0
     ax_disc += (f'<text x="{cx:.1f}" y="{H-30}" text-anchor="middle" class="ax">{y}</text>'
                 f'<text x="{cx:.1f}" y="{H-14}" text-anchor="middle" class="wpct" data-p="{pp}" data-m="{pm}">{pp}%</text>')
@@ -336,7 +352,7 @@ for y in ["2023", "2024", "2025", "2026"]:
           if r["org"] in ro and r["date"][:4] <= y and r["entry_id"] in score_by_entry]
     if ys: _cap_run = max(ys)
     close_cap.append((_yrmid(y), y_traj(_cap_run))); _cap_vals.append(round(_cap_run))
-    pct = round(100 * byyr_pap[y] / byyr_n[y]) if byyr_n[y] else 0
+    pct = round(100 * byyr_pap[y] / byyr_pap_res[y]) if byyr_pap_res[y] else 0
     close_dis.append((_yrmid(y), y_traj(pct))); _dis_vals.append(pct)
 _cap_d = "M " + " L ".join(f"{x:.1f} {yy:.1f}" for x, yy in close_cap)
 _dis_d = "M " + " L ".join(f"{x:.1f} {yy:.1f}" for x, yy in close_dis)
@@ -594,11 +610,11 @@ _meta = {
     "div": {"n": "Beat 3 of 4", "t": "What the lab said, beside what Epoch measured",
             "te": f'Each stem is one release measured twice on the same benchmark. The ring at the top is the lab\'s own reported score; the dot at the bottom is Epoch\'s independent measurement. The number is the gap between them, and the axis is zoomed to a few points, so a short stem means the two agree.', "h": "hover a pair for its numbers"},
     "dpaper": {"n": "Beat 4 of 4", "t": "Fewer arrive with a paper",
-               "te": "The same marks, gathered by year. Filled = a paper on record; a dashed slot = none.", "h": "hover a mark for its record"},
+               "te": "The same marks, gathered by year. Filled = a paper on record; a dashed slot = researched, none found; a faint slot = not yet researched. The share is of researched releases.", "h": "hover a mark for its record"},
     "dparam": {"n": "Beat 4 of 4", "t": "And fewer state their size",
                "te": "Re-sorted by a different disclosure: a stated parameter count. Filled = on record; a dashed slot = none.", "h": "hover a mark for its record"},
     "close": {"n": "In sum", "t": "The record, in two lines",
-              "te": f'Over the same four years: the highest independent GPQA Diamond score rose from {_cap_vals[0]} to {_cap_vals[-1]}; the share of releases with a paper on record fell from {_dis_vals[0]}% to {_dis_vals[-1]}%. Both are percentages, on one axis.', "h": ""},
+              "te": f'Over the same four years: the highest independent GPQA Diamond score rose from {_cap_vals[0]} to {_cap_vals[-1]}; the share of researched releases with a paper on record fell from {_dis_vals[0]}% to {_dis_vals[-1]}%. Both are percentages, on one axis.', "h": ""},
 }
 # why these labs: the four with the most releases on record and the widest
 # independent benchmark coverage, so a per-lab trend is well supported. Stated once,
@@ -691,6 +707,9 @@ html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){{opacity:0;po
    visually distinct from beat 3's crisp lab-reported hollow ring: different
    meaning, different mark, so the solid/hollow grammar is not overloaded */
 .canvas[data-beat="dpaper"] .rmk[data-paper="0"],.canvas[data-beat="dparam"] .rmk[data-param="0"]{{fill:none;stroke:var(--ink-faint);stroke-width:0.8;stroke-dasharray:1.5 2;opacity:0.33}}
+/* not yet researched: the registrar's own gap, faint and undashed so it never
+   reads as the recorded absence above, and never counted in a share */
+.canvas[data-beat="dpaper"] .rmk[data-paper="2"]{{fill:none;stroke:var(--ink-faint);stroke-width:0.6;opacity:0.14}}
 .rmk.co{{opacity:1;stroke:var(--ink);stroke-width:0.5}}.canvas.filtering .rmk:not(.co){{opacity:0.07}}
 /* keep the unscored (parked) marks hidden even while a company is spotlighted --
    the filtering rule above must not bring the phantom boxes back on hover */
@@ -888,7 +907,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
    animation off, marks revealed instantly; the sticky canvas stays visible and
    each beat's arrangement simply appears as you scroll. setBeat shows all note
    boxes when reduce is set, so the stacking notes still populate. */
-@media (prefers-reduced-motion:reduce){{.rmk,.ax-pulse,.ax-traj,.ax-disc,.frontier,.conn{{transition:none}}.hero{{min-height:auto;padding:40px 20px}}.hero-scroll span{{animation:none}}.bignum{{display:none}}.hbar{{animation:none;transform:none}}.hbar-n{{animation:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){{*,*::before,*::after{{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important}}.rmk,.ax-pulse,.ax-traj,.ax-disc,.frontier,.conn{{transition:none}}.hero{{min-height:auto;padding:40px 20px}}.hero-scroll span{{animation:none}}.bignum{{display:none}}.hbar{{animation:none;transform:none}}.hbar-n{{animation:none;opacity:1}}
   html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){{opacity:0.9}}}}
 /* mobile: sticky GRAPHIC on top (canvas capped so the notes have room), a sticky
    NOTE strip pinned just beneath it, and the invisible notetrack scrolling behind
@@ -922,7 +941,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
 <div class="mast-by">Maintained by <a href="https://walker-robinson.com">Walker Robinson</a> &#183; <a href="./methodology.html">methodology &amp; sources</a> &#183; <span class="mast-asof">the record as of {AS_OF}</span></div></div>
 <section class="hero" id="hero">
   <div class="hero-inner">
-    <p class="hero-head">A public registry of AI model releases.<br>Arriving faster every year.</p>
+    <p class="hero-head">A public registry of AI model releases.<br>From {_hero_first_n} in {_hero_first_y} to {_hero_last_n} in {_hero_last_y}.</p>
     <svg class="hero-viz" viewBox="0 0 {HVZ_W} {HVZ_H}" role="img" aria-label="Bar chart of AI model releases logged per year: {_hb_aria}. The count rises through each complete year; 2026 is a partial year.">{hero_bars}</svg>
     <div class="hero-scroll"><span>Scroll &#8595;</span></div>
   </div>
@@ -933,7 +952,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
     <p class="teach" id="teach">One mark = one model release, placed by the lab that shipped it (down the side) and when (across). The record opens at ChatGPT's launch; {tiles["releases_recorded"]} releases follow.</p>
     <div class="controls" id="controls"><span class="clab" id="hint">hover any mark for its record</span></div>
     <svg class="canvas" id="canvas" data-beat="pulse" viewBox="0 0 {W} {H}" role="img"
-      aria-label="One canvas of {tiles["releases_recorded"]} release marks moving between four views: the release timeline, independent benchmark scores, the gap between lab-reported and independent numbers, and the yearly disclosure decline. Across the four years, the highest independent score rises while the share of releases with a paper on record falls. The full narrative in words follows below.">
+      aria-label="One canvas of {tiles["releases_recorded"]} release marks moving between four views: the release timeline, independent benchmark scores, the gap between lab-reported and independent numbers, and the yearly disclosure decline. Across the four years, the highest independent score rises while the share of researched releases with a paper on record falls. The full narrative in words follows below.">
       <g class="yrbands">{yrbands}</g>
       <g class="axis-shared">{years}</g>
       <g class="ax-pulse">{ax_pulse}</g>
