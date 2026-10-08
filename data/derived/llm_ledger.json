@@ -13,10 +13,10 @@
       "usd": 0.344882
     },
     "2026-10": {
-      "calls": 7,
-      "input_tokens": 32177,
-      "output_tokens": 5032,
-      "usd": 0.057337
+      "calls": 9,
+      "input_tokens": 41440,
+      "output_tokens": 7181,
+      "usd": 0.077345
     }
   }
 }
