@@ -227,6 +227,8 @@
     $$("#grid .hrow th").forEach(function (th) {
       var k = th.getAttribute("data-k");
       th.setAttribute("aria-sort", k === SORT.k ? (SORT.dir > 0 ? "ascending" : "descending") : "none");
+      /* the sort buttons are one tab stop; the arrow keys move between them */
+      $(".sortb", th).tabIndex = k === SORT.k ? 0 : -1;
     });
   }
 
@@ -326,6 +328,16 @@
       if (tr && !ev.target.closest("a")) { var i = +tr.getAttribute("data-i"); focusI = i; openEntry(rows[i].id); }
     });
     $("#grid").addEventListener("keydown", function (ev) {
+      var sb = ev.target.closest(".sortb");
+      if (sb && (ev.key === "ArrowRight" || ev.key === "ArrowLeft" || ev.key === "Home" || ev.key === "End")) {
+        var all = $$("#grid .sortb"), at = all.indexOf(sb);
+        var to = ev.key === "Home" ? 0 : ev.key === "End" ? all.length - 1 : Math.max(0, Math.min(all.length - 1, at + (ev.key === "ArrowRight" ? 1 : -1)));
+        ev.preventDefault();
+        all.forEach(function (x, i) { x.tabIndex = i === to ? 0 : -1; });
+        all[to].focus();
+        all[to].scrollIntoView({ block: "nearest", inline: "nearest" });
+        return;
+      }
       var b = ev.target.closest(".rbtn"); if (!b) { return; }
       var i = +b.getAttribute("data-i"), page = Math.max(1, Math.floor($("#grid-scroll").clientHeight / RH) - 2);
       var map = { ArrowDown: i + 1, j: i + 1, ArrowUp: i - 1, k: i - 1, PageDown: i + page, PageUp: i - page, Home: 0, End: rows.length - 1 };

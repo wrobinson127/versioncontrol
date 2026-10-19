@@ -21,8 +21,12 @@ shutil.rmtree(dist, ignore_errors=True)
 shutil.copytree(os.path.join(repo, "site"), dist)
 shutil.copytree(os.path.join(repo, "data"), os.path.join(dist, "data"),
                 ignore=shutil.ignore_patterns("pending", "raw"))
-handler = functools.partial(http.server.SimpleHTTPRequestHandler, directory=dist)
-handler.log_message = lambda *a: None
+class _Quiet(http.server.SimpleHTTPRequestHandler):
+    def log_message(self, *a):
+        pass
+
+
+handler = functools.partial(_Quiet, directory=dist)
 srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
 url = f"http://127.0.0.1:{srv.server_address[1]}/"
 threading.Thread(target=srv.serve_forever, daemon=True).start()

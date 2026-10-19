@@ -20,6 +20,7 @@ SITE = "https://versioncontrol.walker-robinson.com"
 # last record update is a safe upper bound for.
 PAGES = (
     ("/", "record"),
+    ("/explorer.html", "record"),
     ("/story.html", "record"),
     ("/data.html", "record"),
     ("/methodology.html", "content"),
@@ -63,11 +64,13 @@ The record holds {meta['entry_count']} entries ({meta['releases']} releases and 
 
 ## Pages
 
-- {SITE}/ : timeline of every entry, with filters
-- {SITE}/story.html : the record told year by year, with a full text version
+- {SITE}/ : the overview: release cadence by lab, the newest entries, disclosure and independent scores
+- {SITE}/explorer.html : every entry, searchable and filterable, each with its sources, archived copies and score provenance; one entry at {SITE}/explorer.html?id=<entry-id>
+- {SITE}/story.html : the record told in five views and four findings, with a full text version
 - {SITE}/methodology.html : the rules, the scope, and the known limits
 - {SITE}/data.html : download, field notes, license and citation
 - {SITE}/changes.html : every correction, retraction and addition, dated
+- {SITE}/about.html : what Version Control is, who runs it, and why every number on it tells you where it came from
 
 ## Data (CC BY 4.0, with Epoch AI attribution)
 
