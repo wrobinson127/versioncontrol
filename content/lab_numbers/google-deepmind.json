@@ -21,7 +21,7 @@
    "notes": ""
   },
   {
-   "entry_id": "google-deepmind--gemini-3.0-flash-lite",
+   "entry_id": "google-deepmind--gemini-3.1-flash-lite",
    "model_name": "Gemini 3.1 Flash-Lite",
    "benchmark": "gpqa-diamond",
    "value": 86.9,
@@ -50,7 +50,7 @@
    ]
   },
   {
-   "entry_id": "google-deepmind--gemini-3.0-flash-lite",
+   "entry_id": "google-deepmind--gemini-3.1-flash-lite",
    "benchmark": "swe-bench-verified",
    "checked": [
     "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-lite/",

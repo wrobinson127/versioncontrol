@@ -217,3 +217,45 @@ def validate_entry(entry) -> list:
         errors.append("a retracted entry must carry a retraction_note")
 
     return errors
+
+
+def validate_record(entries: list) -> list:
+    """Record-level rules no single entry can check: ids are unique and
+    every predecessor names an entry on the record. A carried-forward entry
+    can otherwise keep pointing at an id a rebuild renamed (found
+    2026-10-19: Gemini 3.5 Flash-Lite still chained to the misnamed
+    "gemini-3.0-flash-lite" after the upstream name correction)."""
+    errors = []
+    ids = [e.get("id") for e in entries]
+    seen = set()
+    for i in ids:
+        if i in seen:
+            errors.append(f"{i}: duplicate entry id")
+        seen.add(i)
+    for e in entries:
+        pred = e.get("predecessor")
+        if pred is not None and pred not in seen:
+            errors.append(f"{e.get('id')}: predecessor {pred!r} is not on the record")
+    return errors
+
+
+def main(root: str = ".") -> int:
+    """Validate every published entry, then the record as a whole. Until
+    2026-10-19 this module had no entry point, so `python -m
+    pipeline.validate` imported, checked nothing, and exited 0."""
+    from . import store
+    entries = store.read_entries(root=root)
+    errors = []
+    for e in entries:
+        errors.extend(f"{e.get('id')}: {msg}" for msg in validate_entry(e))
+    errors.extend(validate_record(entries))
+    errors.extend(store.check_manifest(root=root))
+    for msg in errors:
+        print(msg)
+    print(f"{len(entries)} entries checked, {len(errors)} problems")
+    return 1 if errors else 0
+
+
+if __name__ == "__main__":
+    import sys
+    sys.exit(main())

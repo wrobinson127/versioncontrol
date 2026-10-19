@@ -447,8 +447,8 @@
    "researched": true
   },
   {
-   "entry_id": "google-deepmind--gemini-3.0-flash-lite",
-   "model_name": "Gemini 3.0 Flash-lite",
+   "entry_id": "google-deepmind--gemini-3.1-flash-lite",
+   "model_name": "Gemini 3.1 Flash-Lite",
    "date": "2026-03-03",
    "system_card": "NOT_DISCLOSED",
    "model_card": "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Flash-Lite-Model-Card.pdf",

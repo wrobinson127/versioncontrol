@@ -17,6 +17,8 @@ jobs:
       - run: python -m pytest pipeline/tests -q
       - name: Manifest-drift guard
         run: python -c "from pipeline import store; problems = store.check_manifest(); assert not problems, problems"
+      - name: Record validation (every entry, ids, predecessors)
+        run: python -m pipeline.validate
       - name: Story-drift guard
         # Every figure on the story page is read from data/ at build time, so
         # a refreshed capture silently falsifies it unless a rebuild is forced.
