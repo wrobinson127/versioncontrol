@@ -34,8 +34,25 @@ jobs:
           rm -f dist/data/derived/llm_ledger.json
           cp DATA_LICENSE.md dist/
           echo "versioncontrol.walker-robinson.com" > dist/CNAME
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Sitemap and llms.txt from the published record
+        run: python -m pipeline.site_files --out dist
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Tell IndexNow the pages changed (Bing, Yandex, Seznam, Naver)
+        # The key file ships at the site root; the key is public by design.
+        # Best effort: a failed ping never fails a deploy.
+        continue-on-error: true
+        run: |
+          KEY=$(basename -a -s .txt site/*.txt | grep -E '^[0-9a-f]{32}$' | head -1)
+          SITE=https://versioncontrol.walker-robinson.com
+          BODY=$(printf '{"host":"versioncontrol.walker-robinson.com","key":"%s","keyLocation":"%s/%s.txt","urlList":["%s/","%s/story.html","%s/data.html","%s/methodology.html","%s/about.html"]}' \
+            "$KEY" "$SITE" "$KEY" "$SITE" "$SITE" "$SITE" "$SITE" "$SITE")
+          curl -sS -m 30 -X POST https://api.indexnow.org/indexnow \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "$BODY" -o /dev/null -w "IndexNow HTTP %{http_code}\n"

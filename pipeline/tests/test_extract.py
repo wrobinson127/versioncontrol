@@ -247,3 +247,9 @@ def test_output_ceiling_is_high_enough_for_a_real_draft():
     """1024 truncated 11 of 52 drafts in production; dense extraction JSON
     runs about 2.8 characters per token."""
     assert config.LLM_MAX_OUTPUT_TOKENS >= 2048
+
+
+def test_every_registry_org_has_a_country():
+    from pipeline import config
+    for org, cfg in config.REGISTRY.items():
+        assert cfg.get("country") in {"United States", "China", "France", "Canada"}, org
