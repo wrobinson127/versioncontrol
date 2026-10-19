@@ -39,17 +39,23 @@ def run_detectors(now_ts: float, now_date: str):
             errors.append(f"{label}: {e}")
 
     for org_key, org in config.REGISTRY.items():
-        news = org.get("news")
-        if news is not None:
+        sources = config.news_sources(org_key)
+        for news in sources:
+            label = f"{news['kind']} {org_key}"
+            if len(sources) > 1:
+                # Distinct labels, or a second source's count overwrites the
+                # first in the report and one of them goes unseen.
+                label += f" ({pending.normalize_url(news['url'])})"
             if news["kind"] == "rss":
-                _run(f"rss {org_key}",
+                _run(label,
                      lambda n=news, o=org_key: rss.detect(o, n, lookback, now_ts))
             else:
-                _run(f"html_diff {org_key}",
+                _run(label,
                      lambda n=news, o=org_key: html_diff.detect(o, n))
         _run(f"hf_orgs {org_key}",
-             lambda o=org_key, h=org["hf_handles"]:
-             hf_orgs.detect(o, h, lookback, now_date))
+             lambda o=org_key, h=org["hf_handles"],
+             f=org.get("hf_name_filter"):
+             hf_orgs.detect(o, h, lookback, now_date, name_filter=f))
 
     _run("openrouter", lambda: openrouter.detect(lookback, now_ts))
     _run("epoch", lambda: epoch.detect(lookback, now_date))
@@ -82,9 +88,26 @@ def adapter_flags(counts: dict, examined: dict) -> list:
     return flags
 
 
-def extract_drafts(candidates: list, run_date: str, root: str) -> list:
+def is_run_level_api_failure(exc: Exception) -> bool:
+    """An API error no other candidate tonight can succeed past.
+
+    On 2026-09-20 the Anthropic account ran out of credit; the 400 was
+    recorded as three per-candidate notes and the run went green, so nobody
+    learned the drafting step was dead (audit W1). It is a property of the
+    account, not of the candidate, and is reported as one.
+    """
+    return "credit balance is too low" in str(exc).lower()
+
+
+def extract_drafts(candidates: list, run_date: str, root: str,
+                   fatal: list = None) -> list:
     """Attach LLM drafts to candidates that have an announcement URL.
-    Returns notes for the morning report."""
+    Returns notes for the morning report.
+
+    A run-level API failure stops drafting (every remaining call would fail
+    the same way) and is appended to `fatal`, which main() turns into a red
+    run after the candidates are written.
+    """
     notes = []
     if not os.environ.get("ANTHROPIC_API_KEY"):
         if candidates:
@@ -107,6 +130,14 @@ def extract_drafts(candidates: list, run_date: str, root: str) -> list:
             c["draft_entry"] = draft
             notes.append(f"{c['id']}: {note}")
         except Exception as e:
+            if is_run_level_api_failure(e):
+                msg = (f"Anthropic API refused the call for lack of credit "
+                       f"at {c['id']}; drafting stopped for the night. Top up "
+                       f"the account, then dispatch a redraft run. ({e})")
+                notes.append(msg)
+                if fatal is not None:
+                    fatal.append(msg)
+                break
             notes.append(f"{c['id']}: extraction error, draft skipped: {e}")
     return notes
 
@@ -138,7 +169,7 @@ def reap_published_candidates(entries: list, root: str) -> list:
     return reaped
 
 
-def redraft_pending(run_date: str, root: str) -> list:
+def redraft_pending(run_date: str, root: str, fatal: list = None) -> list:
     """Retry drafting for pending candidates that still have none.
 
     extract_drafts only ever sees candidates correlated fresh that night, so a
@@ -176,6 +207,16 @@ def redraft_pending(run_date: str, root: str) -> list:
                 payload["draft_entry"] = draft
                 notes.append(f"{payload['id']}: {note}")
         except Exception as e:
+            if is_run_level_api_failure(e):
+                # Not this candidate's failure: the break skips the write
+                # below, so its attempt count stays as it was and the account
+                # outage does not read as a bad candidate.
+                msg = (f"Anthropic API refused the call for lack of credit "
+                       f"at {payload['id']}; redraft stopped. ({e})")
+                notes.append(msg)
+                if fatal is not None:
+                    fatal.append(msg)
+                break
             notes.append(f"{payload['id']}: redraft error: {e}")
         with open(path, "w", encoding="utf-8", newline="\n") as f:
             json.dump(payload, f, indent=2, ensure_ascii=False, sort_keys=True)
@@ -205,9 +246,13 @@ def main():
     # route stops occupying the queue and suppressing its own re-detection.
     reaped = reap_published_candidates(entries, args.root)
     pending_ids = pending.existing_pending_ids(args.root)
-    candidates = correlate.correlate(signals, entries, pending_ids)
+    suppressed = []
+    candidates = correlate.correlate(signals, entries, pending_ids,
+                                     rejected_urls=pending.rejected_urls(args.root),
+                                     suppressed=suppressed)
 
-    llm_notes = extract_drafts(candidates, now_date, args.root)
+    fatal = []
+    llm_notes = extract_drafts(candidates, now_date, args.root, fatal=fatal)
 
     manifest_problems = store.check_manifest(root=args.root)
     flags = [f"manifest drift: {p}" for p in manifest_problems]
@@ -216,6 +261,9 @@ def main():
         flags.append(
             f"reaped {len(reaped)} queued candidate(s) already on the record: "
             + ", ".join(reaped))
+    for cand_id, by in suppressed:
+        flags.append(f"suppressed {cand_id}: every URL it was detected on "
+                     f"belongs to rejected {', '.join(by)}")
 
     pending.write_candidates(candidates, now_date, root=args.root)
 
@@ -224,7 +272,7 @@ def main():
         # running it first would have its work overwritten by the fresh write.
         # Placed here it also picks up a candidate detected tonight whose first
         # draft attempt failed.
-        redraft_notes = redraft_pending(now_date, args.root)
+        redraft_notes = redraft_pending(now_date, args.root, fatal=fatal)
         if redraft_notes:
             llm_notes.append("Redraft of queued candidates:")
             llm_notes.extend(redraft_notes)
@@ -233,6 +281,7 @@ def main():
     # is left is genuinely carried over from an earlier run.
     held = pending.held_candidates({c["id"] for c in candidates}, args.root)
 
+    flags.extend(f"RUN FAILED: {m}" for m in fatal)
     report = pending.morning_report(candidates, now_date, errors, flags,
                                     llm_note="\n".join(llm_notes),
                                     source_counts=counts,
@@ -246,8 +295,9 @@ def main():
     print(json.dumps({"signals": len(signals), "candidates": len(candidates),
                       "detector_errors": len(errors)}))
     # Detector errors surface in the report AND fail the job so the run is
-    # visibly unhealthy, never silently degraded.
-    return 1 if errors or manifest_problems else 0
+    # visibly unhealthy, never silently degraded. A run-level API failure
+    # does the same, after the candidates and report are already written.
+    return 1 if errors or manifest_problems or fatal else 0
 
 
 if __name__ == "__main__":

@@ -170,6 +170,79 @@ def test_empty_output_reports_itself(tmp_path):
     assert "no text output" in note
 
 
+# --- F1: a page off the lab's domain never yields LAB_REPORTED numbers ------
+
+def test_openrouter_page_yields_no_benchmarks_or_claims():
+    """Audit F1: the anthropic--claude-sonnet-5.5-batch draft carried
+    Artificial Analysis's GPQA 93.9 as LAB_REPORTED, source_url the
+    OpenRouter page. Every provenance field was present, so validate passed."""
+    url = "https://openrouter.ai/anthropic/claude-sonnet-5.5:batch"
+    entry = extract.parse_extraction(SAMPLE_OUTPUT, url,
+                                     retrieval_date="2026-10-19",
+                                     org="anthropic")
+    assert entry["benchmarks"] == []
+    assert entry["unpinned_claims"] == []
+    assert "LAB_REPORTED" not in json.dumps(entry)
+    # Identity fields and summary are kept for the reviewer.
+    assert entry["model_name"] == "Mixtral 8x7B"
+    assert entry["date"] == "2023-12-11"
+    assert entry["availability_class"] == "open_weights"
+    assert entry["summary"]
+    # Links read off an aggregator are not research into the lab.
+    assert set(entry["disclosure_links"].values()) == {"NOT_RESEARCHED"}
+    assert entry["third_party_source"] is True
+    assert "openrouter.ai" in entry["review_note"]
+
+
+def test_any_non_lab_host_is_treated_as_third_party():
+    for url in ("https://example.com/news/mixtral",
+                "https://huggingface.co/TheBloke/Mixtral-8x7B-GGUF",
+                "https://epoch.ai/models/mixtral"):
+        entry = extract.parse_extraction(SAMPLE_OUTPUT, url, org="mistral")
+        assert entry["benchmarks"] == [], url
+        assert entry["unpinned_claims"] == [], url
+
+
+def test_another_labs_domain_is_not_this_labs_page():
+    """mistral.ai is a lab domain, but not Anthropic's."""
+    entry = extract.parse_extraction(SAMPLE_OUTPUT, ANNOUNCEMENT_URL,
+                                     org="anthropic")
+    assert entry["benchmarks"] == []
+
+
+def test_lab_domain_subdomain_and_first_party_hf_keep_benchmarks():
+    for org, url in (("mistral", "https://docs.mistral.ai/models/mixtral"),
+                     ("mistral", "https://www.mistral.ai/news/mixtral"),
+                     ("mistral", "https://huggingface.co/mistralai/Mixtral-8x7B-v0.1"),
+                     ("deepseek", "https://api-docs.deepseek.com/news/x")):
+        entry = extract.parse_extraction(SAMPLE_OUTPUT, url, org=org)
+        assert len(entry["benchmarks"]) == 1, url
+        assert entry["benchmarks"][0]["provenance"]["source_class"] == \
+            "LAB_REPORTED"
+        assert "third_party_source" not in entry
+
+
+def test_extract_candidate_passes_the_candidates_org(tmp_path):
+    """The full path decides by the candidate's own org."""
+    client = _FakeClient(SAMPLE_OUTPUT, "end_turn")
+    cand = {"id": "mistral--mixtral-8x7b", "org": "mistral",
+            "announcement_url": "https://openrouter.ai/mistralai/mixtral-8x7b"}
+    draft, note = extract.extract_candidate(cand, "<html>x</html>",
+                                            "2026-10-19", client=client,
+                                            root=str(tmp_path))
+    assert draft is not None, note
+    assert draft["benchmarks"] == [] and draft["unpinned_claims"] == []
+
+
+def test_every_registry_org_declares_lab_domains():
+    """An org with no lab domains would have every draft stripped, silently."""
+    for key, org in config.REGISTRY.items():
+        assert org.get("lab_domains"), key
+        assert not any(d in ("openrouter.ai", "huggingface.co", "epoch.ai",
+                             "artificialanalysis.ai")
+                       for d in org["lab_domains"]), key
+
+
 def test_output_ceiling_is_high_enough_for_a_real_draft():
     """1024 truncated 11 of 52 drafts in production; dense extraction JSON
     runs about 2.8 characters per token."""

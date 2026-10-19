@@ -108,3 +108,19 @@ def test_clean_entry_passes():
     entry = {"summary": "Anthropic reports scores on two benchmarks.",
              "model_name": "Claude Opus 5"}
     assert lint_voice.lint_entry_prose(entry) == []
+
+
+def test_spaced_double_hyphen_is_refused_as_a_dash():
+    """' -- ' is the typewriter em dash and falls under the same rule."""
+    v = lint_voice.lint_text("Mistral released Large 4 -- open weights follow.")
+    assert [x["category"] for x in v] == ["em-dash"]
+    assert v[0]["match"] == " -- "
+    # Names get the dash rule too.
+    assert lint_voice.lint_identifier("GPT -- 6")
+
+
+def test_double_hyphen_that_is_not_a_dash_is_legal():
+    for text in ("Run python -m pipeline.nightly --redraft-pending.",
+                 "The id is openai--gpt-6.",
+                 "Dates 2026-10-01 to 2026-10-06."):
+        assert lint_voice.lint_text(text) == [], text

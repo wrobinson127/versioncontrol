@@ -457,3 +457,239 @@ def test_empty_listing_examines_nothing():
 def test_signal_list_behaves_as_a_plain_list():
     sl = common.SignalList([1, 2], examined=7)
     assert sl == [1, 2] and len(sl) == 2 and list(sl) == [1, 2]
+
+
+# --- hf_orgs: newly public, not newly created (audit F2) -------------------
+
+def _hf(repo, created, modified):
+    return {"id": repo, "createdAt": created + "T14:53:42.000Z",
+            "lastModified": modified + "T15:29:23.000Z"}
+
+
+def test_hf_repo_created_private_and_opened_later_is_caught():
+    """google/embeddinggemma-2: created 2026-09-14, public 2026-10-06. On
+    10-06 a 14-day createdAt horizon (09-22) skipped it."""
+    listing = [_hf("google/embeddinggemma-2", "2026-09-14", "2026-10-06")]
+    signals = hf_orgs.parse_listing("google-deepmind", listing,
+                                    lookback_days=14, now_date="2026-10-06")
+    assert [s["model_hint"] for s in signals] == ["embeddinggemma-2"]
+    # The date hint is the opening, not the private creation.
+    assert signals[0]["date_hint"] == "2026-10-06"
+
+
+def test_hf_repo_public_at_creation_keeps_its_creation_date():
+    listing = [_hf("zai-org/GLM-6", "2026-10-01", "2026-10-05")]
+    signals = hf_orgs.parse_listing("zai", listing, 14, "2026-10-06")
+    assert signals[0]["date_hint"] == "2026-10-01"
+
+
+def test_hf_touching_an_old_repo_is_not_a_release():
+    """lastModified moves on any README edit; a years-old repo is bounded
+    out by createdAt."""
+    listing = [_hf("google/gemma-2b", "2024-02-21", "2026-10-05")]
+    assert hf_orgs.parse_listing("google-deepmind", listing, 14,
+                                 "2026-10-06") == []
+
+
+def test_hf_untouched_repo_outside_lookback_is_skipped():
+    listing = [_hf("google/timesfm-3.0-pytorch", "2026-08-24", "2026-09-02")]
+    assert hf_orgs.parse_listing("google-deepmind", listing, 14,
+                                 "2026-10-06") == []
+
+
+def test_hf_amazon_nova_filter():
+    """Audit W5: config promised a Nova name filter that did not exist, and
+    nine Amazon research repos reached the queue."""
+    listing = [_hf("amazon/strands-decider-gemma4-v1-2610", "2026-10-10", "2026-10-10"),
+               _hf("amazon/poiss-bge-m3-retriever", "2026-10-10", "2026-10-10"),
+               _hf("amazon/Nova-3-Lite", "2026-10-10", "2026-10-10"),
+               _hf("amazon/amazon-nova-sonic", "2026-10-10", "2026-10-10"),
+               _hf("amazon/novascotia-data", "2026-10-10", "2026-10-10")]
+    signals = hf_orgs.parse_listing(
+        "amazon", listing, 14, "2026-10-12",
+        name_filter=config.REGISTRY["amazon"]["hf_name_filter"])
+    assert sorted(s["model_hint"] for s in signals) == \
+        ["Nova-3-Lite", "amazon-nova-sonic"]
+
+
+def test_hf_detect_requests_last_modified_and_applies_filter(monkeypatch):
+    calls = []
+
+    class _R:
+        status_code = 200
+
+        def __init__(self, sort):
+            self._sort = sort
+
+        def json(self):
+            if self._sort == "createdAt":
+                return [_hf("amazon/Nova-3", "2026-10-10", "2026-10-10"),
+                        _hf("amazon/LAR", "2026-10-10", "2026-10-10")]
+            return [_hf("amazon/Nova-3", "2026-10-10", "2026-10-10"),
+                    _hf("amazon/Nova-2.5-Sonic", "2026-09-01", "2026-10-11")]
+
+    def fake_get(url, params, **kw):
+        p = dict(params)
+        calls.append(params)
+        return _R(p["sort"])
+
+    monkeypatch.setattr(hf_orgs.requests, "get", fake_get)
+    signals = hf_orgs.detect("amazon", ["amazon"], 14, "2026-10-12",
+                             name_filter=r"\bnova\b")
+    assert {dict(c)["sort"] for c in calls} == {"createdAt", "lastModified"}
+    for c in calls:
+        assert ("expand[]", "lastModified") in c
+    assert sorted(s["model_hint"] for s in signals) == ["Nova-2.5-Sonic",
+                                                         "Nova-3"]
+    assert signals.examined == 3  # merged by id
+
+
+# --- news sources: Meta and a second Google source (audit F2) --------------
+
+FIX_1019 = os.path.join(os.path.dirname(__file__), "fixtures", "captures",
+                        "2026-10-19")
+
+
+def test_meta_and_google_have_news_sources():
+    meta = config.news_sources("meta")
+    assert [s["url"] for s in meta] == ["https://research.meta.ai/blog"]
+    google = [s["url"] for s in config.news_sources("google-deepmind")]
+    assert google[0] == "https://deepmind.google/blog/rss.xml"
+    assert any(u.startswith("https://blog.google/") for u in google)
+    assert config.news_sources("openai")[0]["kind"] == "rss"
+
+
+def test_meta_research_index_parses():
+    """research.meta.ai/blog, captured 2026-10-19 (it redirects to the
+    research.meta.ai index, which lists the posts as anchors)."""
+    with open(os.path.join(FIX_1019, "html_meta_research.html"), "rb") as f:
+        content = f.read()
+    signals = html_diff.parse_index("meta", content,
+                                    "https://research.meta.ai/blog")
+    hints = {s["model_hint"] for s in signals}
+    assert "Muse Spark 1.3" in hints
+    for s in signals:
+        assert config.is_lab_url("meta", s["url"]), s["url"]
+
+
+def test_blog_google_title_filter_catches_gemma_and_gemini():
+    gfilter = [s for s in config.news_sources("google-deepmind")
+               if s.get("title_filter")][0]["title_filter"]
+    feed = b"""<?xml version="1.0"?><rss version="2.0"><channel>
+      <item><title>Introducing EmbeddingGemma 2</title>
+        <link>https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2</link>
+        <pubDate>Tue, 06 Oct 2026 16:00:00 +0000</pubDate></item>
+      <item><title>Gemini 4 Argon is now available for developers.</title>
+        <link>https://blog.google/a</link>
+        <pubDate>Tue, 13 Oct 2026 16:00:00 +0000</pubDate></item>
+      <item><title>Android 17 earthquake alerts now available</title>
+        <link>https://blog.google/b</link>
+        <pubDate>Tue, 13 Oct 2026 16:00:00 +0000</pubDate></item>
+    </channel></rss>"""
+    now = datetime.datetime(2026, 10, 14, tzinfo=datetime.timezone.utc).timestamp()
+    signals = rss.parse_feed("google-deepmind", feed, 14, now,
+                             title_filter=gfilter)
+    titles = sorted(s["title"] for s in signals)
+    assert len(titles) == 2
+    assert titles[0].startswith("Gemini 4 Argon")
+    assert titles[1] == "Introducing EmbeddingGemma 2"
+
+
+# --- announcement anchor prefers the lab's own page (audit U1/F1) ----------
+
+def test_lab_url_beats_openrouter_whatever_the_detector():
+    signals = [
+        _sig("openrouter", "anthropic", "claude-opus-5.5",
+             "https://openrouter.ai/anthropic/claude-opus-5.5", "2026-09-22"),
+        _sig("epoch", "anthropic", "Claude Opus 5.5",
+             "https://epoch.ai/models/claude-opus-5-5"),
+        _sig("hf_orgs", "anthropic", "claude-opus-5.5",
+             "https://huggingface.co/anthropic/claude-opus-5.5"),
+    ]
+    cands = correlate.correlate(signals, [], set())
+    assert cands[0]["announcement_url"] == \
+        "https://huggingface.co/anthropic/claude-opus-5.5"
+    signals.append(_sig("html_diff", "anthropic", "Claude Opus 5.5",
+                        "https://www.anthropic.com/claude-opus-5-5"))
+    cands = correlate.correlate(signals, [], set())
+    assert cands[0]["announcement_url"] == \
+        "https://www.anthropic.com/claude-opus-5-5"
+
+
+def test_openrouter_only_candidate_still_gets_an_anchor():
+    signals = [_sig("openrouter", "openai", "gpt-6-luna",
+                    "https://openrouter.ai/openai/gpt-6-luna")]
+    cands = correlate.correlate(signals, [], set())
+    assert cands[0]["announcement_url"] == \
+        "https://openrouter.ai/openai/gpt-6-luna"
+
+
+# --- rejections match on URL as well as id (audit W4) ----------------------
+
+def _queue(tmp_path, candidate):
+    pdir = tmp_path / "data" / "pending"
+    pdir.mkdir(parents=True, exist_ok=True)
+    (pdir / f"{candidate['id']}.json").write_text(json.dumps(candidate),
+                                                  encoding="utf-8")
+    return pdir
+
+
+def test_reject_records_urls_and_a_renamed_post_stays_rejected(tmp_path):
+    """x.ai retitled the Voice Think Fast posts; xai--grok-voice-1.0 came back
+    on the same URL as rejected xai--voice-think-fast-1.0."""
+    url = "https://x.ai/news/grok-voice-think-fast-1"
+    pdir = _queue(tmp_path, {
+        "id": "xai--voice-think-fast-1.0", "org": "xai",
+        "announcement_url": url,
+        "signals": [{"detector": "html_diff", "url": url}]})
+    record = pending.reject("xai--voice-think-fast-1.0", "voice model",
+                            "2026-10-01", root=str(tmp_path))
+    assert record["urls"] == [url]
+    assert not (pdir / "xai--voice-think-fast-1.0.json").exists()
+    saved = json.loads((pdir / "rejected.json").read_text(encoding="utf-8"))
+    assert saved[-1]["urls"] == [url]
+
+    renamed = [_sig("html_diff", "xai", "Grok Voice 1.0",
+                    "https://x.ai/news/grok-voice-think-fast-1/")]
+    suppressed = []
+    cands = correlate.correlate(
+        renamed, [], pending.existing_pending_ids(str(tmp_path)),
+        rejected_urls=pending.rejected_urls(str(tmp_path)),
+        suppressed=suppressed)
+    assert cands == []
+    assert suppressed == [("xai--grok-voice-1.0",
+                           ["xai--voice-think-fast-1.0"])]
+
+
+def test_shared_url_does_not_suppress_a_sibling_with_other_signals(tmp_path):
+    """A rejected pro tier shares the launch post with the real model; the
+    real model's other signal keeps it a candidate."""
+    post = "https://openai.com/index/introducing-gpt-6-sol-and-luna/"
+    (tmp_path / "data" / "pending").mkdir(parents=True)
+    (tmp_path / "data" / "pending" / "rejected.json").write_text(json.dumps(
+        [{"id": "openai--gpt-6-sol-pro", "reason": "reasoning mode",
+          "rejected_on": "2026-10-19", "urls": [post]}]), encoding="utf-8")
+    signals = [_sig("rss", "openai", "GPT-6 Sol", post),
+               _sig("openrouter", "openai", "gpt-6-sol",
+                    "https://openrouter.ai/openai/gpt-6-sol")]
+    cands = correlate.correlate(signals, [], set(),
+                                rejected_urls=pending.rejected_urls(str(tmp_path)))
+    assert [c["id"] for c in cands] == ["openai--gpt-6-sol"]
+
+
+def test_legacy_rejections_without_urls_still_load(tmp_path):
+    (tmp_path / "data" / "pending").mkdir(parents=True)
+    (tmp_path / "data" / "pending" / "rejected.json").write_text(json.dumps(
+        ["openai--some-tool",
+         {"id": "xai--composer-2.5", "reason": "x", "rejected_on": "2026-08-24"}]),
+        encoding="utf-8")
+    assert pending.rejected_urls(str(tmp_path)) == {}
+    ids = pending.existing_pending_ids(str(tmp_path))
+    assert {"openai--some-tool", "xai--composer-2.5"} <= ids
+
+
+def test_url_normalization():
+    assert pending.normalize_url("https://www.x.ai/news/a/") == \
+        pending.normalize_url("http://x.ai/news/a#top")
+    assert pending.normalize_url("https://openrouter.ai/a/b:batch") != \
+        pending.normalize_url("https://openrouter.ai/a/b")

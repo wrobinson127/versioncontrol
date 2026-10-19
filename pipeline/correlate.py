@@ -9,6 +9,7 @@ import re
 
 from . import config
 from .backfill import slugify
+from .pending import normalize_url
 
 _SIBLING_RE = re.compile(config.SIBLING_SUFFIX_RE)
 # HF repos and API slugs decorate with sizes and formats that the base name
@@ -72,13 +73,44 @@ def is_known(org: str, slug: str, known: dict) -> bool:
     return False
 
 
-def correlate(signals: list, entries: list, pending_ids: set) -> list:
+_DETECTOR_PREFERENCE = ("rss", "html_diff", "epoch", "hf_orgs", "openrouter")
+
+
+def choose_announcement_url(org: str, cluster: list):
+    """The page a draft is extracted from.
+
+    A URL on the lab's own domain wins over any other, then detector order
+    (rss, html_diff, epoch, hf_orgs, openrouter) breaks ties. Detector order
+    alone let an OpenRouter page anchor Opus 5.5, GPT-6 Sol/Luna and Gemini 4
+    Argon although lab pages existed (audit U1), and an OpenRouter-anchored
+    draft is read from a page whose numbers are Artificial Analysis's (F1).
+    """
+    for lab_only in (True, False):
+        for pref in _DETECTOR_PREFERENCE:
+            for s in cluster:
+                if s["detector"] != pref or not s["url"]:
+                    continue
+                if lab_only and not config.is_lab_url(org, s["url"]):
+                    continue
+                return s["url"]
+    return next((s["url"] for s in cluster if s["url"]), None)
+
+
+def correlate(signals: list, entries: list, pending_ids: set,
+              rejected_urls: dict = None, suppressed: list = None) -> list:
     """Group signals into candidate events, drop known ones, score the rest.
+
+    rejected_urls maps a normalized URL to the rejected candidate id it came
+    from (pending.rejected_urls). A cluster whose every signal URL is already
+    in it is the same thing a person already ruled out under another name,
+    and is dropped; each drop is appended to `suppressed` as (id, rejected
+    ids) for the morning report, so suppression is never silent.
 
     Returns candidates sorted by confidence then org/slug, each:
       {id, org, base_slug, model_hints, signals, announcement_url,
        date_hint, confidence, detectors}
     """
+    rejected_urls = rejected_urls or {}
     known = known_slugs(entries)
     clusters = {}
     for s in signals:
@@ -109,15 +141,20 @@ def correlate(signals: list, entries: list, pending_ids: set) -> list:
         cand_id = f"{org}--{slug}"
         if cand_id in pending_ids:
             continue
+        # Rejections were matched by id alone, so a renamed post came back:
+        # x.ai retitled the Voice Think Fast posts and xai--grok-voice-1.0/2.0
+        # re-entered the queue on the same URLs (audit W4). Every URL must be
+        # a rejected one, so a real model that merely shares an announcement
+        # post with a rejected sibling still surfaces through its other
+        # signals.
+        urls = {normalize_url(s["url"]) for s in cluster if s["url"]}
+        if urls and urls <= set(rejected_urls):
+            if suppressed is not None:
+                suppressed.append(
+                    (cand_id, sorted({rejected_urls[u] for u in urls})))
+            continue
         detectors = sorted({s["detector"] for s in cluster})
-        # The announcement anchor prefers primary sources: rss, then
-        # html_diff, then anything with a URL.
-        url = None
-        for pref in ("rss", "html_diff", "epoch", "hf_orgs", "openrouter"):
-            url = next((s["url"] for s in cluster
-                        if s["detector"] == pref and s["url"]), None)
-            if url:
-                break
+        url = choose_announcement_url(org, cluster)
         date_hint = min((s["date_hint"] for s in cluster if s["date_hint"]),
                         default=None)
         candidates.append({

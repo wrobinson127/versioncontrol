@@ -51,6 +51,118 @@ def test_extraction_exception_becomes_note(tmp_path, monkeypatch):
     assert any("api down" in n for n in notes)
 
 
+# --- an exhausted API account fails the run, not the candidate (audit W1) --
+
+_CREDIT = RuntimeError(
+    "Error code: 400 - {'type': 'error', 'error': {'type': "
+    "'invalid_request_error', 'message': 'Your credit balance is too low to "
+    "access the Anthropic API. Please go to Plans & Billing to upgrade or "
+    "purchase credits.'}}")
+
+
+def test_credit_exhaustion_is_run_level(tmp_path, monkeypatch):
+    """Run 35512376637 (2026-09-20) recorded three per-candidate notes and
+    went green; the drafting step was dead and nobody was told."""
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    cands = [_cand(), {**_cand(), "id": "openai--gpt-6-mini"}]
+    fatal = []
+    with mock.patch("pipeline.detectors.common.fetch",
+                    return_value=(200, b"<html>GPT-6</html>")), \
+         mock.patch("pipeline.extract.extract_candidate",
+                    side_effect=_CREDIT) as ex:
+        notes = nightly.extract_drafts(cands, "2026-09-20", str(tmp_path),
+                                       fatal=fatal)
+    assert len(fatal) == 1 and "credit" in fatal[0]
+    assert ex.call_count == 1, "drafting stops at the first refusal"
+    assert all(c.get("draft_entry") is None for c in cands)
+    assert any("credit" in n for n in notes)
+
+
+def test_other_api_errors_stay_per_candidate(tmp_path, monkeypatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    fatal = []
+    with mock.patch("pipeline.detectors.common.fetch",
+                    return_value=(200, b"<html>GPT-6</html>")), \
+         mock.patch("pipeline.extract.extract_candidate",
+                    side_effect=RuntimeError("Error code: 529 overloaded")):
+        nightly.extract_drafts([_cand()], "2026-09-20", str(tmp_path),
+                               fatal=fatal)
+    assert fatal == []
+
+
+def test_redraft_stops_on_credit_exhaustion_without_billing_attempts(
+        tmp_path, monkeypatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    path = _write_pending(tmp_path)
+    fatal = []
+    with mock.patch("pipeline.detectors.common.fetch",
+                    return_value=(200, b"<html>GPT-6</html>")), \
+         mock.patch("pipeline.extract.extract_candidate", side_effect=_CREDIT):
+        nightly.redraft_pending("2026-09-20", str(tmp_path), fatal=fatal)
+    assert len(fatal) == 1
+    assert "draft_attempts" not in json.loads(path.read_text(encoding="utf-8"))
+
+
+def test_main_writes_candidates_then_exits_red_on_credit_exhaustion(
+        tmp_path, monkeypatch):
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test-key")
+    monkeypatch.chdir(tmp_path)
+    sig = {"detector": "rss", "org": "openai", "model_hint": "GPT-6",
+           "url": "https://openai.com/index/gpt-6", "date_hint": "2026-09-20",
+           "title": "Introducing GPT-6"}
+    monkeypatch.setattr("sys.argv", ["nightly", "--root", str(tmp_path),
+                                     "--now", "2026-09-20"])
+    with mock.patch.object(nightly, "run_detectors",
+                           return_value=([sig], [], {"rss openai": 1}, {})), \
+         mock.patch("pipeline.store.read_entries", return_value=[]), \
+         mock.patch("pipeline.store.check_manifest", return_value=[]), \
+         mock.patch("pipeline.detectors.common.fetch",
+                    return_value=(200, b"<html>GPT-6</html>")), \
+         mock.patch("pipeline.extract.extract_candidate", side_effect=_CREDIT):
+        code = nightly.main()
+    assert code == 1
+    assert (tmp_path / "data" / "pending" / "openai--gpt-6.json").exists()
+    report = (tmp_path / "morning_report.md").read_text(encoding="utf-8")
+    assert "RUN FAILED" in report and "credit" in report
+
+
+# --- detector wiring: several news sources per org, HF name filter ---------
+
+def test_run_detectors_runs_every_news_source_with_distinct_labels():
+    seen = []
+
+    def fake_rss(org, news, lookback, now_ts):
+        seen.append(("rss", org, news["url"]))
+        return []
+
+    def fake_html(org, news):
+        seen.append(("html_diff", org, news["url"]))
+        return []
+
+    hf_calls = {}
+
+    def fake_hf(org, handles, lookback, now_date, name_filter=None):
+        hf_calls[org] = name_filter
+        return []
+
+    with mock.patch("pipeline.detectors.rss.detect", side_effect=fake_rss), \
+         mock.patch("pipeline.detectors.html_diff.detect",
+                    side_effect=fake_html), \
+         mock.patch("pipeline.detectors.hf_orgs.detect", side_effect=fake_hf), \
+         mock.patch("pipeline.detectors.openrouter.detect", return_value=[]), \
+         mock.patch("pipeline.detectors.epoch.detect", return_value=[]):
+        _, errors, counts, _ = nightly.run_detectors(0.0, "2026-10-19")
+    assert errors == []
+    google = [u for kind, org, u in seen if org == "google-deepmind"]
+    assert len(google) == len(nightly.config.news_sources("google-deepmind"))
+    assert ("html_diff", "meta", "https://research.meta.ai/blog") in seen
+    google_labels = [k for k in counts if "google-deepmind" in k
+                     and not k.startswith("hf_orgs")]
+    assert len(google_labels) == len(google), "labels must not collide"
+    assert hf_calls["amazon"] == r"\bnova\b"
+    assert hf_calls["openai"] is None
+
+
 # --- adapter flags: a quiet night must not read as a broken adapter --------
 
 def test_quiet_source_is_not_flagged():
