@@ -406,8 +406,8 @@
     }).join("");
 
     if (foot) {
-      foot.textContent = "Measures as of " + t.as_of + ", from the derived views file." +
-        (pendingCards ? " System card, model card, and usage policy links are under the registrar's review and not yet on record." : "");
+      foot.textContent = "Figures as of " + t.as_of + "." +
+        (pendingCards ? " System card, model card, and usage policy links are awaiting review and not yet on record." : "");
     }
   }
 
@@ -526,7 +526,7 @@
            blank chart reads as broken */
         var msg = !allDates.length ?
           "No measurements on record for this benchmark." :
-          "No measurements in the selected provenance classes for this benchmark. The backfill carries independent numbers only; lab reported numbers accrue through the nightly path.";
+          "No measurements of the selected kinds for this benchmark. Older entries have independent scores only. Lab scores are added as new releases come in.";
         chartMount.innerHTML = '<p class="chart-empty-note">' + esc(msg) + "</p>";
         updateCaption();
         updateAlt();
@@ -735,7 +735,7 @@
         '<span><svg width="9" height="8" viewBox="0 0 9 8" aria-hidden="true"><circle cx="4" cy="4" r="3" class="dm-dot-filled"/></svg> links on record</span>' +
         '<span><svg width="9" height="8" viewBox="0 0 9 8" aria-hidden="true"><circle cx="4" cy="4" r="3" class="dm-dot-hollow"/></svg> none on record</span>' +
         (artifacts.some(isPendingCol) ?
-          "<span><em>under review</em>: researched links awaiting the registrar's approval; no counts shown</span>" : "") +
+          "<span><em>under review</em>: researched links awaiting review; no counts shown</span>" : "") +
         (artifacts.some(function (a) {
           var st = status[a];
           return !!(st && st.links_on_record > 0 && st.pending_review > 0);
@@ -765,7 +765,7 @@
         if (isPendingCol(a)) {
           var pLabel = "Under review: " + (api.orgNames[org] || org) + ", " +
             (ARTIFACT_NAMES[a] || a) +
-            " links are researched and awaiting the registrar's approval; no count is on record. " +
+            " links are researched and awaiting review; no count is on record. " +
             "Filters the timeline to this organization's releases.";
           html += '<button type="button" class="dm-cell is-pending" data-org="' + esc(org) +
             '" data-artifact="' + esc(a) + '" aria-label="' + esc(pLabel) + '">' +
@@ -824,7 +824,7 @@
         "Timeline filtered to " + (api.orgNames[org] || org) + " releases from the disclosure record. " +
         "Selected artifact: " + (ARTIFACT_NAMES[artifact] || artifact) + ", " +
         (isPendingCol(artifact) ?
-          "links under the registrar's review, not yet on record." :
+          "links awaiting review, not yet on record." :
           c.disclosed + " of " + c.total + " researched releases with a link on record."));
     });
 
@@ -835,8 +835,8 @@
       var pendingNote = artifacts.some(function (a) {
         var st = status[a];
         return !!(st && st.pending_review > 0);
-      }) ? " Some researched links await the registrar's approval and are not yet counted." : "";
-      var t = '<table><caption>Disclosure links on record by organization and artifact, releases only. Each value is the count of releases with a link on record, out of all releases recorded.' +
+      }) ? " Some researched links await review and are not yet counted." : "";
+      var t = '<table><caption>Disclosure links on record by organization and artifact, releases only. Each value is the count of releases with a link on record, out of the releases we have checked for that item.' +
         esc(pendingNote) + '</caption><thead><tr><th scope="col">Organization</th>';
       artifacts.forEach(function (a) {
         t += '<th scope="col">' + esc(ARTIFACT_NAMES[a] || a) + "</th>";
