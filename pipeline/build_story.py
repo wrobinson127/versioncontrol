@@ -18,7 +18,7 @@ Compute-disclosure dropped (R-A1). Fallbacks first: static/no-JS = pulse,
 reduced-motion = instant. Caption law on every hover; four-ink colour law held
 (green = data, no per-org hue, annotation blue outline-only).
 """
-import gzip, json, pathlib, math, sys
+import gzip, json, pathlib, math, re, runpy, statistics, sys
 from datetime import date
 from collections import defaultdict
 
@@ -83,8 +83,30 @@ for yr in ["2022", "2023", "2024", "2025", "2026"]:
                 _pairs[(e["id"], bench)] = {
                     "model": e["model_name"], "date": e["date"], "bench": bench,
                     "lab": d["LAB_REPORTED"]["value"], "ind": d["INDEPENDENT"]["value"],
-                    "labcfg": d["LAB_REPORTED"].get("configuration", "")}
+                    "labcfg": d["LAB_REPORTED"].get("configuration", ""),
+                    "indcfg": d["INDEPENDENT"].get("configuration", "")}
 PAIRS = sorted(_pairs.values(), key=lambda p: p["date"])
+# The reasoning setting each side ran at, read from the configuration strings
+# on record. Epoch's run ids end in the effort level ("_low", "_max"); the
+# lab's configuration is prose, so only an explicit effort or thinking level
+# is read from it. Anything else is shown as not stated, never guessed.
+import re as _cfgre
+_LVL = r"(xhigh|x-high|high|medium|low|max)"
+def _lab_setting(cfg):
+    c = (cfg or "").lower()
+    m = (_cfgre.search(r"think " + _LVL, c) or _cfgre.search(_LVL + r" thinking", c)
+         or _cfgre.search(r"effort (?:set to |of )?" + _LVL, c))
+    if not m: return None, "not stated"
+    lvl = m.group(1).replace("-", "")
+    return lvl, f"{lvl} {'thinking' if 'think' in m.group(0) else 'effort'}"
+def _join_and(names):
+    if len(names) <= 1: return "".join(names)
+    return ", ".join(names[:-1]) + " and " + names[-1]
+def _ind_setting(cfg):
+    m = _cfgre.search(r"_" + _LVL + r"$", (cfg or "").lower())
+    if not m: return None, "not stated"
+    lvl = m.group(1).replace("-", "")
+    return lvl, f"{lvl} effort"
 # some releases are measured both ways on MORE than one benchmark (DeepSeek-V4-Pro
 # on GPQA and SWE), so the comparison count exceeds the distinct-release count.
 n_pair_models = len(set(p["model"] for p in PAIRS))
@@ -92,15 +114,19 @@ for p in PAIRS:
     lc = (p["labcfg"] or "").strip()
     p["cfg"] = f"lab {lc[:22]} &#183; ind Epoch default" if lc else "lab reported &#183; ind Epoch default"
     p["benchlabel"] = BENCH_LABEL.get(p["bench"], p["bench"])
+    p["lab_lvl"], p["lab_set"] = _lab_setting(p["labcfg"])
+    p["ind_lvl"], p["ind_set"] = _ind_setting(p["indcfg"])
+# pairs whose two runs used different reasoning settings, read from the record
+SET_DIFF = [p for p in PAIRS if p["lab_lvl"] and p["ind_lvl"] and p["lab_lvl"] != p["ind_lvl"]]
 
 RD_MODELS = max(_epoch_models_rd) if _epoch_models_rd else None
 RD_BENCH = max(_epoch_bench_rd) if _epoch_bench_rd else None
 if RD_MODELS and RD_MODELS == RD_BENCH:
     SOURCE_LINE = (f"Releases: Epoch AI, Data on AI models &#183; independent scores: "
-                   f"Epoch AI, Capabilities &amp; benchmarking &#183; both retrieved {RD_MODELS}")
+                   f"Epoch AI, Capabilities &amp; benchmarking &#183; both retrieved <span class=\"nw\">{RD_MODELS}</span>")
 else:
-    SOURCE_LINE = (f"Releases: Epoch AI, Data on AI models, retrieved {RD_MODELS} &#183; "
-                   f"independent scores: Epoch AI, Capabilities &amp; benchmarking, retrieved {RD_BENCH}")
+    SOURCE_LINE = (f"Releases: Epoch AI, Data on AI models, retrieved <span class=\"nw\">{RD_MODELS}</span> &#183; "
+                   f"independent scores: Epoch AI, Capabilities &amp; benchmarking, retrieved <span class=\"nw\">{RD_BENCH}</span>")
 
 NUMWORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven",
             8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen",
@@ -115,11 +141,42 @@ def dd(d): return (date.fromisoformat(d) - date.fromisoformat(DAY0)).days
 SPAN = dd(rel[-1]["date"])
 def esc(s): return str(s).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
 
-W, H = 920, 560
-X0, X1 = 158, 892
-TOP, BOT = 46, 486
+# The canvas is built twice. The wide geometry (920 units) is the desktop
+# chart. Shrunk onto a phone it rendered axis, organization and provenance
+# labels at about 3px (audit F6; DESIGN.md rule 1 wants provenance readable at
+# every width), so a narrow geometry (360 units, about 1 unit = 1px on a
+# phone) is built by re-running this module with _NARROW set, and the page
+# swaps it in below 700px. Only its SVG geometry is borrowed; every number
+# and sentence still comes from the wide run.
+_NARROW = globals().get("_NARROW", False)
+if _NARROW:
+    W, H = 360, 368
+    X0, X1 = 114, 352
+    TOP, BOT = 54, 300
+    PARK = 360
+    YLAB_Y, WPCT_Y = BOT + 36, BOT + 54   # year labels; disclosure shares
+    JIT = 0.9                              # same-week vertical jitter in a row
+    LABX = X0 - 8                          # right edge of the row and tick labels
+    AXU_Y = TOP - 30                       # axis title line
+    YTOT_Y = TOP - 8                       # per-year totals over the pulse
+    CG_Y = (14, 28)                        # the ChatGPT origin note
+    DISC_Y = (18, 36)                      # disclosure variable and fold note
+else:
+    W, H = 920, 560
+    X0, X1 = 158, 892
+    TOP, BOT = 46, 486
+    PARK = 520
+    YLAB_Y, WPCT_Y = H - 30, H - 14
+    JIT = 1.8
+    LABX = X0 - 10
+    AXU_Y = TOP - 16
+    YTOT_Y = 42
+    CG_Y = (TOP - 20, TOP - 9)
+    DISC_Y = (TOP + 2, TOP + 22)
+# axis titles sit on the left margin, start-anchored, so a title set larger for
+# a small screen grows into the plot's empty top band, never off the canvas edge
+AXU_X = 8
 ROWH = (BOT - TOP) / len(REG)
-PARK = 520
 GREEN = "#173404"
 def xp(d): return X0 + (X1 - X0) * dd(d) / SPAN
 def y_pulse(org): return TOP + ro[org] * ROWH + ROWH / 2
@@ -129,8 +186,11 @@ def y_traj(v): return BOT - (v / 100.0) * (BOT - TOP)
 # marks sized to fit) so the green fill fraction reads as SHARE and every column
 # fills the frame uniformly -- no ragged skyline from 1-vs-112 releases a year.
 slots = ["2023", "2024", "2025", "2026"]
-slotw = (X1 - X0) / len(slots)
-DBOT = 492; HCOL = 396; WMAX = slotw - 26
+# the waffle has no organization gutter, so the narrow canvas gives it the full width
+DX0, DX1 = (8, W - 8) if _NARROW else (X0, X1)
+slotw = (DX1 - DX0) / len(slots)
+DBOT, HCOL = (BOT + 4, BOT - 60) if _NARROW else (492, 396)
+WMAX = slotw - 26
 byyr_marks = defaultdict(list)
 for r in rel:
     if r["org"] in ro: byyr_marks[r["date"][:4]].append(r)
@@ -149,7 +209,7 @@ def waffle_positions(flag_map):
     for si, y in enumerate(slots):
         rows_y = sorted(byyr_marks.get(y, []), key=lambda r: (0 if flag_map.get(r["entry_id"]) else 1, r["date"]))
         cw = YCW[y]; ch = YCH[y]; wwy = YWW[y]
-        bx = X0 + si * slotw + (slotw - WMAX) / 2 + cw / 2
+        bx = DX0 + si * slotw + (slotw - WMAX) / 2 + cw / 2
         for k, r in enumerate(rows_y):
             col = k % wwy; row = k // wwy
             pos[r["entry_id"]] = (bx + col * cw, DBOT - row * ch - ch / 2)
@@ -191,7 +251,7 @@ for r in rel:
     if r["org"] not in ro: continue
     eid = r["entry_id"]; px = xp(r["date"])
     # small stable vertical jitter so same-week releases in a row don't overlap
-    py = y_pulse(r["org"]) + ((sum(ord(c) for c in eid) % 7) - 3) * 1.8
+    py = y_pulse(r["org"]) + ((sum(ord(c) for c in eid) % 7) - 3) * JIT
     sc = score_by_entry.get(eid)
     if sc is not None:
         tx, ty = xp(r["date"]), y_traj(sc); scored = 1; n_scored += 1
@@ -310,18 +370,18 @@ def _yrmid(y):
     return (xp(y + "-01-01") + xp(min(y + "-12-31", rel[-1]["date"]))) / 2
 years = "".join(
     f'<line x1="{xp(y+"-01-01"):.1f}" y1="{TOP-6}" x2="{xp(y+"-01-01"):.1f}" y2="{BOT}" class="yrgrid"/>'
-    f'<text x="{_yrmid(y):.1f}" y="{H-30}" text-anchor="middle" class="ax yearlbl" data-year="{y}">{y}</text>'
+    f'<text x="{_yrmid(y):.1f}" y="{YLAB_Y}" text-anchor="middle" class="ax yearlbl" data-year="{y}">{y}</text>'
     for y in ["2023", "2024", "2025", "2026"])
 ax_pulse = ""
 for o in REG:
     yb = y_pulse(o)
     ax_pulse += (f'<line x1="{X0}" y1="{yb:.1f}" x2="{X1}" y2="{yb:.1f}" class="rowrule"/>'
-                 f'<text x="{X0-10}" y="{yb+3:.1f}" text-anchor="end" class="orglab" data-org="{o}">{esc(NM[o])}</text>')
+                 f'<text x="{LABX}" y="{yb+3:.1f}" text-anchor="end" class="orglab" data-org="{o}">{esc(NM[o])}</text>')
 # per-year release totals across the top of the pulse (the acceleration, felt)
-ax_pulse += f'<text x="{X0-10}" y="40" text-anchor="end" class="ytoth">releases/yr</text>'
+ax_pulse += f'<text x="{LABX}" y="{YTOT_Y - 2}" text-anchor="end" class="ytoth">releases/yr</text>'
 for y in ["2023", "2024", "2025"]:
-    ax_pulse += f'<text x="{_yrmid(y):.1f}" y="42" text-anchor="middle" class="ytot" data-year="{y}">{yearly[y]}</text>'
-ax_pulse += f'<text x="{_yrmid("2026"):.1f}" y="42" text-anchor="middle" class="ytotsm" data-year="2026">{yearly["2026"]} so far</text>'
+    ax_pulse += f'<text x="{_yrmid(y):.1f}" y="{YTOT_Y}" text-anchor="middle" class="ytot" data-year="{y}">{yearly[y]}</text>'
+ax_pulse += f'<text x="{_yrmid("2026"):.1f}" y="{YTOT_Y}" text-anchor="middle" class="ytotsm" data-year="2026">{yearly["2026"]} so far</text>'
 # ChatGPT origin anchor: the record starts at ChatGPT's launch (day 0). An
 # annotation-blue OUTLINE stamp (never a data fill: colour law) so the first
 # green mark -- Meta, three weeks later -- is not misread as "before ChatGPT".
@@ -329,14 +389,14 @@ ax_pulse += f'<text x="{_yrmid("2026"):.1f}" y="42" text-anchor="middle" class="
 # row), so we no longer draw an annotation dot -- just the anchor line + label call
 # it out as the origin. (Content pass 2026-07-20 promoted the ChatGPT entry.)
 ax_pulse += (f'<line x1="{X0}" y1="{TOP-6}" x2="{X0}" y2="{BOT}" class="cganchor"/>'
-             f'<text x="{X0+5}" y="{TOP-20}" class="cglab">ChatGPT &#183; the first</text>'
-             f'<text x="{X0+5}" y="{TOP-9}" class="cglab cglab2">Nov 2022 &#183; day 0</text>')
+             f'<text x="{X0+5}" y="{CG_Y[0]}" class="cglab">ChatGPT &#183; the first</text>'
+             f'<text x="{X0+5}" y="{CG_Y[1]}" class="cglab cglab2">Nov 2022 &#183; day 0</text>')
 ax_traj = ""
 for v in [0, 25, 50, 75, 100]:
     yy = y_traj(v)
     ax_traj += (f'<line x1="{X0}" y1="{yy:.1f}" x2="{X1}" y2="{yy:.1f}" class="scoregrid"/>'
-                f'<text x="{X0-10}" y="{yy+3:.1f}" text-anchor="end" class="scoreax">{v}</text>')
-ax_traj += f'<text x="{X0-10}" y="{TOP-16}" text-anchor="end" class="axunit">GPQA Diamond, 0 to 100</text>'
+                f'<text x="{LABX}" y="{yy+3:.1f}" text-anchor="end" class="scoreax">{v}</text>')
+ax_traj += f'<text x="{AXU_X}" y="{AXU_Y}" class="axunit">GPQA Diamond, 0 to 100</text>'
 ax_traj += f'<text x="{X1-4}" y="{TOP+14}" text-anchor="end" class="frontlbl">the highest score reached so far</text>'
 _n_total = sum(1 for r in rel if r["org"] in ro)
 ax_traj += f'<text x="{(X0+X1)/2:.1f}" y="{TOP+2}" text-anchor="middle" class="companylbl" id="companylbl"></text>'
@@ -345,8 +405,8 @@ ax_swe = ""
 for v in [0, 25, 50, 75, 100]:
     yy = y_traj(v)
     ax_swe += (f'<line x1="{X0}" y1="{yy:.1f}" x2="{X1}" y2="{yy:.1f}" class="scoregrid"/>'
-               f'<text x="{X0-10}" y="{yy+3:.1f}" text-anchor="end" class="scoreax">{v}</text>')
-ax_swe += f'<text x="{X0-10}" y="{TOP-16}" text-anchor="end" class="axunit">SWE-Bench Verified, 0 to 100</text>'
+               f'<text x="{LABX}" y="{yy+3:.1f}" text-anchor="end" class="scoreax">{v}</text>')
+ax_swe += f'<text x="{AXU_X}" y="{AXU_Y}" class="axunit">SWE-Bench Verified, 0 to 100</text>'
 ax_swe += f'<text x="{X1-4}" y="{TOP+14}" text-anchor="end" class="frontlbl">a second benchmark, also measured by Epoch</text>'
 
 # disclosure axis: year labels + the disclosed SHARE per year (updated per beat
@@ -363,14 +423,20 @@ for r in rel:
     if param_by_entry.get(r["entry_id"]): byyr_par[y] += 1
 # a loud variable tag so the two disclosure movements read as DIFFERENT cuts,
 # not one waffle shown twice (JS swaps the word per beat)
-ax_disc = f'<text x="{X0-10}" y="{TOP+2}" class="discvar" id="discvar">on record: a paper</text>'
-ax_disc += f'<text x="{X0-10}" y="{TOP+22}" class="foldnote">2022 is folded out: its two releases sit before the yearly columns shown here.</text>'
+_DX = AXU_X if _NARROW else X0 - 10
+ax_disc = f'<text x="{_DX}" y="{DISC_Y[0]}" class="discvar" id="discvar">on record: a paper</text>'
+_FOLD = ("2022 is folded out: its two releases sit", "before the yearly columns shown here.")
+if _NARROW:  # two lines: one line runs past a 360-unit canvas
+    ax_disc += (f'<text x="{_DX}" y="{DISC_Y[1]}" class="foldnote"><tspan x="{_DX}">{_FOLD[0]}</tspan>'
+                f'<tspan x="{_DX}" dy="14">{_FOLD[1]}</tspan></text>')
+else:
+    ax_disc += f'<text x="{_DX}" y="{DISC_Y[1]}" class="foldnote">{_FOLD[0]} {_FOLD[1]}</text>'
 for si, y in enumerate(slots):
-    cx = X0 + si * slotw + slotw / 2
+    cx = DX0 + si * slotw + slotw / 2
     pp = round(100 * byyr_pap[y] / byyr_pap_res[y]) if byyr_pap_res[y] else 0
     pm = round(100 * byyr_par[y] / byyr_n[y]) if byyr_n[y] else 0
-    ax_disc += (f'<text x="{cx:.1f}" y="{H-30}" text-anchor="middle" class="ax">{y}</text>'
-                f'<text x="{cx:.1f}" y="{H-14}" text-anchor="middle" class="wpct" data-p="{pp}" data-m="{pm}">{pp}%</text>')
+    ax_disc += (f'<text x="{cx:.1f}" y="{YLAB_Y}" text-anchor="middle" class="ax">{y}</text>'
+                f'<text x="{cx:.1f}" y="{WPCT_Y}" text-anchor="middle" class="wpct" data-p="{pp}" data-m="{pm}">{pp}%</text>')
 
 # ---- CLOSE beat (coda): the two headline trends on one 0-100 axis. Capability
 # (best independent GPQA score, cumulative) RISES; disclosure (share of releases
@@ -389,32 +455,10 @@ for y in ["2023", "2024", "2025", "2026"]:
 _cap_d = "M " + " L ".join(f"{x:.1f} {yy:.1f}" for x, yy in close_cap)
 _dis_d = "M " + " L ".join(f"{x:.1f} {yy:.1f}" for x, yy in close_dis)
 _capx, _capy = close_cap[-1]; _disx, _disy = close_dis[-1]
-# the CROSSING: where the rising capability line meets the falling disclosure line.
-# The emphasis moment (P4). Computed from the real series and labelled with the
-# TRUE period it falls in -- never a rounder/dramatic year (Walker's binding rule).
-_cross_svg = ""; CLOSE_YEARS = ["2023", "2024", "2025", "2026"]
-_cross_label = None
-for i in range(len(_cap_vals) - 1):
-    d0 = _cap_vals[i] - _dis_vals[i]; d1 = _cap_vals[i+1] - _dis_vals[i+1]
-    if d0 == 0:
-        _cxr, _cyr = close_cap[i]; _cross_label = CLOSE_YEARS[i]
-    elif d0 * d1 < 0:
-        t = d0 / (d0 - d1)
-        _cxr = close_cap[i][0] + t * (close_cap[i+1][0] - close_cap[i][0])
-        _cvr = _cap_vals[i] + t * (_cap_vals[i+1] - _cap_vals[i]); _cyr = y_traj(_cvr)
-        _ddr = (_cxr - X0) * SPAN / (X1 - X0)
-        _cdate = date.fromordinal(date.fromisoformat(DAY0).toordinal() + int(round(_ddr)))
-        _cross_label = _cdate.strftime("%b %Y")
-    if _cross_label:
-        _cross_svg = (f'<line x1="{_cxr:.1f}" y1="{_cyr:.1f}" x2="{_cxr:.1f}" y2="{BOT:.1f}" class="clcrosstick"/>'
-                      f'<circle cx="{_cxr:.1f}" cy="{_cyr:.1f}" r="4.4" class="clcrossdot"/>'
-                      f'<text x="{_cxr:.1f}" y="{BOT+18:.1f}" text-anchor="middle" class="clcrosslab">the lines cross, {esc(_cross_label)}</text>')
-        break
 closelines = (f'<path class="clcap" d="{_cap_d}" fill="none"/>'
               f'<path class="cldis" d="{_dis_d}" fill="none"/>'
               + "".join(f'<circle cx="{x:.1f}" cy="{yy:.1f}" r="3.4" class="cldot"/>' for x, yy in close_cap)
               + "".join(f'<circle cx="{x:.1f}" cy="{yy:.1f}" r="3.4" class="cldot cldotd"/>' for x, yy in close_dis)
-              + _cross_svg
               + f'<text x="{_capx-6:.1f}" y="{_capy-9:.1f}" text-anchor="end" class="cllab">highest independent GPQA score</text>'
               + f'<text x="{_disx-6:.1f}" y="{_disy+17:.1f}" text-anchor="end" class="cllab cllabd">released with a paper on record</text>')
 # close axis: 0-100 grid, neutral unit (both series are percentages, 0 to 100)
@@ -422,43 +466,86 @@ ax_close = ""
 for v in [0, 25, 50, 75, 100]:
     yy = y_traj(v)
     ax_close += (f'<line x1="{X0}" y1="{yy:.1f}" x2="{X1}" y2="{yy:.1f}" class="scoregrid"/>'
-                 f'<text x="{X0-10}" y="{yy+3:.1f}" text-anchor="end" class="scoreax">{v}</text>')
-ax_close += f'<text x="{X0-10}" y="{TOP-16}" text-anchor="end" class="axunit">0 to 100</text>'
+                 f'<text x="{LABX}" y="{yy+3:.1f}" text-anchor="end" class="scoreax">{v}</text>')
+ax_close += f'<text x="{AXU_X}" y="{AXU_Y}" class="axunit">0 to 100</text>'
 
 # ---- divergence dumbbell group (credential beat) ----
 # NOTE: this is a ZOOMED GAP axis (lab minus independent, in points, range ~+-3),
 # NOT the 0-100 score axis. The axis labels below make the true magnitude explicit
 # so a 2.9-point gap is not misread as a large difference (honesty > drama).
-dz = 306; dscale = 74
-_dleft, _dright = 224, 858
-def dxi(i): return _dleft + i * ((_dright - _dleft) / max(1, len(PAIRS) - 1))
-divg = ""
 gaps = [round(p["lab"] - p["ind"], 1) for p in PAIRS]
-for i, p in enumerate(PAIRS):
-    x = dxi(i); g = round(p["lab"] - p["ind"], 1); sg = "+" if g >= 0 else ""
-    yl = dz - g * dscale; above = g >= 0
-    tip = f'{esc(p["model"])} &#183; {esc(p["benchlabel"])}: lab reported {p["lab"]}, Epoch measured {p["ind"]} ({sg}{g}); the record keeps both'
-    boxy = yl - 30 if above else yl + 12
-    prov = ""
-    if i == 0:
-        prov = (f'<text x="{x+18:.1f}" y="{yl+4:.1f}" class="provlab">lab-reported</text>'
-                f'<text x="{x+18:.1f}" y="{dz+18:.1f}" class="provlab">independent (Epoch)</text>')
-    divg += (f'<g class="dpair" data-tip="{tip}">'
-             f'<line x1="{x:.1f}" y1="{dz:.1f}" x2="{x:.1f}" y2="{yl:.1f}" class="gaplink"/>'
-             f'<circle cx="{x:.1f}" cy="{dz}" r="12.5" class="dind"/>'
-             f'<circle cx="{x:.1f}" cy="{yl:.1f}" r="12.5" class="dlab"/>'
-             f'<rect x="{x-26:.1f}" y="{boxy:.1f}" width="52" height="19" rx="3" class="gapbox"/>'
-             f'<text x="{x:.1f}" y="{boxy+13:.1f}" text-anchor="middle" class="pgap">{sg}{g}</text>{prov}'
-             f'<text x="{x:.1f}" y="{H-96:.1f}" text-anchor="middle" class="pmodel">{esc(p["model"])}</text>'
-             f'<text x="{x:.1f}" y="{H-82:.1f}" text-anchor="middle" class="pbench">{esc(p["benchlabel"])}</text></g>')
+# The axis spans the gaps on record plus a little headroom, never a fixed range:
+# a fixed -1 to +3 axis drew the +12.7 and +8.0 pairs far off the top.
+G_HI = max(3, math.ceil(max(gaps) + 0.5)); G_LO = min(-1, math.floor(min(gaps) - 0.5))
+_gspan = G_HI - G_LO
+_gstep = 1 if _gspan <= 6 else (2 if _gspan <= 12 else 5)
+G_TICKS = [v for v in range(G_LO, G_HI + 1) if v % _gstep == 0]
+divg = ""
+if _NARROW:
+    # one pair per row: name and benchmark, both settings, then the stem
+    # running across (gap axis horizontal), so nothing has to share a column
+    _GX0, _GX1 = 40, 298
+    def gx(v): return _GX0 + (v - G_LO) * (_GX1 - _GX0) / _gspan
+    _ROW = 52; _R0 = 20
+    def _ry(i): return _R0 + i * _ROW + (26 if i > 0 else 0)
+    for i, p in enumerate(PAIRS):
+        g = gaps[i]; sg = "+" if g >= 0 else ""; ry = _ry(i); yd = ry + 26
+        tip = f'{esc(p["model"])} &#183; {esc(p["benchlabel"])}: lab reported {p["lab"]}, Epoch measured {p["ind"]} ({sg}{g}); lab at {esc(p["lab_set"])}, Epoch at {esc(p["ind_set"])}; the record keeps both'
+        prov = ""
+        if i == 0:
+            prov = (f'<text x="{gx(g)+7:.1f}" y="{yd+19:.1f}" text-anchor="end" class="provlab">lab-reported</text>'
+                    f'<text x="{gx(0)-7:.1f}" y="{yd+33:.1f}" class="provlab">independent (Epoch)</text>')
+        divg += (f'<g class="dpair" data-tip="{tip}">'
+                 f'<line x1="{gx(0):.1f}" y1="{yd:.1f}" x2="{gx(g):.1f}" y2="{yd:.1f}" class="gaplink"/>'
+                 f'<circle cx="{gx(0):.1f}" cy="{yd:.1f}" r="6" class="dind"/>'
+                 f'<circle cx="{gx(g):.1f}" cy="{yd:.1f}" r="6" class="dlab"/>'
+                 f'<rect x="{W-52}" y="{yd-10:.1f}" width="44" height="19" rx="3" class="gapbox"/>'
+                 f'<text x="{W-30}" y="{yd+3:.1f}" text-anchor="middle" class="pgap">{sg}{g}</text>{prov}'
+                 f'<text x="8" y="{ry:.1f}" class="pmodel">{esc(p["model"])}</text>'
+                 f'<text x="{W-8}" y="{ry:.1f}" text-anchor="end" class="pbench">{esc(p["benchlabel"])}</text>'
+                 f'<text x="8" y="{ry+13:.1f}" class="pcfg">lab: {esc(p["lab_set"])}</text>'
+                 f'<text x="{W-8}" y="{ry+13:.1f}" text-anchor="end" class="pcfg">Epoch: {esc(p["ind_set"])}</text></g>')
+    _gy0, _gy1 = _R0 + 14, _ry(len(PAIRS) - 1) + 34
+    dgrid = ""
+    for gv in G_TICKS:
+        xx = gx(gv)
+        dgrid += (f'<line x1="{xx:.1f}" y1="{_gy0}" x2="{xx:.1f}" y2="{_gy1:.1f}" class="{"baseline" if gv==0 else "dgrid"}"/>'
+                  f'<text x="{xx:.1f}" y="{_gy1+14:.1f}" text-anchor="middle" class="dgax">{"+" if gv>0 else ""}{gv}</text>')
+    dgrid += f'<text x="{W-8}" y="{_gy1+14:.1f}" text-anchor="end" class="dgaxu">gap, in points</text>'
+else:
+    # NOTE: a ZOOMED GAP axis (lab minus independent, in points), NOT the 0-100
+    # score axis; the axis labels make the true magnitude explicit.
+    _GY_TOP, _GY_BOT = 74, 430
+    dscale = (_GY_BOT - _GY_TOP) / _gspan
+    dz = _GY_TOP + G_HI * dscale
+    _dleft, _dright = 224, 858
+    def dxi(i): return _dleft + i * ((_dright - _dleft) / max(1, len(PAIRS) - 1))
+    for i, p in enumerate(PAIRS):
+        x = dxi(i); g = gaps[i]; sg = "+" if g >= 0 else ""
+        yl = dz - g * dscale; above = g >= 0
+        tip = f'{esc(p["model"])} &#183; {esc(p["benchlabel"])}: lab reported {p["lab"]}, Epoch measured {p["ind"]} ({sg}{g}); lab at {esc(p["lab_set"])}, Epoch at {esc(p["ind_set"])}; the record keeps both'
+        boxy = yl - 30 if above else yl + 12
+        prov = ""
+        if i == 0:
+            prov = (f'<text x="{x+18:.1f}" y="{yl+4:.1f}" class="provlab">lab-reported</text>'
+                    f'<text x="{x+18:.1f}" y="{dz+18:.1f}" class="provlab">independent (Epoch)</text>')
+        divg += (f'<g class="dpair" data-tip="{tip}">'
+                 f'<line x1="{x:.1f}" y1="{dz:.1f}" x2="{x:.1f}" y2="{yl:.1f}" class="gaplink"/>'
+                 f'<circle cx="{x:.1f}" cy="{dz:.1f}" r="10" class="dind"/>'
+                 f'<circle cx="{x:.1f}" cy="{yl:.1f}" r="10" class="dlab"/>'
+                 f'<rect x="{x-26:.1f}" y="{boxy:.1f}" width="52" height="19" rx="3" class="gapbox"/>'
+                 f'<text x="{x:.1f}" y="{boxy+13:.1f}" text-anchor="middle" class="pgap">{sg}{g}</text>{prov}'
+                 f'<text x="{x:.1f}" y="{H-92:.1f}" text-anchor="middle" class="pmodel">{esc(p["model"])}</text>'
+                 f'<text x="{x:.1f}" y="{H-77:.1f}" text-anchor="middle" class="pbench">{esc(p["benchlabel"])}</text>'
+                 f'<text x="{x:.1f}" y="{H-58:.1f}" text-anchor="middle" class="pcfg">lab: {esc(p["lab_set"])}</text>'
+                 f'<text x="{x:.1f}" y="{H-44:.1f}" text-anchor="middle" class="pcfg">Epoch: {esc(p["ind_set"])}</text></g>')
+    dgrid = ""
+    for gv in G_TICKS:
+        yy = dz - gv * dscale
+        dgrid += (f'<line x1="196" y1="{yy:.1f}" x2="880" y2="{yy:.1f}" class="{"baseline" if gv==0 else "dgrid"}"/>'
+                  f'<text x="188" y="{yy+3:.1f}" text-anchor="end" class="dgax">{"+" if gv>0 else ""}{gv}</text>')
+    dgrid += f'<text x="188" y="{_GY_TOP-12:.1f}" text-anchor="end" class="dgaxu">gap, in points</text>'
 near = sum(1 for g in gaps if abs(g) <= 1)
-# an explicit GAP axis (in points) so the stem length is anchored to a true scale
-dgrid = ""
-for gv in [-1, 0, 1, 2, 3]:
-    yy = dz - gv * dscale
-    dgrid += (f'<line x1="196" y1="{yy:.1f}" x2="880" y2="{yy:.1f}" class="{"baseline" if gv==0 else "dgrid"}"/>'
-              f'<text x="188" y="{yy+3:.1f}" text-anchor="end" class="dgax">{"+" if gv>0 else ""}{gv}</text>')
-dgrid += f'<text x="188" y="{dz-3*dscale-10:.1f}" text-anchor="end" class="dgaxu">gap, in points</text>'
 divbase = dgrid  # the explanatory sentence lives in the teach line, not floating on the plot
 
 # ---- CASE STUDIES: full-size, scroll-driven multi-line charts, one batch per
@@ -494,8 +581,12 @@ def _case_stat(kind, o, ser):
     pts = ser[o]
     if kind == "accel":
         vals = [v for _, v in pts]; n = len(vals)
-        early = sorted(vals[:max(1, n//3)]); late = sorted(vals[-max(1, n//3):])
-        return early[len(early)//2], late[len(late)//2]
+        early = vals[:max(1, n//3)]; late = vals[-max(1, n//3):]
+        # true medians: the upper-middle element printed 25 where Qwen's median is 20.5
+        def _med(v):
+            m = statistics.median(v)
+            return int(m) if float(m).is_integer() else round(m, 1)
+        return _med(early), _med(late)
     return pts[0][1], pts[-1][1]
 
 def accel_group():
@@ -521,8 +612,8 @@ ax_accel = ""
 for gv in [30, 60, 90, 120]:
     yy = y_acc(gv)
     ax_accel += (f'<line x1="{X0}" y1="{yy:.1f}" x2="{X1}" y2="{yy:.1f}" class="scoregrid"/>'
-                 f'<text x="{X0-10}" y="{yy+3:.1f}" text-anchor="end" class="scoreax">{gv}</text>')
-ax_accel += f'<text x="{X0-10}" y="{TOP-16}" text-anchor="end" class="axunit">days between releases</text>'
+                 f'<text x="{LABX}" y="{yy+3:.1f}" text-anchor="end" class="scoreax">{gv}</text>')
+ax_accel += f'<text x="{AXU_X}" y="{AXU_Y}" class="axunit">days between releases</text>'
 ax_accel += f'<text x="{X1-4}" y="{TOP+14}" text-anchor="end" class="frontlbl">lower = shipping faster</text>'
 
 # per-batch copy (stats baked from the real series)
@@ -713,8 +804,13 @@ else:
     _c2 = (f"The share with a paper {_PAPER_DIR}; the share with a parameter count on record {_PARAM_DIR}.")
 _c3 = "More came with a system card." if _SC_DIR == "rose" else f"The share with a system card {_SC_DIR}."
 CLOSE_SHORT = f"Independent scores {_cap_dir}. {_c2} {_c3}"
-DIV_NOTE = (f"Each stem is one release on one benchmark, graded twice: the ring is the lab's score, the dot is Epoch's. "
-            f"{near} of the {len(PAIRS)} pairs sit within a single point, and the gaps run both ways. "
+# the beat's teaching sentence already says what a stem is; the note starts
+# with what the pairs show
+DIV_NOTE = (f"{near} of the {len(PAIRS)} pairs sit within a single point, and the gaps run both ways. "
+            + (f"In {nword(len(SET_DIFF))} of the {nword(len(PAIRS))} pairs ({_join_and([esc(p['model']) for p in SET_DIFF])}) "
+               f"the lab and Epoch ran different reasoning settings, so those gaps include a settings difference. "
+               if SET_DIFF else "")
+            + 
             f"These {nword(len(PAIRS))} pairs come from recent major releases, and the lab and Epoch often run "
             f"different settings (reasoning effort, number of attempts). With so few pairs this is not a test "
             f"of whether labs overstate. The record keeps both numbers and never averages them.")
@@ -751,7 +847,7 @@ spacers = (_spc("pulse", "spc pop", ' id="popstep"')
            + _spc("swe") + "".join(_spc(f"sclimb:{o}") for o in SWE_CASE_ORDER)
            + _spc("div") + _spc("dpaper") + _spc("dparam") + _spc("close"))
 # no-JS / reduced-motion fallback: the notes rendered inline (the sticky overlay is JS-only)
-def _nfb(h, b): return f'<div class="nfb"><h4>{h}</h4><p>{b}</p></div>'
+def _nfb(h, b): return f'<div class="nfb"><h3>{h}</h3><p>{b}</p></div>'
 fallback = ("".join(_nfb(h, b) for (_, h, b) in PULSE_NOTES)
             + "".join(_nfb(NOTES["accel"][o]["h"], ACCEL_COPY[o][1]) for o in CASE_ORDER)
             + "".join(_nfb(h, b) for (_, h, b) in TRAJ_NOTES)
@@ -766,17 +862,18 @@ fallback = ("".join(_nfb(h, b) for (_, h, b) in PULSE_NOTES)
 # chart-level frame; the per-year detail lives in the stacking notes on the right.
 _meta = {
     "pulse": {"n": "Beat 1 of 4", "t": SCOPE_T,
-              "te": f'One mark = one model release: which lab shipped it (down the side), and when (across). {tiles["releases_recorded"]} in all.', "h": "hover any mark for its record"},
+              "te": f'One mark = one model release: which lab shipped it (down the side), and when (across). {tiles["releases_recorded"]} in all.', "h": "select any mark for its record"},
     "traj": {"n": "Beat 2 of 4", "t": "Benchmark scores, independently measured",
-             "te": f'The same marks rise to their GPQA Diamond score, measured by Epoch, not the lab. Of {_n_total}, the {n_scored} with an independent score rise; the rest have none on record.', "h": "hover a mark to light its whole lab"},
+             "te": f'The same marks rise to their GPQA Diamond score, measured by Epoch, not the lab. Of {_n_total}, the {n_scored} with an independent score rise; the rest have none on record.', "h": "select a mark to light its whole lab"},
     "swe": {"n": "", "t": "A second benchmark",
-            "te": f'The {n_swe} releases with an independent SWE-Bench Verified score rise to it. A different task from GPQA, and the same measurer: Epoch.', "h": "hover a mark for its record"},
+            "te": f'The {n_swe} releases with an independent SWE-Bench Verified score rise to it. A different task from GPQA, and the same measurer: Epoch.', "h": "select a mark for its record"},
     "div": {"n": "Beat 3 of 4", "t": "What the lab said, beside what Epoch measured",
-            "te": f'Each stem is one release measured twice on the same benchmark. The ring at the top is the lab\'s own reported score; the dot at the bottom is Epoch\'s independent measurement. The number is the gap between them, and the axis is zoomed to a few points, so a short stem means the two agree.', "h": "hover a pair for its numbers"},
+            "te": f'Each stem is one release measured twice on the same benchmark. The ring at the top is the lab\'s own reported score; the dot at the bottom is Epoch\'s independent measurement. The number is the gap between them, and the axis spans only the gaps on record, so a short stem means the two agree.', "h": "select a pair for its numbers",
+            "ten": 'Each stem is one release measured twice on the same benchmark. The ring is the lab\'s own reported score; the dot is Epoch\'s independent measurement. The number is the gap between them, and the axis spans only the gaps on record, so a short stem means the two agree.'},
     "dpaper": {"n": "Beat 4 of 4", "t": _DPAPER_T,
-               "te": "The same marks, gathered by year. Filled = a paper on record; a dashed slot = researched, none found; a faint slot = not yet researched. The share is of researched releases.", "h": "hover a mark for its record"},
+               "te": "The same marks, gathered by year. Filled = a paper on record; a dashed slot = researched, none found; a faint slot = not yet researched. The share is of researched releases.", "h": "select a mark for its record"},
     "dparam": {"n": "Beat 4 of 4", "t": _DPARAM_T,
-               "te": "Re-sorted by a different item: whether Epoch AI's data has a parameter count. Filled = a count on record; an empty slot = no count on record. The share is of all releases.", "h": "hover a mark for its record"},
+               "te": "Re-sorted by a different item: whether Epoch AI's data has a parameter count. Filled = a count on record; an empty slot = no count on record. The share is of all releases.", "h": "select a mark for its record"},
     "close": {"n": "In sum", "t": f"What changed, {_D0} to {_D1}",
               "te": CLOSE_NOTE + " The two lines are the highest score and the paper share, both on a 0 to 100 axis.", "h": ""},
 }
@@ -791,20 +888,67 @@ _WHY = ("Four labs with long records and many independent scores: "
 for k, o in enumerate(CASE_ORDER):
     # numberless: sub-beats don't restart the "of 4" counter (Walker: top-level only)
     _meta[f"accel:{o}"] = {"n": "", "t": f"The wait between releases: {ACCEL_COPY[o][0]}",
-                           "te": (_WHY if k == 0 else "") + "Days between one release and the next, for this lab alone. \"At first\" is the median of its first third of gaps on record; \"lately\" is the median of its last third.", "h": "hover any point for its record"}
+                           "te": (_WHY if k == 0 else "") + "Days between one release and the next, for this lab alone. \"At first\" is the median of its first third of gaps on record; \"lately\" is the median of its last third.", "h": "select any point for its record"}
     _meta[f"climb:{o}"] = {"n": "", "t": f"The independent climb: {TRAJ_COPY[o][0]}",
-                           "te": "Each release rises to its independent GPQA Diamond score, measured by Epoch.", "h": "hover any point for its record"}
+                           "te": "Each release rises to its independent GPQA Diamond score, measured by Epoch.", "h": "select any point for its record"}
 for k, o in enumerate(SWE_CASE_ORDER):
     _meta[f"sclimb:{o}"] = {"n": "", "t": f"On SWE-Bench, by lab: {SWE_CLIMB_COPY[o][0]}",
                             "te": ((f"The same labs on a second benchmark. Qwen has {len(swe_org_vals['alibaba-qwen'])} independent SWE-Bench Verified {'score' if len(swe_org_vals['alibaba-qwen']) == 1 else 'scores'} on record, so it steps out here. " if k == 0 and 'alibaba-qwen' not in SWE_CASE_ORDER else "")
-                                   + "Each release rises to its independent SWE-Bench Verified score, measured by Epoch."), "h": "hover any point for its record"}
+                                   + "Each release rises to its independent SWE-Bench Verified score, measured by Epoch."), "h": "select any point for its record"}
 metajs = json.dumps(_meta)
 swecorderjs = json.dumps(SWE_CASE_ORDER)
+
+# the canvas groups, in one order for both geometries: the page pairs them
+# element by element when it swaps the narrow geometry in
+def _canvas_inner(g, marks_markup):
+    return (f'<g class="yrbands">{g["yrbands"]}</g><g class="axis-shared">{g["years"]}</g>'
+            f'<g class="ax-pulse">{g["ax_pulse"]}</g><g class="ax-traj">{g["ax_traj"]}</g>'
+            f'<g class="ax-swe">{g["ax_swe"]}</g><g class="ax-accel">{g["ax_accel"]}</g>'
+            f'<g class="ax-disc">{g["ax_disc"]}</g><g class="ax-close">{g["ax_close"]}</g>'
+            f'<g class="ax-div">{g["divbase"]}</g><g class="conns">{g["conns"]}</g>'
+            f'<g class="sweconns">{g["sweconns"]}</g><path class="frontier" d="{g["frontier_d"]}"/>'
+            f'<path class="swefrontier" d="{g["swefront_d"]}"/><g class="marks" id="marks">{marks_markup}</g>'
+            f'<g class="caselines" data-kind="accel">{g["accel_lines"]}</g><g class="divg">{g["divg"]}</g>'
+            f'<g class="closelines">{g["closelines"]}</g>')
+_GKEYS = ["yrbands", "years", "ax_pulse", "ax_traj", "ax_swe", "ax_accel", "ax_disc", "ax_close", "divbase",
+          "conns", "sweconns", "frontier_d", "swefront_d", "accel_lines", "divg", "closelines", "W", "H"]
+# per mark, the attributes that carry geometry (everything else is shared)
+MK_ATTRS = ["x", "y", "data-px", "data-py", "data-pulsex", "data-pulsey", "data-trajx", "data-trajy",
+            "data-swex", "data-swey", "data-accelx", "data-accely", "data-dpaperx", "data-dpapery",
+            "data-dparamx", "data-dparamy", "data-wsc"]
+def _mark_geom(markup):
+    out = []
+    for rect in re.findall(r"<rect [^>]*>", markup):
+        a = dict(re.findall(r'([\w-]+)="([^"]*)"', rect))
+        out.append([float(a[k]) for k in MK_ATTRS])
+    return out
+if _NARROW:
+    _SINK.update({k: globals()[k] for k in _GKEYS})
+    _SINK["mk"] = _mark_geom(marks)
+    raise _GeomDone()
+class _GeomDone(Exception):
+    pass
+_NG = {}
+try:
+    runpy.run_path(__file__, init_globals={"_NARROW": True, "_SINK": _NG, "_GeomDone": _GeomDone},
+                   run_name="_narrow_geometry")
+except _GeomDone:
+    pass
+_WG = {k: globals()[k] for k in _GKEYS}
+CANVAS_INNER = _canvas_inner(_WG, marks)
+CANVAS_NARROW = (f'<template id="canvasN"><svg viewBox="0 0 {_NG["W"]} {_NG["H"]}">'
+                 + _canvas_inner(_NG, "") + "</svg></template>")
+# compact: the narrow position of every mark, in DOM order, attribute order MK_ATTRS
+_wide_mk = _mark_geom(marks)
+assert len(_wide_mk) == len(_NG["mk"]), "narrow and wide canvases disagree on the marks"
+mkn_js = json.dumps([[round(v, 2) for v in row] for row in _NG["mk"]], separators=(",", ":"))
+mkattrs_js = json.dumps(MK_ATTRS)
 
 HTML = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Version Control: the release record of the AI model era</title>
 <meta name="description" content="{tiles["releases_recorded"]} AI model releases from {nword(N_LABS)} labs since ChatGPT: when they shipped, how they scored, and what each lab published.">
+<link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
 <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
 <link rel="canonical" href="https://versioncontrol.walker-robinson.com/story.html">
 <meta property="og:title" content="Version Control: the release record of the AI model era">
@@ -828,9 +972,9 @@ body{{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .wrap{{max-width:1460px;margin:0 auto;padding:20px 26px 40px}}
 .masthead{{border-bottom:3px solid var(--ink);padding-bottom:11px;position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}}
 .masthead::after{{content:"";position:absolute;left:0;right:0;bottom:-6px;border-bottom:1px solid var(--ink)}}
-.masthead h1{{font-family:var(--slab);font-size:1.9rem;font-weight:700;margin:0}}
-.masthead p{{margin:3px 0 0;font-family:var(--slab);font-style:italic;color:var(--ink-muted)}}
-.mast-by{{font-size:12px;color:var(--ink-muted)}}.mast-by a{{color:var(--annotation)}}
+.mast-title{{font-family:var(--slab);font-size:1.9rem;font-weight:700;margin:0;line-height:1.3}}
+.masthead p:not(.mast-title){{margin:3px 0 0;font-family:var(--slab);font-style:italic;color:var(--ink-muted)}}
+.mast-by{{font-size:13px;color:var(--ink-muted)}}.mast-by a{{color:var(--annotation)}}
 .mast-asof{{color:var(--ink);font-weight:600}}
 .scrolly{{display:grid;grid-template-columns:minmax(0,2.75fr) 320px;gap:44px;margin-top:20px}}
 .stage-col{{position:sticky;top:var(--nav-h);height:calc(100vh - var(--nav-h));display:flex;flex-direction:column;justify-content:center;align-self:start}}
@@ -849,11 +993,11 @@ body{{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);
 .instrument{{width:100%;background:var(--surface);border:1px solid var(--surface-edge);border-radius:12px;padding:13px 22px 10px;display:flex;flex-direction:column;position:relative}}
 .beatnum{{font-family:var(--mono);font-size:10.5px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.06em}}
 .ctitle{{font-family:var(--slab);font-size:22px;font-weight:700;margin:2px 0 2px;line-height:1.14}}
-.teach{{font-family:var(--slab);font-size:12.5px;color:var(--ink);margin:0 0 5px;min-height:32px}}
-.canvas{{width:100%;height:auto;display:block}}
-.source{{font-family:var(--mono);font-size:9.5px;color:var(--ink-faint);margin-top:5px}}
+.teach{{font-family:var(--slab);font-size:13.5px;color:var(--ink);margin:0 0 5px;min-height:32px}}
+.canvas{{width:100%;height:auto;display:block;border-radius:4px}}.canvas:focus{{outline:none}}.canvas:focus-visible{{outline:2px solid var(--annotation);outline-offset:4px}}.canvas.narrow{{max-width:560px;max-height:calc(100vh - var(--nav-h) - 230px);margin:0 auto}}.nw{{white-space:nowrap}}.canvas.narrow text{{paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round}}
+.source{{font-family:var(--body);font-size:13px;line-height:1.4;color:var(--ink-faint);margin-top:6px}}
 .controls{{display:flex;gap:8px;margin:3px 0 1px;min-height:22px;align-items:center}}
-.controls .clab{{font-size:10px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.05em}}
+.controls .clab{{font-size:13px;color:var(--ink-muted)}}
 .controls .grp{{display:inline-flex;border:1px solid var(--surface-edge);border-radius:6px;overflow:hidden}}
 .controls button{{font:inherit;font-size:11px;font-family:var(--mono);padding:2px 9px;background:var(--surface);color:var(--ink-muted);border:0;cursor:pointer;border-right:1px solid var(--surface-edge)}}
 .controls button:last-child{{border-right:0}}.controls button.on{{background:var(--verified);color:var(--paper)}}
@@ -922,7 +1066,7 @@ html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){{opacity:0;po
 .canvas[data-beat="div"] .axis-shared,.canvas[data-beat="div"] .frontier{{opacity:0}}
 .canvas[data-beat="div"] .yrbands{{opacity:0}}
 .canvas[data-beat="div"] .rmk[data-scored="0"]{{opacity:0}}
-.pbench{{font-family:var(--mono);font-size:9px;fill:var(--ink-faint)}}
+.pbench{{font-family:var(--mono);font-size:max(9px,calc(11.5px*var(--u,0)));fill:var(--ink-faint)}}
 .dpair{{cursor:pointer}}
 /* CLOSE coda: two labelled green lines on a shared 0-100% axis, marks a faint cloud */
 .canvas[data-beat="close"] .ax-close{{opacity:1}}
@@ -934,45 +1078,40 @@ html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){{opacity:0;po
 .clcap{{stroke:var(--verified);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}}
 .cldis{{stroke:var(--verified);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:5 4;opacity:0.85}}
 .cldot{{fill:var(--verified)}}.cldotd{{fill:var(--surface);stroke:var(--verified);stroke-width:1.6}}
-.cllab{{font-family:var(--body);font-size:11.5px;font-weight:700;fill:var(--verified)}}
+.cllab{{font-family:var(--body);font-size:max(11.5px,calc(11.5px*var(--u,0)));font-weight:700;fill:var(--verified)}}
 .cllabd{{font-weight:400;font-style:italic}}
-/* the crossing marker: a plain ink tick + dot + factual period label (P4). Ink,
-   not green -- it annotates the geometry, it is not a data mark. */
-.clcrosstick{{stroke:var(--ink);stroke-width:1;stroke-dasharray:2 3;opacity:0.45}}
-.clcrossdot{{fill:var(--ink)}}
-.clcrosslab{{font-family:var(--mono);font-size:10px;fill:var(--ink);letter-spacing:0.02em}}
 /* the coda's one true statement, made the largest text moment (emphasis by size,
    never by adjective) */
 .nbox.codanote .nb{{font-family:var(--slab);font-size:20px;line-height:1.32;color:var(--ink);max-width:30ch;font-weight:700}}
 .yrband{{fill:var(--ink);opacity:0;transition:opacity 260ms var(--ease);pointer-events:none}}.yrband.on{{opacity:0.05}}
 .canvas[data-beat="dpaper"] .yrbands,.canvas[data-beat="dparam"] .yrbands{{opacity:0}}
 .rowrule{{stroke:var(--surface-edge)}}.scoregrid{{stroke:var(--surface-edge);opacity:0.7}}.yrgrid{{stroke:var(--surface-edge);opacity:0.45}}
-.orglab{{font-family:var(--body);font-size:10.5px;fill:var(--ink-muted);cursor:pointer}}.orglab.co{{fill:var(--verified);font-weight:700}}
+.orglab{{font-family:var(--body);font-size:max(10.5px,calc(11.5px*var(--u,0)));fill:var(--ink-muted);cursor:pointer}}.orglab.co{{fill:var(--verified);font-weight:700}}
 .yearlbl{{cursor:pointer}}.yearlbl.co{{fill:var(--verified);font-weight:700}}
-.ytoth{{font-family:var(--body);font-size:9px;fill:var(--ink-faint);text-transform:uppercase;letter-spacing:0.04em}}
-.ytot{{font-family:var(--slab);font-size:15px;font-weight:700;fill:var(--verified);cursor:pointer;font-variant-numeric:tabular-nums}}
-.ytotsm{{font-family:var(--slab);font-size:10px;fill:var(--ink-muted);cursor:pointer}}
+.ytoth{{font-family:var(--body);font-size:max(10px,calc(11.5px*var(--u,0)));fill:var(--ink-faint)}}
+.ytot{{font-family:var(--slab);font-size:max(15px,calc(11.5px*var(--u,0)));font-weight:700;fill:var(--verified);cursor:pointer;font-variant-numeric:tabular-nums}}
+.ytotsm{{font-family:var(--slab);font-size:max(10px,calc(11.5px*var(--u,0)));fill:var(--ink-muted);cursor:pointer}}
 .cganchor{{stroke:var(--annotation);stroke-width:1;stroke-dasharray:2 3;opacity:0.55}}
 .cgdot{{fill:var(--surface);stroke:var(--annotation);stroke-width:2}}
 .cgtie{{stroke:var(--annotation);stroke-width:1;opacity:0.4}}
-.cglab{{font-family:var(--body);font-size:10px;fill:var(--annotation);font-style:italic}}
-.cglab2{{font-size:9px;opacity:0.85}}
-.companylbl{{font-family:var(--slab);font-size:16px;font-weight:700;fill:var(--verified);opacity:0;transition:opacity 150ms}}
+.cglab{{font-family:var(--body);font-size:max(10px,calc(11.5px*var(--u,0)));fill:var(--annotation);font-style:italic}}
+.cglab2{{font-size:max(10px,calc(11.5px*var(--u,0)));opacity:0.85}}
+.companylbl{{font-family:var(--slab);font-size:max(16px,calc(11.5px*var(--u,0)));font-weight:700;fill:var(--verified);opacity:0;transition:opacity 150ms}}
 .canvas.filtering .companylbl{{opacity:1}}
-.scoreax{{font-family:var(--mono);font-size:10px;fill:var(--ink-muted)}}.axunit,.ax{{font-family:var(--body);font-size:10px;fill:var(--ink-muted)}}.ax{{font-family:var(--mono)}}
-.discvar{{font-family:var(--slab);font-size:15px;font-weight:700;fill:var(--verified)}}
-.foldnote{{font-family:var(--body);font-size:10px;font-style:italic;fill:var(--ink-faint)}}
-.wpct{{font-family:var(--slab);font-size:14px;font-weight:700;fill:var(--ink);font-variant-numeric:tabular-nums}}
+.scoreax{{font-family:var(--mono);font-size:max(10px,calc(11.5px*var(--u,0)));fill:var(--ink-muted)}}.axunit,.ax{{font-family:var(--body);font-size:max(10px,calc(11.5px*var(--u,0)));fill:var(--ink-muted)}}.ax{{font-family:var(--mono)}}
+.discvar{{font-family:var(--slab);font-size:max(15px,calc(11.5px*var(--u,0)));font-weight:700;fill:var(--verified)}}
+.foldnote{{font-family:var(--body);font-size:max(10px,calc(11.5px*var(--u,0)));font-style:italic;fill:var(--ink-faint)}}
+.wpct{{font-family:var(--slab);font-size:max(14px,calc(11.5px*var(--u,0)));font-weight:700;fill:var(--ink);font-variant-numeric:tabular-nums}}
 .frontier{{stroke:var(--verified);stroke-width:2;fill:none;stroke-linecap:round;stroke-dasharray:0.1 7;opacity:0;transition:opacity 500ms var(--ease)}}
 .canvas[data-beat="traj"] .frontier{{opacity:0.45}}
 .conn{{stroke:var(--verified);stroke-width:2;fill:none;opacity:0}}.conn.co{{opacity:1;stroke-width:2.8}}
-.frontlbl{{font-family:var(--body);font-size:10px;fill:var(--verified);font-style:italic}}
+.frontlbl{{font-family:var(--body);font-size:max(10px,calc(11.5px*var(--u,0)));fill:var(--verified);font-style:italic}}
 .baseline{{stroke:var(--ink);opacity:0.8;stroke-width:1.4}}
-.dgrid{{stroke:var(--surface-edge)}}.dgax{{font-family:var(--mono);font-size:10px;fill:var(--ink-muted)}}.dgaxu{{font-family:var(--body);font-size:10px;fill:var(--ink-muted)}}.axhint{{font-family:var(--body);font-size:10px;fill:var(--ink-muted)}}
+.dgrid{{stroke:var(--surface-edge)}}.dgax{{font-family:var(--mono);font-size:max(10px,calc(11.5px*var(--u,0)));fill:var(--ink-muted)}}.dgaxu{{font-family:var(--body);font-size:max(10px,calc(11.5px*var(--u,0)));fill:var(--ink-muted)}}.axhint{{font-family:var(--body);font-size:max(10px,calc(11.5px*var(--u,0)));fill:var(--ink-muted)}}
 .dind{{fill:var(--verified)}}.dlab{{fill:var(--surface);stroke:var(--verified);stroke-width:3}}
 .gaplink{{stroke:var(--verified);stroke-width:2.5;opacity:0.4}}
-.gapbox{{fill:var(--surface);stroke:var(--verified);stroke-width:1.4}}.pgap{{font-family:var(--mono);font-size:12px;font-weight:700;fill:var(--ink)}}
-.pmodel{{font-family:var(--body);font-size:11.5px;font-weight:600;fill:var(--ink)}}.provlab{{font-family:var(--mono);font-size:9.5px;fill:var(--ink-faint)}}
+.gapbox{{fill:var(--surface);stroke:var(--verified);stroke-width:1.4}}.pgap{{font-family:var(--mono);font-size:max(12px,calc(11.5px*var(--u,0)));font-weight:700;fill:var(--ink)}}
+.pmodel{{font-family:var(--body);font-size:max(11.5px,calc(11.5px*var(--u,0)));font-weight:600;fill:var(--ink)}}.pcfg{{font-family:var(--body);font-size:max(10.5px,calc(11.5px*var(--u,0)));fill:var(--ink-muted)}}.provlab{{font-family:var(--mono);font-size:max(9.5px,calc(11.5px*var(--u,0)));fill:var(--ink-faint)}}
 
 /* right column: a STICKY notes panel that stacks per-year boxes for the two
    populate charts (and swaps a single box for the case/disclosure beats). The
@@ -982,18 +1121,18 @@ html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){{opacity:0;po
 html.js .notetrack{{margin-top:-100vh}}
 .spc{{min-height:92vh;pointer-events:none}}
 .spc.pop{{min-height:480vh}}.spc.trin{{min-height:340vh}}
-.nbox{{background:var(--surface);border:1px solid var(--surface-edge);border-radius:10px;padding:14px 18px;pointer-events:auto;opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease),transform .55s var(--ease);box-shadow:0 2px 8px rgba(29,33,26,0.05)}}
+.nbox{{background:var(--surface);border-radius:10px;padding:14px 18px;pointer-events:auto;opacity:0;transform:translateY(10px);transition:opacity .55s var(--ease),transform .55s var(--ease);}}
 .nbox.show{{opacity:1;transform:none}}
 .nbox .nh{{font-family:var(--slab);font-weight:700;font-size:16px;margin:0 0 4px;color:var(--ink)}}
-.nbox .nb{{margin:0;font-size:14.5px;color:var(--ink-muted);line-height:1.5;max-width:38ch}}
+.nbox .nb{{margin:0;font-size:16px;color:var(--ink);line-height:1.5;max-width:38ch}}
 /* the full narrative kept in the ACCESSIBILITY TREE always: visually-hidden when
    JS drives the sticky notes (so screen readers still get the whole story), and
    fully visible as the static fallback when JS is off (P2). */
 .nfallback{{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;padding:0;margin:-1px}}
 html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visible;clip:auto;clip-path:none;white-space:normal;padding-top:20px;margin:0}}
-.nfb{{margin-bottom:14px;padding:11px 15px;background:var(--surface);border:1px solid var(--surface-edge);border-radius:10px}}
-.nfb h4{{margin:0 0 3px;font-family:var(--slab);font-size:14px}}.nfb p{{margin:0;font-size:12.5px;color:var(--ink-muted)}}
-.hovertip{{position:fixed;z-index:30;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--ink);font-family:var(--mono);font-size:11px;white-space:nowrap;box-shadow:0 3px 10px rgba(29,33,26,0.18);padding:5px 10px;border-radius:4px;opacity:0;transition:opacity 120ms;max-width:none}}
+.nfb{{margin-bottom:14px;padding:11px 15px;background:var(--surface);border-radius:10px}}
+.nfb h3{{margin:0 0 3px;font-family:var(--slab);font-size:16px}}.nfb p{{margin:0;font-size:16px;color:var(--ink)}}
+.hovertip{{position:fixed;z-index:30;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--ink);font-family:var(--body);font-size:13px;white-space:nowrap;padding:5px 10px;border-radius:4px;opacity:0;transition:opacity 120ms;max-width:none}}
 .bd-title{{font-family:var(--slab);font-size:1.9rem;font-weight:700;margin:6px 0 8px;line-height:1.15;max-width:24ch}}
 .bd-lede{{font-size:15px;color:var(--ink-muted);max-width:66ch;margin:0 0 4px}}
 .bd-take{{font-family:var(--slab);font-size:17px;color:var(--ink);max-width:66ch;margin:8px 0 0;line-height:1.45}}
@@ -1010,47 +1149,43 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
 .ccl{{opacity:0;transition:opacity 520ms var(--ease)}}.ccl.on,.ccl.ghost{{opacity:1}}
 .cclpath{{stroke:var(--verified);stroke-width:2;fill:none;stroke-linejoin:round;stroke-linecap:round;opacity:0.5;transition:stroke-dashoffset 950ms var(--ease),opacity 400ms,stroke 400ms}}
 .ccltrend{{stroke:var(--annotation);stroke-width:1.6;stroke-dasharray:4 4;opacity:0.75;transition:opacity 400ms}}
-.ccllabel{{font-family:var(--body);font-size:12px;font-weight:700;fill:var(--ink);transition:opacity 400ms}}
+.ccllabel{{font-family:var(--body);font-size:max(12px,calc(11.5px*var(--u,0)));font-weight:700;fill:var(--ink);transition:opacity 400ms}}
 /* a visited lab stays as a faint grey ghost so the four build up a comparison */
 .ccl.ghost .cclpath{{stroke:var(--ink-faint);opacity:0.2}}
 .ccl.ghost .ccltrend,.ccl.ghost .ccllabel{{opacity:0}}
 .conn.ghost{{opacity:0.18;stroke:var(--ink-faint);stroke-width:1.4}}
-.note{{margin-top:28px;background:var(--surface);border:1px solid var(--surface-edge);border-radius:10px;padding:16px 20px;font-size:13.5px}}
+.note{{margin-top:28px;background:var(--surface);border-radius:10px;padding:22px 24px;font-size:16px}}
 .endpitch{{font-family:var(--slab);font-size:clamp(17px,2.4vw,22px);font-weight:700;line-height:1.3;margin:0 0 8px;max-width:32ch}}
-.enddemo{{font-size:12.5px;color:var(--ink-muted);max-width:70ch;margin:0 0 14px;line-height:1.5}}.enddemo em{{font-style:italic;color:var(--ink)}}
+.enddemo{{font-size:14px;color:var(--ink-muted);max-width:70ch;margin:0 0 14px;line-height:1.5}}.enddemo em{{font-style:italic;color:var(--ink)}}
 .endstance{{margin:0 0 14px;max-width:70ch}}
 /* the closing summary: the four findings of the story compiled in one place, then
    the doors into the archive (Walker #6). Descriptive labels only, no ranking. */
-.endsum{{margin:0 0 20px;padding:0 0 18px;border-bottom:1px solid var(--surface-edge)}}
+.endsum{{margin:0 0 30px}}
 .endsum-h{{font-family:var(--slab);font-size:clamp(17px,2.4vw,22px);font-weight:700;margin:0 0 13px;color:var(--ink)}}
 .endsum-list{{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:15px 28px}}
-.endsum-list li{{margin:0;font-size:13.5px;color:var(--ink-muted);line-height:1.5;border-left:3px solid var(--verified);padding-left:13px}}
-.endsum-list b{{display:block;font-family:var(--slab);font-size:12.5px;color:var(--ink);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}}
+.endsum-list li{{margin:0;font-size:16px;color:var(--ink);line-height:1.5;border-left:3px solid var(--verified);padding-left:13px}}
+.endsum-list b{{display:block;font-family:var(--slab);font-size:17px;color:var(--ink);margin-bottom:3px}}
 @media (max-width:720px){{.endsum-list{{grid-template-columns:1fr}}}}
-.readmore{{margin:34px 0 10px;padding-top:28px;border-top:1px solid var(--surface-edge)}}
-.readmore-h{{font-family:var(--slab);font-size:16px;font-weight:700;margin:0 0 18px;color:var(--ink);text-transform:uppercase;letter-spacing:0.06em}}
+.readmore{{margin:44px 0 10px}}
+.readmore-h{{font-family:var(--slab);font-size:clamp(17px,2.4vw,22px);font-weight:700;margin:0 0 16px;color:var(--ink)}}
 .enddoors{{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:0}}
 @media (max-width:900px){{.enddoors{{grid-template-columns:1fr 1fr}}}}
-.enddoor{{display:flex;flex-direction:column;gap:7px;padding:22px 20px;min-height:112px;justify-content:space-between;border:1px solid var(--surface-edge);border-radius:12px;background:var(--paper);text-decoration:none;color:var(--ink);transition:border-color 150ms,transform 150ms,box-shadow 150ms}}
-.enddoor:hover{{border-color:var(--verified);transform:translateY(-2px);box-shadow:0 5px 16px rgba(29,33,26,0.09)}}
-.enddoor b{{font-family:var(--slab);font-size:18px;line-height:1.1}}.enddoor span{{font-size:12.5px;color:var(--ink-muted);line-height:1.35}}
+.enddoor{{display:flex;flex-direction:column;gap:7px;padding:22px 20px;min-height:112px;justify-content:space-between;border-radius:12px;background:var(--paper);text-decoration:none;color:var(--ink);transition:background-color 150ms}}
+.enddoor:hover{{background:var(--surface-edge)}}.enddoor:focus-visible{{outline:2px solid var(--annotation);outline-offset:2px}}
+.enddoor b{{font-family:var(--slab);font-size:18px;line-height:1.1}}.enddoor span{{font-size:14px;color:var(--ink-muted);line-height:1.35}}
 @media (max-width:560px){{.enddoors{{grid-template-columns:1fr}}}}
-.protonote{{display:block;margin-top:8px;font-size:11px;color:var(--ink-faint);font-style:italic}}
-.skip{{position:absolute;left:14px;top:-46px;background:var(--ink);color:var(--paper);padding:7px 13px;z-index:40;transition:top 120ms}}.skip:focus{{top:0}}
-/* cold open: "it started with one" -- a full-screen counter that sets the pace */
-.hero{{min-height:calc(96vh - var(--nav-h));display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}}
-.hero-inner{{max-width:840px;width:100%}}
-.hero-num{{font-family:var(--slab);font-size:clamp(96px,19vw,230px);font-weight:700;color:var(--verified);line-height:0.86;letter-spacing:-0.02em}}
-.hero-head{{font-family:var(--slab);font-size:clamp(28px,4.8vw,50px);font-weight:700;color:var(--ink);line-height:1.06;letter-spacing:-0.01em;margin:8px auto 2px;max-width:19ch}}
-/* the hero visual: releases-per-year bars. They grow from the baseline on load, so
-   the acceleration is the first thing the reader sees. Colour law holds: green =
-   data marks only; the partial current year is a dimmed green, never a new hue. */
-.hero-viz{{width:100%;max-width:520px;height:auto;display:block;margin:18px auto 8px}}
+.protonote{{display:block;margin-top:14px;font-size:13px;color:var(--ink-faint);font-style:italic}}.note a,.protonote a{{color:var(--annotation);text-underline-offset:2px}}
+.skip{{position:absolute;left:14px;top:0;background:var(--ink);color:var(--paper);padding:7px 13px;z-index:50;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}}.skip:focus{{clip-path:none;width:auto;height:auto;overflow:visible}}
+.hero{{padding:30px 20px 40px;text-align:center}}
+.hero-inner{{max-width:1000px;margin:0 auto}}
+.hero-head{{font-family:var(--slab);font-size:clamp(27px,4.6vw,66px);font-weight:700;color:var(--ink);line-height:1.06;letter-spacing:-0.01em;margin:0 auto;max-width:22ch;text-wrap:balance}}
+.hero-count{{font-family:var(--slab);font-size:clamp(18px,2.1vw,27px);color:var(--ink-muted);margin:12px 0 0}}
+.hero-viz{{width:100%;max-width:760px;max-height:46vh;height:auto;display:block;margin:20px auto 0}}
 .hbar{{fill:var(--verified);transform:scaleY(0);transform-box:fill-box;transform-origin:center bottom;animation:hbargrow .7s var(--ease) forwards}}
 .hbar.partial{{opacity:0.42}}
 @keyframes hbargrow{{to{{transform:scaleY(1)}}}}
-.hbar-n{{font-family:var(--slab);font-size:19px;font-weight:700;fill:var(--verified);font-variant-numeric:tabular-nums;opacity:0;animation:hbnfade .45s var(--ease) .55s forwards}}
-.hbar-y{{font-family:var(--mono);font-size:12.5px;fill:var(--ink-muted)}}
+.hbar-n{{font-family:var(--slab);font-size:max(19px,calc(13px*var(--u,0)));font-weight:700;fill:var(--verified);font-variant-numeric:tabular-nums;opacity:0;animation:hbnfade .45s var(--ease) .55s forwards}}
+.hbar-y{{font-family:var(--mono);font-size:max(12.5px,calc(11.5px*var(--u,0)));fill:var(--ink-muted)}}
 .hbar-base{{stroke:var(--ink);stroke-width:1.4}}
 @keyframes hbnfade{{to{{opacity:1}}}}
 .hero-meta{{font-family:var(--mono);font-size:11.5px;color:var(--ink-muted);letter-spacing:0.05em}}
@@ -1060,13 +1195,10 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
 .hero-line{{font-family:var(--slab);font-size:clamp(21px,3.3vw,33px);margin-top:30px;color:var(--ink);line-height:1.25}}
 .hero-sub{{font-size:14.5px;color:var(--ink-muted);margin:14px auto 0;max-width:52ch}}
 .hero-dek{{font-family:var(--slab);font-style:italic;font-size:clamp(15px,2vw,19px);color:var(--ink-muted);margin:16px auto 0;max-width:40ch;line-height:1.4}}
-.hero-scroll{{font-family:var(--mono);font-size:11.5px;color:var(--ink-muted);margin-top:40px;letter-spacing:0.08em;text-transform:uppercase}}
-.hero-scroll span{{display:inline-block;animation:bob 1.8s var(--ease) infinite}}
-@keyframes bob{{0%,100%{{transform:translateY(0)}}50%{{transform:translateY(4px)}}}}
 /* the counter that climbs 1->281 while the marks stream into the timeline behind it */
 .bignum{{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);text-align:center;pointer-events:none;opacity:0;transition:opacity 300ms;z-index:5}}
 .bignum b{{display:block;font-family:var(--slab);font-size:clamp(70px,11vw,132px);font-weight:700;color:var(--verified);line-height:0.9;opacity:0.9;font-variant-numeric:tabular-nums}}
-.bignum small{{display:block;font-family:var(--mono);font-size:11.5px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.13em;margin-top:6px}}
+.bignum small{{display:block;font-family:var(--body);font-size:14px;color:var(--ink-muted);margin-top:6px}}
 .instrument.populating .bignum{{opacity:1}}
 .instrument.populating .teach,.instrument.populating .controls{{opacity:0.25;transition:opacity 300ms}}
 /* reduced-motion = the SAME sticky desktop layout, just instant. We do NOT un-pin
@@ -1083,28 +1215,44 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
   display: flex; align-items: center; justify-content: center;
   background: var(--paper); color: var(--ink);
   border: 1px solid var(--ink); border-radius: 3px;
-  font-family: var(--mono); font-size: 18px; line-height: 1;
+  font-family: var(--body); font-size: 18px; line-height: 1;
   text-decoration: none;
 }}
 .totop:hover {{ background: var(--ink); color: var(--paper); }}
 @media (max-width: 720px) {{ .totop {{ right: 12px; bottom: 12px; width: 36px; height: 36px; font-size: 16px; }} }}
 @media print {{ .totop {{ display: none; }} }}
-@media (prefers-reduced-motion:reduce){{*,*::before,*::after{{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important}}.rmk,.ax-pulse,.ax-traj,.ax-disc,.frontier,.conn{{transition:none}}.hero{{min-height:auto;padding:40px 20px}}.hero-scroll span{{animation:none}}.bignum{{display:none}}.hbar{{animation:none;transform:none}}.hbar-n{{animation:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){{*,*::before,*::after{{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important}}.rmk,.ax-pulse,.ax-traj,.ax-disc,.frontier,.conn{{transition:none}}.hero{{min-height:auto;padding:40px 20px}}.bignum{{display:none}}.hbar{{animation:none;transform:none}}.hbar-n{{animation:none;opacity:1}}
   html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){{opacity:0.9}}}}
-/* mobile: sticky GRAPHIC on top (canvas capped so the notes have room), a sticky
-   NOTE strip pinned just beneath it, and the invisible notetrack scrolling behind
-   to drive the beats. The canvas stays visible through every beat (the desktop
-   bug was un-pinning it). Single column; notes flow in the lower band. */
-@media (max-width:900px){{.scrolly{{display:block}}
-  .storynav{{padding:0 14px}}.storynav-brand{{font-size:13px}}.storynav-links{{gap:11px}}.storynav-links a{{font-size:12px}}
+/* one column (900px and under): the chart card is pinned under the nav and
+   holds only the title, the hint, the chart and its source. Each beat's
+   teaching sentence and note sit in the scroll track, in flow, and a beat
+   switches when its note reaches the band below the card, so a note is read
+   below the card and only passes under it once the reader scrolls on (F7). */
+.snote{{display:none}}
+@media (max-width:900px){{.scrolly{{display:block;margin-top:8px}}
+  .storynav{{padding:0 16px}}.storynav-brand{{font-size:13px}}.storynav-links{{gap:11px}}.storynav-links a{{font-size:12.5px}}
+  .wrap{{padding:16px 16px 40px}}
+  .stage-col{{position:sticky;top:var(--nav-h);height:auto;z-index:3;background:var(--paper);padding:6px 0 10px;display:block}}
+  .instrument{{padding:10px 12px 8px}}
+  .ctitle{{font-size:18px;line-height:1.2;min-height:2.4em}}
+  html.js .instrument .teach{{display:none}}
+  .notewrap{{display:none}}
+  html.js .notetrack{{margin-top:0}}
+  html.js .snote{{display:block;position:relative;z-index:1;pointer-events:auto}}
+  .snote .nbox{{opacity:1;transform:none;margin:0 0 12px}}
+  .steach{{font-family:var(--slab);font-size:16px;line-height:1.45;color:var(--ink);margin:0 0 12px;max-width:60ch}}
+  .spc{{min-height:62vh;padding-top:14px}}
+  .spc.pop,.spc.trin{{min-height:0}}
+  .spc.pop .snote{{display:flex;flex-direction:column;justify-content:space-between;min-height:300vh}}
+  .spc.trin .snote{{display:flex;flex-direction:column;justify-content:space-between;min-height:230vh}}
+  /* the year notes of the two filling charts hold in the band under the card
+     while their year fills; each next year slides up over the last */
+  .sitem{{position:sticky;top:var(--stage-top,50vh);background:var(--paper);min-height:calc(100dvh - var(--stage-top,50vh));padding-top:14px}}
+  .hovertip{{white-space:normal;max-width:calc(100vw - 16px)}}
 }}
 @media (max-width:430px){{
-  .storynav{{padding:0 12px;gap:10px}}.storynav-links{{gap:9px}}.storynav-links a{{font-size:11.5px}}
-  .stage-col{{position:sticky;top:var(--nav-h);height:auto;z-index:3;background:var(--paper);padding-bottom:4px}}
-  .canvas{{max-height:44vh}}
-  .notewrap{{position:sticky;top:calc(var(--nav-h) + 45vh);height:auto;min-height:0;max-height:44vh;overflow:hidden;justify-content:flex-start;pointer-events:none;z-index:2;background:var(--paper);padding:6px 0 10px;gap:8px}}
-  html.js .notetrack{{margin-top:0}}.spc,.spc.pop,.spc.trin{{min-height:74vh}}
-  .nbox{{opacity:1;transform:none;margin-bottom:8px}}}}
+  .storynav{{gap:10px}}.storynav-links{{gap:9px}}.storynav-links a{{font-size:12px}}
+}}
 </style></head>
 <body>
 <a class="skip" href="#end">Skip to the summary</a>
@@ -1119,42 +1267,27 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
   </div>
 </nav>
 <div class="wrap">
-<div class="masthead"><div><h1>Version Control</h1><p>The release record of the AI model era.</p></div>
+<div class="masthead"><div><p class="mast-title">Version Control</p><p>The release record of the AI model era.</p></div>
 <div class="mast-by">Maintained by <a href="https://walker-robinson.com">Walker Robinson</a> &#183; <a href="./methodology.html">methodology &amp; sources</a> &#183; <span class="mast-asof">the record as of {AS_OF}</span></div></div>
 <section class="hero" id="hero">
   <div class="hero-inner">
-    <p class="hero-head">A public registry of AI model releases.<br>From {_hero_first_n} in {_hero_first_y} to {_hero_last_n} in {_hero_last_y}.</p>
+    <h1 class="hero-head">A public registry of AI model releases.</h1>
+    <p class="hero-count">From {_hero_first_n} in {_hero_first_y} to {_hero_last_n} in {_hero_last_y}.</p>
     <svg class="hero-viz" viewBox="0 0 {HVZ_W} {HVZ_H}" role="img" aria-label="Bar chart of AI model releases logged per year: {_hb_aria}. 2026 is a partial year.">{hero_bars}</svg>
-    <div class="hero-scroll"><span>Scroll &#8595;</span></div>
   </div>
 </section>
 <div class="scrolly">
   <div class="stage-col"><div class="instrument">
     <div class="ctitle" id="ctitle">{SCOPE_T}</div>
     <p class="teach" id="teach">One mark = one model release, placed by lab (down the side) and by date (across). The record opens at ChatGPT's launch: {tiles["releases_recorded"]} releases in all, ChatGPT included.</p>
-    <div class="controls" id="controls"><span class="clab" id="hint">hover any mark for its record</span></div>
-    <svg class="canvas" id="canvas" data-beat="pulse" viewBox="0 0 {W} {H}" role="img"
-      aria-label="One chart of {tiles["releases_recorded"]} release marks moving between four views: the release timeline, independent benchmark scores, the gap between lab-reported and independent numbers, and yearly disclosure shares. The full narrative in words follows below.">
-      <g class="yrbands">{yrbands}</g>
-      <g class="axis-shared">{years}</g>
-      <g class="ax-pulse">{ax_pulse}</g>
-      <g class="ax-traj">{ax_traj}</g>
-      <g class="ax-swe">{ax_swe}</g>
-      <g class="ax-accel">{ax_accel}</g>
-      <g class="ax-disc">{ax_disc}</g>
-      <g class="ax-close">{ax_close}</g>
-      <g class="ax-div">{divbase}</g>
-      <g class="conns">{conns}</g>
-      <g class="sweconns">{sweconns}</g>
-      <path class="frontier" d="{frontier_d}"/>
-      <path class="swefrontier" d="{swefront_d}"/>
-      <g class="marks" id="marks">{marks}</g>
-      <g class="caselines" data-kind="accel">{accel_lines}</g>
-      <g class="divg">{divg}</g>
-      <g class="closelines">{closelines}</g>
+    <div class="controls" id="controls"><span class="clab" id="hint">select any mark for its record</span></div>
+    <svg class="canvas" id="canvas" data-beat="pulse" viewBox="0 0 {W} {H}" role="img" tabindex="0"
+      aria-label="One chart of {tiles["releases_recorded"]} release marks moving between four views: the release timeline, independent benchmark scores, the gap between lab-reported and independent numbers, and yearly disclosure shares. Use the arrow keys to step through the marks and read each record. The full narrative in words follows below.">
+      {CANVAS_INNER}
     </svg>
     <div class="bignum" id="bignum" aria-hidden="true"><b id="bignumN">1</b><small id="bignumS">release on record</small></div>
     <div class="source" id="src">{SOURCE_LINE}</div>
+    {CANVAS_NARROW}
   </div></div>
   <div class="notecol">
     <div class="notewrap" id="notewrap" aria-live="polite"></div>
@@ -1174,7 +1307,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
   </div>
   <p class="endstance"><b>The record is public.</b> Each night it checks its sources and drafts new entries, and a person approves each one before it appears. Every number shows where it came from, or it is left out.</p>
   <div class="readmore">
-    <h2 class="readmore-h">Read more</h2>
+    <h2 class="readmore-h">The full record, its rules and who keeps it</h2>
     <div class="enddoors">
       <a class="enddoor" href="./index.html"><b>Timeline</b><span>every entry, filterable &#8594;</span></a>
       <a class="enddoor" href="./methodology.html"><b>Methodology</b><span>the rules every number follows &#8594;</span></a>
@@ -1182,13 +1315,12 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
       <a class="enddoor" href="./data.html"><b>Data</b><span>download the dataset, CC-BY 4.0 &#8594;</span></a>
     </div>
   </div>
-  <span class="protonote">Parameter counts come from Epoch AI's data, and a few are Epoch's own estimates; the methodology says how many. Data current as of {AS_OF}. <a href="{REPORT_URL}">Report an error</a>.</span></div>
+  <span class="protonote">Parameter counts come from Epoch AI's data, and a few are Epoch's own estimates; the methodology says how many. Data current as of {AS_OF}. <a href="{REPORT_URL}">Report an error</a>. <a href="https://github.com/wrobinson127/versioncontrol" rel="external">Source on GitHub</a>.</span></div>
 </div>
-<div class="hovertip" id="tip"></div>
+<div class="hovertip" id="tip" role="status" aria-live="polite"></div>
 <script>
 (function(){{
 var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-var NOHOVER=matchMedia("(hover: none)").matches;  // touch devices: say "tap", not "hover"
 var canvas=document.getElementById("canvas"),marks=[].slice.call(document.querySelectorAll(".rmk"));
 var ctitle=document.getElementById("ctitle"),teach=document.getElementById("teach"),hint=document.getElementById("hint");
 var steps=[].slice.call(document.querySelectorAll(".spc"));
@@ -1294,8 +1426,8 @@ function setBeat(b){{ if(b===cur)return; cur=b;
   var mode=modeOf(b),lab=labOf(b);
   if(mode==="accel") applyAccel(lab); else applyPos(mode);
   canvas.setAttribute("data-beat",mode); canvas.setAttribute("data-lab",lab);
-  var m=META[b]||META[mode]; if(m){{ctitle.innerHTML=m.t; teach.innerHTML=m.te;
-    hint.textContent=NOHOVER?m.h.replace(/hover/gi,"tap"):m.h;}}  // "hover" is a lie on touch
+  var m=META[b]||META[mode]; if(m){{ctitle.innerHTML=m.t; teach.innerHTML=teachOf(m);
+    hint.textContent=m.h;}}
   // right-hand notes: STACK for the two populate charts, single swap otherwise
   if(mode==="pulse"||mode==="traj"){{ if(curNotesMode!==mode) buildStack(mode);
     if(reduce) notewrap.querySelectorAll(".nbox").forEach(function(x){{x.classList.add("show");}}); }}
@@ -1321,10 +1453,15 @@ function setBeat(b){{ if(b===cur)return; cur=b;
   if(mode!=="pulse"){{ reveal(marks.length); if(instrument) instrument.classList.remove("populating"); }}
   else if(!reduce){{ populateScroll(); }}
   if(mode==="traj"){{ if(reduce) trReveal(NSC); else {{ trReveal(0); trajScroll(); }} }} }}
-var io=new IntersectionObserver(function(es){{
-  es.forEach(function(e){{ if(e.isIntersecting) setBeat(e.target.getAttribute("data-beat")); }});
-}},{{rootMargin:"-45% 0px -45% 0px",threshold:0}});
-steps.forEach(function(s){{io.observe(s);}});
+// the beat line: mid-screen on a wide screen; in one column, a line in the band
+// below the pinned chart card, so a beat changes where its note is read
+var ONECOL=matchMedia("(max-width: 900px)"),io=null,stageCol=document.querySelector(".stage-col"),navEl=document.querySelector(".storynav");
+function onIO(es){{ es.forEach(function(e){{ if(e.isIntersecting) setBeat(e.target.getAttribute("data-beat")); }}); }}
+function makeIO(){{ if(io) io.disconnect(); var rm="-45% 0px -45% 0px";
+  if(ONECOL.matches){{ var top0=(navEl?navEl.offsetHeight:0)+(stageCol?stageCol.offsetHeight:0);
+    var line=Math.round(top0+Math.max(0,innerHeight-top0)*0.3);
+    rm="-"+line+"px 0px -"+Math.max(0,innerHeight-line-1)+"px 0px"; }}
+  io=new IntersectionObserver(onIO,{{rootMargin:rm,threshold:0}}); steps.forEach(function(s){{io.observe(s);}}); }}
 
 // ---- cold open / populate-on-scroll: the marks stream in chronologically (marks
 // are in DOM order = date order) while the counter climbs 1 -> {tiles["releases_recorded"]}.
@@ -1377,8 +1514,8 @@ function spotlight(attr,val){{ var key=(val==null)?null:(attr+"="+val); if(key==
   conns.forEach(function(c){{c.classList.toggle("co",on&&attr==="data-org"&&cur==="traj"&&c.getAttribute("data-org")===val);}});
   if(companylbl) companylbl.textContent=(on&&attr==="data-org"&&cur==="traj")?(NMJS[val]||""):""; }}
 function setHot(el){{ if(hot===el)return; if(hot)hot.classList.remove("hot"); hot=el; if(hot)hot.classList.add("hot"); }}
-canvas.addEventListener("mousemove",function(e){{ var t=e.target;
-  var m=t.closest?t.closest(".rmk"):null;
+function inspectAt(t){{
+  var m=t&&t.closest?t.closest(".rmk"):null;
   var ol=t.closest?t.closest(".orglab"):null, y2=t.closest?t.closest("[data-year]"):null;
   setHot(m); showTip(m);
   setYearBand(y2?y2.getAttribute("data-year"):null); // the faint column, in every time-axis chart
@@ -1389,9 +1526,88 @@ canvas.addEventListener("mousemove",function(e){{ var t=e.target;
   if(ol) spotlight("data-org",ol.getAttribute("data-org"));
   else if(y2) spotlight("data-yr",y2.getAttribute("data-year"));
   else if(m&&cur==="traj") spotlight("data-org",m.getAttribute("data-org"));
-  else spotlight(null,null); }});
-canvas.addEventListener("mouseleave",function(){{setHot(null);showTip(null);setYearBand(null);spotlight(null,null);}});
+  else spotlight(null,null); }}
+function clearInspect(){{setHot(null);showTip(null);setYearBand(null);spotlight(null,null);}}
+canvas.addEventListener("mousemove",function(e){{ inspectAt(e.target); }});
+canvas.addEventListener("mouseleave",clearInspect);
+// a tap selects too: the record opens on the tapped mark, a tap on empty chart closes it
+canvas.addEventListener("click",function(e){{ inspectAt(e.target); }});
+// keyboard: with the chart focused, the arrow keys step through the marks shown
+// in the current view (the pairs, in the divergence view); Escape closes the record
+var kel=null;
+function inspectables(){{ var md=modeOf(cur||"pulse");
+  if(md==="div") return [].slice.call(canvas.querySelectorAll(".dpair"));
+  return marks.filter(function(mk){{ var cs=getComputedStyle(mk); return cs.pointerEvents!=="none"&&parseFloat(cs.opacity)>0.2; }}); }}
+canvas.addEventListener("keydown",function(e){{ var k=e.key;
+  if(["ArrowRight","ArrowLeft","ArrowUp","ArrowDown","Home","End","Escape"].indexOf(k)<0) return;
+  e.preventDefault();
+  if(k==="Escape"){{ kel=null; clearInspect(); return; }}
+  var L=inspectables(); if(!L.length) return;
+  var i=L.indexOf(kel);
+  if(k==="Home") i=0; else if(k==="End") i=L.length-1;
+  else if(k==="ArrowRight"||k==="ArrowDown") i=(i+1)%L.length;
+  else i=(i<=0?L.length:i)-1;
+  kel=L[i]; inspectAt(kel); }});
+canvas.addEventListener("blur",function(){{ kel=null; clearInspect(); }});
+
+function teachOf(m){{ return (geomNarrow&&m.ten)?m.ten:m.te; }}
+// in-flow notes for the one-column layout: each beat's teaching sentence and
+// note, written into its own step of the scroll track
+function buildFlowNotes(){{ steps.forEach(function(st){{
+  var b=st.getAttribute("data-beat"),md=modeOf(b),lab=labOf(b),m=META[b]||META[md],h="";
+  if(m&&m.te) h+='<p class="steach">'+teachOf(m)+'</p>';
+  if(md==="pulse"||md==="traj"){{ h='<div class="sitem">'+h+'</div>';
+    (NOTES[md]||[]).forEach(function(n){{ h+='<div class="sitem"><div class="nbox"><div class="nh">'+n.h+'</div><p class="nb">'+n.b+'</p></div></div>'; }}); }}
+  else {{ var n=(md==="accel"||md==="climb"||md==="sclimb")?(NOTES[md]||{{}})[lab]:NOTES[md];
+    if(n) h+='<div class="nbox'+(md==="close"?" codanote":"")+'"><p class="nb">'+n.b+'</p></div>'; }}
+  var box=st.querySelector(".snote"); if(!box){{ box=document.createElement("div"); box.className="snote"; box.setAttribute("aria-hidden","true"); st.appendChild(box); }}
+  box.innerHTML=h; }}); }}
+
+// --u = viewBox units per CSS pixel, on each chart: label sizes are floored at
+// 11.5px rendered through it, however far the chart is scaled down
+var heroViz=document.querySelector(".hero-viz");
+function setU(){{ [canvas,heroViz].forEach(function(sv){{ if(!sv) return;
+  var r=sv.getBoundingClientRect(),vb=sv.viewBox&&sv.viewBox.baseVal;
+  if(r.width>0&&r.height>0&&vb&&vb.width) sv.style.setProperty("--u",Math.max(vb.width/r.width,vb.height/r.height).toFixed(4)); }}); }}
+
+// narrow geometry: under 700px the canvas takes the 360-unit layout. The wide
+// and narrow markup share one element order, so the swap only rewrites the
+// geometric attributes of the same elements; the marks' narrow positions come
+// as a compact table.
+var MKATTRS={mkattrs_js},MKN={mkn_js},geomPairs=null,geomNarrow=false;
+// narrow whenever the chart's column is under 820px: there the wide layout's
+// labels, held at their floor, would collide
+function wantNarrow(){{ var ins=document.querySelector(".instrument"); if(!ins) return false;
+  var cs=getComputedStyle(ins); return (ins.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight))<820; }}
+function setStageTop(){{ document.documentElement.style.setProperty("--stage-top",((navEl?navEl.offsetHeight:0)+(stageCol?stageCol.offsetHeight:0))+"px"); }}
+function buildGeom(){{ var t=document.getElementById("canvasN"); if(!t||!t.content) return null;
+  var nsv=t.content.querySelector("svg"); if(!nsv) return null;
+  var pairs=[[canvas,"viewBox",canvas.getAttribute("viewBox"),nsv.getAttribute("viewBox")]];
+  function walk(a,b){{ if(a.tagName!==b.tagName) throw 1;
+    var seen={{}};
+    [].forEach.call(b.attributes,function(at){{ seen[at.name]=1; var wv=a.getAttribute(at.name); if(wv!==at.value) pairs.push([a,at.name,wv,at.value]); }});
+    [].forEach.call(a.attributes,function(at){{ if(!seen[at.name]&&at.name!=="style"&&at.name!=="class") pairs.push([a,at.name,at.value,null]); }});
+    if(a.tagName.toLowerCase()==="text"){{ if(a.innerHTML!==b.innerHTML) pairs.push([a,"#html",a.innerHTML,b.innerHTML]); return; }}
+    if(a.id==="marks") return;
+    if(a.children.length!==b.children.length) throw 2;
+    for(var i=0;i<a.children.length;i++) walk(a.children[i],b.children[i]); }}
+  try {{ var wk=canvas.children,nk=nsv.children; if(wk.length!==nk.length) return null;
+    for(var i=0;i<wk.length;i++) walk(wk[i],nk[i]);
+    if(MKN.length!==marks.length) return null;
+    marks.forEach(function(mk,k){{ MKATTRS.forEach(function(an,j){{ pairs.push([mk,an,mk.getAttribute(an),String(MKN[k][j])]); }}); }});
+  }} catch(err) {{ return null; }}
+  return pairs; }}
+function applyGeom(narrow){{ if(narrow===geomNarrow) return; if(narrow&&!geomPairs) geomPairs=buildGeom(); if(!geomPairs) return;
+  geomPairs.forEach(function(p){{ var v=narrow?p[3]:p[2];
+    if(p[1]==="#html") p[0].innerHTML=v; else if(v===null) p[0].removeAttribute(p[1]); else p[0].setAttribute(p[1],v); }});
+  geomNarrow=narrow; canvas.classList.toggle("narrow",narrow);
+  if(cur){{ var b=cur; cur=null; curNotesMode=null; setBeat(b); }} }}
+function relayout(){{ applyGeom(wantNarrow()); setU(); buildFlowNotes(); setStageTop(); makeIO(); }}
+var _rt=0;
+addEventListener("resize",function(){{ clearTimeout(_rt); _rt=setTimeout(relayout,120); }});
+applyGeom(wantNarrow()); setU(); buildFlowNotes();
 setBeat("pulse");
+setStageTop(); makeIO();
 }})();
 </script>
 <a class="totop" href="#" aria-label="Back to top">&uarr;</a>
