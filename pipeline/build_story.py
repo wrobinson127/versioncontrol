@@ -670,6 +670,7 @@ _refused_html = "".join(
 MAIN = f"""<main id="main" class="story" tabindex="-1">
 <section class="scrolly" aria-labelledby="hed">
 <div class="graphic" id="graphic" data-ui>
+<svg class="ov ovb" id="ovb" aria-hidden="true" focusable="false"></svg>
 <canvas id="cv" aria-hidden="true"></canvas>
 <svg class="ov" id="ov" aria-hidden="true" focusable="false"></svg>
 <div class="hit" id="hit" tabindex="0" role="application" aria-roledescription="chart" aria-label="The chart of every release on record. The arrow keys move between marks and read each record; Enter opens it in the explorer." aria-describedby="live" hidden></div>

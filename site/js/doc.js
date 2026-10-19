@@ -225,11 +225,11 @@
       '<p class="rn-s">' + num(D.entries.length) + " entries across " + files.length + " files, each with a SHA-256 checksum in the manifest.</p>";
   }
 
-  function word(v) { return v === "NOT_DISCLOSED" || v === "NOT_RESEARCHED" ? v : v ? "link" : "NOT_RESEARCHED"; }
+  function word(v) { return v === "NOT_DISCLOSED" || v === "NOT_RESEARCHED" ? v : v ? "(a URL)" : "NOT_RESEARCHED"; }
   function csvHtml(D) {
     var rows = D.entries.slice(0, 6);
-    return '<div class="spec-tbl"><table class="dt"><thead><tr><th scope="col">id</th><th scope="col">date</th><th scope="col">system_card</th></tr></thead><tbody>' +
-      rows.map(function (e) { return '<tr><th scope="row"><a href="' + entryHref(e) + '">' + esc(e.id) + "</a></th><td>" + num(e.date) + "</td><td>" + esc(word((e.disclosure_links || {}).system_card)) + "</td></tr>"; }).join("") +
+    return '<div class="spec-tbl"><table class="dt"><thead><tr><th scope="col">model_name</th><th scope="col">date</th><th scope="col">paper</th></tr></thead><tbody>' +
+      rows.map(function (e) { return '<tr><th scope="row" class="ell"><a href="' + entryHref(e) + '" title="' + esc(e.id) + '">' + esc(e.model_name) + "</a></th><td>" + num(e.date) + "</td><td>" + esc(word((e.disclosure_links || {}).paper)) + "</td></tr>"; }).join("") +
       '</tbody></table></div><p class="rn-s">Three of its columns. Absence is a word, never a blank.</p>';
   }
 

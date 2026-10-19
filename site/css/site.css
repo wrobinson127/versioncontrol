@@ -1102,3 +1102,5 @@ code, pre, kbd, samp { font-family: var(--mono); font-stretch: 87.5%; }
 @media (max-width: 1040px) {
   .pg-doc .doc-sec, .pg-doc .doc-head, .doc-sec.rule .rule-text { max-width: none; }
 }
+.spec .dt .ell { max-width: 104px; overflow: hidden; text-overflow: ellipsis; }
+.spec .dt th, .spec .dt td { font-size: 12px; }

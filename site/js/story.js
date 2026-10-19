@@ -21,6 +21,7 @@
   var cv = document.getElementById("cv");
   var ctx = cv.getContext("2d");
   var ov = document.getElementById("ov");
+  var ovb = document.getElementById("ovb");
   var hit = document.getElementById("hit");
   var tip = document.getElementById("tip");
   var live = document.getElementById("live");
@@ -123,16 +124,17 @@
     DPR = Math.min(2, window.devicePixelRatio || 1);
     cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
     ov.setAttribute("viewBox", "0 0 " + W + " " + H);
+    ovb.setAttribute("viewBox", "0 0 " + W + " " + H);
     var cb = contentBox();
     var stepsTop = document.querySelector(".steps").getBoundingClientRect().top;
     var heroB = document.getElementById("hero-text").getBoundingClientRect().bottom - stepsTop;
     var band = narrow ? 50 : 66;
     LW0 = narrow ? 70 : 128;
-    var r0 = { x0: cb.x0 + LW0, x1: cb.x1, y0: heroB + band + (narrow ? 8 : 12), y1: H - (narrow ? 40 : 48) };
+    var r0 = { x0: cb.x0 + LW0, x1: cb.x1, y0: heroB + band + (narrow ? 8 : 12), y1: H - (narrow ? 40 : 60) };
     var minH = narrow ? 12 * 22 : 12 * 24;
     if (r0.y1 - r0.y0 < minH) { r0.y0 = r0.y1 - minH; }
     region = narrow ? Math.round(H * 0.56) : H;
-    var rs = narrow ? { x0: cb.x0, x1: cb.x1, y0: 12, y1: region - 14 } : { x0: cb.x0 + Math.min(400, W * 0.3) + 56, x1: cb.x1, y0: 28, y1: H - 50 };
+    var rs = narrow ? { x0: cb.x0, x1: cb.x1, y0: 12, y1: region - 14 } : { x0: cb.x0 + Math.min(400, W * 0.3) + 56, x1: cb.x1, y0: 28, y1: H - 58 };
     R = [r0, rs, rs, rs, rs, rs];
   }
   function timeScale(x0, x1) {
@@ -543,16 +545,21 @@
     if (narrow) { s += T(R[5].x0, R[5].y1 + 6, "Ticks mark 1 January of 2024 and 2026; figures count releases.", "ax-t"); }
     return s;
   }
+  /* guide lines and bands go on a layer behind the marks; labels in front */
+  var BACK = /<line [^>]*class="ax-g"\/>|<rect class="band"[^>]*\/>/g;
   function buildOverlays() {
-    ov.innerHTML = [ov0, ov1, ov2, ov3, ov4, ov5].map(function (f, i) {
+    var front = "", back = "";
+    [ov0, ov1, ov2, ov3, ov4, ov5].forEach(function (f, i) {
       var inner = "";
       try { inner = f(); } catch (err) { if (window.console) { console.warn("labels for view " + i, err); } }
-      return '<g class="ovg" data-v="' + i + '">' + inner + "</g>";
-    }).join("");
+      back += '<g class="ovg" data-v="' + i + '">' + (inner.match(BACK) || []).join("") + "</g>";
+      front += '<g class="ovg" data-v="' + i + '">' + inner.replace(BACK, "") + "</g>";
+    });
+    ov.innerHTML = front; ovb.innerHTML = back;
   }
   function showView(v) {
     shownV = v;
-    [].forEach.call(ov.querySelectorAll(".ovg"), function (g) { g.classList.toggle("on", +g.getAttribute("data-v") === v); });
+    [].forEach.call(document.querySelectorAll("#ov .ovg, #ovb .ovg"), function (g) { g.classList.toggle("on", +g.getAttribute("data-v") === v); });
     focusList = []; focusIdx = -1;
     hideTip();
     if (v < 0) { return; }
