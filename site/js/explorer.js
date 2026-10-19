@@ -393,7 +393,8 @@
     var tiles = [
       { value: String(t.releases_recorded),
         label: "releases recorded, of " + (t.entries_recorded || t.releases_recorded) + " entries" },
-      { value: String(t.days_since_last_release), label: "days since the last release" },
+      { value: String(t.last_release_date || ""),
+        label: "newest release on record, as of " + t.as_of },
       { value: String(t.median_gap_days_this_year), label: "median gap between releases this year, in days" },
       fourth
     ];

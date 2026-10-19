@@ -202,6 +202,9 @@ def test_tiles():
     assert t["releases_recorded"] == 3
     assert t["entries_recorded"] == 3
     assert t["days_since_last_release"] == 10
+    # the tile the site renders is a date, which cannot freeze into a
+    # misleading day count when updates stop
+    assert t["last_release_date"] == "2026-02-10"
     assert t["median_gap_days_this_year"] == 20
     assert t["share_with_system_card"] == round(1 / 3, 3)
     assert t["papers_on_record"] == 0
