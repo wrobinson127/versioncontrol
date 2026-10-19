@@ -652,6 +652,13 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
 }
 .file-table th { font-weight: 600; color: var(--ink-muted); }
 .file-table td:first-child { font-family: var(--mono); font-size: 0.82rem; white-space: nowrap; }
+/* On a phone a long first cell (a field list, a source URL) or a wide
+   exclusions table must not push the page sideways: wrap anywhere. */
+@media (max-width: 600px) {
+  .file-table { table-layout: fixed; }
+  .file-table th, .file-table td { overflow-wrap: anywhere; word-break: break-word; }
+  .file-table td:first-child { white-space: normal; }
+}
 
 /* ---- footer ---- */
 
