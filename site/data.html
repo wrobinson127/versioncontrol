@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Version Control: dataset download</title>
 <meta name="description" content="Download the Version Control dataset: gzipped JSON entry files, derived deltas, and the manifest, licensed CC-BY 4.0 with Epoch AI attribution.">
+<link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
 <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
 <link rel="canonical" href="https://versioncontrol.walker-robinson.com/data.html">
 <meta property="og:title" content="Version Control: dataset">
@@ -16,6 +17,29 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
 <link rel="stylesheet" href="./css/site.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "Version Control: the release record of the AI model era",
+  "description": "A public record of AI model releases from twelve tracked labs since 2022-11-30: release date, availability, disclosure documents (system card, model card, usage policy, paper), and GPQA Diamond and SWE-bench Verified scores, each with its source class, source URL and retrieval date.",
+  "url": "https://versioncontrol.walker-robinson.com/data.html",
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "isAccessibleForFree": true,
+  "creator": {"@type": "Person", "name": "Walker Robinson", "url": "https://walker-robinson.com"},
+  "temporalCoverage": "2022-11-30/..",
+  "keywords": ["AI models", "model releases", "AI disclosure", "system cards", "benchmarks", "GPQA Diamond", "SWE-bench Verified"],
+  "isBasedOn": [
+    {"@type": "Dataset", "name": "Data on AI Models", "creator": {"@type": "Organization", "name": "Epoch AI"}, "url": "https://epoch.ai/data/ai-models"},
+    {"@type": "Dataset", "name": "Capabilities & benchmarking", "creator": {"@type": "Organization", "name": "Epoch AI"}, "url": "https://epoch.ai/benchmarks"}
+  ],
+  "distribution": [
+    {"@type": "DataDownload", "encodingFormat": "text/csv", "contentUrl": "https://versioncontrol.walker-robinson.com/data/releases.csv"},
+    {"@type": "DataDownload", "encodingFormat": "text/csv", "contentUrl": "https://versioncontrol.walker-robinson.com/data/scores.csv"},
+    {"@type": "DataDownload", "encodingFormat": "application/json", "contentUrl": "https://versioncontrol.walker-robinson.com/data/manifest.json"}
+  ]
+}
+</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -43,7 +67,7 @@
 <main id="main" class="wrap prose">
   <h1>The dataset</h1>
 
-  <p>The complete registry record is published as versioned files: a manifest, one gzipped JSON array of entries per year, and a derived deltas file. The same files drive this site. There is no separate API.</p>
+  <p>The complete record is published as files. For a spreadsheet, start with the two CSV files. For the full record with every source, use the gzipped JSON, one file per year, indexed by the manifest. The same files drive this site. There is no separate API, and the paths below are stable.</p>
 
   <h2>Files</h2>
   <table class="file-table">
@@ -51,6 +75,8 @@
       <tr><th scope="col">File</th><th scope="col">Contents</th></tr>
     </thead>
     <tbody id="file-rows">
+      <tr><td><a href="./data/releases.csv">releases.csv</a></td><td>One row per entry: dates, lab, availability, the four disclosure items, parameters, predecessor, and the primary source. Absence is written as a word (NOT_DISCLOSED or NOT_RESEARCHED), never left blank.</td></tr>
+      <tr><td><a href="./data/scores.csv">scores.csv</a></td><td>One row per benchmark score, with its source class, source URL, retrieval date and test settings.</td></tr>
       <tr><td><a href="./data/manifest.json">manifest.json</a></td><td>Index of entry files with per-file entry counts, ids, and SHA-256 checksums.</td></tr>
       <tr><td><a href="./data/derived/deltas.json.gz">derived/deltas.json.gz</a></td><td>Predecessor comparisons per entry: delta values or recorded refusals. The site renders this file verbatim.</td></tr>
       <tr><td><a href="./data/derived/views.json.gz">derived/views.json.gz</a></td><td>Derived chart datasets: release cadence, benchmark trajectory series, disclosure matrix, and registry measures. The charts on the site draw from this file; the site only counts and rounds what is in it.</td></tr>
@@ -68,7 +94,7 @@
           if (!res.ok) continue;
           var manifest = await res.json();
           var tbody = document.getElementById("file-rows");
-          var anchor = tbody.children[1];
+          var anchor = tbody.children[3];
           Object.keys(manifest.files).sort().forEach(function (rel) {
             var short = rel.replace(/^data\//, "");
             var year = (short.match(/(\d{4})\.json\.gz$/) || [])[1] || "";
@@ -92,6 +118,26 @@
     })();
   </script>
 
+  <h2>Fields</h2>
+  <p>Each entry in the JSON files, and each row of releases.csv, carries these fields.</p>
+  <table class="file-table">
+    <thead><tr><th scope="col">Field</th><th scope="col">Meaning</th></tr></thead>
+    <tbody>
+      <tr><td>id</td><td>Stable identifier: organization key, two hyphens, model slug. Also the anchor of the entry's card on the timeline.</td></tr>
+      <tr><td>model_name, org</td><td>The model as the lab names it, and the organization key. A correction_note explains any name or date we corrected from the source.</td></tr>
+      <tr><td>date</td><td>The day the public could first use the model, usually the lab's announcement date.</td></tr>
+      <tr><td>entry_type</td><td>release, or revision for an update shipped under the same model name.</td></tr>
+      <tr><td>availability_class</td><td>open_weights, public_api, or public_service (a product people can sign up for).</td></tr>
+      <tr><td>origin</td><td>How the entry reached the record: backfill-epoch (from Epoch AI's dataset), nightly-pipeline (found by nightly detection, approved by hand), or manual (recorded by hand).</td></tr>
+      <tr><td>parameters</td><td>Total parameter count. NOT_DISCLOSED here means no count is on record: the lab stated none we could find, or Epoch AI's dataset has none.</td></tr>
+      <tr><td>predecessor</td><td>The id of the model this one follows, where the lab or the model family makes it clear. Comparisons against the predecessor are in derived/deltas.json.gz.</td></tr>
+      <tr><td>system_card, model_card, usage_policy, paper</td><td>A link to the document, NOT_DISCLOSED (we checked the lab's pages and found none), or NOT_RESEARCHED (not checked yet). Neither absence value means zero.</td></tr>
+      <tr><td>benchmarks</td><td>Scores on GPQA Diamond and SWE-bench Verified only. Each carries its source class (LAB_REPORTED or INDEPENDENT), source URL, benchmark version, retrieval date and test settings. scores.csv has one row per score.</td></tr>
+      <tr><td>sources</td><td>Every page the entry was built from, each with the date we read it.</td></tr>
+      <tr><td>retracted</td><td>true when the entry was withdrawn or corrected; the note says why.</td></tr>
+    </tbody>
+  </table>
+
   <h2>License</h2>
   <p>The published dataset (the gzipped JSON files above) is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/" rel="external">Creative Commons Attribution 4.0 International License (CC-BY 4.0)</a>.</p>
 
@@ -101,9 +147,29 @@
   <blockquote>Epoch AI, "Capabilities &amp; benchmarking". Published online at epoch.ai. Retrieved from <a href="https://epoch.ai/benchmarks" rel="external">https://epoch.ai/benchmarks</a> [online resource].</blockquote>
   <p>Release dates, lab names, parameter counts and availability come from Epoch AI's models dataset. Independent scores come from Epoch AI's benchmarking data. Both need Epoch's attribution.</p>
 
-  <h2>Attribution for this dataset</h2>
-  <p>If you use the Version Control dataset, please attribute:</p>
-  <blockquote>Version Control, "The release record of the AI model era". Walker Robinson. versioncontrol.walker-robinson.com</blockquote>
+  <h2>Cite this dataset</h2>
+  <p>The record changes as releases are added and corrected, so cite the date you retrieved it.</p>
+  <blockquote>Walker Robinson. Version Control: the release record of the AI model era. Dataset, CC BY 4.0. https://versioncontrol.walker-robinson.com. Record updated <span class="cite-updated">(loads with the dataset)</span>; accessed <span class="cite-accessed">(today)</span>.</blockquote>
+  <pre class="cite-bibtex">@misc{versioncontrol,
+  author       = {Robinson, Walker},
+  title        = {Version Control: the release record of the AI model era},
+  howpublished = {\url{https://versioncontrol.walker-robinson.com}},
+  note         = {Dataset, CC BY 4.0. Record updated <span class="cite-updated">(loads with the dataset)</span>; accessed <span class="cite-accessed">(today)</span>},
+  year         = {2026}
+}</pre>
+  <script>
+    (function () {
+      var today = new Date().toISOString().slice(0, 10);
+      document.querySelectorAll(".cite-accessed").forEach(function (el) { el.textContent = today; });
+      ["./data/derived/site_meta.json", "../data/derived/site_meta.json"].reduce(function (p, url) {
+        return p.catch(function () {
+          return fetch(url).then(function (r) { if (!r.ok) { throw 0; } return r.json(); });
+        });
+      }, Promise.reject()).then(function (m) {
+        document.querySelectorAll(".cite-updated").forEach(function (el) { el.textContent = m.last_successful_update; });
+      }).catch(function () {});
+    })();
+  </script>
 
   <h2>What the dataset does not contain</h2>
   <p>OpenRouter's catalog is not in the dataset, and the site does not show its prices or context lengths. Prices quoted in an entry's summary are the lab's own figures. Artificial Analysis data is not in the dataset either: we use it only for an internal check of which models we might be missing.</p>
@@ -115,7 +181,7 @@
 <footer class="site-foot">
   <div class="wrap">
     <p class="update" id="foot-update">Last successful update loads with the dataset.</p>
-    <p>Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>. Dataset licensed CC-BY 4.0 with Epoch AI attribution. <a href="./data.html">Download the dataset</a>. <a href="https://github.com/wrobinson127/versioncontrol/issues/new" rel="external">Report an error</a>.</p>
+    <p>Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>. Dataset licensed CC-BY 4.0 with Epoch AI attribution. <a href="./data.html">Download the dataset</a>. <a href="https://github.com/wrobinson127/versioncontrol/issues/new" rel="external">Report an error</a>. <a href="https://github.com/wrobinson127/versioncontrol" rel="external">Source on GitHub</a>.</p>
   </div>
 </footer>
 
