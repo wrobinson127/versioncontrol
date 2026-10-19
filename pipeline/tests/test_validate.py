@@ -197,3 +197,10 @@ def test_validate_has_an_entry_point():
     # it once had none: `python -m pipeline.validate` checked nothing and
     # exited 0 while being cited as a gate
     assert callable(validate.main)
+
+
+def test_lab_announcement_must_be_on_the_labs_domain():
+    e = copy.deepcopy(_entries()[0])
+    e["sources"] = [{"kind": "lab_announcement", "url": "https://openrouter.ai/x/y",
+                     "retrieval_date": "2026-10-19"}]
+    assert any("not on the lab's own domain" in m for m in validate.validate_entry(e))
