@@ -277,7 +277,8 @@
     if (e.sources && e.sources.length) {
       var srcLinks = e.sources.map(function (src) {
         return '<a href="' + esc(src.url) + '" rel="external">' + esc(SOURCE_KIND_NAMES[src.kind] || src.kind.replace(/_/g, " ")) +
-          "</a> (retrieved " + esc(src.retrieval_date) + ")";
+          "</a> (retrieved " + esc(src.retrieval_date) +
+          (src.archived_url ? ', <a href="' + esc(src.archived_url) + '" rel="external">archived copy</a>' : "") + ")";
       });
       foot.push("Sources: " + srcLinks.join(", "));
     }
