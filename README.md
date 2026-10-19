@@ -1,6 +1,6 @@
 # Version Control
 
-**The release record of the AI model era.** Version Control is a public registry of major AI model releases: what shipped, what changed against the predecessor, what the lab disclosed, and where every number comes from. It tracks the versions of frontier AI models, not source code, and it is not an MLOps tool.
+**The release record of the AI model era.** Version Control is a public registry of AI model releases from twelve tracked labs: what shipped, what changed against the predecessor, what the lab disclosed, and where every number comes from. It tracks releases of AI models. (It is not a software version-control tool.)
 
 Live site: [versioncontrol.walker-robinson.com](https://versioncontrol.walker-robinson.com) (goes live at launch; the site in `site/` renders the committed dataset).
 
@@ -14,9 +14,11 @@ Every number tells you where it came from, or it does not appear. Every benchmar
 2. **Correlation.** Signals cluster into candidate release events; sibling repositories collapse into one event; anything already in the record is suppressed (`pipeline/correlate.py`).
 3. **Drafting.** On detection-positive nights a small language model drafts a structured entry under a hard monthly spend cap; drafts must pass a registrar-voice lint before they attach (`pipeline/extract.py`, `pipeline/lint_voice.py`, `pipeline/spend.py`).
 4. **Human approval.** Candidates queue on a review branch. Nothing publishes without explicit approval; merging the branch is publication (`pipeline/pending.py`, `pipeline/promote.py`).
-5. **The record.** Entries reaching back to 2022-11-30: seeded from Epoch AI's CC-BY data, with independent benchmark numbers from Epoch's Benchmarking Hub, and extended by the nightly pipeline. Committed data is gzipped aggregates plus a checksummed manifest (`data/`), guarded against drift in CI.
+5. **The record.** Entries reaching back to 2022-11-30: seeded from Epoch AI's CC-BY data, with independent benchmark numbers from Epoch AI's "Capabilities & benchmarking" data, and extended by the nightly pipeline. Committed data is gzipped aggregates plus a checksummed manifest (`data/`), guarded against drift in CI.
 
 Tests: `python -m pytest pipeline/tests` (170 tests). CI runs them plus the manifest-drift guard on every push (`.github/workflows/ci.yml`).
+
+Where AI tools were used, and who approves what, is set out under "Who decides, and how" in `docs/METHODOLOGY.md`. To report an error in the record, open an issue: https://github.com/wrobinson127/versioncontrol/issues/new
 
 ## Licensing
 
