@@ -57,9 +57,24 @@ yearly = {y["year"]: y["releases"] for y in V["cadence"]["yearly"]}
 # benchmark measured both ways). The content pass (2026-07-20) brought these to 5.
 _pairs = {}
 BENCH_LABEL = {"gpqa-diamond": "GPQA Diamond", "swe-bench-verified": "SWE-Bench Verified"}
+# The source line names the date each Epoch dataset was retrieved. It comes
+# from the entries' own retrieval dates, never from AS_OF: the derive date
+# says when we computed, not when Epoch's rows were read, and printing it as a
+# retrieval date was a false provenance statement (audit 1.10).
+_epoch_models_rd = []   # sources of kind epoch_csv ("Data on AI models")
+_epoch_bench_rd = []    # INDEPENDENT scores (Epoch's benchmarking data)
+avail_by_entry = {}
 for yr in ["2022", "2023", "2024", "2025", "2026"]:
     for e in json.loads(gzip.decompress((ROOT / f"data/entries/{yr}.json.gz").read_bytes())):
         param_by_entry[e["id"]] = e.get("parameters") not in (None, "NOT_DISCLOSED", "")
+        avail_by_entry[e["id"]] = e.get("availability_class")
+        for s in e.get("sources", []):
+            if s.get("kind") == "epoch_csv" and s.get("retrieval_date"):
+                _epoch_models_rd.append(s["retrieval_date"])
+        for b in e.get("benchmarks", []):
+            pv = b.get("provenance", {})
+            if pv.get("source_class") == "INDEPENDENT" and pv.get("retrieval_date"):
+                _epoch_bench_rd.append(pv["retrieval_date"])
         bb = defaultdict(dict)
         for b in e.get("benchmarks", []):
             bb[b["benchmark"]][b["provenance"]["source_class"]] = b
@@ -77,6 +92,23 @@ for p in PAIRS:
     lc = (p["labcfg"] or "").strip()
     p["cfg"] = f"lab {lc[:22]} &#183; ind Epoch default" if lc else "lab reported &#183; ind Epoch default"
     p["benchlabel"] = BENCH_LABEL.get(p["bench"], p["bench"])
+
+RD_MODELS = max(_epoch_models_rd) if _epoch_models_rd else None
+RD_BENCH = max(_epoch_bench_rd) if _epoch_bench_rd else None
+if RD_MODELS and RD_MODELS == RD_BENCH:
+    SOURCE_LINE = (f"Releases: Epoch AI, Data on AI models &#183; independent scores: "
+                   f"Epoch AI, Capabilities &amp; benchmarking &#183; both retrieved {RD_MODELS}")
+else:
+    SOURCE_LINE = (f"Releases: Epoch AI, Data on AI models, retrieved {RD_MODELS} &#183; "
+                   f"independent scores: Epoch AI, Capabilities &amp; benchmarking, retrieved {RD_BENCH}")
+
+NUMWORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven",
+            8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen",
+            14: "fourteen", 15: "fifteen", 16: "sixteen"}
+def nword(n): return NUMWORDS.get(n, str(n))
+N_LABS = len(REG)
+REPORT_URL = "https://github.com/wrobinson127/versioncontrol/issues/new"
+SCOPE_T = f"Every release from {nword(N_LABS)} tracked labs since ChatGPT"
 
 DAY0 = "2022-11-30"
 def dd(d): return (date.fromisoformat(d) - date.fromisoformat(DAY0)).days
@@ -304,8 +336,8 @@ for v in [0, 25, 50, 75, 100]:
     yy = y_traj(v)
     ax_traj += (f'<line x1="{X0}" y1="{yy:.1f}" x2="{X1}" y2="{yy:.1f}" class="scoregrid"/>'
                 f'<text x="{X0-10}" y="{yy+3:.1f}" text-anchor="end" class="scoreax">{v}</text>')
-ax_traj += f'<text x="{X0-10}" y="{TOP-16}" text-anchor="end" class="axunit">GPQA Diamond, 0&#8211;100</text>'
-ax_traj += f'<text x="{X1-4}" y="{TOP+14}" text-anchor="end" class="frontlbl">the frontier: the highest score reached so far</text>'
+ax_traj += f'<text x="{X0-10}" y="{TOP-16}" text-anchor="end" class="axunit">GPQA Diamond, 0 to 100</text>'
+ax_traj += f'<text x="{X1-4}" y="{TOP+14}" text-anchor="end" class="frontlbl">the highest score reached so far</text>'
 _n_total = sum(1 for r in rel if r["org"] in ro)
 ax_traj += f'<text x="{(X0+X1)/2:.1f}" y="{TOP+2}" text-anchor="middle" class="companylbl" id="companylbl"></text>'
 # SWE-Bench Verified axis (same 0-100 grid, different benchmark label)
@@ -314,7 +346,7 @@ for v in [0, 25, 50, 75, 100]:
     yy = y_traj(v)
     ax_swe += (f'<line x1="{X0}" y1="{yy:.1f}" x2="{X1}" y2="{yy:.1f}" class="scoregrid"/>'
                f'<text x="{X0-10}" y="{yy+3:.1f}" text-anchor="end" class="scoreax">{v}</text>')
-ax_swe += f'<text x="{X0-10}" y="{TOP-16}" text-anchor="end" class="axunit">SWE-Bench Verified, 0&#8211;100</text>'
+ax_swe += f'<text x="{X0-10}" y="{TOP-16}" text-anchor="end" class="axunit">SWE-Bench Verified, 0 to 100</text>'
 ax_swe += f'<text x="{X1-4}" y="{TOP+14}" text-anchor="end" class="frontlbl">a second benchmark, also measured by Epoch</text>'
 
 # disclosure axis: year labels + the disclosed SHARE per year (updated per beat
@@ -497,18 +529,30 @@ ax_accel += f'<text x="{X1-4}" y="{TOP+14}" text-anchor="end" class="frontlbl">l
 _sa = _case_series("accel"); _st = _case_series("traj")
 def _stat(kind, o): return _case_stat(kind, o, _sa if kind == "accel" else _st)
 NMSHORT = {"openai": "OpenAI", "anthropic": "Anthropic", "google-deepmind": "Google DeepMind", "alibaba-qwen": "Qwen"}
-ACCEL_COPY = {
- "openai": ("OpenAI", f"From about {_stat('accel','openai')[0]} days between releases to about {_stat('accel','openai')[1]}. Roughly two months down to three weeks."),
- "anthropic": ("Anthropic", f"A similar compression: about {_stat('accel','anthropic')[0]} days between releases early on, about {_stat('accel','anthropic')[1]} lately."),
- "google-deepmind": ("Google DeepMind", f"From about {_stat('accel','google-deepmind')[0]} days to about {_stat('accel','google-deepmind')[1]} between releases, the same downward pull."),
- "alibaba-qwen": ("Qwen", f"Alibaba's Qwen started fast and stayed fast: about {_stat('accel','alibaba-qwen')[0]} days then, about {_stat('accel','alibaba-qwen')[1]} now. The American labs moved toward a similar pace."),
-}
-TRAJ_COPY = {
- "openai": ("OpenAI", f"GPT-4 opened at {_stat('traj','openai')[0]} on GPQA Diamond; the latest OpenAI model on record sits at {_stat('traj','openai')[1]}."),
- "anthropic": ("Anthropic", f"Claude's independently measured score climbed from {_stat('traj','anthropic')[0]} to {_stat('traj','anthropic')[1]} over the same window."),
- "google-deepmind": ("Google DeepMind", f"From {_stat('traj','google-deepmind')[0]} to {_stat('traj','google-deepmind')[1]}. Fewer models on record, the same steep climb."),
- "alibaba-qwen": ("Qwen", f"Qwen rose from {_stat('traj','alibaba-qwen')[0]} to {_stat('traj','alibaba-qwen')[1]}, with open weights the whole way."),
-}
+# Every sentence below is built from the series. The earlier copy carried
+# hand-written claims that the data did not support ("open weights the whole
+# way" ended on an API-only model; "the American labs moved toward a similar
+# pace" grouped labs by country, which the methodology says the story never
+# does). A claim that is not computed here does not appear.
+def _accel_sentence(o):
+    a, b = _stat('accel', o)
+    return f"About {a} days between releases at first, about {b} lately."
+ACCEL_COPY = {o: (NMSHORT.get(o, NM[o]), _accel_sentence(o)) for o in CASE_ORDER}
+
+def _traj_sentence(o):
+    rows = sorted((r["date"], score_by_entry[r["entry_id"]], r["model_name"], r["entry_id"])
+                  for r in rel if r["org"] == o and r["entry_id"] in score_by_entry)
+    (d0, v0, m0, _), (d1, v1, m1, _) = rows[0], rows[-1]
+    s = (f"First independent GPQA Diamond score on record: {v0} ({esc(m0)}, {d0[:4]}). "
+         f"Latest: {v1} ({esc(m1)}, {d1[:4]}).")
+    vmax, mmax = max((v, m) for _, v, m, _ in rows)
+    if vmax != v1:
+        s += f" Highest: {vmax} ({esc(mmax)})."
+    n_open = sum(1 for *_, eid in rows if avail_by_entry.get(eid) == "open_weights")
+    if n_open:
+        s += f" {n_open} of these {len(rows)} scored releases {'has' if n_open == 1 else 'have'} open weights."
+    return s
+TRAJ_COPY = {o: (NMSHORT.get(o, NM[o]), _traj_sentence(o)) for o in CASE_ORDER}
 # per-lab SWE-Bench Verified copy (the company-specific second-benchmark climb).
 # n>=3 reads as a trajectory; n==2 is stated as two scores on record, not a trend.
 def _swe_copy(o):
@@ -531,17 +575,66 @@ for r in rel:
         traj_yr_vals[r["date"][:4]].append(score_by_entry[r["entry_id"]])
 def _tmax(y): return round(max(traj_yr_vals[y])) if traj_yr_vals.get(y) else 0
 def _tn(y): return len(traj_yr_vals.get(y, []))
+# Per-year pulse facts, all computed: how many tracked labs released that
+# year, which labs appear for the first time, the pooled median gap between
+# consecutive releases, and the most releases in any one week.
+_rel_t = [r for r in rel if r["org"] in ro]
+_labs_by_y = defaultdict(set); _first_y = {}
+for r in _rel_t:
+    _labs_by_y[r["date"][:4]].add(r["org"])
+    _first_y.setdefault(r["org"], r["date"][:4])
+_dates_all = sorted(r["date"] for r in _rel_t)
+_gaps_by_y = defaultdict(list)
+for _a, _b in zip(_dates_all, _dates_all[1:]):
+    _gaps_by_y[_b[:4]].append((date.fromisoformat(_b) - date.fromisoformat(_a)).days)
+def _median(v):
+    v = sorted(v); n = len(v)
+    if not n: return None
+    m = v[n // 2] if n % 2 else (v[n // 2 - 1] + v[n // 2]) / 2
+    return int(m) if float(m).is_integer() else m
+MEDGAP = {y: _median(v) for y, v in _gaps_by_y.items()}
+def _busiest_week(y):
+    wk = defaultdict(int)
+    for d in _dates_all:
+        if d[:4] == y:
+            iso = date.fromisoformat(d).isocalendar(); wk[(iso[0], iso[1])] += 1
+    return max(wk.values()) if wk else 0
+def _list_names(orgs):
+    names = [NM[o] for o in REG if o in orgs]
+    if len(names) <= 1: return "".join(names)
+    return ", ".join(names[:-1]) + " and " + names[-1]
+def _pulse_note(y):
+    n_labs = len(_labs_by_y.get(y, ()))
+    s = (f"All {nword(N_LABS)} tracked labs released at least one model." if n_labs == N_LABS
+         else f"{n_labs} of the {nword(N_LABS)} tracked labs released at least one model.")
+    new = [o for o, fy in _first_y.items() if fy == y]
+    if new and y > slots[0]:
+        s += f" First on record this year: {_list_names(new)}."
+    if MEDGAP.get(y) is not None:
+        s += f" Median time between one release and the next: {MEDGAP[y]} days."
+    bw = _busiest_week(y)
+    if bw > 1:
+        s += f" The busiest week brought {bw} releases."
+    return s
+# the partial current year is set against the same span of the year before
+_as_of_d = date.fromisoformat(AS_OF)
+_cur_y = AS_OF[:4]; _prev_y = str(int(_cur_y) - 1)
+_cur_n = sum(1 for d in _dates_all if d[:4] == _cur_y and d <= AS_OF)
+_prev_cut = f"{_prev_y}{AS_OF[4:]}" if AS_OF[5:] != "02-29" else f"{_prev_y}-02-28"
+_prev_n = sum(1 for d in _dates_all if d[:4] == _prev_y and d <= _prev_cut)
+_PARTIAL_NOTE = (f"A partial year: {_cur_n} releases by {AS_OF}. By the same date in {_prev_y} "
+                 f"there were {_prev_n}.")
 PULSE_NOTES = [
- ("2023", f'2023 &#183; {yearly["2023"]} releases', "The first full year after ChatGPT. A handful of labs, often weeks or months between models."),
- ("2024", f'2024 &#183; {yearly["2024"]} releases', "More than double 2023. New labs enter the record, and the time between releases shrinks."),
- ("2025", f'2025 &#183; {yearly["2025"]} releases', "The busiest year on record. In some weeks several models arrive at once."),
- ("2026", f'2026 &#183; {yearly["2026"]} so far', "A partial year, already tracking the 2025 pace."),
+ ("2023", f'2023 &#183; {yearly["2023"]} releases', "The first full year after ChatGPT. " + _pulse_note("2023")),
+ ("2024", f'2024 &#183; {yearly["2024"]} releases', _pulse_note("2024")),
+ ("2025", f'2025 &#183; {yearly["2025"]} releases', _pulse_note("2025")),
+ ("2026", f'2026 &#183; {yearly["2026"]} so far', _PARTIAL_NOTE + " " + _pulse_note("2026")),
 ]
 TRAJ_NOTES = [
- ("2023", "2023", f"The first {_tn('2023')} independent scores land, reaching {_tmax('2023')} on GPQA Diamond."),
- ("2024", "2024", f"{_tn('2024')} more measured this year; the highest independent score climbs to {_tmax('2024')}."),
- ("2025", "2025", f"{_tn('2025')} measured; the frontier reaches {_tmax('2025')}."),
- ("2026", "2026", f"{_tn('2026')} so far, topping out at {_tmax('2026')}."),
+ ("2023", "2023", f"The first {_tn('2023')} independent scores on record; the highest is {_tmax('2023')} on GPQA Diamond."),
+ ("2024", "2024", f"{_tn('2024')} scored this year; the highest is {_tmax('2024')}."),
+ ("2025", "2025", f"{_tn('2025')} scored this year; the highest is {_tmax('2025')}."),
+ ("2026", "2026", f"{_tn('2026')} scored so far; the highest is {_tmax('2026')}."),
 ]
 mark_dates = sorted(r["date"] for r in rel if r["org"] in ro)
 scored_dates = sorted(r["date"] for r in rel if r["org"] in ro and r["entry_id"] in score_by_entry)
@@ -554,19 +647,64 @@ TRAJ_THR = {y: sum(1 for d in scored_dates if d < f"{y}-01-01") for y in ["2023"
 # framed over the columns shown, 2023-2026).
 def _paperpct(y): return round(100 * byyr_pap[y] / byyr_pap_res[y]) if byyr_pap_res[y] else 0
 def _parampct(y): return round(100 * byyr_par[y] / byyr_n[y]) if byyr_n[y] else 0
-DPAPER_NOTE = f"In 2023, {_paperpct('2023')}% of researched releases had a paper on record; by 2026, {_paperpct('2026')}%."
-DPARAM_NOTE = f"In 2023, {_parampct('2023')}% stated a parameter count; by 2026, {_parampct('2026')}%. A separate decline, on a different signal."
+# Every share states its denominator. The paper share divides by releases we
+# have researched for a paper; the parameter share divides by all releases,
+# because a blank parameter cell means Epoch AI's data has no count, not that
+# we checked the lab's pages (audit 1.2). The words say which.
+_D0, _D1 = slots[0], slots[-1]
+DPAPER_NOTE = (f"In {_D0}, {byyr_pap[_D0]} of {byyr_pap_res[_D0]} researched releases had a paper on record "
+               f"({_paperpct(_D0)}%). In {_D1} so far, {byyr_pap[_D1]} of {byyr_pap_res[_D1]} "
+               f"({_paperpct(_D1)}%). Papers can come out weeks after a release, so recent years may rise.")
+DPARAM_NOTE = (f"In {_D0}, {byyr_par[_D0]} of {byyr_n[_D0]} releases had a parameter count in Epoch AI's data "
+               f"({_parampct(_D0)}%). In {_D1} so far, {byyr_par[_D1]} of {byyr_n[_D1]} ({_parampct(_D1)}%). "
+               f"Epoch often adds counts for recent models late, and we have not checked the blanks against the labs' own pages.")
+# system card share by year, from the same derived matrix rows (researched only)
+_sc_dis = defaultdict(int); _sc_res = defaultdict(int)
+for r in V["disclosure_matrix"]["rows"]:
+    if r["org"] not in ro: continue
+    st = r["cells"].get("system_card", "not_researched")
+    if st == "not_researched": continue
+    _sc_res[r["date"][:4]] += 1
+    if st == "disclosed": _sc_dis[r["date"][:4]] += 1
+def _scpct(y): return round(100 * _sc_dis[y] / _sc_res[y]) if _sc_res[y] else 0
+def _moved(a, b): return "rose" if b > a else ("fell" if b < a else "held")
+_PAPER_DIR = _moved(_paperpct(_D0), _paperpct(_D1))
+_PARAM_DIR = _moved(_parampct(_D0), _parampct(_D1))
+_SC_DIR = _moved(_scpct(_D0), _scpct(_D1))
+_DPAPER_T = {"fell": "Fewer arrive with a paper", "rose": "More arrive with a paper"}.get(_PAPER_DIR, "Releases with a paper")
+_DPARAM_T = {"fell": "And fewer have a parameter count on record", "rose": "And more have a parameter count on record"}.get(_PARAM_DIR, "And a parameter count on record")
+CLOSE_NOTE = (f"From {_D0} to {_D1}, the highest independent GPQA Diamond score {_moved(_cap_vals[0], _cap_vals[-1])} "
+              f"from {_cap_vals[0]} to {_cap_vals[-1]}. The share of researched releases with a paper {_PAPER_DIR} "
+              f"from {_paperpct(_D0)}% to {_paperpct(_D1)}%, and the share with a parameter count in Epoch AI's data "
+              f"{_PARAM_DIR} from {_parampct(_D0)}% to {_parampct(_D1)}%. The share with a system card "
+              f"{_SC_DIR} from {_scpct(_D0)}% to {_scpct(_D1)}% ({_sc_dis[_D0]} of {_sc_res[_D0]}, then "
+              f"{_sc_dis[_D1]} of {_sc_res[_D1]}).")
+# the coda's short form (set large on screen); the numbers sit in CLOSE_NOTE
+_cap_dir = _moved(_cap_vals[0], _cap_vals[-1])
+if _PAPER_DIR == "fell" and _PARAM_DIR == "fell":
+    _c2 = "Fewer releases came with a paper or a parameter count on record."
+else:
+    _c2 = (f"The share with a paper {_PAPER_DIR}; the share with a parameter count on record {_PARAM_DIR}.")
+_c3 = "More came with a system card." if _SC_DIR == "rose" else f"The share with a system card {_SC_DIR}."
+CLOSE_SHORT = f"Independent scores {_cap_dir}. {_c2} {_c3}"
+DIV_NOTE = (f"Each stem is one release on one benchmark, graded twice: the ring is the lab's score, the dot is Epoch's. "
+            f"{near} of the {len(PAIRS)} pairs sit within a single point, and the gaps run both ways. "
+            f"These {nword(len(PAIRS))} pairs come from recent major releases, and the lab and Epoch often run "
+            f"different settings (reasoning effort, number of attempts). With so few pairs this is not a test "
+            f"of whether labs overstate. The record keeps both numbers and never averages them.")
+SWE_NOTE = (f"On a second benchmark, SWE-Bench Verified (fixing real GitHub issues), the top score rose from "
+            f"{swe_lo} to {swe_hi} over the same years. Epoch measured these too.")
 NOTES = {
  "pulse": [{"y": y, "h": h, "b": b} for (y, h, b) in PULSE_NOTES],
  "traj":  [{"y": y, "h": h, "b": b} for (y, h, b) in TRAJ_NOTES],
  "accel": {o: {"h": f"{ACCEL_COPY[o][0]}: the wait between releases", "b": ACCEL_COPY[o][1]} for o in CASE_ORDER},
  "climb": {o: {"h": f"{TRAJ_COPY[o][0]}: the independent climb", "b": TRAJ_COPY[o][1]} for o in CASE_ORDER},
- "swe": {"h": "", "b": f"Not one benchmark's story: on SWE-Bench Verified, a software-engineering task, the frontier climbs from {swe_lo} to {swe_hi} over the same window. Still Epoch-measured; a second benchmark, not a second source."},
+ "swe": {"h": "", "b": SWE_NOTE},
  "sclimb": {o: {"h": f"{SWE_CLIMB_COPY[o][0]}: on SWE-Bench", "b": SWE_CLIMB_COPY[o][1]} for o in SWE_CASE_ORDER},
- "div": {"h": "", "b": f"When a lab grades its own model and Epoch grades the same model on the same benchmark, do they match? Each stem is one release: the ring on top is the lab's reported score, the dot below is Epoch's. The stems are short. {near} of the {len(PAIRS)} comparisons sit within a single point, and the gaps run both ways. The record keeps both numbers and never averages them."},
- "dpaper": {"h": "Fewer arrive with a paper", "b": DPAPER_NOTE},
- "dparam": {"h": "And fewer state their size", "b": DPARAM_NOTE},
- "close": {"h": "", "b": "Independent scores rose. Disclosure fell."},
+ "div": {"h": "", "b": DIV_NOTE},
+ "dpaper": {"h": _DPAPER_T, "b": DPAPER_NOTE},
+ "dparam": {"h": _DPARAM_T, "b": DPARAM_NOTE},
+ "close": {"h": "", "b": CLOSE_SHORT},
 }
 # cumulative reveal count at the END of each year (2023..2026); drives the paced
 # populate (fill each year, then DWELL so the reader can read the year box).
@@ -589,66 +727,69 @@ spacers = (_spc("pulse", "spc pop", ' id="popstep"')
 # no-JS / reduced-motion fallback: the notes rendered inline (the sticky overlay is JS-only)
 def _nfb(h, b): return f'<div class="nfb"><h4>{h}</h4><p>{b}</p></div>'
 fallback = ("".join(_nfb(h, b) for (_, h, b) in PULSE_NOTES)
-            + "".join(_nfb(f"{esc(NM[o])}: the acceleration", ACCEL_COPY[o][1]) for o in CASE_ORDER)
+            + "".join(_nfb(NOTES["accel"][o]["h"], ACCEL_COPY[o][1]) for o in CASE_ORDER)
             + "".join(_nfb(h, b) for (_, h, b) in TRAJ_NOTES)
-            + "".join(_nfb(f"{esc(NM[o])}: the climb", TRAJ_COPY[o][1]) for o in CASE_ORDER)
-            + _nfb("A second benchmark", f"On SWE-Bench Verified, a software-engineering task also measured by Epoch, the frontier climbs from {swe_lo} to {swe_hi} over the same window.")
+            + "".join(_nfb(NOTES["climb"][o]["h"], TRAJ_COPY[o][1]) for o in CASE_ORDER)
+            + _nfb("A second benchmark", SWE_NOTE)
             + "".join(_nfb(f"{SWE_CLIMB_COPY[o][0]}: on SWE-Bench", SWE_CLIMB_COPY[o][1]) for o in SWE_CASE_ORDER)
-            + _nfb("What the lab said, beside what Epoch measured", f"Each of {n_pair_models} releases was graded twice on the same benchmark: once by the releasing lab, once independently by Epoch. Across {len(PAIRS)} comparisons the two numbers sit close, {near} of them within a single point, and the gaps run both ways. The record keeps both and averages neither.")
-            + _nfb("Fewer arrive with a paper", DPAPER_NOTE) + _nfb("And fewer state their size", DPARAM_NOTE)
-            + _nfb("The record, in two lines", "Independent scores rose. Disclosure fell."))
+            + _nfb("What the lab said, beside what Epoch measured", f"{n_pair_models} releases were graded twice on the same benchmark: once by the releasing lab, once by Epoch. " + DIV_NOTE)
+            + _nfb(_DPAPER_T, DPAPER_NOTE) + _nfb(_DPARAM_T, DPARAM_NOTE)
+            + _nfb(f"What changed, {_D0} to {_D1}", CLOSE_NOTE))
 
 # META for the sticky instrument header (left). For the populate charts it holds the
 # chart-level frame; the per-year detail lives in the stacking notes on the right.
 _meta = {
-    "pulse": {"n": "Beat 1 of 4", "t": "Every model release since ChatGPT",
+    "pulse": {"n": "Beat 1 of 4", "t": SCOPE_T,
               "te": f'One mark = one model release: which lab shipped it (down the side), and when (across). {tiles["releases_recorded"]} in all.', "h": "hover any mark for its record"},
     "traj": {"n": "Beat 2 of 4", "t": "Benchmark scores, independently measured",
              "te": f'The same marks rise to their GPQA Diamond score, measured by Epoch, not the lab. Of {_n_total}, the {n_scored} with an independent score rise; the rest have none on record.', "h": "hover a mark to light its whole lab"},
-    "swe": {"n": "", "t": "The same climb, on a second benchmark",
-            "te": f'The {n_swe} releases with an independent SWE-Bench Verified score rise to it, measured by Epoch. A different task from GPQA, the same shape. Still one measurer: a second benchmark, not a second source.', "h": "hover a mark for its record"},
+    "swe": {"n": "", "t": "A second benchmark",
+            "te": f'The {n_swe} releases with an independent SWE-Bench Verified score rise to it. A different task from GPQA, and the same measurer: Epoch.', "h": "hover a mark for its record"},
     "div": {"n": "Beat 3 of 4", "t": "What the lab said, beside what Epoch measured",
             "te": f'Each stem is one release measured twice on the same benchmark. The ring at the top is the lab\'s own reported score; the dot at the bottom is Epoch\'s independent measurement. The number is the gap between them, and the axis is zoomed to a few points, so a short stem means the two agree.', "h": "hover a pair for its numbers"},
-    "dpaper": {"n": "Beat 4 of 4", "t": "Fewer arrive with a paper",
+    "dpaper": {"n": "Beat 4 of 4", "t": _DPAPER_T,
                "te": "The same marks, gathered by year. Filled = a paper on record; a dashed slot = researched, none found; a faint slot = not yet researched. The share is of researched releases.", "h": "hover a mark for its record"},
-    "dparam": {"n": "Beat 4 of 4", "t": "And fewer state their size",
-               "te": "Re-sorted by a different disclosure: a stated parameter count. Filled = on record; a dashed slot = none.", "h": "hover a mark for its record"},
-    "close": {"n": "In sum", "t": "The record, in two lines",
-              "te": f'Over the same four years: the highest independent GPQA Diamond score rose from {_cap_vals[0]} to {_cap_vals[-1]}; the share of researched releases with a paper on record fell from {_dis_vals[0]}% to {_dis_vals[-1]}%. Both are percentages, on one axis.', "h": ""},
+    "dparam": {"n": "Beat 4 of 4", "t": _DPARAM_T,
+               "te": "Re-sorted by a different item: whether Epoch AI's data has a parameter count. Filled = a count on record; an empty slot = no count on record. The share is of all releases.", "h": "hover a mark for its record"},
+    "close": {"n": "In sum", "t": f"What changed, {_D0} to {_D1}",
+              "te": CLOSE_NOTE + " The two lines are the highest score and the paper share, both on a 0 to 100 axis.", "h": ""},
 }
-# why these labs: the four with the most releases on record and the widest
-# independent benchmark coverage, so a per-lab trend is well supported. Stated once,
-# on the first case beat, as a plain selection rule (not a ranking of the models).
-_WHY = ("These four labs carry the most releases on record and the widest independent coverage, "
-        "so a per-lab trend is well supported. They span US and Chinese labs, open weights and closed. ")
+# why these labs: stated once, on the first case beat, as counts read from the
+# record. The old sentence ("the most releases on record") was false for
+# Anthropic, so the selection is now described by its numbers, not a rank.
+_case_n = {o: sum(1 for r in rel if r["org"] == o) for o in CASE_ORDER}
+_case_s = {o: sum(1 for r in rel if r["org"] == o and r["entry_id"] in score_by_entry) for o in CASE_ORDER}
+_WHY = ("Four labs with long records and many independent scores: "
+        + ", ".join(f"{NMSHORT.get(o, NM[o])} ({_case_n[o]} releases, {_case_s[o]} scored)" for o in CASE_ORDER)
+        + ". ")
 for k, o in enumerate(CASE_ORDER):
     # numberless: sub-beats don't restart the "of 4" counter (Walker: top-level only)
     _meta[f"accel:{o}"] = {"n": "", "t": f"The wait between releases: {ACCEL_COPY[o][0]}",
-                           "te": (_WHY if k == 0 else "") + "Days between one release and the next, for this lab alone.", "h": "hover any point for its record"}
+                           "te": (_WHY if k == 0 else "") + "Days between one release and the next, for this lab alone. \"At first\" is the median of its first third of gaps on record; \"lately\" is the median of its last third.", "h": "hover any point for its record"}
     _meta[f"climb:{o}"] = {"n": "", "t": f"The independent climb: {TRAJ_COPY[o][0]}",
                            "te": "Each release rises to its independent GPQA Diamond score, measured by Epoch.", "h": "hover any point for its record"}
 for k, o in enumerate(SWE_CASE_ORDER):
     _meta[f"sclimb:{o}"] = {"n": "", "t": f"On SWE-Bench, by lab: {SWE_CLIMB_COPY[o][0]}",
-                            "te": (("The same labs on a second benchmark. Qwen's independent SWE-Bench coverage is too thin to trace, so it steps out here. " if k == 0 else "")
+                            "te": ((f"The same labs on a second benchmark. Qwen has {len(swe_org_vals['alibaba-qwen'])} independent SWE-Bench Verified {'score' if len(swe_org_vals['alibaba-qwen']) == 1 else 'scores'} on record, so it steps out here. " if k == 0 and 'alibaba-qwen' not in SWE_CASE_ORDER else "")
                                    + "Each release rises to its independent SWE-Bench Verified score, measured by Epoch."), "h": "hover any point for its record"}
 metajs = json.dumps(_meta)
 swecorderjs = json.dumps(SWE_CASE_ORDER)
 
 HTML = f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Version Control: the record of the model era</title>
-<meta name="description" content="One transforming canvas: {tiles["releases_recorded"]} AI model releases since ChatGPT. Independent scores rise as disclosure falls, every number traced to its source.">
+<title>Version Control: the release record of the AI model era</title>
+<meta name="description" content="{tiles["releases_recorded"]} AI model releases from {nword(N_LABS)} labs since ChatGPT: when they shipped, how they scored, and what each lab published.">
 <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
 <link rel="canonical" href="https://versioncontrol.walker-robinson.com/story.html">
-<meta property="og:title" content="Version Control: the record of the model era">
-<meta property="og:description" content="One transforming canvas of every model release since ChatGPT. Scores rise, disclosure falls.">
+<meta property="og:title" content="Version Control: the release record of the AI model era">
+<meta property="og:description" content="{tiles["releases_recorded"]} AI model releases from {nword(N_LABS)} labs since ChatGPT: when they shipped, how they scored, and what each lab published.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://versioncontrol.walker-robinson.com/story.html">
 <meta property="og:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Version Control: the record of the AI model era">
-<meta name="twitter:description" content="One transforming canvas of every model release since ChatGPT. Scores rise, disclosure falls.">
+<meta name="twitter:title" content="Version Control: the release record of the AI model era">
+<meta name="twitter:description" content="{tiles["releases_recorded"]} AI model releases from {nword(N_LABS)} labs since ChatGPT: when they shipped, how they scored, and what each lab published.">
 <meta name="twitter:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
 <style>
 :root{{--paper:#f1f3e9;--surface:#f8f9f1;--surface-edge:#dde1cd;--ink:#1d211a;--ink-muted:#57604e;
@@ -940,7 +1081,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
   .nbox{{opacity:1;transform:none;margin-bottom:8px}}}}
 </style></head>
 <body>
-<a class="skip" href="#end">Skip to the end state</a>
+<a class="skip" href="#end">Skip to the summary</a>
 <nav class="storynav" aria-label="Site">
   <a class="storynav-brand" href="./index.html">Version Control</a>
   <div class="storynav-links">
@@ -957,17 +1098,17 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
 <section class="hero" id="hero">
   <div class="hero-inner">
     <p class="hero-head">A public registry of AI model releases.<br>From {_hero_first_n} in {_hero_first_y} to {_hero_last_n} in {_hero_last_y}.</p>
-    <svg class="hero-viz" viewBox="0 0 {HVZ_W} {HVZ_H}" role="img" aria-label="Bar chart of AI model releases logged per year: {_hb_aria}. The count rises through each complete year; 2026 is a partial year.">{hero_bars}</svg>
+    <svg class="hero-viz" viewBox="0 0 {HVZ_W} {HVZ_H}" role="img" aria-label="Bar chart of AI model releases logged per year: {_hb_aria}. 2026 is a partial year.">{hero_bars}</svg>
     <div class="hero-scroll"><span>Scroll &#8595;</span></div>
   </div>
 </section>
 <div class="scrolly">
   <div class="stage-col"><div class="instrument">
-    <div class="ctitle" id="ctitle">Every model release since ChatGPT</div>
-    <p class="teach" id="teach">One mark = one model release, placed by lab (down the side) and by date (across). The record opens at ChatGPT's launch; {tiles["releases_recorded"]} releases follow.</p>
+    <div class="ctitle" id="ctitle">{SCOPE_T}</div>
+    <p class="teach" id="teach">One mark = one model release, placed by lab (down the side) and by date (across). The record opens at ChatGPT's launch: {tiles["releases_recorded"]} releases in all, ChatGPT included.</p>
     <div class="controls" id="controls"><span class="clab" id="hint">hover any mark for its record</span></div>
     <svg class="canvas" id="canvas" data-beat="pulse" viewBox="0 0 {W} {H}" role="img"
-      aria-label="One canvas of {tiles["releases_recorded"]} release marks moving between four views: the release timeline, independent benchmark scores, the gap between lab-reported and independent numbers, and the yearly disclosure decline. Across the four years, the highest independent score rises while the share of researched releases with a paper on record falls. The full narrative in words follows below.">
+      aria-label="One chart of {tiles["releases_recorded"]} release marks moving between four views: the release timeline, independent benchmark scores, the gap between lab-reported and independent numbers, and yearly disclosure shares. The full narrative in words follows below.">
       <g class="yrbands">{yrbands}</g>
       <g class="axis-shared">{years}</g>
       <g class="ax-pulse">{ax_pulse}</g>
@@ -986,26 +1127,26 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
       <g class="divg">{divg}</g>
       <g class="closelines">{closelines}</g>
     </svg>
-    <div class="bignum" id="bignum" aria-hidden="true"><b id="bignumN">1</b><small>releases on record</small></div>
-    <div class="source" id="src">Releases: Epoch AI, Data on AI Models &#183; independent scores: Epoch AI Benchmarking Hub &#183; retrieved {AS_OF}</div>
+    <div class="bignum" id="bignum" aria-hidden="true"><b id="bignumN">1</b><small id="bignumS">release on record</small></div>
+    <div class="source" id="src">{SOURCE_LINE}</div>
   </div></div>
   <div class="notecol">
     <div class="notewrap" id="notewrap" aria-live="polite"></div>
     <div class="notetrack">{spacers}</div>
-    <div class="nfallback"><h2>The record in words</h2><p>A text version of each view below. For every entry as a filterable table with full provenance, see <a href="./index.html">the timeline explorer</a>.</p>{fallback}</div>
+    <div class="nfallback"><h2>The record in words</h2><p>A text version of each view below. For every entry as a filterable list with its sources, see <a href="./index.html">the timeline explorer</a>.</p>{fallback}</div>
   </div>
 </div>
 <div class="note" id="end">
   <div class="endsum">
     <h2 class="endsum-h">What the record shows, in four findings</h2>
     <ul class="endsum-list">
-      <li><b>Cadence</b>{yearly["2023"]} releases in 2023, {yearly["2025"]} in 2025. The time between one release and the next shrank every year through 2025.</li>
-      <li><b>Independent scores</b>The highest independent GPQA Diamond score rose from {_cap_vals[0]} to {_cap_vals[-1]}; SWE-Bench Verified from {swe_lo} to {swe_hi}. Every figure measured by Epoch.</li>
-      <li><b>Lab beside independent</b>{n_pair_models} releases were graded both ways; {near} of {len(PAIRS)} comparisons fall within a single point. Both numbers are kept, neither is averaged.</li>
-      <li><b>Disclosure</b>Releases arriving with a paper on record fell from {_dis_vals[0]}% to {_dis_vals[-1]}%; those stating a parameter count from {_parampct("2023")}% to {_parampct("2026")}%.</li>
+      <li><b>Cadence</b>{yearly["2023"]} releases in 2023, {yearly["2025"]} in 2025. Pooled across the {nword(N_LABS)} labs, the median time between one release and the next was {MEDGAP["2023"]} days in 2023, {MEDGAP["2024"]} in 2024 and {MEDGAP["2025"]} in 2025.</li>
+      <li><b>Independent scores</b>The highest independent GPQA Diamond score went from {_cap_vals[0]} to {_cap_vals[-1]}; SWE-Bench Verified from {swe_lo} to {swe_hi}. Every figure measured by Epoch.</li>
+      <li><b>Lab beside independent</b>{n_pair_models} releases were graded both ways, giving {len(PAIRS)} pairs; {near} fall within a single point. That is too few pairs, run at different settings, to test whether labs overstate. Both numbers are kept, neither is averaged.</li>
+      <li><b>Disclosure</b>With a paper on record: {byyr_pap[_D0]} of {byyr_pap_res[_D0]} researched releases in {_D0} ({_paperpct(_D0)}%), {byyr_pap[_D1]} of {byyr_pap_res[_D1]} in {_D1} so far ({_paperpct(_D1)}%). With a parameter count in Epoch AI's data: {_parampct(_D0)}%, then {_parampct(_D1)}%. With a system card: {_scpct(_D0)}%, then {_scpct(_D1)}%.</li>
     </ul>
   </div>
-  <p class="endstance"><b>The record is public, and it maintains itself.</b> It re-checks its sources nightly, drafts candidate entries, and waits for a person to approve them; nothing publishes on its own. Every number carries its provenance, or it does not appear.</p>
+  <p class="endstance"><b>The record is public.</b> Each night it checks its sources and drafts new entries, and a person approves each one before it appears. Every number shows where it came from, or it is left out.</p>
   <div class="readmore">
     <h2 class="readmore-h">Read more</h2>
     <div class="enddoors">
@@ -1015,7 +1156,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
       <a class="enddoor" href="./data.html"><b>Data</b><span>download the dataset, CC-BY 4.0 &#8594;</span></a>
     </div>
   </div>
-  <span class="protonote">Parameter values are counts on record; a small share are Epoch estimates, footnoted in methodology. Data current as of {AS_OF}.</span></div>
+  <span class="protonote">Parameter counts come from Epoch AI's data, and a few are Epoch's own estimates; the methodology says how many. Data current as of {AS_OF}. <a href="{REPORT_URL}">Report an error</a>.</span></div>
 </div>
 <div class="hovertip" id="tip"></div>
 <script>
@@ -1166,12 +1307,13 @@ document.documentElement.classList.add("js");
 // links out of tab order so sighted keyboard focus never lands on a clipped element
 // (WCAG 2.4.7). The same destinations are reachable via the visible closing doors.
 [].forEach.call(document.querySelectorAll(".nfallback a"),function(a){{a.tabIndex=-1;}});
-var instrument=document.querySelector(".instrument"),bignum=document.getElementById("bignum"),bignumN=document.getElementById("bignumN"),popstep=document.getElementById("popstep");
+var instrument=document.querySelector(".instrument"),bignum=document.getElementById("bignum"),bignumN=document.getElementById("bignumN"),bignumS=document.getElementById("bignumS"),popstep=document.getElementById("popstep");
 var NMK=marks.length,revealed=0;
 function reveal(t){{ t=t<0?0:(t>NMK?NMK:t); if(t===revealed)return;
   if(t>revealed){{ for(var i=revealed;i<t;i++) marks[i].classList.add("in"); }}
   else {{ for(var j=t;j<revealed;j++) marks[j].classList.remove("in"); }}
-  revealed=t; if(bignumN) bignumN.textContent=t; }}
+  revealed=t; if(bignumN) bignumN.textContent=t;
+  if(bignumS) bignumS.textContent=(t===1?"release on record":"releases on record"); }}
 function populateScroll(){{ if(!popstep) return;
   var r=popstep.getBoundingClientRect(),vh=innerHeight;
   var p=(vh*0.5-r.top)/(r.height*0.86); p=(p-LEAD)/(1-LEAD); p=p<0?0:(p>1?1:p);
@@ -1229,6 +1371,45 @@ setBeat("pulse");
 <a class="totop" href="#" aria-label="Back to top">&uarr;</a>
 </body></html>
 """
+
+# The template's comments are notes for us, not for readers. They shipped in
+# the served source (View Source) with internal names and typewriter dashes,
+# so the generated page carries none: HTML comments, CSS and JS block
+# comments, and JS line comments are all stripped here.
+import re as _re
+def _strip_js_line_comment(line):
+    q = None; i = 0
+    while i < len(line):
+        c = line[i]
+        if q:
+            if c == "\\": i += 2; continue
+            if c == q: q = None
+        elif c in "'\"`":
+            q = c
+        elif c == "/" and line[i + 1:i + 2] == "/":
+            return line[:i].rstrip()
+        i += 1
+    return line
+
+def strip_comments(html):
+    html = _re.sub(r"<!--.*?-->", "", html, flags=_re.S)
+    html = _re.sub(r"/\*.*?\*/", "", html, flags=_re.S)
+    out = []; in_script = False
+    for line in html.split("\n"):
+        if "<script" in line: in_script = True
+        if in_script:
+            stripped = _strip_js_line_comment(line)
+            if stripped.strip() == "" and line.strip() != "":
+                if "</script>" in line: in_script = False
+                continue
+            line = stripped
+        if "</script>" in line: in_script = False
+        if line.strip() == "" and out and out[-1].strip() == "":
+            continue
+        out.append(line)
+    return "\n".join(out)
+
+HTML = strip_comments(HTML)
 OUT = ROOT / "site" / "story.html"  # the canvas story is now the canonical /story.html (C1)
 _STATS = f"marks={len(rel)} scored={n_scored} pairs={len(PAIRS)}"
 
