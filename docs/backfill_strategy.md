@@ -5,8 +5,8 @@ How the launch timeline was built, what it includes, and what it deliberately re
 ## Sources
 
 - **Epoch AI, "Data on AI Models"** (CC-BY, attribution in `DATA_LICENSE.md`): the spine of the backfill. Captured 2026-07-16: 3,555 rows.
-- **Epoch AI, "AI Benchmarking Hub"** (CC-BY): the only source of benchmark numbers in the backfill, all carrying `INDEPENDENT` provenance. Captured 2026-07-16.
-- No LLM was used anywhere in the backfill. Summaries are deterministic registrar-voice templates that pass the same voice lint as everything else. The budgeted backfill LLM assist (under $5, flagged before spending) was not needed: $0 spent.
+- **Epoch AI, "Capabilities & benchmarking"** (CC-BY; earlier called the AI Benchmarking Hub): the only source of benchmark numbers in the backfill, all carrying `INDEPENDENT` provenance. Captured 2026-07-16.
+- No language model was used anywhere in the backfill entries. Summaries are fixed templates that pass the same voice lint as everything else. The disclosure-link research described below was drafted with AI tools, every URL was fetched, and Walker Robinson approved the rows.
 
 ## Inclusion (the scope test, applied in order)
 
@@ -25,7 +25,7 @@ Per-year entry counts: 2022: 1, 2023: 45, 2024: 98, 2025: 118, 2026: 30.
 
 The pinned pair only: GPQA Diamond and SWE-Bench Verified. The Benchmarking Hub carried 205 evaluation runs for registry-org models. 101 numbers attached to 80 entries (78 GPQA Diamond, 23 SWE-Bench Verified); every one carries `INDEPENDENT` provenance, the hub URL, the exact benchmark version, the retrieval date, and the verbatim hub model string as its configuration.
 
-The join is deliberately conservative, and its refusals are the point:
+The join refuses a match whenever it is unsure:
 
 - **Revision-aware routing.** A date-stamped evaluation (`gpt-4o-2024-11-20`, `DeepSeek-V3-0324`) attaches to the entry whose date falls within 45 days of the stamp, which routes snapshot evaluations to the matching revision entry, never to the original release. A stamp matching no entry within the window attaches nowhere.
 - **Variants never inherit.** A `gpt-5-mini` score cannot land on the GPT-5 entry; tier and mode tokens (mini, nano, flash, thinking, turbo, exp) are never stripped during matching because they name different models.
@@ -39,12 +39,12 @@ The join is deliberately conservative, and its refusals are the point:
 
 Backfilled entries carry a paper link where Epoch's data recorded an arXiv link for the release; every other artifact (system card, model card, usage policy) is `NOT_DISCLOSED` in the entry pending review of the curated tables. The per-lab draft tables in `content/disclosure_links/` (278 rows across 12 labs) hold the drafted content pass: 126 major releases researched against the labs' own sites, 335 artifact URLs each fetched live and verified on 2026-07-16, 206 artifact cells recorded as `NOT_DISCLOSED` with a stated justification, and the remainder left blank and marked not researched. At the time of the backfill every row was `DRAFT_FLAGGED`: nothing publishes from these tables until a row is approved. Rows have since been reviewed and approved onto the record through the content pass.
 
-Findings from the research pass worth knowing when reviewing: OpenAI publishes system cards but no standalone model cards; Anthropic's system-cards hub lists nothing earlier than Claude 2; Google publishes model cards and technical reports but nothing in system-card format; Meta publishes model cards in its GitHub repos and blocks scripted fetches of ai.meta.com; xAI's safety index omits at least one card it actually published; Amazon has withdrawn its Titan service cards (the URLs now 404), so those cells are blank rather than asserted absent.
+Findings from the research pass that affect how to read the cells: OpenAI publishes system cards but no standalone model cards; Anthropic's system-cards hub lists nothing earlier than Claude 2; Google publishes model cards and technical reports but nothing in system-card format; Meta publishes model cards in its GitHub repos and blocks scripted fetches of ai.meta.com; xAI's safety index omits at least one card it actually published; Amazon has withdrawn its Titan service cards (the URLs now 404), so those cells are blank rather than asserted absent.
 
 ## Known limits
 
 - **ChatGPT is recorded by hand.** Epoch's dataset carries no ChatGPT row (its nearest neighbour is a blank-organization GPT-3.5 row, refused by the registry filter), so the backfill alone would have opened the record on ChatGPT's release date without ChatGPT in it. The entry was therefore sourced by hand and carries `origin: manual`, which also keeps it through rebuilds that replace the captured record wholesale.
-- **Upstream errors are corrected in the open, never silently.** Epoch dates OpenAI's Operator 2023-01-23; the product shipped 2025-01-23 (Epoch's own Computer-Using Agent row carries the correct date). The backfill applies a documented correction map (`UPSTREAM_CORRECTIONS` in `pipeline/backfill.py`); the corrected entry states the original value and the evidence in a rendered correction note. The row is also worth reporting upstream.
+- **Upstream errors are corrected in the open, never silently.** Epoch dates OpenAI's Operator 2023-01-23; the product shipped 2025-01-23 (Epoch's own Computer-Using Agent row carries the correct date). The backfill applies a documented correction map (`UPSTREAM_CORRECTIONS` in `pipeline/backfill.py`); the corrected entry states the original value and the evidence in a rendered correction note. The row should also be reported to Epoch.
 
 - **Predecessor chains are heuristic** (same organization, same coarse model family, nearest earlier entry; 105 of 292 entries are chained). A wrong chain can suppress or misdirect a delta chip but can never fabricate a comparison: delta computation independently requires identical benchmark, version, and provenance class, and refuses everything else.
 - **Meta's announcement surfaces block scripted fetches** (HTTP 400, verified 2026-07-16), so Meta entries lean entirely on Epoch data.

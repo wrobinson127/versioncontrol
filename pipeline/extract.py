@@ -178,6 +178,15 @@ def extract_candidate(candidate: dict, announcement_html: str, run_date: str,
         # characters are enough to tell those apart without pasting a page.
         head = " ".join(raw.split())[:120]
         return None, f"extraction output rejected: {e} | output began: {head!r}"
+    if (not draft.get("third_party_source")
+            and re.search(r"artificial\s*analysis", announcement_html or "", re.I)):
+        # A lab page can quote another evaluator's numbers in its own table
+        # (Meta's Muse Spark Open card takes GPQA Diamond from Artificial
+        # Analysis). The page is the lab's, so the class cannot be decided
+        # here; a person checks each figure's footnote (Phase 3 review).
+        draft["review_note"] = (
+            "the lab page mentions Artificial Analysis: check each benchmark "
+            "figure's footnote before approving it as LAB_REPORTED.")
     violations = lint_voice.lint_entry_prose(draft)
     if violations and all(v["context"] == "summary" for v in violations):
         # Only the prose failed. Throwing the whole draft away cost four
@@ -308,9 +317,14 @@ def parse_extraction(raw_json: str, announcement_url: str,
         draft["disclosure_links"] = {a: "NOT_RESEARCHED"
                                      for a in DISCLOSURE_ARTIFACTS}
         draft["third_party_source"] = True
+        # The summary goes too: it is the field that carried "Anthropic
+        # reports ... Intelligence Index (56.0)", an Artificial Analysis
+        # figure, as the lab's own words (Phase 3 review). A reviewer writes
+        # it from the lab's page instead; promote refuses a null summary.
+        draft["summary"] = None
         draft["review_note"] = (
             f"drafted from {config.url_host(announcement_url) or 'an unknown host'},"
             f" which is not a {org or 'registry lab'} domain; {dropped} "
-            f"benchmark figure(s) and all links dropped. Check the summary for "
-            f"claims attributed to the lab and re-anchor on the lab's own page.")
+            f"benchmark figure(s), all links and the summary dropped. "
+            f"Re-anchor on the lab's own page and write the summary from it.")
     return draft

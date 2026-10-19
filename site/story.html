@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Version Control: the record of the model era</title>
-<meta name="description" content="One transforming canvas: 352 AI model releases since ChatGPT. Independent scores rise as disclosure falls, every number traced to its source.">
+<title>Version Control: the release record of the AI model era</title>
+<meta name="description" content="352 AI model releases from twelve labs since ChatGPT: when they shipped, how they scored, and what each lab published.">
 <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg">
 <link rel="canonical" href="https://versioncontrol.walker-robinson.com/story.html">
-<meta property="og:title" content="Version Control: the record of the model era">
-<meta property="og:description" content="One transforming canvas of every model release since ChatGPT. Scores rise, disclosure falls.">
+<meta property="og:title" content="Version Control: the release record of the AI model era">
+<meta property="og:description" content="352 AI model releases from twelve labs since ChatGPT: when they shipped, how they scored, and what each lab published.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://versioncontrol.walker-robinson.com/story.html">
 <meta property="og:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Version Control: the record of the AI model era">
-<meta name="twitter:description" content="One transforming canvas of every model release since ChatGPT. Scores rise, disclosure falls.">
+<meta name="twitter:title" content="Version Control: the release record of the AI model era">
+<meta name="twitter:description" content="352 AI model releases from twelve labs since ChatGPT: when they shipped, how they scored, and what each lab published.">
 <meta name="twitter:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
 <style>
 :root{--paper:#f1f3e9;--surface:#f8f9f1;--surface-edge:#dde1cd;--ink:#1d211a;--ink-muted:#57604e;
@@ -31,12 +31,10 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);f
 .mast-asof{color:var(--ink);font-weight:600}
 .scrolly{display:grid;grid-template-columns:minmax(0,2.75fr) 320px;gap:44px;margin-top:20px}
 .stage-col{position:sticky;top:var(--nav-h);height:calc(100vh - var(--nav-h));display:flex;flex-direction:column;justify-content:center;align-self:start}
-/* persistent top nav: a slim sticky bar that stays through the whole scroll (Walker
-   #6). The tall masthead below it scrolls away; this keeps the section links reachable. */
+
 .storynav{position:sticky;top:0;z-index:45;background:var(--paper);border-bottom:1px solid var(--ink);display:flex;justify-content:space-between;align-items:center;gap:16px;padding:0 26px;height:var(--nav-h)}
 .storynav-brand{font-family:var(--slab);font-weight:700;color:var(--ink);text-decoration:none;font-size:15px;white-space:nowrap}
-/* The bar is a fixed height, so nothing in it may wrap: a wrapped brand or a
-   second row of links overflows the bar rather than growing it. */
+
 .storynav-links{display:flex;gap:15px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
 .storynav-links::-webkit-scrollbar{display:none}
 .storynav-links a{white-space:nowrap}
@@ -56,27 +54,21 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);f
 .controls button:last-child{border-right:0}.controls button.on{background:var(--verified);color:var(--paper)}
 
 .rmk{fill:var(--verified);transform-box:fill-box;transform-origin:center;transition:transform 820ms var(--ease),opacity 480ms var(--ease),fill 300ms;opacity:0.9}
-/* populate-on-scroll: during the pulse, marks not yet revealed are hidden. Gated
-   on html.js so a no-JS reader still sees the full chart (fallback = static). */
+
 html.js .canvas[data-beat="pulse"] .rmk:not(.in){opacity:0;transition:opacity 300ms var(--ease)}
 .canvas[data-beat="traj"] .rmk{transform:translate(var(--tx),var(--ty))}
 .canvas[data-beat="traj"] .rmk[data-scored="0"]{opacity:0;pointer-events:none}
-/* trajectory starts EMPTY and populates year by year: scored marks stay hidden
-   until revealed (.trin), synced to the stacking year-notes on the right */
+
 html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){opacity:0;pointer-events:none;transition:opacity 340ms var(--ease)}
 .canvas[data-beat="div"] .rmk{transform:translate(var(--tx),var(--ty));opacity:0;pointer-events:none}
 .canvas[data-beat="dpaper"] .rmk{transform:translate(var(--tx),var(--ty)) scale(var(--ws,1))}
 .canvas[data-beat="dparam"] .rmk{transform:translate(var(--tx),var(--ty)) scale(var(--ws,1))}
-/* disclosure ABSENCE reads as an empty dashed slot (a recorded not-disclosed),
-   visually distinct from beat 3's crisp lab-reported hollow ring: different
-   meaning, different mark, so the solid/hollow grammar is not overloaded */
+
 .canvas[data-beat="dpaper"] .rmk[data-paper="0"],.canvas[data-beat="dparam"] .rmk[data-param="0"]{fill:none;stroke:var(--ink-faint);stroke-width:0.8;stroke-dasharray:1.5 2;opacity:0.33}
-/* not yet researched: the registrar's own gap, faint and undashed so it never
-   reads as the recorded absence above, and never counted in a share */
+
 .canvas[data-beat="dpaper"] .rmk[data-paper="2"]{fill:none;stroke:var(--ink-faint);stroke-width:0.6;opacity:0.14}
 .rmk.co{opacity:1;stroke:var(--ink);stroke-width:0.5}.canvas.filtering .rmk:not(.co){opacity:0.07}
-/* keep the unscored (parked) marks hidden even while a company is spotlighted --
-   the filtering rule above must not bring the phantom boxes back on hover */
+
 .canvas[data-beat="traj"].filtering .rmk[data-scored="0"],.canvas[data-beat="climb"] .rmk[data-scored="0"]{opacity:0}
 .canvas[data-beat="dpaper"] .rmk[data-yr="2022"],.canvas[data-beat="dparam"] .rmk[data-yr="2022"]{opacity:0}
 .canvas.filtering .frontier{opacity:0.05}
@@ -84,14 +76,12 @@ html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){opacity:0;poi
 
 .ax-pulse,.ax-traj,.ax-swe,.ax-accel,.ax-disc,.ax-close,.ax-div,.axis-shared,.frontier,.conn{transition:opacity 480ms var(--ease)}
 .ax-pulse{opacity:1}.ax-traj,.ax-swe,.ax-accel,.ax-disc,.ax-close,.ax-div{opacity:0}
-/* faded (opacity:0) axis groups still capture pointer events -- turn them off so
-   e.g. the disclosure label can't intercept a hover on the pulse's year totals */
+
 .ax-traj,.ax-swe,.ax-accel,.ax-disc,.ax-close,.ax-div{pointer-events:none}.canvas:not([data-beat="pulse"]) .ax-pulse{pointer-events:none}
 .canvas[data-beat="pulse"] .ax-pulse{opacity:1}.canvas:not([data-beat="pulse"]) .ax-pulse{opacity:0}
 .canvas[data-beat="traj"] .ax-traj,.canvas[data-beat="climb"] .ax-traj{opacity:1}
 .canvas[data-beat="climb"] .frontlbl{opacity:0}
-/* SWE-Bench beat: a second benchmark on the same 0-100 axis. Only the SWE-scored
-   marks move to their score; the frontier draws; the GPQA axis/frontier hide. */
+
 .swefrontier{stroke:var(--verified);stroke-width:2;fill:none;stroke-linecap:round;stroke-dasharray:0.1 7;opacity:0;transition:opacity 500ms var(--ease)}
 .canvas[data-beat="swe"] .ax-swe{opacity:1}
 .canvas[data-beat="swe"] .swefrontier{opacity:0.5}
@@ -99,9 +89,7 @@ html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){opacity:0;poi
 .canvas[data-beat="swe"] .yrbands{opacity:1}
 .canvas[data-beat="swe"] .rmk{transform:translate(var(--tx),var(--ty));opacity:0;pointer-events:none}
 .canvas[data-beat="swe"] .rmk[data-hasswe="1"]{opacity:0.95;pointer-events:auto}
-/* per-lab SWE-Bench climb (company-specific second benchmark): one lab's line at a
-   time on the SWE 0-100 axis; visited labs stay as faint ghosts, mirroring the GPQA
-   climb. Only the active lab's SWE-scored marks show. */
+
 .canvas[data-beat="sclimb"] .ax-swe{opacity:1}
 .canvas[data-beat="sclimb"] .swefrontier,.canvas[data-beat="sclimb"] .frontier{opacity:0}
 .canvas[data-beat="sclimb"] .rmk{transform:translate(var(--tx),var(--ty));opacity:0;pointer-events:none}
@@ -112,8 +100,7 @@ html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){opacity:0;poi
 .canvas[data-beat="accel"] .ax-accel{opacity:1}
 .canvas[data-beat="dpaper"] .ax-disc,.canvas[data-beat="dparam"] .ax-disc{opacity:1}
 .canvas[data-beat="dpaper"] .axis-shared,.canvas[data-beat="dparam"] .axis-shared{opacity:0}
-/* DIVERGENCE (credential beat): release marks recede to a faint band; the 5
-   lab-vs-independent dumbbells build centre-stage on a zoomed gap axis */
+
 .divg{opacity:0;transition:opacity 560ms var(--ease)}
 .canvas[data-beat="div"] .divg,.canvas[data-beat="div"] .ax-div{opacity:1}
 .canvas[data-beat="div"] .axis-shared,.canvas[data-beat="div"] .frontier{opacity:0}
@@ -121,7 +108,7 @@ html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){opacity:0;poi
 .canvas[data-beat="div"] .rmk[data-scored="0"]{opacity:0}
 .pbench{font-family:var(--mono);font-size:9px;fill:var(--ink-faint)}
 .dpair{cursor:pointer}
-/* CLOSE coda: two labelled green lines on a shared 0-100% axis, marks a faint cloud */
+
 .canvas[data-beat="close"] .ax-close{opacity:1}
 .closelines{opacity:0;transition:opacity 620ms var(--ease)}
 .canvas[data-beat="close"] .closelines{opacity:1}
@@ -133,13 +120,11 @@ html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){opacity:0;poi
 .cldot{fill:var(--verified)}.cldotd{fill:var(--surface);stroke:var(--verified);stroke-width:1.6}
 .cllab{font-family:var(--body);font-size:11.5px;font-weight:700;fill:var(--verified)}
 .cllabd{font-weight:400;font-style:italic}
-/* the crossing marker: a plain ink tick + dot + factual period label (P4). Ink,
-   not green -- it annotates the geometry, it is not a data mark. */
+
 .clcrosstick{stroke:var(--ink);stroke-width:1;stroke-dasharray:2 3;opacity:0.45}
 .clcrossdot{fill:var(--ink)}
 .clcrosslab{font-family:var(--mono);font-size:10px;fill:var(--ink);letter-spacing:0.02em}
-/* the coda's one true statement, made the largest text moment (emphasis by size,
-   never by adjective) */
+
 .nbox.codanote .nb{font-family:var(--slab);font-size:20px;line-height:1.32;color:var(--ink);max-width:30ch;font-weight:700}
 .yrband{fill:var(--ink);opacity:0;transition:opacity 260ms var(--ease);pointer-events:none}.yrband.on{opacity:0.05}
 .canvas[data-beat="dpaper"] .yrbands,.canvas[data-beat="dparam"] .yrbands{opacity:0}
@@ -171,9 +156,6 @@ html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){opacity:0;poi
 .gapbox{fill:var(--surface);stroke:var(--verified);stroke-width:1.4}.pgap{font-family:var(--mono);font-size:12px;font-weight:700;fill:var(--ink)}
 .pmodel{font-family:var(--body);font-size:11.5px;font-weight:600;fill:var(--ink)}.provlab{font-family:var(--mono);font-size:9.5px;fill:var(--ink-faint)}
 
-/* right column: a STICKY notes panel that stacks per-year boxes for the two
-   populate charts (and swaps a single box for the case/disclosure beats). The
-   invisible .notetrack behind it provides the scroll distance + IO triggers. */
 .notecol{min-width:0;position:relative}
 .notewrap{position:sticky;top:var(--nav-h);height:calc(100vh - var(--nav-h));display:flex;flex-direction:column;justify-content:center;gap:14px;pointer-events:none}
 html.js .notetrack{margin-top:-100vh}
@@ -183,9 +165,7 @@ html.js .notetrack{margin-top:-100vh}
 .nbox.show{opacity:1;transform:none}
 .nbox .nh{font-family:var(--slab);font-weight:700;font-size:16px;margin:0 0 4px;color:var(--ink)}
 .nbox .nb{margin:0;font-size:14.5px;color:var(--ink-muted);line-height:1.5;max-width:38ch}
-/* the full narrative kept in the ACCESSIBILITY TREE always: visually-hidden when
-   JS drives the sticky notes (so screen readers still get the whole story), and
-   fully visible as the static fallback when JS is off (P2). */
+
 .nfallback{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;padding:0;margin:-1px}
 html:not(.js) .nfallback{position:static;width:auto;height:auto;overflow:visible;clip:auto;clip-path:none;white-space:normal;padding-top:20px;margin:0}
 .nfb{margin-bottom:14px;padding:11px 15px;background:var(--surface);border:1px solid var(--surface-edge);border-radius:10px}
@@ -194,10 +174,7 @@ html:not(.js) .nfallback{position:static;width:auto;height:auto;overflow:visible
 .bd-title{font-family:var(--slab);font-size:1.9rem;font-weight:700;margin:6px 0 8px;line-height:1.15;max-width:24ch}
 .bd-lede{font-size:15px;color:var(--ink-muted);max-width:66ch;margin:0 0 4px}
 .bd-take{font-family:var(--slab);font-size:17px;color:var(--ink);max-width:66ch;margin:8px 0 0;line-height:1.45}
-/* CASE STUDIES on the canvas: per-lab line groups interleaved as beats between
-   the parents. Marks fade out; one lab's line draws in at a time; each flows into
-   the next. Same time x-axis throughout. Trend line = annotation blue (outline,
-   never a data fill). */
+
 .canvas[data-beat="accel"] .rmk,.canvas[data-beat="climb"] .rmk{opacity:0;pointer-events:none}
 .canvas[data-beat="accel"] .rmk.caseon,.canvas[data-beat="climb"] .rmk.caseon{opacity:0.95;pointer-events:auto}
 .canvas[data-beat="accel"] .rmk{transform:translate(var(--tx),var(--ty))}
@@ -208,7 +185,7 @@ html:not(.js) .nfallback{position:static;width:auto;height:auto;overflow:visible
 .cclpath{stroke:var(--verified);stroke-width:2;fill:none;stroke-linejoin:round;stroke-linecap:round;opacity:0.5;transition:stroke-dashoffset 950ms var(--ease),opacity 400ms,stroke 400ms}
 .ccltrend{stroke:var(--annotation);stroke-width:1.6;stroke-dasharray:4 4;opacity:0.75;transition:opacity 400ms}
 .ccllabel{font-family:var(--body);font-size:12px;font-weight:700;fill:var(--ink);transition:opacity 400ms}
-/* a visited lab stays as a faint grey ghost so the four build up a comparison */
+
 .ccl.ghost .cclpath{stroke:var(--ink-faint);opacity:0.2}
 .ccl.ghost .ccltrend,.ccl.ghost .ccllabel{opacity:0}
 .conn.ghost{opacity:0.18;stroke:var(--ink-faint);stroke-width:1.4}
@@ -216,8 +193,7 @@ html:not(.js) .nfallback{position:static;width:auto;height:auto;overflow:visible
 .endpitch{font-family:var(--slab);font-size:clamp(17px,2.4vw,22px);font-weight:700;line-height:1.3;margin:0 0 8px;max-width:32ch}
 .enddemo{font-size:12.5px;color:var(--ink-muted);max-width:70ch;margin:0 0 14px;line-height:1.5}.enddemo em{font-style:italic;color:var(--ink)}
 .endstance{margin:0 0 14px;max-width:70ch}
-/* the closing summary: the four findings of the story compiled in one place, then
-   the doors into the archive (Walker #6). Descriptive labels only, no ranking. */
+
 .endsum{margin:0 0 20px;padding:0 0 18px;border-bottom:1px solid var(--surface-edge)}
 .endsum-h{font-family:var(--slab);font-size:clamp(17px,2.4vw,22px);font-weight:700;margin:0 0 13px;color:var(--ink)}
 .endsum-list{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,1fr);gap:15px 28px}
@@ -234,14 +210,12 @@ html:not(.js) .nfallback{position:static;width:auto;height:auto;overflow:visible
 @media (max-width:560px){.enddoors{grid-template-columns:1fr}}
 .protonote{display:block;margin-top:8px;font-size:11px;color:var(--ink-faint);font-style:italic}
 .skip{position:absolute;left:14px;top:-46px;background:var(--ink);color:var(--paper);padding:7px 13px;z-index:40;transition:top 120ms}.skip:focus{top:0}
-/* cold open: "it started with one" -- a full-screen counter that sets the pace */
+
 .hero{min-height:calc(96vh - var(--nav-h));display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
 .hero-inner{max-width:840px;width:100%}
 .hero-num{font-family:var(--slab);font-size:clamp(96px,19vw,230px);font-weight:700;color:var(--verified);line-height:0.86;letter-spacing:-0.02em}
 .hero-head{font-family:var(--slab);font-size:clamp(28px,4.8vw,50px);font-weight:700;color:var(--ink);line-height:1.06;letter-spacing:-0.01em;margin:8px auto 2px;max-width:19ch}
-/* the hero visual: releases-per-year bars. They grow from the baseline on load, so
-   the acceleration is the first thing the reader sees. Colour law holds: green =
-   data marks only; the partial current year is a dimmed green, never a new hue. */
+
 .hero-viz{width:100%;max-width:520px;height:auto;display:block;margin:18px auto 8px}
 .hbar{fill:var(--verified);transform:scaleY(0);transform-box:fill-box;transform-origin:center bottom;animation:hbargrow .7s var(--ease) forwards}
 .hbar.partial{opacity:0.42}
@@ -260,20 +234,13 @@ html:not(.js) .nfallback{position:static;width:auto;height:auto;overflow:visible
 .hero-scroll{font-family:var(--mono);font-size:11.5px;color:var(--ink-muted);margin-top:40px;letter-spacing:0.08em;text-transform:uppercase}
 .hero-scroll span{display:inline-block;animation:bob 1.8s var(--ease) infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
-/* the counter that climbs 1->281 while the marks stream into the timeline behind it */
+
 .bignum{position:absolute;left:0;right:0;top:46%;transform:translateY(-50%);text-align:center;pointer-events:none;opacity:0;transition:opacity 300ms;z-index:5}
 .bignum b{display:block;font-family:var(--slab);font-size:clamp(70px,11vw,132px);font-weight:700;color:var(--verified);line-height:0.9;opacity:0.9;font-variant-numeric:tabular-nums}
 .bignum small{display:block;font-family:var(--mono);font-size:11.5px;color:var(--ink-muted);text-transform:uppercase;letter-spacing:0.13em;margin-top:6px}
 .instrument.populating .bignum{opacity:1}
 .instrument.populating .teach,.instrument.populating .controls{opacity:0.25;transition:opacity 300ms}
-/* reduced-motion = the SAME sticky desktop layout, just instant. We do NOT un-pin
-   the canvas (that was the bug: it scrolled off-screen). Transitions off, counter
-   animation off, marks revealed instantly; the sticky canvas stays visible and
-   each beat's arrangement simply appears as you scroll. setBeat shows all note
-   boxes when reduce is set, so the stacking notes still populate. */
-/* ---- back to top: always present, bottom right, on every page. A quiet
-   square in the ledger's own inks; no shadow bloom, no pill, no gradient.
-   Sits above content on the z stack but below the sticky nav. ---- */
+
 .totop {
   position: fixed; right: 18px; bottom: 18px; z-index: 40;
   width: 40px; height: 40px;
@@ -288,10 +255,7 @@ html:not(.js) .nfallback{position:static;width:auto;height:auto;overflow:visible
 @media print { .totop { display: none; } }
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:0s!important;animation-duration:0s!important;animation-iteration-count:1!important}.rmk,.ax-pulse,.ax-traj,.ax-disc,.frontier,.conn{transition:none}.hero{min-height:auto;padding:40px 20px}.hero-scroll span{animation:none}.bignum{display:none}.hbar{animation:none;transform:none}.hbar-n{animation:none;opacity:1}
   html.js .canvas[data-beat="traj"] .rmk[data-scored="1"]:not(.trin){opacity:0.9}}
-/* mobile: sticky GRAPHIC on top (canvas capped so the notes have room), a sticky
-   NOTE strip pinned just beneath it, and the invisible notetrack scrolling behind
-   to drive the beats. The canvas stays visible through every beat (the desktop
-   bug was un-pinning it). Single column; notes flow in the lower band. */
+
 @media (max-width:900px){.scrolly{display:block}
   .storynav{padding:0 14px}.storynav-brand{font-size:13px}.storynav-links{gap:11px}.storynav-links a{font-size:12px}
 }
@@ -304,7 +268,7 @@ html:not(.js) .nfallback{position:static;width:auto;height:auto;overflow:visible
   .nbox{opacity:1;transform:none;margin-bottom:8px}}
 </style></head>
 <body>
-<a class="skip" href="#end">Skip to the end state</a>
+<a class="skip" href="#end">Skip to the summary</a>
 <nav class="storynav" aria-label="Site">
   <a class="storynav-brand" href="./index.html">Version Control</a>
   <div class="storynav-links">
@@ -321,22 +285,22 @@ html:not(.js) .nfallback{position:static;width:auto;height:auto;overflow:visible
 <section class="hero" id="hero">
   <div class="hero-inner">
     <p class="hero-head">A public registry of AI model releases.<br>From 45 in 2023 to 120 in 2025.</p>
-    <svg class="hero-viz" viewBox="0 0 640 300" role="img" aria-label="Bar chart of AI model releases logged per year: 45 in 2023, 92 in 2024, 120 in 2025, 93 in 2026. The count rises through each complete year; 2026 is a partial year."><rect class="hbar" x="59.2" y="174.8" width="74.5" height="77.2" rx="2" style="animation-delay:0ms"/><text class="hbar-n" x="96.5" y="165.8" text-anchor="middle">45</text><text class="hbar-y" x="96.5" y="276.0" text-anchor="middle">2023</text><rect class="hbar" x="208.2" y="94.1" width="74.5" height="157.9" rx="2" style="animation-delay:130ms"/><text class="hbar-n" x="245.5" y="85.1" text-anchor="middle">92</text><text class="hbar-y" x="245.5" y="276.0" text-anchor="middle">2024</text><rect class="hbar" x="357.2" y="46.0" width="74.5" height="206.0" rx="2" style="animation-delay:260ms"/><text class="hbar-n" x="394.5" y="37.0" text-anchor="middle">120</text><text class="hbar-y" x="394.5" y="276.0" text-anchor="middle">2025</text><rect class="hbar partial" x="506.2" y="92.3" width="74.5" height="159.7" rx="2" style="animation-delay:390ms"/><text class="hbar-n" x="543.5" y="83.3" text-anchor="middle">93</text><text class="hbar-y" x="543.5" y="276.0" text-anchor="middle">2026, so far</text><line class="hbar-base" x1="22" y1="252.0" x2="618" y2="252.0"/></svg>
+    <svg class="hero-viz" viewBox="0 0 640 300" role="img" aria-label="Bar chart of AI model releases logged per year: 45 in 2023, 92 in 2024, 120 in 2025, 93 in 2026. 2026 is a partial year."><rect class="hbar" x="59.2" y="174.8" width="74.5" height="77.2" rx="2" style="animation-delay:0ms"/><text class="hbar-n" x="96.5" y="165.8" text-anchor="middle">45</text><text class="hbar-y" x="96.5" y="276.0" text-anchor="middle">2023</text><rect class="hbar" x="208.2" y="94.1" width="74.5" height="157.9" rx="2" style="animation-delay:130ms"/><text class="hbar-n" x="245.5" y="85.1" text-anchor="middle">92</text><text class="hbar-y" x="245.5" y="276.0" text-anchor="middle">2024</text><rect class="hbar" x="357.2" y="46.0" width="74.5" height="206.0" rx="2" style="animation-delay:260ms"/><text class="hbar-n" x="394.5" y="37.0" text-anchor="middle">120</text><text class="hbar-y" x="394.5" y="276.0" text-anchor="middle">2025</text><rect class="hbar partial" x="506.2" y="92.3" width="74.5" height="159.7" rx="2" style="animation-delay:390ms"/><text class="hbar-n" x="543.5" y="83.3" text-anchor="middle">93</text><text class="hbar-y" x="543.5" y="276.0" text-anchor="middle">2026, so far</text><line class="hbar-base" x1="22" y1="252.0" x2="618" y2="252.0"/></svg>
     <div class="hero-scroll"><span>Scroll &#8595;</span></div>
   </div>
 </section>
 <div class="scrolly">
   <div class="stage-col"><div class="instrument">
-    <div class="ctitle" id="ctitle">Every model release since ChatGPT</div>
-    <p class="teach" id="teach">One mark = one model release, placed by lab (down the side) and by date (across). The record opens at ChatGPT's launch; 352 releases follow.</p>
+    <div class="ctitle" id="ctitle">Every release from twelve tracked labs since ChatGPT</div>
+    <p class="teach" id="teach">One mark = one model release, placed by lab (down the side) and by date (across). The record opens at ChatGPT's launch: 352 releases in all, ChatGPT included.</p>
     <div class="controls" id="controls"><span class="clab" id="hint">hover any mark for its record</span></div>
     <svg class="canvas" id="canvas" data-beat="pulse" viewBox="0 0 920 560" role="img"
-      aria-label="One canvas of 352 release marks moving between four views: the release timeline, independent benchmark scores, the gap between lab-reported and independent numbers, and the yearly disclosure decline. Across the four years, the highest independent score rises while the share of researched releases with a paper on record falls. The full narrative in words follows below.">
+      aria-label="One chart of 352 release marks moving between four views: the release timeline, independent benchmark scores, the gap between lab-reported and independent numbers, and yearly disclosure shares. The full narrative in words follows below.">
       <g class="yrbands"><rect class="yrband" data-year="2023" x="174.6" y="40" width="189.3" height="446.0"/><rect class="yrband" data-year="2024" x="363.9" y="40" width="189.9" height="446.0"/><rect class="yrband" data-year="2025" x="553.8" y="40" width="189.3" height="446.0"/><rect class="yrband" data-year="2026" x="743.1" y="40" width="148.9" height="446.0"/></g>
       <g class="axis-shared"><line x1="174.6" y1="40" x2="174.6" y2="486" class="yrgrid"/><text x="269.0" y="530" text-anchor="middle" class="ax yearlbl" data-year="2023">2023</text><line x1="363.9" y1="40" x2="363.9" y2="486" class="yrgrid"/><text x="458.6" y="530" text-anchor="middle" class="ax yearlbl" data-year="2024">2024</text><line x1="553.8" y1="40" x2="553.8" y2="486" class="yrgrid"/><text x="648.2" y="530" text-anchor="middle" class="ax yearlbl" data-year="2025">2025</text><line x1="743.1" y1="40" x2="743.1" y2="486" class="yrgrid"/><text x="817.6" y="530" text-anchor="middle" class="ax yearlbl" data-year="2026">2026</text></g>
       <g class="ax-pulse"><line x1="158" y1="64.3" x2="892" y2="64.3" class="rowrule"/><text x="148" y="67.3" text-anchor="end" class="orglab" data-org="openai">OpenAI</text><line x1="158" y1="101.0" x2="892" y2="101.0" class="rowrule"/><text x="148" y="104.0" text-anchor="end" class="orglab" data-org="anthropic">Anthropic</text><line x1="158" y1="137.7" x2="892" y2="137.7" class="rowrule"/><text x="148" y="140.7" text-anchor="end" class="orglab" data-org="google-deepmind">Google DeepMind</text><line x1="158" y1="174.3" x2="892" y2="174.3" class="rowrule"/><text x="148" y="177.3" text-anchor="end" class="orglab" data-org="meta">Meta</text><line x1="158" y1="211.0" x2="892" y2="211.0" class="rowrule"/><text x="148" y="214.0" text-anchor="end" class="orglab" data-org="xai">xAI</text><line x1="158" y1="247.7" x2="892" y2="247.7" class="rowrule"/><text x="148" y="250.7" text-anchor="end" class="orglab" data-org="mistral">Mistral</text><line x1="158" y1="284.3" x2="892" y2="284.3" class="rowrule"/><text x="148" y="287.3" text-anchor="end" class="orglab" data-org="deepseek">DeepSeek</text><line x1="158" y1="321.0" x2="892" y2="321.0" class="rowrule"/><text x="148" y="324.0" text-anchor="end" class="orglab" data-org="alibaba-qwen">Alibaba (Qwen)</text><line x1="158" y1="357.7" x2="892" y2="357.7" class="rowrule"/><text x="148" y="360.7" text-anchor="end" class="orglab" data-org="moonshot">Moonshot AI</text><line x1="158" y1="394.3" x2="892" y2="394.3" class="rowrule"/><text x="148" y="397.3" text-anchor="end" class="orglab" data-org="zai">Z.ai</text><line x1="158" y1="431.0" x2="892" y2="431.0" class="rowrule"/><text x="148" y="434.0" text-anchor="end" class="orglab" data-org="cohere">Cohere</text><line x1="158" y1="467.7" x2="892" y2="467.7" class="rowrule"/><text x="148" y="470.7" text-anchor="end" class="orglab" data-org="amazon">Amazon</text><text x="148" y="40" text-anchor="end" class="ytoth">releases/yr</text><text x="269.0" y="42" text-anchor="middle" class="ytot" data-year="2023">45</text><text x="458.6" y="42" text-anchor="middle" class="ytot" data-year="2024">92</text><text x="648.2" y="42" text-anchor="middle" class="ytot" data-year="2025">120</text><text x="817.6" y="42" text-anchor="middle" class="ytotsm" data-year="2026">93 so far</text><line x1="158" y1="40" x2="158" y2="486" class="cganchor"/><text x="163" y="26" class="cglab">ChatGPT &#183; the first</text><text x="163" y="37" class="cglab cglab2">Nov 2022 &#183; day 0</text></g>
-      <g class="ax-traj"><line x1="158" y1="486.0" x2="892" y2="486.0" class="scoregrid"/><text x="148" y="489.0" text-anchor="end" class="scoreax">0</text><line x1="158" y1="376.0" x2="892" y2="376.0" class="scoregrid"/><text x="148" y="379.0" text-anchor="end" class="scoreax">25</text><line x1="158" y1="266.0" x2="892" y2="266.0" class="scoregrid"/><text x="148" y="269.0" text-anchor="end" class="scoreax">50</text><line x1="158" y1="156.0" x2="892" y2="156.0" class="scoregrid"/><text x="148" y="159.0" text-anchor="end" class="scoreax">75</text><line x1="158" y1="46.0" x2="892" y2="46.0" class="scoregrid"/><text x="148" y="49.0" text-anchor="end" class="scoreax">100</text><text x="148" y="30" text-anchor="end" class="axunit">GPQA Diamond, 0&#8211;100</text><text x="888" y="60" text-anchor="end" class="frontlbl">the frontier: the highest score reached so far</text><text x="525.0" y="48" text-anchor="middle" class="companylbl" id="companylbl"></text></g>
-      <g class="ax-swe"><line x1="158" y1="486.0" x2="892" y2="486.0" class="scoregrid"/><text x="148" y="489.0" text-anchor="end" class="scoreax">0</text><line x1="158" y1="376.0" x2="892" y2="376.0" class="scoregrid"/><text x="148" y="379.0" text-anchor="end" class="scoreax">25</text><line x1="158" y1="266.0" x2="892" y2="266.0" class="scoregrid"/><text x="148" y="269.0" text-anchor="end" class="scoreax">50</text><line x1="158" y1="156.0" x2="892" y2="156.0" class="scoregrid"/><text x="148" y="159.0" text-anchor="end" class="scoreax">75</text><line x1="158" y1="46.0" x2="892" y2="46.0" class="scoregrid"/><text x="148" y="49.0" text-anchor="end" class="scoreax">100</text><text x="148" y="30" text-anchor="end" class="axunit">SWE-Bench Verified, 0&#8211;100</text><text x="888" y="60" text-anchor="end" class="frontlbl">a second benchmark, also measured by Epoch</text></g>
+      <g class="ax-traj"><line x1="158" y1="486.0" x2="892" y2="486.0" class="scoregrid"/><text x="148" y="489.0" text-anchor="end" class="scoreax">0</text><line x1="158" y1="376.0" x2="892" y2="376.0" class="scoregrid"/><text x="148" y="379.0" text-anchor="end" class="scoreax">25</text><line x1="158" y1="266.0" x2="892" y2="266.0" class="scoregrid"/><text x="148" y="269.0" text-anchor="end" class="scoreax">50</text><line x1="158" y1="156.0" x2="892" y2="156.0" class="scoregrid"/><text x="148" y="159.0" text-anchor="end" class="scoreax">75</text><line x1="158" y1="46.0" x2="892" y2="46.0" class="scoregrid"/><text x="148" y="49.0" text-anchor="end" class="scoreax">100</text><text x="148" y="30" text-anchor="end" class="axunit">GPQA Diamond, 0 to 100</text><text x="888" y="60" text-anchor="end" class="frontlbl">the highest score reached so far</text><text x="525.0" y="48" text-anchor="middle" class="companylbl" id="companylbl"></text></g>
+      <g class="ax-swe"><line x1="158" y1="486.0" x2="892" y2="486.0" class="scoregrid"/><text x="148" y="489.0" text-anchor="end" class="scoreax">0</text><line x1="158" y1="376.0" x2="892" y2="376.0" class="scoregrid"/><text x="148" y="379.0" text-anchor="end" class="scoreax">25</text><line x1="158" y1="266.0" x2="892" y2="266.0" class="scoregrid"/><text x="148" y="269.0" text-anchor="end" class="scoreax">50</text><line x1="158" y1="156.0" x2="892" y2="156.0" class="scoregrid"/><text x="148" y="159.0" text-anchor="end" class="scoreax">75</text><line x1="158" y1="46.0" x2="892" y2="46.0" class="scoregrid"/><text x="148" y="49.0" text-anchor="end" class="scoreax">100</text><text x="148" y="30" text-anchor="end" class="axunit">SWE-Bench Verified, 0 to 100</text><text x="888" y="60" text-anchor="end" class="frontlbl">a second benchmark, also measured by Epoch</text></g>
       <g class="ax-accel"><line x1="158" y1="388.2" x2="892" y2="388.2" class="scoregrid"/><text x="148" y="391.2" text-anchor="end" class="scoreax">30</text><line x1="158" y1="290.4" x2="892" y2="290.4" class="scoregrid"/><text x="148" y="293.4" text-anchor="end" class="scoreax">60</text><line x1="158" y1="192.7" x2="892" y2="192.7" class="scoregrid"/><text x="148" y="195.7" text-anchor="end" class="scoreax">90</text><line x1="158" y1="94.9" x2="892" y2="94.9" class="scoregrid"/><text x="148" y="97.9" text-anchor="end" class="scoreax">120</text><text x="148" y="30" text-anchor="end" class="axunit">days between releases</text><text x="888" y="60" text-anchor="end" class="frontlbl">lower = shipping faster</text></g>
       <g class="ax-disc"><text x="148" y="48" class="discvar" id="discvar">on record: a paper</text><text x="148" y="68" class="foldnote">2022 is folded out: its two releases sit before the yearly columns shown here.</text><text x="249.8" y="530" text-anchor="middle" class="ax">2023</text><text x="249.8" y="546" text-anchor="middle" class="wpct" data-p="71" data-m="71">71%</text><text x="433.2" y="530" text-anchor="middle" class="ax">2024</text><text x="433.2" y="546" text-anchor="middle" class="wpct" data-p="60" data-m="65">60%</text><text x="616.8" y="530" text-anchor="middle" class="ax">2025</text><text x="616.8" y="546" text-anchor="middle" class="wpct" data-p="46" data-m="52">46%</text><text x="800.2" y="530" text-anchor="middle" class="ax">2026</text><text x="800.2" y="546" text-anchor="middle" class="wpct" data-p="23" data-m="40">23%</text></g>
       <g class="ax-close"><line x1="158" y1="486.0" x2="892" y2="486.0" class="scoregrid"/><text x="148" y="489.0" text-anchor="end" class="scoreax">0</text><line x1="158" y1="376.0" x2="892" y2="376.0" class="scoregrid"/><text x="148" y="379.0" text-anchor="end" class="scoreax">25</text><line x1="158" y1="266.0" x2="892" y2="266.0" class="scoregrid"/><text x="148" y="269.0" text-anchor="end" class="scoreax">50</text><line x1="158" y1="156.0" x2="892" y2="156.0" class="scoregrid"/><text x="148" y="159.0" text-anchor="end" class="scoreax">75</text><line x1="158" y1="46.0" x2="892" y2="46.0" class="scoregrid"/><text x="148" y="49.0" text-anchor="end" class="scoreax">100</text><text x="148" y="30" text-anchor="end" class="axunit">0 to 100</text></g>
@@ -350,26 +314,26 @@ html:not(.js) .nfallback{position:static;width:auto;height:auto;overflow:visible
       <g class="divg"><g class="dpair" data-tip="Gemini 3.1 Flash-Lite &#183; GPQA Diamond: lab reported 86.9, Epoch measured 74.2 (+12.7); the record keeps both"><line x1="224.0" y1="306.0" x2="224.0" y2="-633.8" class="gaplink"/><circle cx="224.0" cy="306" r="12.5" class="dind"/><circle cx="224.0" cy="-633.8" r="12.5" class="dlab"/><rect x="198.0" y="-663.8" width="52" height="19" rx="3" class="gapbox"/><text x="224.0" y="-650.8" text-anchor="middle" class="pgap">+12.7</text><text x="242.0" y="-629.8" class="provlab">lab-reported</text><text x="242.0" y="324.0" class="provlab">independent (Epoch)</text><text x="224.0" y="464.0" text-anchor="middle" class="pmodel">Gemini 3.1 Flash-Lite</text><text x="224.0" y="478.0" text-anchor="middle" class="pbench">GPQA Diamond</text></g><g class="dpair" data-tip="GPT-5.4 &#183; GPQA Diamond: lab reported 92.8, Epoch measured 84.8 (+8.0); the record keeps both"><line x1="350.8" y1="306.0" x2="350.8" y2="-286.0" class="gaplink"/><circle cx="350.8" cy="306" r="12.5" class="dind"/><circle cx="350.8" cy="-286.0" r="12.5" class="dlab"/><rect x="324.8" y="-316.0" width="52" height="19" rx="3" class="gapbox"/><text x="350.8" y="-303.0" text-anchor="middle" class="pgap">+8.0</text><text x="350.8" y="464.0" text-anchor="middle" class="pmodel">GPT-5.4</text><text x="350.8" y="478.0" text-anchor="middle" class="pbench">GPQA Diamond</text></g><g class="dpair" data-tip="GPT-5.5 &#183; GPQA Diamond: lab reported 93.6, Epoch measured 90.7 (+2.9); the record keeps both"><line x1="477.6" y1="306.0" x2="477.6" y2="91.4" class="gaplink"/><circle cx="477.6" cy="306" r="12.5" class="dind"/><circle cx="477.6" cy="91.4" r="12.5" class="dlab"/><rect x="451.6" y="61.4" width="52" height="19" rx="3" class="gapbox"/><text x="477.6" y="74.4" text-anchor="middle" class="pgap">+2.9</text><text x="477.6" y="464.0" text-anchor="middle" class="pmodel">GPT-5.5</text><text x="477.6" y="478.0" text-anchor="middle" class="pbench">GPQA Diamond</text></g><g class="dpair" data-tip="DeepSeek-V4-Pro &#183; GPQA Diamond: lab reported 90.1, Epoch measured 89.6 (+0.5); the record keeps both"><line x1="604.4" y1="306.0" x2="604.4" y2="269.0" class="gaplink"/><circle cx="604.4" cy="306" r="12.5" class="dind"/><circle cx="604.4" cy="269.0" r="12.5" class="dlab"/><rect x="578.4" y="239.0" width="52" height="19" rx="3" class="gapbox"/><text x="604.4" y="252.0" text-anchor="middle" class="pgap">+0.5</text><text x="604.4" y="464.0" text-anchor="middle" class="pmodel">DeepSeek-V4-Pro</text><text x="604.4" y="478.0" text-anchor="middle" class="pbench">GPQA Diamond</text></g><g class="dpair" data-tip="DeepSeek-V4-Pro &#183; SWE-Bench Verified: lab reported 80.6, Epoch measured 77.6 (+3.0); the record keeps both"><line x1="731.2" y1="306.0" x2="731.2" y2="84.0" class="gaplink"/><circle cx="731.2" cy="306" r="12.5" class="dind"/><circle cx="731.2" cy="84.0" r="12.5" class="dlab"/><rect x="705.2" y="54.0" width="52" height="19" rx="3" class="gapbox"/><text x="731.2" y="67.0" text-anchor="middle" class="pgap">+3.0</text><text x="731.2" y="464.0" text-anchor="middle" class="pmodel">DeepSeek-V4-Pro</text><text x="731.2" y="478.0" text-anchor="middle" class="pbench">SWE-Bench Verified</text></g><g class="dpair" data-tip="GLM-5.2 &#183; GPQA Diamond: lab reported 91.2, Epoch measured 91.9 (-0.7); the record keeps both"><line x1="858.0" y1="306.0" x2="858.0" y2="357.8" class="gaplink"/><circle cx="858.0" cy="306" r="12.5" class="dind"/><circle cx="858.0" cy="357.8" r="12.5" class="dlab"/><rect x="832.0" y="369.8" width="52" height="19" rx="3" class="gapbox"/><text x="858.0" y="382.8" text-anchor="middle" class="pgap">-0.7</text><text x="858.0" y="464.0" text-anchor="middle" class="pmodel">GLM-5.2</text><text x="858.0" y="478.0" text-anchor="middle" class="pbench">GPQA Diamond</text></g></g>
       <g class="closelines"><path class="clcap" d="M 269.0 328.9 L 458.6 159.5 L 648.2 78.6 L 817.6 68.9" fill="none"/><path class="cldis" d="M 269.0 173.6 L 458.6 222.0 L 648.2 283.6 L 817.6 384.8" fill="none"/><circle cx="269.0" cy="328.9" r="3.4" class="cldot"/><circle cx="458.6" cy="159.5" r="3.4" class="cldot"/><circle cx="648.2" cy="78.6" r="3.4" class="cldot"/><circle cx="817.6" cy="68.9" r="3.4" class="cldot"/><circle cx="269.0" cy="173.6" r="3.4" class="cldot cldotd"/><circle cx="458.6" cy="222.0" r="3.4" class="cldot cldotd"/><circle cx="648.2" cy="283.6" r="3.4" class="cldot cldotd"/><circle cx="817.6" cy="384.8" r="3.4" class="cldot cldotd"/><line x1="404.4" y1="208.2" x2="404.4" y2="486.0" class="clcrosstick"/><circle cx="404.4" cy="208.2" r="4.4" class="clcrossdot"/><text x="404.4" y="504.0" text-anchor="middle" class="clcrosslab">the lines cross, Mar 2024</text><text x="811.6" y="59.9" text-anchor="end" class="cllab">highest independent GPQA score</text><text x="811.6" y="401.8" text-anchor="end" class="cllab cllabd">released with a paper on record</text></g>
     </svg>
-    <div class="bignum" id="bignum" aria-hidden="true"><b id="bignumN">1</b><small>releases on record</small></div>
-    <div class="source" id="src">Releases: Epoch AI, Data on AI Models &#183; independent scores: Epoch AI Benchmarking Hub &#183; retrieved 2026-10-19</div>
+    <div class="bignum" id="bignum" aria-hidden="true"><b id="bignumN">1</b><small id="bignumS">release on record</small></div>
+    <div class="source" id="src">Releases: Epoch AI, Data on AI models &#183; independent scores: Epoch AI, Capabilities &amp; benchmarking &#183; both retrieved 2026-08-24</div>
   </div></div>
   <div class="notecol">
     <div class="notewrap" id="notewrap" aria-live="polite"></div>
     <div class="notetrack"><section class="spc pop" data-beat="pulse" id="popstep"></section><section class="spc" data-beat="accel:openai"></section><section class="spc" data-beat="accel:anthropic"></section><section class="spc" data-beat="accel:google-deepmind"></section><section class="spc" data-beat="accel:alibaba-qwen"></section><section class="spc trin" data-beat="traj" id="trajstep"></section><section class="spc" data-beat="climb:openai"></section><section class="spc" data-beat="climb:anthropic"></section><section class="spc" data-beat="climb:google-deepmind"></section><section class="spc" data-beat="climb:alibaba-qwen"></section><section class="spc" data-beat="swe"></section><section class="spc" data-beat="sclimb:openai"></section><section class="spc" data-beat="sclimb:anthropic"></section><section class="spc" data-beat="sclimb:google-deepmind"></section><section class="spc" data-beat="div"></section><section class="spc" data-beat="dpaper"></section><section class="spc" data-beat="dparam"></section><section class="spc" data-beat="close"></section></div>
-    <div class="nfallback"><h2>The record in words</h2><p>A text version of each view below. For every entry as a filterable table with full provenance, see <a href="./index.html">the timeline explorer</a>.</p><div class="nfb"><h4>2023 &#183; 45 releases</h4><p>The first full year after ChatGPT. A handful of labs, often weeks or months between models.</p></div><div class="nfb"><h4>2024 &#183; 92 releases</h4><p>More than double 2023. New labs enter the record, and the time between releases shrinks.</p></div><div class="nfb"><h4>2025 &#183; 120 releases</h4><p>The busiest year on record. In some weeks several models arrive at once.</p></div><div class="nfb"><h4>2026 &#183; 93 so far</h4><p>A partial year, already tracking the 2025 pace.</p></div><div class="nfb"><h4>OpenAI: the acceleration</h4><p>From about 66 days between releases to about 22. Roughly two months down to three weeks.</p></div><div class="nfb"><h4>Anthropic: the acceleration</h4><p>A similar compression: about 104 days between releases early on, about 21 lately.</p></div><div class="nfb"><h4>Google DeepMind: the acceleration</h4><p>From about 41 days to about 15 between releases, the same downward pull.</p></div><div class="nfb"><h4>Alibaba (Qwen): the acceleration</h4><p>Alibaba's Qwen started fast and stayed fast: about 25 days then, about 12 now. The American labs moved toward a similar pace.</p></div><div class="nfb"><h4>2023</h4><p>The first 7 independent scores land, reaching 36 on GPQA Diamond.</p></div><div class="nfb"><h4>2024</h4><p>23 more measured this year; the highest independent score climbs to 74.</p></div><div class="nfb"><h4>2025</h4><p>26 measured; the frontier reaches 93.</p></div><div class="nfb"><h4>2026</h4><p>34 so far, topping out at 95.</p></div><div class="nfb"><h4>OpenAI: the climb</h4><p>GPT-4 opened at 35.7 on GPQA Diamond; the latest OpenAI model on record sits at 89.9.</p></div><div class="nfb"><h4>Anthropic: the climb</h4><p>Claude's independently measured score climbed from 33.0 to 92.9 over the same window.</p></div><div class="nfb"><h4>Google DeepMind: the climb</h4><p>From 34.0 to 94.8. Fewer models on record, the same steep climb.</p></div><div class="nfb"><h4>Alibaba (Qwen): the climb</h4><p>Qwen rose from 28.8 to 82.3, with open weights the whole way.</p></div><div class="nfb"><h4>A second benchmark</h4><p>On SWE-Bench Verified, a software-engineering task also measured by Epoch, the frontier climbs from 31 to 84 over the same window.</p></div><div class="nfb"><h4>OpenAI: on SWE-Bench</h4><p>On SWE-Bench Verified, OpenAI's independent score moves from 48 to 81 across 6 releases on record.</p></div><div class="nfb"><h4>Anthropic: on SWE-Bench</h4><p>On SWE-Bench Verified, Anthropic's independent score moves from 61 to 84 across 8 releases on record.</p></div><div class="nfb"><h4>Google DeepMind: on SWE-Bench</h4><p>On SWE-Bench Verified, Google DeepMind's independent score moves from 58 to 79 across 3 releases on record.</p></div><div class="nfb"><h4>What the lab said, beside what Epoch measured</h4><p>Each of 5 releases was graded twice on the same benchmark: once by the releasing lab, once independently by Epoch. Across 6 comparisons the two numbers sit close, 2 of them within a single point, and the gaps run both ways. The record keeps both and averages neither.</p></div><div class="nfb"><h4>Fewer arrive with a paper</h4><p>In 2023, 71% of researched releases had a paper on record; by 2026, 23%.</p></div><div class="nfb"><h4>And fewer state their size</h4><p>In 2023, 71% stated a parameter count; by 2026, 40%. A separate decline, on a different signal.</p></div><div class="nfb"><h4>The record, in two lines</h4><p>Independent scores rose. Disclosure fell.</p></div></div>
+    <div class="nfallback"><h2>The record in words</h2><p>A text version of each view below. For every entry as a filterable list with its sources, see <a href="./index.html">the timeline explorer</a>.</p><div class="nfb"><h4>2023 &#183; 45 releases</h4><p>The first full year after ChatGPT. 11 of the twelve tracked labs released at least one model. Median time between one release and the next: 4 days. The busiest week brought 5 releases.</p></div><div class="nfb"><h4>2024 &#183; 92 releases</h4><p>All twelve tracked labs released at least one model. First on record this year: Moonshot AI. Median time between one release and the next: 2.5 days. The busiest week brought 9 releases.</p></div><div class="nfb"><h4>2025 &#183; 120 releases</h4><p>All twelve tracked labs released at least one model. Median time between one release and the next: 2 days. The busiest week brought 6 releases.</p></div><div class="nfb"><h4>2026 &#183; 93 so far</h4><p>A partial year: 93 releases by 2026-10-19. By the same date in 2025 there were 98. 11 of the twelve tracked labs released at least one model. Median time between one release and the next: 2 days. The busiest week brought 7 releases.</p></div><div class="nfb"><h4>OpenAI: the wait between releases</h4><p>About 66 days between releases at first, about 22 lately.</p></div><div class="nfb"><h4>Anthropic: the wait between releases</h4><p>About 104 days between releases at first, about 21 lately.</p></div><div class="nfb"><h4>Google DeepMind: the wait between releases</h4><p>About 41 days between releases at first, about 15 lately.</p></div><div class="nfb"><h4>Qwen: the wait between releases</h4><p>About 25 days between releases at first, about 12 lately.</p></div><div class="nfb"><h4>2023</h4><p>The first 7 independent scores on record; the highest is 36 on GPQA Diamond.</p></div><div class="nfb"><h4>2024</h4><p>23 scored this year; the highest is 74.</p></div><div class="nfb"><h4>2025</h4><p>26 scored this year; the highest is 93.</p></div><div class="nfb"><h4>2026</h4><p>34 scored so far; the highest is 95.</p></div><div class="nfb"><h4>OpenAI: the independent climb</h4><p>First independent GPQA Diamond score on record: 35.7 (GPT-4, 2023). Latest: 89.9 (GPT-5.6 Sol, 2026). Highest: 90.7 (GPT-5.5). 1 of these 17 scored releases has open weights.</p></div><div class="nfb"><h4>Anthropic: the independent climb</h4><p>First independent GPQA Diamond score on record: 33.0 (Claude 2.1, 2023). Latest: 92.9 (Claude Opus 5, 2026).</p></div><div class="nfb"><h4>Google DeepMind: the independent climb</h4><p>First independent GPQA Diamond score on record: 34.0 (Gemini 1.0 Pro, 2023). Latest: 94.8 (Gemini 3.7 Flash, 2026). 2 of these 12 scored releases have open weights.</p></div><div class="nfb"><h4>Qwen: the independent climb</h4><p>First independent GPQA Diamond score on record: 28.8 (Qwen1.5-72B, 2024). Latest: 82.3 (Qwen3.7 Flash, 2026). Highest: 92.7 (Qwen 3.8 Max). 8 of these 14 scored releases have open weights.</p></div><div class="nfb"><h4>A second benchmark</h4><p>On a second benchmark, SWE-Bench Verified (fixing real GitHub issues), the top score rose from 31 to 84 over the same years. Epoch measured these too.</p></div><div class="nfb"><h4>OpenAI: on SWE-Bench</h4><p>On SWE-Bench Verified, OpenAI's independent score moves from 48 to 81 across 6 releases on record.</p></div><div class="nfb"><h4>Anthropic: on SWE-Bench</h4><p>On SWE-Bench Verified, Anthropic's independent score moves from 61 to 84 across 8 releases on record.</p></div><div class="nfb"><h4>Google DeepMind: on SWE-Bench</h4><p>On SWE-Bench Verified, Google DeepMind's independent score moves from 58 to 79 across 3 releases on record.</p></div><div class="nfb"><h4>What the lab said, beside what Epoch measured</h4><p>5 releases were graded twice on the same benchmark: once by the releasing lab, once by Epoch. Each stem is one release on one benchmark, graded twice: the ring is the lab's score, the dot is Epoch's. 2 of the 6 pairs sit within a single point, and the gaps run both ways. These six pairs come from recent major releases, and the lab and Epoch often run different settings (reasoning effort, number of attempts). With so few pairs this is not a test of whether labs overstate. The record keeps both numbers and never averages them.</p></div><div class="nfb"><h4>Fewer arrive with a paper</h4><p>In 2023, 24 of 34 researched releases had a paper on record (71%). In 2026 so far, 10 of 43 (23%). Papers can come out weeks after a release, so recent years may rise. In 2026, 15 of the 43 checked releases are from September or later, a period that holds 21 of the year's 93 releases. The checked releases lean toward the newest ones, so the share may move as earlier 2026 releases are checked.</p></div><div class="nfb"><h4>And fewer have a parameter count on record</h4><p>In 2023, 32 of 45 releases had a parameter count in Epoch AI's data (71%). In 2026 so far, 37 of 93 (40%). Epoch often adds counts for recent models late, and we have not checked the blanks against the labs' own pages.</p></div><div class="nfb"><h4>What changed, 2023 to 2026</h4><p>From 2023 to 2026, the highest independent GPQA Diamond score rose from 36 to 95. The share of researched releases with a paper fell from 71% to 23%, and the share with a parameter count in Epoch AI's data fell from 71% to 40%. The share with a system card rose from 11% to 48% (2 of 18, then 19 of 40). In 2026, 15 of the 43 checked releases are from September or later, a period that holds 21 of the year's 93 releases. The checked releases lean toward the newest ones, so these 2026 shares may move as earlier 2026 releases are checked.</p></div></div>
   </div>
 </div>
 <div class="note" id="end">
   <div class="endsum">
     <h2 class="endsum-h">What the record shows, in four findings</h2>
     <ul class="endsum-list">
-      <li><b>Cadence</b>45 releases in 2023, 120 in 2025. The time between one release and the next shrank every year through 2025.</li>
-      <li><b>Independent scores</b>The highest independent GPQA Diamond score rose from 36 to 95; SWE-Bench Verified from 31 to 84. Every figure measured by Epoch.</li>
-      <li><b>Lab beside independent</b>5 releases were graded both ways; 2 of 6 comparisons fall within a single point. Both numbers are kept, neither is averaged.</li>
-      <li><b>Disclosure</b>Releases arriving with a paper on record fell from 71% to 23%; those stating a parameter count from 71% to 40%.</li>
+      <li><b>Cadence</b>45 releases in 2023, 120 in 2025. Pooled across the twelve labs, the median time between one release and the next was 4 days in 2023, 2.5 in 2024 and 2 in 2025.</li>
+      <li><b>Independent scores</b>The highest independent GPQA Diamond score went from 36 to 95; SWE-Bench Verified from 31 to 84. Every figure measured by Epoch.</li>
+      <li><b>Lab beside independent</b>5 releases were graded both ways, giving 6 pairs; 2 fall within a single point. That is too few pairs, run at different settings, to test whether labs overstate. Both numbers are kept, neither is averaged.</li>
+      <li><b>Disclosure</b>With a paper on record: 24 of 34 researched releases in 2023 (71%), 10 of 43 in 2026 so far (23%). With a parameter count in Epoch AI's data: 71%, then 40%. With a system card: 2 of 18 (11%), then 19 of 40 (48%). In 2026, 15 of the 43 checked releases are from September or later, a period that holds 21 of the year's 93 releases. The checked releases lean toward the newest ones, so the 2026 shares may move as earlier 2026 releases are checked.</li>
     </ul>
   </div>
-  <p class="endstance"><b>The record is public, and it maintains itself.</b> It re-checks its sources nightly, drafts candidate entries, and waits for a person to approve them; nothing publishes on its own. Every number carries its provenance, or it does not appear.</p>
+  <p class="endstance"><b>The record is public.</b> Each night it checks its sources and drafts new entries, and a person approves each one before it appears. Every number shows where it came from, or it is left out.</p>
   <div class="readmore">
     <h2 class="readmore-h">Read more</h2>
     <div class="enddoors">
@@ -379,13 +343,13 @@ html:not(.js) .nfallback{position:static;width:auto;height:auto;overflow:visible
       <a class="enddoor" href="./data.html"><b>Data</b><span>download the dataset, CC-BY 4.0 &#8594;</span></a>
     </div>
   </div>
-  <span class="protonote">Parameter values are counts on record; a small share are Epoch estimates, footnoted in methodology. Data current as of 2026-10-19.</span></div>
+  <span class="protonote">Parameter counts come from Epoch AI's data, and a few are Epoch's own estimates; the methodology says how many. Data current as of 2026-10-19. <a href="https://github.com/wrobinson127/versioncontrol/issues/new">Report an error</a>.</span></div>
 </div>
 <div class="hovertip" id="tip"></div>
 <script>
 (function(){
 var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-var NOHOVER=matchMedia("(hover: none)").matches;  // touch devices: say "tap", not "hover"
+var NOHOVER=matchMedia("(hover: none)").matches;
 var canvas=document.getElementById("canvas"),marks=[].slice.call(document.querySelectorAll(".rmk"));
 var ctitle=document.getElementById("ctitle"),teach=document.getElementById("teach"),hint=document.getElementById("hint");
 var steps=[].slice.call(document.querySelectorAll(".spc"));
@@ -393,21 +357,12 @@ var conns=[].slice.call(document.querySelectorAll(".conn")),orglabs=[].slice.cal
 var sweconns=[].slice.call(document.querySelectorAll(".sweconn"));
 var SWE_CORDER=["openai", "anthropic", "google-deepmind"];
 var wpcts=[].slice.call(document.querySelectorAll(".wpct"));
-// LEAD: a settle zone at the start of each populate beat -- the empty chart is fully
-// in place and framed before any mark appears (Walker #2: don't populate off-screen).
 var LEAD=0.13;
-var META={"pulse": {"n": "Beat 1 of 4", "t": "Every model release since ChatGPT", "te": "One mark = one model release: which lab shipped it (down the side), and when (across). 352 in all.", "h": "hover any mark for its record"}, "traj": {"n": "Beat 2 of 4", "t": "Benchmark scores, independently measured", "te": "The same marks rise to their GPQA Diamond score, measured by Epoch, not the lab. Of 352, the 90 with an independent score rise; the rest have none on record.", "h": "hover a mark to light its whole lab"}, "swe": {"n": "", "t": "The same climb, on a second benchmark", "te": "The 26 releases with an independent SWE-Bench Verified score rise to it, measured by Epoch. A different task from GPQA, the same shape. Still one measurer: a second benchmark, not a second source.", "h": "hover a mark for its record"}, "div": {"n": "Beat 3 of 4", "t": "What the lab said, beside what Epoch measured", "te": "Each stem is one release measured twice on the same benchmark. The ring at the top is the lab's own reported score; the dot at the bottom is Epoch's independent measurement. The number is the gap between them, and the axis is zoomed to a few points, so a short stem means the two agree.", "h": "hover a pair for its numbers"}, "dpaper": {"n": "Beat 4 of 4", "t": "Fewer arrive with a paper", "te": "The same marks, gathered by year. Filled = a paper on record; a dashed slot = researched, none found; a faint slot = not yet researched. The share is of researched releases.", "h": "hover a mark for its record"}, "dparam": {"n": "Beat 4 of 4", "t": "And fewer state their size", "te": "Re-sorted by a different disclosure: a stated parameter count. Filled = on record; a dashed slot = none.", "h": "hover a mark for its record"}, "close": {"n": "In sum", "t": "The record, in two lines", "te": "Over the same four years: the highest independent GPQA Diamond score rose from 36 to 95; the share of researched releases with a paper on record fell from 71% to 23%. Both are percentages, on one axis.", "h": ""}, "accel:openai": {"n": "", "t": "The wait between releases: OpenAI", "te": "These four labs carry the most releases on record and the widest independent coverage, so a per-lab trend is well supported. They span US and Chinese labs, open weights and closed. Days between one release and the next, for this lab alone.", "h": "hover any point for its record"}, "climb:openai": {"n": "", "t": "The independent climb: OpenAI", "te": "Each release rises to its independent GPQA Diamond score, measured by Epoch.", "h": "hover any point for its record"}, "accel:anthropic": {"n": "", "t": "The wait between releases: Anthropic", "te": "Days between one release and the next, for this lab alone.", "h": "hover any point for its record"}, "climb:anthropic": {"n": "", "t": "The independent climb: Anthropic", "te": "Each release rises to its independent GPQA Diamond score, measured by Epoch.", "h": "hover any point for its record"}, "accel:google-deepmind": {"n": "", "t": "The wait between releases: Google DeepMind", "te": "Days between one release and the next, for this lab alone.", "h": "hover any point for its record"}, "climb:google-deepmind": {"n": "", "t": "The independent climb: Google DeepMind", "te": "Each release rises to its independent GPQA Diamond score, measured by Epoch.", "h": "hover any point for its record"}, "accel:alibaba-qwen": {"n": "", "t": "The wait between releases: Qwen", "te": "Days between one release and the next, for this lab alone.", "h": "hover any point for its record"}, "climb:alibaba-qwen": {"n": "", "t": "The independent climb: Qwen", "te": "Each release rises to its independent GPQA Diamond score, measured by Epoch.", "h": "hover any point for its record"}, "sclimb:openai": {"n": "", "t": "On SWE-Bench, by lab: OpenAI", "te": "The same labs on a second benchmark. Qwen's independent SWE-Bench coverage is too thin to trace, so it steps out here. Each release rises to its independent SWE-Bench Verified score, measured by Epoch.", "h": "hover any point for its record"}, "sclimb:anthropic": {"n": "", "t": "On SWE-Bench, by lab: Anthropic", "te": "Each release rises to its independent SWE-Bench Verified score, measured by Epoch.", "h": "hover any point for its record"}, "sclimb:google-deepmind": {"n": "", "t": "On SWE-Bench, by lab: Google DeepMind", "te": "Each release rises to its independent SWE-Bench Verified score, measured by Epoch.", "h": "hover any point for its record"}};
+var META={"pulse": {"n": "Beat 1 of 4", "t": "Every release from twelve tracked labs since ChatGPT", "te": "One mark = one model release: which lab shipped it (down the side), and when (across). 352 in all.", "h": "hover any mark for its record"}, "traj": {"n": "Beat 2 of 4", "t": "Benchmark scores, independently measured", "te": "The same marks rise to their GPQA Diamond score, measured by Epoch, not the lab. Of 352, the 90 with an independent score rise; the rest have none on record.", "h": "hover a mark to light its whole lab"}, "swe": {"n": "", "t": "A second benchmark", "te": "The 26 releases with an independent SWE-Bench Verified score rise to it. A different task from GPQA, and the same measurer: Epoch.", "h": "hover a mark for its record"}, "div": {"n": "Beat 3 of 4", "t": "What the lab said, beside what Epoch measured", "te": "Each stem is one release measured twice on the same benchmark. The ring at the top is the lab's own reported score; the dot at the bottom is Epoch's independent measurement. The number is the gap between them, and the axis is zoomed to a few points, so a short stem means the two agree.", "h": "hover a pair for its numbers"}, "dpaper": {"n": "Beat 4 of 4", "t": "Fewer arrive with a paper", "te": "The same marks, gathered by year. Filled = a paper on record; a dashed slot = researched, none found; a faint slot = not yet researched. The share is of researched releases.", "h": "hover a mark for its record"}, "dparam": {"n": "Beat 4 of 4", "t": "And fewer have a parameter count on record", "te": "Re-sorted by a different item: whether Epoch AI's data has a parameter count. Filled = a count on record; an empty slot = no count on record. The share is of all releases.", "h": "hover a mark for its record"}, "close": {"n": "In sum", "t": "What changed, 2023 to 2026", "te": "From 2023 to 2026, the highest independent GPQA Diamond score rose from 36 to 95. The share of researched releases with a paper fell from 71% to 23%, and the share with a parameter count in Epoch AI's data fell from 71% to 40%. The share with a system card rose from 11% to 48% (2 of 18, then 19 of 40). In 2026, 15 of the 43 checked releases are from September or later, a period that holds 21 of the year's 93 releases. The checked releases lean toward the newest ones, so these 2026 shares may move as earlier 2026 releases are checked. The two lines are the highest score and the paper share, both on a 0 to 100 axis.", "h": ""}, "accel:openai": {"n": "", "t": "The wait between releases: OpenAI", "te": "Four labs with long records and many independent scores: OpenAI (48 releases, 17 scored), Anthropic (26 releases, 18 scored), Google DeepMind (55 releases, 12 scored), Qwen (63 releases, 14 scored). Days between one release and the next, for this lab alone. \"At first\" is the median of its first third of gaps on record; \"lately\" is the median of its last third.", "h": "hover any point for its record"}, "climb:openai": {"n": "", "t": "The independent climb: OpenAI", "te": "Each release rises to its independent GPQA Diamond score, measured by Epoch.", "h": "hover any point for its record"}, "accel:anthropic": {"n": "", "t": "The wait between releases: Anthropic", "te": "Days between one release and the next, for this lab alone. \"At first\" is the median of its first third of gaps on record; \"lately\" is the median of its last third.", "h": "hover any point for its record"}, "climb:anthropic": {"n": "", "t": "The independent climb: Anthropic", "te": "Each release rises to its independent GPQA Diamond score, measured by Epoch.", "h": "hover any point for its record"}, "accel:google-deepmind": {"n": "", "t": "The wait between releases: Google DeepMind", "te": "Days between one release and the next, for this lab alone. \"At first\" is the median of its first third of gaps on record; \"lately\" is the median of its last third.", "h": "hover any point for its record"}, "climb:google-deepmind": {"n": "", "t": "The independent climb: Google DeepMind", "te": "Each release rises to its independent GPQA Diamond score, measured by Epoch.", "h": "hover any point for its record"}, "accel:alibaba-qwen": {"n": "", "t": "The wait between releases: Qwen", "te": "Days between one release and the next, for this lab alone. \"At first\" is the median of its first third of gaps on record; \"lately\" is the median of its last third.", "h": "hover any point for its record"}, "climb:alibaba-qwen": {"n": "", "t": "The independent climb: Qwen", "te": "Each release rises to its independent GPQA Diamond score, measured by Epoch.", "h": "hover any point for its record"}, "sclimb:openai": {"n": "", "t": "On SWE-Bench, by lab: OpenAI", "te": "The same labs on a second benchmark. Qwen has 2 independent SWE-Bench Verified scores on record, so it steps out here. Each release rises to its independent SWE-Bench Verified score, measured by Epoch.", "h": "hover any point for its record"}, "sclimb:anthropic": {"n": "", "t": "On SWE-Bench, by lab: Anthropic", "te": "Each release rises to its independent SWE-Bench Verified score, measured by Epoch.", "h": "hover any point for its record"}, "sclimb:google-deepmind": {"n": "", "t": "On SWE-Bench, by lab: Google DeepMind", "te": "Each release rises to its independent SWE-Bench Verified score, measured by Epoch.", "h": "hover any point for its record"}};
 function modeOf(b){ var i=b.indexOf(":"); return i<0?b:b.slice(0,i); }
 function labOf(b){ var i=b.indexOf(":"); return i<0?"":b.slice(i+1); }
-// ---- the stacking notes panel (right column). The two populate charts build a
-// STACK of per-year boxes revealed in sync with the marks; the case/disclosure
-// beats swap a single box. THR[mode][year] = the reveal count that unlocks a box.
 var notewrap=document.getElementById("notewrap");
-var NOTES={"pulse": [{"y": "2023", "h": "2023 &#183; 45 releases", "b": "The first full year after ChatGPT. A handful of labs, often weeks or months between models."}, {"y": "2024", "h": "2024 &#183; 92 releases", "b": "More than double 2023. New labs enter the record, and the time between releases shrinks."}, {"y": "2025", "h": "2025 &#183; 120 releases", "b": "The busiest year on record. In some weeks several models arrive at once."}, {"y": "2026", "h": "2026 &#183; 93 so far", "b": "A partial year, already tracking the 2025 pace."}], "traj": [{"y": "2023", "h": "2023", "b": "The first 7 independent scores land, reaching 36 on GPQA Diamond."}, {"y": "2024", "h": "2024", "b": "23 more measured this year; the highest independent score climbs to 74."}, {"y": "2025", "h": "2025", "b": "26 measured; the frontier reaches 93."}, {"y": "2026", "h": "2026", "b": "34 so far, topping out at 95."}], "accel": {"openai": {"h": "OpenAI: the wait between releases", "b": "From about 66 days between releases to about 22. Roughly two months down to three weeks."}, "anthropic": {"h": "Anthropic: the wait between releases", "b": "A similar compression: about 104 days between releases early on, about 21 lately."}, "google-deepmind": {"h": "Google DeepMind: the wait between releases", "b": "From about 41 days to about 15 between releases, the same downward pull."}, "alibaba-qwen": {"h": "Qwen: the wait between releases", "b": "Alibaba's Qwen started fast and stayed fast: about 25 days then, about 12 now. The American labs moved toward a similar pace."}}, "climb": {"openai": {"h": "OpenAI: the independent climb", "b": "GPT-4 opened at 35.7 on GPQA Diamond; the latest OpenAI model on record sits at 89.9."}, "anthropic": {"h": "Anthropic: the independent climb", "b": "Claude's independently measured score climbed from 33.0 to 92.9 over the same window."}, "google-deepmind": {"h": "Google DeepMind: the independent climb", "b": "From 34.0 to 94.8. Fewer models on record, the same steep climb."}, "alibaba-qwen": {"h": "Qwen: the independent climb", "b": "Qwen rose from 28.8 to 82.3, with open weights the whole way."}}, "swe": {"h": "", "b": "Not one benchmark's story: on SWE-Bench Verified, a software-engineering task, the frontier climbs from 31 to 84 over the same window. Still Epoch-measured; a second benchmark, not a second source."}, "sclimb": {"openai": {"h": "OpenAI: on SWE-Bench", "b": "On SWE-Bench Verified, OpenAI's independent score moves from 48 to 81 across 6 releases on record."}, "anthropic": {"h": "Anthropic: on SWE-Bench", "b": "On SWE-Bench Verified, Anthropic's independent score moves from 61 to 84 across 8 releases on record."}, "google-deepmind": {"h": "Google DeepMind: on SWE-Bench", "b": "On SWE-Bench Verified, Google DeepMind's independent score moves from 58 to 79 across 3 releases on record."}}, "div": {"h": "", "b": "When a lab grades its own model and Epoch grades the same model on the same benchmark, do they match? Each stem is one release: the ring on top is the lab's reported score, the dot below is Epoch's. The stems are short. 2 of the 6 comparisons sit within a single point, and the gaps run both ways. The record keeps both numbers and never averages them."}, "dpaper": {"h": "Fewer arrive with a paper", "b": "In 2023, 71% of researched releases had a paper on record; by 2026, 23%."}, "dparam": {"h": "And fewer state their size", "b": "In 2023, 71% stated a parameter count; by 2026, 40%. A separate decline, on a different signal."}, "close": {"h": "", "b": "Independent scores rose. Disclosure fell."}},THR={"pulse": {"2023": 2, "2024": 47, "2025": 139, "2026": 259}, "traj": {"2023": 0, "2024": 7, "2025": 30, "2026": 56}},ENDS={"pulse": [47, 139, 259, 352], "traj": [7, 30, 56, 90]},curNotesMode=null;
-// paced populate: split scroll into one slice per year; within a year, FILL the
-// marks over the first ~62% of the slice, then HOLD (dwell) for the rest so the
-// reader can read that year's box before the next year starts. Later years pack
-// more marks into an equal slice, so the fill visibly accelerates on its own.
+var NOTES={"pulse": [{"y": "2023", "h": "2023 &#183; 45 releases", "b": "The first full year after ChatGPT. 11 of the twelve tracked labs released at least one model. Median time between one release and the next: 4 days. The busiest week brought 5 releases."}, {"y": "2024", "h": "2024 &#183; 92 releases", "b": "All twelve tracked labs released at least one model. First on record this year: Moonshot AI. Median time between one release and the next: 2.5 days. The busiest week brought 9 releases."}, {"y": "2025", "h": "2025 &#183; 120 releases", "b": "All twelve tracked labs released at least one model. Median time between one release and the next: 2 days. The busiest week brought 6 releases."}, {"y": "2026", "h": "2026 &#183; 93 so far", "b": "A partial year: 93 releases by 2026-10-19. By the same date in 2025 there were 98. 11 of the twelve tracked labs released at least one model. Median time between one release and the next: 2 days. The busiest week brought 7 releases."}], "traj": [{"y": "2023", "h": "2023", "b": "The first 7 independent scores on record; the highest is 36 on GPQA Diamond."}, {"y": "2024", "h": "2024", "b": "23 scored this year; the highest is 74."}, {"y": "2025", "h": "2025", "b": "26 scored this year; the highest is 93."}, {"y": "2026", "h": "2026", "b": "34 scored so far; the highest is 95."}], "accel": {"openai": {"h": "OpenAI: the wait between releases", "b": "About 66 days between releases at first, about 22 lately."}, "anthropic": {"h": "Anthropic: the wait between releases", "b": "About 104 days between releases at first, about 21 lately."}, "google-deepmind": {"h": "Google DeepMind: the wait between releases", "b": "About 41 days between releases at first, about 15 lately."}, "alibaba-qwen": {"h": "Qwen: the wait between releases", "b": "About 25 days between releases at first, about 12 lately."}}, "climb": {"openai": {"h": "OpenAI: the independent climb", "b": "First independent GPQA Diamond score on record: 35.7 (GPT-4, 2023). Latest: 89.9 (GPT-5.6 Sol, 2026). Highest: 90.7 (GPT-5.5). 1 of these 17 scored releases has open weights."}, "anthropic": {"h": "Anthropic: the independent climb", "b": "First independent GPQA Diamond score on record: 33.0 (Claude 2.1, 2023). Latest: 92.9 (Claude Opus 5, 2026)."}, "google-deepmind": {"h": "Google DeepMind: the independent climb", "b": "First independent GPQA Diamond score on record: 34.0 (Gemini 1.0 Pro, 2023). Latest: 94.8 (Gemini 3.7 Flash, 2026). 2 of these 12 scored releases have open weights."}, "alibaba-qwen": {"h": "Qwen: the independent climb", "b": "First independent GPQA Diamond score on record: 28.8 (Qwen1.5-72B, 2024). Latest: 82.3 (Qwen3.7 Flash, 2026). Highest: 92.7 (Qwen 3.8 Max). 8 of these 14 scored releases have open weights."}}, "swe": {"h": "", "b": "On a second benchmark, SWE-Bench Verified (fixing real GitHub issues), the top score rose from 31 to 84 over the same years. Epoch measured these too."}, "sclimb": {"openai": {"h": "OpenAI: on SWE-Bench", "b": "On SWE-Bench Verified, OpenAI's independent score moves from 48 to 81 across 6 releases on record."}, "anthropic": {"h": "Anthropic: on SWE-Bench", "b": "On SWE-Bench Verified, Anthropic's independent score moves from 61 to 84 across 8 releases on record."}, "google-deepmind": {"h": "Google DeepMind: on SWE-Bench", "b": "On SWE-Bench Verified, Google DeepMind's independent score moves from 58 to 79 across 3 releases on record."}}, "div": {"h": "", "b": "Each stem is one release on one benchmark, graded twice: the ring is the lab's score, the dot is Epoch's. 2 of the 6 pairs sit within a single point, and the gaps run both ways. These six pairs come from recent major releases, and the lab and Epoch often run different settings (reasoning effort, number of attempts). With so few pairs this is not a test of whether labs overstate. The record keeps both numbers and never averages them."}, "dpaper": {"h": "Fewer arrive with a paper", "b": "In 2023, 24 of 34 researched releases had a paper on record (71%). In 2026 so far, 10 of 43 (23%). Papers can come out weeks after a release, so recent years may rise. In 2026, 15 of the 43 checked releases are from September or later, a period that holds 21 of the year's 93 releases. The checked releases lean toward the newest ones, so the share may move as earlier 2026 releases are checked."}, "dparam": {"h": "And fewer have a parameter count on record", "b": "In 2023, 32 of 45 releases had a parameter count in Epoch AI's data (71%). In 2026 so far, 37 of 93 (40%). Epoch often adds counts for recent models late, and we have not checked the blanks against the labs' own pages."}, "close": {"h": "", "b": "Independent scores rose. Fewer releases came with a paper or a parameter count on record. More came with a system card."}},THR={"pulse": {"2023": 2, "2024": 47, "2025": 139, "2026": 259}, "traj": {"2023": 0, "2024": 7, "2025": 30, "2026": 56}},ENDS={"pulse": [47, 139, 259, 352], "traj": [7, 30, 56, 90]},curNotesMode=null;
 function yearPaced(p, ends){ var nY=ends.length, starts=[0];
   for(var i=1;i<nY;i++) starts.push(ends[i-1]);
   p=p<0?0:(p>1?1:p);
@@ -417,10 +372,8 @@ function yearPaced(p, ends){ var nY=ends.length, starts=[0];
 function buildStack(mode){ var arr=NOTES[mode],h="";
   for(var i=0;i<arr.length;i++) h+='<div class="nbox" data-y="'+arr[i].y+'"><div class="nh">'+arr[i].h+'</div><p class="nb">'+arr[i].b+'</p></div>';
   notewrap.innerHTML=h; curNotesMode=mode; }
-// single-box beats: the note carries ONLY its sentence -- the instrument header on
-// the left already states the title (dropping the heading kills a verbatim repeat).
 function buildSingle(mode,lab){ var n=(mode==="accel"||mode==="climb"||mode==="sclimb")?(NOTES[mode]||{})[lab]:NOTES[mode];
-  var cls="nbox show"+(mode==="close"?" codanote":"");  // coda note gets emphasis type
+  var cls="nbox show"+(mode==="close"?" codanote":"");
   notewrap.innerHTML=n?('<div class="'+cls+'"><p class="nb">'+n.b+'</p></div>'):"";
   curNotesMode=mode+":"+(lab||""); }
 function showStack(mode,count){ var thr=THR[mode]; if(!thr)return;
@@ -436,9 +389,6 @@ function applyPos(mode){
     m.style.setProperty("--ws",wf?m.getAttribute("data-wsc"):"1");
   });
 }
-// accel: only the active lab's marks slide (from their pulse row) to the gap
-// height; every other mark stays parked at its pulse spot (invisible), so leaving
-// the beat they rise naturally instead of flying in from all over.
 function applyAccel(lab){
   marks.forEach(function(m){
     if(m.getAttribute("data-org")===lab&&m.getAttribute("data-hasaccel")==="1"){
@@ -449,8 +399,6 @@ function applyAccel(lab){
     m.style.setProperty("--ws","1");
   });
 }
-// which marks are "on" for a case beat: accel -> the lab's releases that have a
-// gap; climb -> the lab's independently-scored releases (already at their scores)
 function setCaseMarks(mode,lab){
   marks.forEach(function(m){
     var ok=(m.getAttribute("data-org")===lab)&&((mode==="accel")
@@ -460,9 +408,6 @@ function setCaseMarks(mode,lab){
     m.classList.toggle("caseon",ok);
   });
 }
-// the accel connecting line (climb reuses the trajectory connector polylines).
-// release-rate case studies show ONE lab's line at a time (no ghosts -- Walker: the
-// faint lines belong only to the benchmark climb, where the comparison earns its keep).
 var CORDER=["openai","anthropic","google-deepmind","alibaba-qwen"];
 var accelG={};
 [].slice.call(document.querySelectorAll('.caselines[data-kind="accel"] .ccl')).forEach(function(c){accelG[c.getAttribute("data-lab")]=c;});
@@ -472,8 +417,6 @@ function drawAccel(lab){ var idx=CORDER.indexOf(lab);
     c.classList.toggle("on",on); c.classList.remove("ghost");
     if(on){ var p=c.querySelector(".cclpath"); if(p){ if(reduce){p.style.strokeDashoffset=0;} else {var L=p.getTotalLength();p.style.strokeDasharray=L;p.style.strokeDashoffset=L;p.getBoundingClientRect();p.style.strokeDashoffset=0;} } }
   }); }
-// trajectory populate: the scored marks reveal in date order (.trin), year by year,
-// as you scroll the traj beat -- the chart "starts empty and fills" (Walker #3).
 var scoredMarks=marks.filter(function(m){return m.getAttribute("data-scored")==="1";});
 var NSC=scoredMarks.length,trRevealed=0;
 function trReveal(t){ t=t<0?0:(t>NSC?NSC:t); if(t===trRevealed)return;
@@ -492,14 +435,12 @@ function setBeat(b){ if(b===cur)return; cur=b;
   if(mode==="accel") applyAccel(lab); else applyPos(mode);
   canvas.setAttribute("data-beat",mode); canvas.setAttribute("data-lab",lab);
   var m=META[b]||META[mode]; if(m){ctitle.innerHTML=m.t; teach.innerHTML=m.te;
-    hint.textContent=NOHOVER?m.h.replace(/hover/gi,"tap"):m.h;}  // "hover" is a lie on touch
-  // right-hand notes: STACK for the two populate charts, single swap otherwise
+    hint.textContent=NOHOVER?m.h.replace(/hover/gi,"tap"):m.h;}
   if(mode==="pulse"||mode==="traj"){ if(curNotesMode!==mode) buildStack(mode);
     if(reduce) notewrap.querySelectorAll(".nbox").forEach(function(x){x.classList.add("show");}); }
   else buildSingle(mode,lab);
   var pk=(mode==="dparam")?"data-m":"data-p"; wpcts.forEach(function(w){w.textContent=w.getAttribute(pk)+"%";});
   var dv=document.getElementById("discvar"); if(dv&&(mode==="dpaper"||mode==="dparam")) dv.textContent=(mode==="dparam")?"on record: a parameter count":"on record: a paper";
-  // reset then apply case emphasis
   canvas.classList.remove("filtering");
   marks.forEach(function(mm){mm.classList.remove("caseon");});
   conns.forEach(function(c){c.classList.remove("co");c.classList.remove("ghost");});
@@ -523,36 +464,27 @@ var io=new IntersectionObserver(function(es){
 },{rootMargin:"-45% 0px -45% 0px",threshold:0});
 steps.forEach(function(s){io.observe(s);});
 
-// ---- cold open / populate-on-scroll: the marks stream in chronologically (marks
-// are in DOM order = date order) while the counter climbs 1 -> 352.
 document.documentElement.classList.add("js");
-// with JS on, the .nfallback narrative is visually-hidden (a11y tree only); pull its
-// links out of tab order so sighted keyboard focus never lands on a clipped element
-// (WCAG 2.4.7). The same destinations are reachable via the visible closing doors.
 [].forEach.call(document.querySelectorAll(".nfallback a"),function(a){a.tabIndex=-1;});
-var instrument=document.querySelector(".instrument"),bignum=document.getElementById("bignum"),bignumN=document.getElementById("bignumN"),popstep=document.getElementById("popstep");
+var instrument=document.querySelector(".instrument"),bignum=document.getElementById("bignum"),bignumN=document.getElementById("bignumN"),bignumS=document.getElementById("bignumS"),popstep=document.getElementById("popstep");
 var NMK=marks.length,revealed=0;
 function reveal(t){ t=t<0?0:(t>NMK?NMK:t); if(t===revealed)return;
   if(t>revealed){ for(var i=revealed;i<t;i++) marks[i].classList.add("in"); }
   else { for(var j=t;j<revealed;j++) marks[j].classList.remove("in"); }
-  revealed=t; if(bignumN) bignumN.textContent=t; }
+  revealed=t; if(bignumN) bignumN.textContent=t;
+  if(bignumS) bignumS.textContent=(t===1?"release on record":"releases on record"); }
 function populateScroll(){ if(!popstep) return;
   var r=popstep.getBoundingClientRect(),vh=innerHeight;
   var p=(vh*0.5-r.top)/(r.height*0.86); p=(p-LEAD)/(1-LEAD); p=p<0?0:(p>1?1:p);
-  // per-year fill-then-dwell: each year fills, then holds so the year box can be
-  // read before the next starts; later years pack more marks -> felt acceleration.
   reveal(yearPaced(p, ENDS.pulse));
   if(cur==="pulse") showStack("pulse",revealed);
   instrument.classList.toggle("populating", cur==="pulse"&&p>0.01&&p<0.99);
   if(p>=0.995) reveal(NMK); }
-// rAF-batch scroll work: many scroll events collapse to one update per frame, so
-// a heavy machine can't stutter on the populate/reveal math (P6 perf hardening).
 var _raf=0;
 function onScroll(){ if(_raf) return; _raf=requestAnimationFrame(function(){ _raf=0; populateScroll(); trajScroll(); }); }
 if(reduce){ reveal(NMK); }
 else { addEventListener("scroll",onScroll,{passive:true}); addEventListener("resize",onScroll); onScroll(); }
 
-// hover: caption tooltip + company highlight (neutral, no hue) + connector in traj
 var tip=document.getElementById("tip"),hot=null,curOrg=null;
 function showTip(el){ var bt=canvas.getAttribute("data-beat");
   var txt=el&&(bt==="accel"&&el.getAttribute("data-atip")?el.getAttribute("data-atip"):((bt==="swe"||bt==="sclimb")&&el.getAttribute("data-swetip")?el.getAttribute("data-swetip"):el.getAttribute("data-tip")));
@@ -577,8 +509,7 @@ canvas.addEventListener("mousemove",function(e){ var t=e.target;
   var m=t.closest?t.closest(".rmk"):null;
   var ol=t.closest?t.closest(".orglab"):null, y2=t.closest?t.closest("[data-year]"):null;
   setHot(m); showTip(m);
-  setYearBand(y2?y2.getAttribute("data-year"):null); // the faint column, in every time-axis chart
-  // case beats manage their own emphasis; don't let hover-spotlight clobber it
+  setYearBand(y2?y2.getAttribute("data-year"):null);
   var mode=cur?(cur.indexOf(":")<0?cur:cur.slice(0,cur.indexOf(":"))):"";
   if(mode==="div"){ var dp=t.closest?t.closest(".dpair"):null; if(dp) showTip(dp); return; }
   if(mode==="accel"||mode==="climb"||mode==="close"||mode==="swe"||mode==="sclimb") return;

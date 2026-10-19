@@ -80,8 +80,10 @@ API-only. The URL status column is the HTTP response retrieved live on 2026-07-1
 | Kimi K2 | Moonshot | 2025-07-11 | 2025-07-11 | 0 | 200 |
 | GPT-5 | OpenAI | 2025-08-07 | 2025-08-07 | 0 | 200 |
 
-Maximum date delta is 2 days, because Epoch pins paper or repository dates where those differ
-from press dates. The correlator's tolerance is set to 3 days accordingly. Epoch carried current
+Across these ten launches the maximum date delta is 2 days, because Epoch pins paper or
+repository dates where those differ from press dates. That holds for this sample of major launches,
+not for the whole record: for some open-weight models Epoch's paper date falls weeks after the
+weights shipped (DeepSeek's first models are one case), and the methodology page says so. The correlator's tolerance is set to 3 days accordingly. Epoch carried current
 data at capture: 76 rows dated 2026, the most recent nine days before the capture.
 
 ## Detection signals
@@ -130,8 +132,8 @@ recent repositories). Suffix stripping (`-FP8`, `-Base`, quantization tags) plus
 
 **OpenRouter catalog.** `openrouter.ai/api/v1/models`: HTTP 200, 344 models, 529KB. Model objects
 carry `id`, `canonical_slug`, `created` (a unix timestamp, so diffable), `context_length`,
-`pricing`, and `hugging_face_id`. Used as a tripwire, and for the display-only pricing fields
-that never enter the downloadable dataset.
+`pricing`, and `hugging_face_id`. Used as a tripwire only. The site does not show its pricing,
+and the catalog never enters the downloadable dataset.
 
 ## Volume and cost
 
@@ -192,13 +194,10 @@ behaviour: GPT-5's bare "GPQA" claim was quarantined as unpinned, and the SWE-Be
 numbers were captured. The voice lint refused one draft that had echoed the announcement's
 "state-of-the-art", which is exactly what it exists to do. The extraction prompt was then
 hardened against quoted promotional vocabulary, and the re-run came back clean: three drafts,
-three lint passes, $0.018 total.
+three lint passes.
 
-Cost, as verified against the model documentation on 2026-07-16: the pinned model is Claude
-Haiku 4.5 (`claude-haiku-4-5-20251001`) at $1.00 per million input tokens and $5.00 per million
-output tokens. One extraction call at roughly 4,000 input and 400 output tokens costs about
-$0.006. At 10 to 15 detection-positive nights per month that is $0.06 to $0.09 expected, and
-under $0.30 with a threefold retry buffer. A $2.00 monthly hard cap is enforced in configuration.
+The pinned drafting model is Claude Haiku 4.5 (`claude-haiku-4-5-20251001`). Its cost is metered and
+capped in configuration (`pipeline/config.py`); we do not publish the figures.
 
 ## Naming
 
@@ -220,9 +219,9 @@ also appears on the methodology page.
    are the working indexes, rather than the more obvious `moonshot.ai` and `z.ai/blog`. Both are
    likelier than average to move, and a move shows up as a source examining zero records rather
    than as a quiet night.
-3. **Artificial Analysis is display-only.** Their documentation confirms attribution is required
-   across all tiers and that redistribution rights require contacting them, so their figures are
-   never included in the downloadable dataset. Their stated convention, verbatim: "Nulls mean
+3. **Artificial Analysis is for an internal coverage check only.** Their terms (Data Platform
+   Terms v1.1) bar displaying or redistributing their data in a product like this one, so their
+   figures never appear on the site or in the downloadable dataset. Their stated convention, verbatim: "Nulls mean
    'not measured' or 'not applicable'. They never mean zero." That is the same convention this
    registry uses.
 

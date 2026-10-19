@@ -376,3 +376,12 @@ def test_every_correction_names_its_evidence():
     for key, fix in backfill.UPSTREAM_CORRECTIONS.items():
         assert fix["field"] and fix["wrong"] and fix["corrected"], key
         assert len(fix["evidence"]) > 40, key
+def test_predecessor_override_applies_and_never_invents():
+    entries = [{"id": "mistral--codestral-25.08", "predecessor": "mistral--codestral"},
+               {"id": "mistral--codestral-25.01", "predecessor": None}]
+    assert backfill.apply_predecessor_overrides(entries) == ["mistral--codestral-25.08"]
+    assert entries[0]["predecessor"] == "mistral--codestral-25.01"
+    # target absent: left alone
+    lone = [{"id": "mistral--codestral-25.08", "predecessor": "mistral--codestral"}]
+    assert backfill.apply_predecessor_overrides(lone) == []
+    assert lone[0]["predecessor"] == "mistral--codestral"

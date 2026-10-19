@@ -48,8 +48,12 @@ REGISTRY = {
     "google-deepmind": {
         "country": "United States",
         "display": "Google DeepMind",
+        # storage.googleapis.com/deepmind-media serves every Gemini model
+        # card and safety report; the path, not the shared host, makes it
+        # Google's own (see config.is_lab_url).
         "lab_domains": ["deepmind.google", "blog.google", "ai.google.dev",
-                        "developers.googleblog.com", "research.google"],
+                        "developers.googleblog.com", "research.google",
+                        "storage.googleapis.com/deepmind-media"],
         "epoch_names": ["Google DeepMind", "Google", "DeepMind", "Google Brain", "Google Research", "Google AI"],
         "hf_handles": ["google"],
         # The deepmind.google feed alone missed EmbeddingGemma 2 (2026-10-06;
@@ -70,9 +74,11 @@ REGISTRY = {
         "country": "United States",
         "display": "Meta",
         "lab_domains": ["ai.meta.com", "research.meta.ai", "llama.com",
-                        "about.fb.com"],
+                        "about.fb.com", "dev.meta.ai", "developer.meta.com"],
         "epoch_names": ["Meta AI", "Facebook AI Research"],
-        "hf_handles": ["meta-llama"],
+        # meta-models hosts the Muse open weights (Muse Spark Open, 2026-10-15),
+        # which only OpenRouter and Epoch had surfaced (Phase 3 review).
+        "hf_handles": ["meta-llama", "meta-models"],
         # ai.meta.com returns HTTP 400 to scripted fetches (Phase 0 finding),
         # but research.meta.ai/blog answers 200 (checked 2026-10-19; it
         # redirects to the research.meta.ai index, which lists the blog posts
@@ -197,7 +203,15 @@ def is_lab_url(org_key: str, url: str) -> bool:
         if org is None:
             continue
         for d in org.get("lab_domains", []):
-            if host == d or host.endswith("." + d):
+            if "/" in d:
+                # a shared host qualifies only under the lab's own path
+                d_host, d_path = d.split("/", 1)
+                from urllib.parse import urlsplit
+                path = urlsplit(url).path.lstrip("/")
+                if host == d_host and (path == d_path
+                                       or path.startswith(d_path + "/")):
+                    return True
+            elif host == d or host.endswith("." + d):
                 return True
         if host == "huggingface.co":
             from urllib.parse import urlsplit

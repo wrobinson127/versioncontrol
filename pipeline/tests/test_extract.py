@@ -187,7 +187,9 @@ def test_openrouter_page_yields_no_benchmarks_or_claims():
     assert entry["model_name"] == "Mixtral 8x7B"
     assert entry["date"] == "2023-12-11"
     assert entry["availability_class"] == "open_weights"
-    assert entry["summary"]
+    # the summary is dropped too: it carried an Artificial Analysis figure
+    # as the lab's own words (Phase 3 review)
+    assert entry["summary"] is None
     # Links read off an aggregator are not research into the lab.
     assert set(entry["disclosure_links"].values()) == {"NOT_RESEARCHED"}
     assert entry["third_party_source"] is True
@@ -253,3 +255,12 @@ def test_every_registry_org_has_a_country():
     from pipeline import config
     for org, cfg in config.REGISTRY.items():
         assert cfg.get("country") in {"United States", "China", "France", "Canada"}, org
+def test_shared_host_counts_only_under_the_labs_path():
+    from pipeline import config
+    assert config.is_lab_url("google-deepmind",
+        "https://storage.googleapis.com/deepmind-media/Model-Cards/x.pdf")
+    assert not config.is_lab_url("google-deepmind",
+        "https://storage.googleapis.com/someone-else/x.pdf")
+    assert config.is_lab_url("meta", "https://dev.meta.ai/legal/aup")
+    assert config.is_lab_url("meta", "https://huggingface.co/meta-models/x")
+

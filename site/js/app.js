@@ -145,11 +145,25 @@
     return '<span class="nd" title="The lab has not disclosed this. Absence is the recorded signal, not a zero.">not disclosed</span>';
   }
 
-  /* The registrar has not looked yet. Rendered as plain words, apart from
+  /* We have not looked yet. Rendered as plain words, apart from
      the not-disclosed mark: a gap in the record is not a claim about the lab. */
   function nrMark() {
-    return '<span class="nr" title="Not yet researched by the registrar. This is a gap in the record, not a statement about the lab.">not yet researched</span>';
+    return '<span class="nr" title="Not yet researched. This is a gap in our record, not a statement about the lab.">not yet researched</span>';
   }
+
+  /* Parameters are a third state. The count comes from Epoch AI's data and
+     nobody has checked the lab's pages for it, so a blank is "no count on
+     record", never the not-disclosed mark (that mark means we looked). */
+  function noCountMark() {
+    return '<span class="nr" title="Epoch AI\'s data has no parameter count for this model. We have not checked whether the lab stated one.">no count on record</span>';
+  }
+
+  var SOURCE_KIND_NAMES = {
+    epoch_csv: "Epoch AI data",
+    lab_link: "lab page",
+    lab_announcement: "lab announcement",
+    paper: "paper"
+  };
 
   function benchRow(b, deltaItems) {
     var p = b.provenance || {};
@@ -215,7 +229,7 @@
     html += '<div class="entry-facts">';
     html += '<span class="fact">availability: <b>' + esc(AVAIL_NAMES[e.availability_class] || e.availability_class) + "</b></span>";
     if (e.parameters === "NOT_DISCLOSED") {
-      html += '<span class="fact">parameters: ' + ndMark() + "</span>";
+      html += '<span class="fact">parameters: ' + noCountMark() + "</span>";
     } else if (typeof e.parameters === "number") {
       html += '<span class="fact">parameters: <b>' + fmtParams(e.parameters) + "</b></span>";
     }
@@ -262,7 +276,7 @@
     if (e.license_note) { foot.push(esc(e.license_note)); }
     if (e.sources && e.sources.length) {
       var srcLinks = e.sources.map(function (src) {
-        return '<a href="' + esc(src.url) + '" rel="external">' + esc(src.kind.replace(/_/g, " ")) +
+        return '<a href="' + esc(src.url) + '" rel="external">' + esc(SOURCE_KIND_NAMES[src.kind] || src.kind.replace(/_/g, " ")) +
           "</a> (retrieved " + esc(src.retrieval_date) + ")";
       });
       foot.push("Sources: " + srcLinks.join(", "));
@@ -285,8 +299,9 @@
     var ageDays = Math.floor((Date.now() - updated.getTime()) / 86400000);
     if (ageDays > 3) {
       txt += ' <span class="stale">This record is ' + ageDays +
-        " days old; the pipeline has not published an update since " +
-        esc(meta.last_successful_update) + ".</span>";
+        " days old: no new entries have been approved since " +
+        esc(meta.last_successful_update) +
+        ". New releases wait in a review queue until a person approves them.</span>";
     }
     el.innerHTML = txt;
   }
