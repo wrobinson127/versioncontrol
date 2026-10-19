@@ -1315,7 +1315,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
       <a class="enddoor" href="./data.html"><b>Data</b><span>download the dataset, CC-BY 4.0 &#8594;</span></a>
     </div>
   </div>
-  <span class="protonote">Parameter counts come from Epoch AI's data, and a few are Epoch's own estimates; the methodology says how many. Data current as of {AS_OF}. <a href="{REPORT_URL}">Report an error</a>. <a href="https://github.com/wrobinson127/versioncontrol" rel="external">Source on GitHub</a>.</span></div>
+  <span class="protonote">Parameter counts come from Epoch AI's data, and a few are Epoch's own estimates, which the record does not yet mark. Data current as of {AS_OF}. <a href="{REPORT_URL}">Report an error</a>. <a href="https://github.com/wrobinson127/versioncontrol" rel="external">Source on GitHub</a>.</span></div>
 </div>
 <div class="hovertip" id="tip" role="status" aria-live="polite"></div>
 <script>
