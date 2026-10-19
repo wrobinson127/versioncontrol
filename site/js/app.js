@@ -690,6 +690,64 @@
     });
   }
 
+  /* ---- changes page: corrections, retractions, additions, all read from
+     the published entry files so the list cannot drift from the record ---- */
+
+  function initChanges() {
+    var corrEl = document.getElementById("changes-corrections");
+    if (!corrEl) { return; }
+    var retrEl = document.getElementById("changes-retractions");
+    var addEl = document.getElementById("changes-added");
+    function link(e) {
+      return '<a href="./index.html#' + esc(e.id) + '">' + esc(e.model_name) + "</a> (" +
+        esc(ORG_NAMES[e.org] || e.org) + ", " + esc(e.date) + ")";
+    }
+    function firstRead(e) {
+      var dates = (e.sources || []).map(function (s) { return s.retrieval_date; }).filter(Boolean).sort();
+      return dates[0] || e.date;
+    }
+    loadJson("manifest.json").then(function (manifest) {
+      var files = Object.keys(manifest.files || {}).sort();
+      return Promise.all(files.map(function (f) { return loadGzJson(f.replace(/^data\//, "")); }));
+    }).then(function (arrays) {
+      var all = [];
+      arrays.forEach(function (a) { all = all.concat(a); });
+
+      var corrected = all.filter(function (e) { return e.correction_note; });
+      corrEl.innerHTML = corrected.length ? "<ul>" + corrected.map(function (e) {
+        return "<li>" + link(e) + ". " + esc(e.correction_note) + "</li>";
+      }).join("") + "</ul>" : "<p>No corrections on record.</p>";
+
+      var retracted = all.filter(function (e) { return e.retracted; });
+      retrEl.innerHTML = retracted.length ? "<ul>" + retracted.map(function (e) {
+        return "<li>" + link(e) + ". " + esc(e.retraction_note || "") + "</li>";
+      }).join("") + "</ul>" : "<p>No entry has been retracted.</p>";
+
+      var backfill = all.filter(function (e) { return e.origin === "backfill-epoch"; });
+      var byDate = {};
+      all.forEach(function (e) {
+        if (e.origin === "backfill-epoch") { return; }
+        var d = firstRead(e);
+        (byDate[d] = byDate[d] || []).push(e);
+      });
+      var html = "<ul>";
+      if (backfill.length) {
+        html += "<li><b>Initial build</b>: " + backfill.length +
+          " entries from Epoch AI's dataset, read " + esc(firstRead(backfill[0])) + ".</li>";
+      }
+      Object.keys(byDate).sort().reverse().forEach(function (d) {
+        var list = byDate[d].sort(function (a, b) { return a.date < b.date ? 1 : -1; });
+        html += "<li><b>" + esc(d) + "</b>: " + list.map(link).join("; ") + ".</li>";
+      });
+      addEl.innerHTML = html + "</ul>";
+    }).catch(function () {
+      [corrEl, retrEl, addEl].forEach(function (el) {
+        el.innerHTML = "<p>The dataset could not be loaded in this session.</p>";
+      });
+    });
+  }
+
   initTimeline();
   initFooterOnly();
+  initChanges();
 })();

@@ -51,8 +51,8 @@ jobs:
         run: |
           KEY=$(basename -a -s .txt site/*.txt | grep -E '^[0-9a-f]{32}$' | head -1)
           SITE=https://versioncontrol.walker-robinson.com
-          BODY=$(printf '{"host":"versioncontrol.walker-robinson.com","key":"%s","keyLocation":"%s/%s.txt","urlList":["%s/","%s/story.html","%s/data.html","%s/methodology.html","%s/about.html"]}' \
-            "$KEY" "$SITE" "$KEY" "$SITE" "$SITE" "$SITE" "$SITE" "$SITE")
+          BODY=$(printf '{"host":"versioncontrol.walker-robinson.com","key":"%s","keyLocation":"%s/%s.txt","urlList":["%s/","%s/story.html","%s/data.html","%s/methodology.html","%s/about.html","%s/changes.html"]}' \
+            "$KEY" "$SITE" "$KEY" "$SITE" "$SITE" "$SITE" "$SITE" "$SITE" "$SITE")
           curl -sS -m 30 -X POST https://api.indexnow.org/indexnow \
             -H "Content-Type: application/json; charset=utf-8" \
             -d "$BODY" -o /dev/null -w "IndexNow HTTP %{http_code}\n"

@@ -24,6 +24,7 @@ PAGES = (
     ("/data.html", "record"),
     ("/methodology.html", "content"),
     ("/about.html", "content"),
+    ("/changes.html", "record"),
 )
 
 
@@ -66,6 +67,7 @@ The record holds {meta['entry_count']} entries ({meta['releases']} releases and 
 - {SITE}/story.html : the record told year by year, with a full text version
 - {SITE}/methodology.html : the rules, the scope, and the known limits
 - {SITE}/data.html : download, field notes, license and citation
+- {SITE}/changes.html : every correction, retraction and addition, dated
 
 ## Data (CC BY 4.0, with Epoch AI attribution)
 
