@@ -28,9 +28,9 @@ A release counts if it is a newly named model or version that the public can use
 
 A family of sizes announced together counts as one release, with the sizes listed as variants. When a lab updates a model under the same name, as with GPT-4o's dated snapshots, we record a `revision`. Revisions are counted separately and left out of release counts.
 
-A release date is the date in Epoch AI's dataset, which is usually the announcement or paper date. For some open-weight models the paper came weeks after the weights, so the record dates them late; DeepSeek's first models are one case. For entries added since July 2026, the date is the day the lab announced the release. Corrected dates carry a correction note with the old value and the evidence.
+A release date is the date in Epoch AI's dataset, which is usually the announcement or paper date. For some open-weight models the paper came weeks after the weights, so Epoch dates them late. Where we found the date the weights went public, the record uses it with a correction note (DeepSeek's first models: November 2023, where Epoch has January 2024). Other open-weight entries may still carry a paper date. For entries added since July 2026, the date is the day the lab announced the release. Corrected dates carry a correction note with the old value and the evidence.
 
-The story page never ranks or groups labs by country, and neither does the timeline. We do not yet record a country for each lab.
+We record the country where each lab's parent company is based (Google DeepMind counts as the United States, through Alphabet), and the timeline can filter by it. The story never ranks or groups labs by country.
 
 ## How releases are detected
 
@@ -79,7 +79,7 @@ When we find an error, the entry shows a correction note with the old value and 
 
 - Lab-reported scores come in through the nightly update. The older part of the record was built from independent scores first, so a recent release may show an independent score before the lab's own.
 - Benchmark coverage is thin in the early record. Thin coverage shows as absence, not as zero.
-- Meta's announcement pages block automated reads, so Meta entries rely on Epoch AI's data and Meta's Hugging Face listings.
+- Meta's main announcement site blocks automated reads, so Meta entries rely on Epoch AI's data, Meta's Hugging Face listings and, since October 2026, its research blog.
 - The nightly news-page check only recognises model names that contain a digit. A release with a name that has no digit and no API listing can be missed. Muse Wonder Full was found by hand.
 - Each entry's predecessor is chosen by rule and can be wrong. A wrong predecessor can hide a comparison but cannot create a false one, because each comparison is checked on its own.
 - A score goes on the snapshot it was measured on when the evaluator names one. When it does not, it goes on the original release, and the card shows the exact model string tested.
