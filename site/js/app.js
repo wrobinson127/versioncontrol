@@ -629,7 +629,8 @@
       var metaEl = document.getElementById("latest-meta");
       if (!card || !nameEl || !metaEl) { return; }
       nameEl.textContent = e.model_name;
-      metaEl.textContent = e.date + " · " + (ORG_NAMES[e.org] || e.org);
+      metaEl.textContent = e.date + " · " + (ORG_NAMES[e.org] || e.org) +
+        (e.entry_type === "revision" ? " · revision" : "");
       card.setAttribute("href", "#" + e.id);
       card.hidden = false;
       card.addEventListener("click", function (ev) { ev.preventDefault(); revealEntry(e.id); });
