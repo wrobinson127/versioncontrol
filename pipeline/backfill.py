@@ -603,10 +603,10 @@ def build_summary(org_display: str, model_name: str, entry_type: str,
                  "; no lab announcement link is recorded for it.")
     else:
         text = (f"{org_display} released {model_name}, available {phrase}. "
-                f"The entry is backfilled from Epoch AI's models dataset.")
+                f"The entry is built from Epoch AI's models dataset.")
     if has_ind:
-        text += (" Benchmark measurements shown are independent evaluations "
-                 "from Epoch AI's Benchmarking Hub.")
+        text += (" Its benchmark scores are independent measurements "
+                 "by Epoch AI.")
     return text
 
 
