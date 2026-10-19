@@ -155,7 +155,7 @@
   /* ---------- data ---------- */
 
   /* deployed: data/ beside the pages; repository layout: site/ next to data/ */
-  var BASES = ["./data/", "../data/"];
+  var BASES = ["./data/", "../data/", "/data/"];
   var base = null, baseP = null, manifestP = null;
   function fetchAt(b, p) {
     return fetch(b + p).then(function (r) { if (!r.ok) { throw new Error("HTTP " + r.status + " for " + p); } return r; });

@@ -441,13 +441,18 @@ def _nfb(h, b):
     return f'<div class="nfb"><h3>{h}</h3><p>{b}</p></div>'
 
 
-def _table(caption, head, rows, num_from=1):
-    th = "".join(f'<th scope="col"{" class=\"n\"" if i >= num_from else ""}>{h}</th>' for i, h in enumerate(head))
+def _table(caption, head, rows, num_cols=None):
+    """A plain table; num_cols are the right-aligned figure columns (default: all but the first)."""
+    num = set(range(1, len(head))) if num_cols is None else set(num_cols)
+    th = "".join(f'<th scope="col"{NUMC if i in num else ""}>{h}</th>' for i, h in enumerate(head))
     body = ""
     for r in rows:
-        body += "<tr>" + "".join((f'<th scope="row">{c}</th>' if i == 0 else f'<td{" class=\"n num\"" if i >= num_from else ""}>{c}</td>')
+        body += "<tr>" + "".join((f'<th scope="row">{c}</th>' if i == 0 else f'<td{NUMC if i in num else ""}>{c}</td>')
                                  for i, c in enumerate(r)) + "</tr>"
     return f'<table class="dt"><caption>{caption}</caption><thead><tr>{th}</tr></thead><tbody>{body}</tbody></table>'
+
+
+NUMC = ' class="n"'
 
 
 def _details(summary, inner):
@@ -491,7 +496,7 @@ STEP2 = ("<p>Each release splits into four cells: system card, model card, usage
          "<p>\"Not disclosed\" is a fact about the lab. \"Not yet researched\" is work we have not done.</p>"
          f'<p><b>{_DPAPER_T}.</b> {DPAPER_NOTE}</p>'
          + _details("The numbers: on record / not disclosed / not yet researched",
-                    _table("Releases per lab, by document. Labs are listed in registry order.", ["Lab"] + [s[1] for s in _DISC_SLOTS], _lab_disc_rows)))
+                    _table("Releases per lab, by document. Labs are listed in registry order.", ["Lab"] + [s[1] for s in _DISC_SLOTS], _lab_disc_rows, num_cols=())))
 
 _traj_rows = [[y, str(_tn(y)), str(_tmax(y)) if _tn(y) else "none"] for y in slots]
 STEP3 = (f"<p>{TRAJ_TEACH}</p>"
@@ -506,7 +511,7 @@ STEP4 = ("<p>Each row is one release scored twice on one benchmark: the open dia
          f"<p>{PAIRS_LEAD}{DIV_NOTE}</p>"
          + _details("The numbers, with settings as written",
                     '<div class="sd-scroll">' + _table("Lab-reported and independent scores on the same release and benchmark.",
-                           ["Release", "Benchmark", "LAB", "IND", "Lab setting", "Epoch setting"], _pair_rows, num_from=2) + "</div>"))
+                           ["Release", "Benchmark", "LAB", "IND", "Lab setting", "Epoch setting"], _pair_rows, num_cols=(2, 3)) + "</div>"))
 
 STEP5 = ("<p>Every release again, split by lab and stacked by quarter, on one time axis and one scale. "
          "Labs are listed in registry order.</p>"
@@ -656,7 +661,7 @@ _steps_html = "".join(
     f'<article class="step" data-step="{i}" aria-labelledby="s{i}h"><h2 id="s{i}h">{t}</h2><div class="sb">{b}</div></article>\n'
     for i, (t, b) in enumerate(STEPS, 1))
 _find_html = "".join(
-    f'<article class="find panel"><h3>{t}</h3><p>{p}</p><figure class="fig">{fig}</figure></article>\n'
+    f'<article class="find panel" data-ui><h3>{t}</h3><p>{p}</p><figure class="fig">{fig}</figure></article>\n'
     for t, p, fig in FINDINGS)
 _refused_html = "".join(
     f'<li><a href="explorer.html?id={esc(eid)}">{esc(_names.get(eid, eid))}</a> <span class="t-m">{esc(reason)}</span></li>'
@@ -664,7 +669,7 @@ _refused_html = "".join(
 
 MAIN = f"""<main id="main" class="story" tabindex="-1">
 <section class="scrolly" aria-labelledby="hed">
-<div class="graphic" id="graphic">
+<div class="graphic" id="graphic" data-ui>
 <canvas id="cv" aria-hidden="true"></canvas>
 <svg class="ov" id="ov" aria-hidden="true" focusable="false"></svg>
 <div class="hit" id="hit" tabindex="0" role="application" aria-roledescription="chart" aria-label="The chart of every release on record. The arrow keys move between marks and read each record; Enter opens it in the explorer." aria-describedby="live" hidden></div>

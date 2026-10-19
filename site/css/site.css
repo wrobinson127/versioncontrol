@@ -168,7 +168,7 @@ select { padding-right: 24px; }
 /* ---------- shell ---------- */
 .topbar {
   position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 20px;
-  height: 52px; padding: 0 24px; background: var(--ground); border-bottom: 1px solid var(--border);
+  height: 52px; padding: 0 24px; background: var(--surface);
 }
 .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; flex: none; min-height: 32px; }
 .brand-name { font-weight: 650; font-stretch: 118%; letter-spacing: -0.01em; font-size: 15px; }
@@ -485,8 +485,8 @@ svg .cmp-over { fill: var(--accent-text); }
 .cmp-strip svg { width: 7px; height: 7px; }
 
 /* ---------- footer ---------- */
-.foot { border-top: 1px solid var(--border); margin-top: 8px; }
-.foot-in { max-width: 1760px; margin: 0 auto; padding: 20px 24px 28px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 32px; color: var(--muted); font-size: 12.5px; line-height: 18px; }
+.foot { background: var(--surface); margin-top: 24px; }
+.foot-in { max-width: 1760px; margin: 0 auto; padding: 20px 24px 28px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 32px; color: var(--muted); font-size: 13px; line-height: 19px; }
 .foot-what { max-width: 80ch; }
 .foot-what b { color: var(--text); font-weight: 600; }
 .foot-links { display: flex; flex-wrap: wrap; gap: 4px 16px; justify-content: flex-end; }
@@ -559,8 +559,8 @@ svg .cmp-over { fill: var(--accent-text); }
   .wf-n b { display: block; }
   .tabbar {
     display: grid; grid-template-columns: repeat(6, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
-    height: calc(58px + env(safe-area-inset-bottom)); padding: 0 6px env(safe-area-inset-bottom);
-    background: var(--surface); border-top: 1px solid var(--border);
+    height: calc(58px + env(safe-area-inset-bottom)); padding: 0 14px env(safe-area-inset-bottom);
+    background: var(--surface);
   }
   .tabbar a, .tabbar button {
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: 0; background: none;
@@ -762,7 +762,8 @@ th[aria-sort="descending"] .sg::after { content: "↓"; }
 .lede { font-size: 18px !important; line-height: 28px !important; }
 .lede-2 { color: var(--muted); }
 .doc-sec { padding: 28px 0 30px; border-top: 1px solid var(--border); max-width: 70ch; }
-.doc-sec.rule { max-width: none; display: grid; grid-template-columns: minmax(0, 66ch) minmax(240px, 300px); gap: 40px; }
+.doc-sec.rule { max-width: none; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 48px; align-items: start; }
+.doc-sec.rule .rule-text { max-width: 68ch; }
 .doc-sec h2 { font-size: 20px; line-height: 28px; font-weight: 650; font-stretch: 108%; letter-spacing: -0.01em; margin-bottom: 12px; scroll-margin-top: 72px; }
 .doc-sec h3 { font-size: 15px; line-height: 22px; font-weight: 650; font-stretch: 106%; margin: 26px 0 8px; scroll-margin-top: 72px; }
 .doc-sec p, .doc-sec li { font-size: 16px; line-height: 26px; }
@@ -809,7 +810,7 @@ th[aria-sort="descending"] .sg::after { content: "↓"; }
 .pg-about .doc-head p { max-width: 68ch; }
 .corr-item { padding: 12px 0 12px 14px; border-left: 2px solid var(--alarm); }
 .corr-item + .corr-item { margin-top: 10px; }
-.corr-item p { font-size: 15px !important; line-height: 23px !important; }
+.corr-item p { font-size: 16px !important; line-height: 25px !important; }
 .corr-item .corr-h { font-weight: 600; }
 .corr-item .corr-tag { color: var(--alarm); font-size: 12px; font-weight: 650; margin-right: 6px; }
 @media (max-width: 1040px) {
@@ -999,3 +1000,105 @@ th[aria-sort="descending"] .sg::after { content: "↓"; }
   }
 }
 @keyframes under { 0% { opacity: 1; } 14% { opacity: 0.15; } 100% { opacity: 0; } }
+
+/* ================= reading pages and the story: surfaces by fill, not by line ================= */
+.pg-doc .doc-sec { border-top: 0; padding-top: 34px; }
+.pg-doc .doc-head { padding-bottom: 8px; }
+.pg-doc .doc-head h1 { font-size: 40px; line-height: 46px; font-stretch: 112%; letter-spacing: -0.02em; }
+.pg-doc .rule-note, .pg-doc .rec-card, .pg-doc .spec { border: 0; }
+.pg-doc .doc-sec blockquote, .pg-doc .cite-bibtex { border: 0; }
+.pg-doc .file-table { font-size: 15px; line-height: 22px; }
+.pg-doc .file-table thead th { font-size: 13px; }
+.pg-doc .doc-list li { font-size: 16px; line-height: 25px; }
+.pg-doc .rn-list li { border-top: 0; padding: 4px 0; }
+.pg-story .step, .pg-story .panel, .pg-story .enddoor, .textver > summary { border: 0; }
+.pg-story .step.is-active { background: var(--raised); }
+.pg-story .sd { border-top: 0; padding-top: 4px; }
+.pg-story .nfb { border-top: 0; padding: 8px 0 10px; }
+.pg-story .step p { font-size: 16px; line-height: 24px; }
+.pg-story .sd .sd-p { font-size: 16px; line-height: 24px; }
+.pg-story .nfb p, .pg-story .nfallback > p { font-size: 16px; line-height: 24px; }
+.pg-story .find p { font-size: 15px; line-height: 22px; }
+.pg-story .refusals-p .t-m, .pg-story .refusals li { font-size: 15px; line-height: 22px; }
+.pg-story .protonote, .pg-story .enddoor span, .pg-story .textver .t-m { font-size: 14px; }
+.pg-story .hero-dek { font-size: 16px; line-height: 24px; }
+.pg-story .refusals li { border-top: 0; padding: 4px 0; }
+@media (max-width: 899px) {
+  .story-js .steps { z-index: auto; }
+}
+@media (max-width: 720px) {
+  .pg-doc .doc-head h1 { font-size: 30px; line-height: 36px; }
+  .pg-story .hero-dek { font-size: 15px; line-height: 22px; }
+}
+.pg-story .num, .pg-doc .num { font-family: var(--font); font-stretch: 100%; font-size: 1em; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.pg-story .sd .dt, .pg-story .sd .dt caption { font-size: 13.5px; }
+.pg-story .sd .dt th, .pg-story .sd .dt td { padding-right: 12px; }
+
+/* ================= specimens: the record beside the text that describes it ================= */
+.specs { display: grid; gap: var(--gap); align-self: start; position: sticky; top: 72px; }
+.spec { background: var(--surface); border-radius: var(--r-panel); padding: 14px 16px 16px; min-height: 200px; min-width: 0; }
+.spec .rn-h { color: var(--muted); }
+.spec .rn-big { font-size: 15px; color: var(--muted); margin-top: 2px; }
+.spec .rn-big .num { font-size: 22px; color: var(--text); margin-right: 4px; font-weight: 500; }
+.spec dl { display: grid; gap: 10px; margin-top: 4px; }
+.spec dt { color: var(--muted); font-size: 12.5px; line-height: 17px; }
+.spec dd { font-size: 15px; line-height: 21px; }
+.spec .rn-s { margin-top: 6px; }
+.spec .rn-big-list li { font-size: 14px; line-height: 20px; padding: 7px 0; }
+.spec .rn-big-list .num { font-size: 17px; margin-right: 3px; }
+.spec-svg { display: block; width: 100%; height: auto; margin: 6px 0 2px; overflow: visible; }
+.spec-svg .sb { fill: var(--accent); }
+.spec-svg .sb-part { fill: none; stroke: var(--accent); stroke-width: 1.5; }
+.spec-svg .sb-base { stroke: var(--control-strong); stroke-width: 1; }
+.spec-svg .sb-mark { stroke: var(--text); stroke-width: 1.5; }
+.spec-svg .sv-n { font: 500 12px var(--font); font-variant-numeric: tabular-nums; fill: var(--text); }
+.spec-svg .sv-l { font: 11.5px var(--font); fill: var(--muted); }
+.spec-tbl { overflow-x: auto; margin-top: 6px; }
+.spec .dt { font-size: 12.5px; }
+.spec .dt th, .spec .dt td { padding: 5px 10px 5px 0; white-space: nowrap; }
+.spec .dt a { text-decoration: none; }
+.spec .dt a:hover { text-decoration: underline; }
+.spec-json { margin: 6px 0 0; max-height: 300px; overflow: auto; font: 11.5px/17px var(--mono); font-stretch: 87.5%; color: var(--muted); white-space: pre; scrollbar-width: thin; }
+.spec-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 320px)); gap: var(--gap); margin-top: 28px; }
+.pg-404 .doc-head { max-width: 70ch; }
+@media (max-width: 1040px) {
+  .specs { position: static; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .spec { min-height: 0; }
+}
+@media (max-width: 720px) {
+  .spec-grid { grid-template-columns: minmax(0, 1fr); }
+}
+.pg-doc .prov, .pg-doc .dmark, .pg-doc .doc-sec .nc { font-size: 14px; }
+.pg-doc .prov { font-family: var(--font); font-stretch: 100%; }
+.pg-doc .toc summary { font-size: 13px; }
+.pg-story .sd .dt thead th { font-size: 13px; }
+
+code, pre, kbd, samp { font-family: var(--mono); font-stretch: 87.5%; }
+.file-table code { font-size: 13px; }
+.file-table code a { text-decoration-color: var(--control-strong); }
+.pg-story .find { min-height: 236px; }
+.pg-story .sd .dt { display: block; overflow-x: auto; max-width: 100%; }
+.sd-scroll { overflow: visible; }
+
+/* specimens settle as they enter the page: bars grow to their count and the
+   strip of glyphs fills in, so the eye sees each figure counted. The figure
+   is readable before, during and after; reduced motion shows it settled. */
+@media (prefers-reduced-motion: no-preference) {
+  .spec-svg .sb, .spec-svg .sb-part { transform-box: fill-box; transform-origin: 50% 100%; transition: transform 520ms cubic-bezier(0.23, 1, 0.32, 1); transition-delay: calc(var(--i, 0) * 45ms); }
+  .js .spec:not(.in) .spec-svg .sb, .js .spec:not(.in) .spec-svg .sb-part { transform: scaleY(0.18); }
+  .rn-strip svg { transition: opacity 360ms ease-out; transition-delay: calc(var(--i, 0) * 2ms); }
+  .js .spec:not(.in) .rn-strip svg { opacity: 0.35; }
+  .spec-svg .g-ind, .spec-svg .g-lab { transform-box: fill-box; transform-origin: center; transition: transform 380ms cubic-bezier(0.23, 1, 0.32, 1); transition-delay: calc(var(--i, 0) * 6ms); }
+  .js .spec:not(.in) .spec-svg .g-ind, .js .spec:not(.in) .spec-svg .g-lab { transform: scale(0.4); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .spec .rn-list li, .spec .dt tbody tr, .spec dl > div { transition: transform 420ms cubic-bezier(0.23, 1, 0.32, 1); }
+  .spec .rn-list li:nth-child(2), .spec .dt tbody tr:nth-child(2), .spec dl > div:nth-child(2) { transition-delay: 50ms; }
+  .spec .rn-list li:nth-child(3), .spec .dt tbody tr:nth-child(3), .spec dl > div:nth-child(3) { transition-delay: 100ms; }
+  .spec .rn-list li:nth-child(n+4), .spec .dt tbody tr:nth-child(n+4), .spec dl > div:nth-child(n+4) { transition-delay: 150ms; }
+  .js .spec:not(.in) .rn-list li, .js .spec:not(.in) .dt tbody tr, .js .spec:not(.in) dl > div { transform: translateY(6px); }
+}
+@media (max-width: 1040px) {
+  .pg-doc .doc-sec, .pg-doc .doc-head, .doc-sec.rule .rule-text { max-width: none; }
+}
