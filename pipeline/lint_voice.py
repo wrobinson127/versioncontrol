@@ -12,6 +12,11 @@ import re
 # the DESIGN prohibition). En dash in date ranges is allowed.
 EM_DASH_RE = re.compile(r"[—―]")
 
+# A spaced double hyphen is the typewriter em dash: the same break in a
+# sentence, and the same prohibition. Spaces on both sides are required, so
+# "--flag" in a quoted command and "a--b" identifiers stay legal.
+DOUBLE_HYPHEN_DASH_RE = re.compile(r"(?<=\S) -- (?=\S)")
+
 # Banned patterns, each with a category for the violation report.
 # Quality adjectives, ranking language, editorial characterization, and
 # corporate speak are all banned in registrar prose.
@@ -127,6 +132,13 @@ def lint_text(text: str, context: str = "") -> list:
             "pattern": "em-dash",
             "category": "em-dash",
             "match": "—",
+            "context": context,
+        })
+    if DOUBLE_HYPHEN_DASH_RE.search(text):
+        violations.append({
+            "pattern": "double-hyphen-dash",
+            "category": "em-dash",
+            "match": " -- ",
             "context": context,
         })
     for rx, cat in _COMPILED:
