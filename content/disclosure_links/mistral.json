@@ -382,6 +382,30 @@
    "status": "APPROVED",
    "researched": true,
    "notes": "No system card, consistent with the lab-wide pattern. Official mistralai HF card for the 128B open weights fetched HTTP 200 this session under a Modified MIT license. No paper; the card links only the announcement blog for the merged flagship release. Usage policy fetched HTTP 200 this session."
+  },
+  {
+   "entry_id": "mistral--codestral-25.01",
+   "model_name": "Codestral 25.01",
+   "date": "2025-01-13",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://legal.mistral.ai/terms/usage-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 for the Sep to Oct catch-up; each URL fetched 200 and each NOT_DISCLOSED cell checked against the lab's own pages (evidence in docs/finish/evidence/). Approved under Walker's decision D1 of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "mistral--mistral-large-4",
+   "model_name": "Mistral Large 4",
+   "date": "2026-10-06",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://legal.mistral.ai/terms/usage-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 for the Sep to Oct catch-up; each URL fetched 200 and each NOT_DISCLOSED cell checked against the lab's own pages (evidence in docs/finish/evidence/). Approved under Walker's decision D1 of 2026-10-19; listed in the approval packet.",
+   "researched": true
   }
  ]
 }

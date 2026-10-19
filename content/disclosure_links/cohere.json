@@ -155,6 +155,18 @@
    "paper": "",
    "status": "DRAFT_FLAGGED",
    "notes": "Not researched this pass; candidate for the next research cycle."
+  },
+  {
+   "entry_id": "cohere--embed-5",
+   "model_name": "Embed 5",
+   "date": "2026-09-30",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://docs.cohere.com/docs/usage-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 for the Sep to Oct catch-up; each URL fetched 200 and each NOT_DISCLOSED cell checked against the lab's own pages (evidence in docs/finish/evidence/). Approved under Walker's decision D1 of 2026-10-19; listed in the approval packet.",
+   "researched": true
   }
  ]
 }

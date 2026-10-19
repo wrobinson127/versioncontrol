@@ -243,6 +243,42 @@
    "status": "APPROVED",
    "notes": "System card URL fetched this session with a browser UA; it redirects to the Claude Sonnet 5 System Card PDF on www-cdn.anthropic.com, returned 200 application/pdf with a valid PDF header, and is listed on the system cards hub fetched this session. No separate model card; Anthropic folds it into the system card. No arXiv technical report. Usage policy page fetched 200.",
    "researched": true
+  },
+  {
+   "entry_id": "anthropic--claude-haiku-5.5",
+   "model_name": "Claude Haiku 5.5",
+   "date": "2026-10-07",
+   "system_card": "https://www.anthropic.com/claude-haiku-5-5-system-card",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://www.anthropic.com/legal/aup",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 for the Sep to Oct catch-up; each URL fetched 200 and each NOT_DISCLOSED cell checked against the lab's own pages (evidence in docs/finish/evidence/). Approved under Walker's decision D1 of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "anthropic--claude-opus-5.5",
+   "model_name": "Claude Opus 5.5",
+   "date": "2026-09-22",
+   "system_card": "https://www.anthropic.com/claude-opus-5-5-system-card",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://www.anthropic.com/legal/aup",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 for the Sep to Oct catch-up; each URL fetched 200 and each NOT_DISCLOSED cell checked against the lab's own pages (evidence in docs/finish/evidence/). Approved under Walker's decision D1 of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "anthropic--claude-sonnet-5.5",
+   "model_name": "Claude Sonnet 5.5",
+   "date": "2026-09-28",
+   "system_card": "https://www.anthropic.com/claude-sonnet-5-5-system-card",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://www.anthropic.com/legal/aup",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 for the Sep to Oct catch-up; each URL fetched 200 and each NOT_DISCLOSED cell checked against the lab's own pages (evidence in docs/finish/evidence/). Approved under Walker's decision D1 of 2026-10-19; listed in the approval packet.",
+   "researched": true
   }
  ]
 }

@@ -223,6 +223,42 @@
    "paper": "",
    "status": "DRAFT_FLAGGED",
    "notes": ""
+  },
+  {
+   "entry_id": "meta--muse-spark-open",
+   "model_name": "Muse Spark Open",
+   "date": "2026-10-15",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B",
+   "usage_policy": "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B/blob/main/LICENSE.md",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 for the Sep to Oct catch-up; each URL fetched 200 and each NOT_DISCLOSED cell checked against the lab's own pages (evidence in docs/finish/evidence/). Approved under Walker's decision D1 of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "meta--muse-wonder-full",
+   "model_name": "Muse Wonder Full",
+   "date": "2026-10-12",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://research.meta.ai/static/muse-wonder-model-card",
+   "usage_policy": "https://dev.meta.ai/legal/acceptable-use-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 for the Sep to Oct catch-up; each URL fetched 200 and each NOT_DISCLOSED cell checked against the lab's own pages (evidence in docs/finish/evidence/). Approved under Walker's decision D1 of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "meta--muse-wonder",
+   "model_name": "Muse Wonder",
+   "date": "2026-10-12",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://research.meta.ai/static/muse-wonder-model-card",
+   "usage_policy": "https://dev.meta.ai/legal/acceptable-use-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 for the Sep to Oct catch-up; each URL fetched 200 and each NOT_DISCLOSED cell checked against the lab's own pages (evidence in docs/finish/evidence/). Approved under Walker's decision D1 of 2026-10-19; listed in the approval packet.",
+   "researched": true
   }
  ]
 }

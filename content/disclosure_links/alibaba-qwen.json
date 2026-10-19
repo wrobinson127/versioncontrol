@@ -586,6 +586,18 @@
    "paper": "",
    "status": "DRAFT_FLAGGED",
    "notes": "Not researched this pass."
+  },
+  {
+   "entry_id": "alibaba-qwen--qwen3.8-omni-flash",
+   "model_name": "Qwen3.8-Omni-Flash",
+   "date": "2026-09-20",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
+   "paper": "https://arxiv.org/abs/2609.25611",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 for the Sep to Oct catch-up; each URL fetched 200 and each NOT_DISCLOSED cell checked against the lab's own pages (evidence in docs/finish/evidence/). Approved under Walker's decision D1 of 2026-10-19; listed in the approval packet.",
+   "researched": true
   }
  ]
 }

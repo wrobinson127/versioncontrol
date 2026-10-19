@@ -18,6 +18,14 @@ jobs:
     if: vars.NIGHTLY_ENABLED == 'true' || github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v4
+      - name: Bring in the review queue
+        # The queue lives on nightly-pending, not main. Without it, every
+        # candidate already waiting for review is reported as a coverage gap.
+        run: |
+          if git ls-remote --exit-code origin nightly-pending >/dev/null 2>&1; then
+            git fetch --depth 1 origin nightly-pending
+            git checkout FETCH_HEAD -- data/pending
+          fi
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

@@ -254,6 +254,30 @@
    "status": "APPROVED",
    "notes": "No system card. DeepSeek publishes technical reports and news posts only; none of its releases to date ship a system or safety card. V4 preview announced 2026-04-24 on api-docs.deepseek.com/news/news260424 (fetched this session). HF card, arXiv 2606.19348 (DeepSeek-V4 report) and Terms of Use verified HTTP 200 this session.",
    "researched": true
+  },
+  {
+   "entry_id": "deepseek--deepseek-v4-flash-vision-exp",
+   "model_name": "DeepSeek-V4-Flash-Vision-Exp",
+   "date": "2026-08-21",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+   "usage_policy": "https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 for the Sep to Oct catch-up; each URL fetched 200 and each NOT_DISCLOSED cell checked against the lab's own pages (evidence in docs/finish/evidence/). Approved under Walker's decision D1 of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "deepseek--deepseek-v4.1-flash-1017",
+   "model_name": "DeepSeek-V4.1-Flash-1017",
+   "date": "2026-10-17",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+   "usage_policy": "https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html",
+   "paper": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/DeepSeek_V41_Tech_Report.pdf",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 for the Sep to Oct catch-up; each URL fetched 200 and each NOT_DISCLOSED cell checked against the lab's own pages (evidence in docs/finish/evidence/). Approved under Walker's decision D1 of 2026-10-19; listed in the approval packet.",
+   "researched": true
   }
  ]
 }

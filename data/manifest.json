@@ -4,13 +4,13 @@
       "sha256": "3a8df9ae94e23e14003ca212c5aefe1be45edc5e708e2da2f6b71656e1962525"
     },
     "data/derived/site_meta.json": {
-      "sha256": "fd2e48341e060d3db9856d5e5e341ab7892369be224f83fc852bea258edb40a0"
+      "sha256": "17b33ad329cc0cb689b2c78fb42a13360911abf85f745eb4fa40f126733f7a0b"
     },
     "data/derived/views.json.gz": {
-      "sha256": "fd12aa792b5b713b05c99f9a1fdee2b7b4f35208b74bb575ae4d2202e7cc860b"
+      "sha256": "aa80e8b3de7497dd7213df9b89c67c6b9eff85c4c7a5e17bbae4d813f8bf231f"
     }
   },
-  "entry_count": 348,
+  "entry_count": 366,
   "files": {
     "data/entries/2022.json.gz": {
       "count": 2,
@@ -174,8 +174,9 @@
       "sha256": "eacbefb3c4869fba739776545f376c0d8ade884f27895ec06cd39e46f3d8111c"
     },
     "data/entries/2025.json.gz": {
-      "count": 126,
+      "count": 127,
       "ids": [
+        "mistral--codestral-25.01",
         "deepseek--deepseek-r1",
         "alibaba-qwen--gte-modernbert",
         "deepseek--deepseek-r1-distill-llama-70b",
@@ -303,10 +304,10 @@
         "openai--gpt-5.2-codex",
         "zai--glm-4.7"
       ],
-      "sha256": "5372d7fe740005fa740ca8aced3e5b396e57464e2ef326c9346f8bef0f190e88"
+      "sha256": "7634d5eb8755b42b6a436c206ec631fd8ca19259a7e9acef0e1711183acc8e2a"
     },
     "data/entries/2026.json.gz": {
-      "count": 79,
+      "count": 96,
       "ids": [
         "zai--glm-4.7-flash",
         "alibaba-qwen--qwen3-max-thinking",
@@ -377,6 +378,7 @@
         "google-deepmind--gemini-3.7-flash",
         "alibaba-qwen--qwen-3.8-27b",
         "zai--glm-5.3",
+        "deepseek--deepseek-v4-flash-vision-exp",
         "alibaba-qwen--qwen3.8-flash-next",
         "zai--glm-5.3-flash",
         "alibaba-qwen--qwen3.8-flash",
@@ -386,9 +388,25 @@
         "meta--muse-spark-1.3",
         "alibaba-qwen--qwen3.8-max-0902",
         "openai--gpt-6-astra",
-        "deepseek--deepseek-v4.1-flash"
+        "deepseek--deepseek-v4.1-flash",
+        "alibaba-qwen--qwen3.8-omni-flash",
+        "xai--grok-4.7",
+        "anthropic--claude-opus-5.5",
+        "openai--gpt-6-luna",
+        "openai--gpt-6-sol",
+        "anthropic--claude-sonnet-5.5",
+        "openai--gpt-6.1-sol",
+        "cohere--embed-5",
+        "google-deepmind--embeddinggemma-2",
+        "mistral--mistral-large-4",
+        "anthropic--claude-haiku-5.5",
+        "meta--muse-wonder",
+        "meta--muse-wonder-full",
+        "google-deepmind--gemini-4-argon",
+        "meta--muse-spark-open",
+        "deepseek--deepseek-v4.1-flash-1017"
       ],
-      "sha256": "f186e363ba7e016f26d61739e2595f1c49eb68537d50a8c1100102d8c81e6b78"
+      "sha256": "6924d46fd619cc51176dc83a57f59e554f849642aa9d36b4a812d2ca4a5fede6"
     }
   },
   "schema_version": 1
