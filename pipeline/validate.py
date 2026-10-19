@@ -27,6 +27,11 @@ DISCLOSURE_ARTIFACTS = ("system_card", "model_card", "usage_policy", "paper")
 ORIGIN_KINDS = ("backfill-epoch", "nightly-pipeline", "manual")
 
 _DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+# Reserved documentation hosts (RFC 2606) are placeholders, never sources. Two
+# promoted drafts once carried example.com links as a lab's model card and
+# paper, shown to readers as real documents (archive run, 2026-10-19).
+_PLACEHOLDER_HOST_RE = re.compile(
+    r"^https?://([^/]*\.)?(example\.(com|org|net)|[^/]*\.(example|invalid|test|localhost))(/|$)", re.I)
 _ID_RE = re.compile(r"^[a-z0-9][a-z0-9-]*--[a-z0-9][a-z0-9.-]*$")
 _URL_RE = re.compile(r"^https?://\S+$")
 
@@ -240,6 +245,15 @@ def validate_record(entries: list) -> list:
         if i in seen:
             errors.append(f"{i}: duplicate entry id")
         seen.add(i)
+    # Placeholder hosts are checked on the published record only: unit-test
+    # fixtures use example.com on purpose, the record never may.
+    for e in entries:
+        for k, v in (e.get("disclosure_links") or {}).items():
+            if isinstance(v, str) and _PLACEHOLDER_HOST_RE.match(v):
+                errors.append(f"{e.get('id')}: disclosure_links.{k} is a placeholder URL: {v}")
+        for i, src in enumerate(e.get("sources") or []):
+            if isinstance(src, dict) and isinstance(src.get("url"), str) and _PLACEHOLDER_HOST_RE.match(src["url"]):
+                errors.append(f"{e.get('id')}: sources[{i}] is a placeholder URL: {src['url']}")
     for e in entries:
         pred = e.get("predecessor")
         if pred is not None and pred not in seen:

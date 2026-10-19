@@ -7,7 +7,7 @@
       "sha256": "17b33ad329cc0cb689b2c78fb42a13360911abf85f745eb4fa40f126733f7a0b"
     },
     "data/derived/views.json.gz": {
-      "sha256": "b4d27201829b491caa113d83221f5dfd70efe0c5431c178bef220b379e0649ec"
+      "sha256": "3b04975dff813fc8c9ffc859620936eb2e4625c957c0d13d058fef913b0e9f4e"
     }
   },
   "entry_count": 366,
@@ -406,7 +406,7 @@
         "meta--muse-spark-open",
         "deepseek--deepseek-v4.1-flash-1017"
       ],
-      "sha256": "93af8158b6c0dff4b0be2d81c82794a7542a6b8f36cd0728427e247afa913c12"
+      "sha256": "c2ca5f6e55b4ebd663bd2f6e3904bcd20f7679a3a3c969aa54f3caed1a2bc26b"
     }
   },
   "schema_version": 1

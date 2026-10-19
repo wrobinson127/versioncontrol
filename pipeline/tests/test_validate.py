@@ -204,3 +204,16 @@ def test_lab_announcement_must_be_on_the_labs_domain():
     e["sources"] = [{"kind": "lab_announcement", "url": "https://openrouter.ai/x/y",
                      "retrieval_date": "2026-10-19"}]
     assert any("not on the lab's own domain" in m for m in validate.validate_entry(e))
+
+
+
+def test_placeholder_urls_are_refused_on_the_record():
+    entries = _entries()
+    ids = {e["id"] for e in entries}
+    for e in entries:
+        if e["predecessor"] not in ids:
+            e["predecessor"] = None
+    entries[0]["disclosure_links"]["model_card"] = "https://example.com/3.6-flash-model-card"
+    assert any("placeholder" in m for m in validate.validate_record(entries))
+    entries[0]["disclosure_links"]["model_card"] = "https://examples.dev/card"
+    assert not any("placeholder" in m for m in validate.validate_record(entries))
