@@ -169,6 +169,137 @@ def lint_identifier(text: str, context: str = "") -> list:
             if v["category"] == "em-dash"]
 
 
+# ---- page copy -------------------------------------------------------------
+# Site pages are not entry prose: they legitimately say "commit" in a code
+# sense, name the dataset's fields, and quote lab terms, so the full banned
+# list above would flag honest copy. Pages get a focused check instead: no
+# dash substitutes of any kind, and none of the internal jargon the 2026-10-19
+# audit removed. Ranges are written in words ("0 to 100"), so any en dash in
+# rendered page text is a failure, not just a spaced one.
+EN_DASH_RE = re.compile("–")
+_DASH_ENTITY_RE = re.compile(r"&(#8211|#8212|#x2013|#x2014|ndash|mdash);|\\u201[34]", re.IGNORECASE)
+
+# Words that leave the public copy and must not come back. Each was a build
+# or project-internal name that a reader has no way to decode.
+PAGE_JARGON = [
+    (r"\bregistrar'?s?\b", "jargon"),
+    (r"\bend state\b", "jargon"),
+    (r"\btransforming canvas\b", "jargon"),
+    (r"\bfrontier\b", "jargon"),
+]
+_PAGE_JARGON = [(re.compile(p, re.IGNORECASE), c) for p, c in PAGE_JARGON]
+
+
+def lint_page_copy(text: str, context: str = "") -> list:
+    """Dash and jargon check for rendered site copy (pages, UI strings)."""
+    violations = [v for v in lint_text(text, context=context) if v["category"] == "em-dash"]
+    m = EN_DASH_RE.search(text)
+    if m:
+        violations.append({"pattern": "en-dash", "category": "en-dash",
+                           "match": m.group(0), "context": context})
+    for m in _DASH_ENTITY_RE.finditer(text):
+        s = m.group(0).lower()
+        cat = "en-dash" if ("8211" in s or "2013" in s or "ndash" in s) else "em-dash"
+        violations.append({"pattern": "dash-entity", "category": cat,
+                           "match": m.group(0), "context": context})
+    for rx, cat in _PAGE_JARGON:
+        m = rx.search(text)
+        if m:
+            violations.append({"pattern": rx.pattern, "category": cat,
+                               "match": m.group(0), "context": context})
+    return violations
+
+
+def strip_js_comments(src: str) -> str:
+    """Remove /* */ and // comments from JavaScript, leaving string literals.
+
+    Line comments are found with a per-line quote scan, so "https://" inside
+    a string survives. Good enough for this site's hand-written scripts; it
+    is not a JavaScript parser.
+    """
+    src = re.sub(r"/\*.*?\*/", "", src, flags=re.S)
+    out = []
+    for line in src.split("\n"):
+        q = None
+        i = 0
+        cut = None
+        while i < len(line):
+            c = line[i]
+            if q:
+                if c == "\\":
+                    i += 2
+                    continue
+                if c == q:
+                    q = None
+            elif c in "'\"`":
+                q = c
+            elif c == "/" and line[i + 1:i + 2] == "/":
+                cut = i
+                break
+            i += 1
+        out.append(line if cut is None else line[:cut])
+    return "\n".join(out)
+
+
+_JS_STRING_RE = re.compile(r'"(?:\\.|[^"\\\n])*"|\'(?:\\.|[^\'\\\n])*\'')
+
+
+def js_strings(src: str) -> list:
+    """Every string literal in a script, comments removed first."""
+    return [m.group(0)[1:-1] for m in _JS_STRING_RE.finditer(strip_js_comments(src))]
+
+
+_VISIBLE_ATTRS = {"title", "aria-label", "alt", "placeholder", "content",
+                  "data-tip", "data-atip", "data-swetip"}
+
+
+def page_strings(html_text: str) -> list:
+    """The strings a reader can see or hear on a page.
+
+    Text nodes outside <script> and <style>, the attributes that render as
+    tooltips, labels or link previews, and the string literals of inline
+    scripts (the story builds its notes from them). Entities are decoded.
+    """
+    import html as _html
+    from html.parser import HTMLParser
+
+    found = []
+
+    class _P(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=False)
+            self.skip = None
+
+        def handle_starttag(self, tag, attrs):
+            if tag in ("script", "style"):
+                self.skip = tag
+            for k, v in attrs:
+                if k in _VISIBLE_ATTRS and v:
+                    found.append(v)
+
+        def handle_endtag(self, tag):
+            if tag == self.skip:
+                self.skip = None
+
+        def handle_data(self, data):
+            if self.skip == "script":
+                found.extend(js_strings(data))
+            elif self.skip is None and data.strip():
+                found.append(data)
+
+        def handle_entityref(self, name):
+            if self.skip is None:
+                found.append(f"&{name};")
+
+        def handle_charref(self, name):
+            if self.skip is None:
+                found.append(f"&#{name};")
+
+    _P().feed(html_text)
+    # keep raw entity spellings visible to the dash check, then decode
+    return [s if _DASH_ENTITY_RE.search(s) else _html.unescape(s) for s in found]
+
+
 def lint_entry_prose(entry: dict) -> list:
     """Lint every publicly rendered field of a draft entry dict.
 

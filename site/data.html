@@ -43,7 +43,7 @@
 <main id="main" class="wrap prose">
   <h1>The dataset</h1>
 
-  <p>The complete registry record is published as versioned files: a manifest, one gzipped JSON array of entries per year, and a derived deltas file. The same files drive this site; there is no separate API and no private copy.</p>
+  <p>The complete registry record is published as versioned files: a manifest, one gzipped JSON array of entries per year, and a derived deltas file. The same files drive this site. There is no separate API.</p>
 
   <h2>Files</h2>
   <table class="file-table">
@@ -53,7 +53,7 @@
     <tbody id="file-rows">
       <tr><td><a href="./data/manifest.json">manifest.json</a></td><td>Index of entry files with per-file entry counts, ids, and SHA-256 checksums.</td></tr>
       <tr><td><a href="./data/derived/deltas.json.gz">derived/deltas.json.gz</a></td><td>Predecessor comparisons per entry: delta values or recorded refusals. The site renders this file verbatim.</td></tr>
-      <tr><td><a href="./data/derived/views.json.gz">derived/views.json.gz</a></td><td>Derived chart datasets: release cadence, benchmark trajectory series, disclosure matrix, and registry measures. Every chart on the site renders this file verbatim.</td></tr>
+      <tr><td><a href="./data/derived/views.json.gz">derived/views.json.gz</a></td><td>Derived chart datasets: release cadence, benchmark trajectory series, disclosure matrix, and registry measures. The charts on the site draw from this file; the site only counts and rounds what is in it.</td></tr>
       <tr><td><a href="./data/derived/site_meta.json">derived/site_meta.json</a></td><td>Record counts, date range, and the last successful update timestamp.</td></tr>
     </tbody>
   </table>
@@ -96,16 +96,17 @@
   <p>The published dataset (the gzipped JSON files above) is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/" rel="external">Creative Commons Attribution 4.0 International License (CC-BY 4.0)</a>.</p>
 
   <h2>Required attribution for Epoch AI derived fields</h2>
-  <p>Portions of the dataset are derived from Epoch AI's "Data on AI Models", used under CC-BY 4.0. If you redistribute or build on those fields, you must retain the following attribution:</p>
+  <p>Portions of the dataset are derived from two Epoch AI datasets, both used under CC-BY 4.0. If you redistribute or build on those fields, you must retain the following attributions:</p>
   <blockquote>Epoch AI, "Data on AI Models". Published online at epoch.ai. Retrieved from <a href="https://epoch.ai/data/ai-models" rel="external">https://epoch.ai/data/ai-models</a> [online resource].</blockquote>
-  <p>Backfilled release dates, organization mappings, parameter counts, availability classes, and independent benchmark numbers sourced from Epoch AI's Benchmarking Hub carry Epoch attribution.</p>
+  <blockquote>Epoch AI, "Capabilities &amp; benchmarking". Published online at epoch.ai. Retrieved from <a href="https://epoch.ai/benchmarks" rel="external">https://epoch.ai/benchmarks</a> [online resource].</blockquote>
+  <p>Release dates, lab names, parameter counts and availability come from Epoch AI's models dataset. Independent scores come from Epoch AI's benchmarking data. Both need Epoch's attribution.</p>
 
   <h2>Attribution for this dataset</h2>
   <p>If you use the Version Control dataset, please attribute:</p>
   <blockquote>Version Control, "The release record of the AI model era". Walker Robinson. versioncontrol.walker-robinson.com</blockquote>
 
   <h2>What the dataset does not contain</h2>
-  <p>Pricing and context-length figures displayed on the site with a "per OpenRouter" attribution are display-only and are not included in the downloadable dataset, because OpenRouter publishes no explicit redistribution license for its catalog data.</p>
+  <p>OpenRouter's catalog is not in the dataset, and the site does not show its prices or context lengths. Prices quoted in an entry's summary are the lab's own figures. Artificial Analysis data is not in the dataset either: we use it only for an internal check of which models we might be missing.</p>
 
   <h2>Cost of operation</h2>
   <p>The registry runs on static hosting and scheduled jobs at zero infrastructure cost, plus a small metered LLM cost for the nightly drafting step.</p>
@@ -114,7 +115,7 @@
 <footer class="site-foot">
   <div class="wrap">
     <p class="update" id="foot-update">Last successful update loads with the dataset.</p>
-    <p>Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>. Dataset licensed CC-BY 4.0 with Epoch AI attribution. <a href="./data.html">Download the dataset</a>.</p>
+    <p>Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>. Dataset licensed CC-BY 4.0 with Epoch AI attribution. <a href="./data.html">Download the dataset</a>. <a href="https://github.com/wrobinson127/versioncontrol/issues/new" rel="external">Report an error</a>.</p>
   </div>
 </footer>
 

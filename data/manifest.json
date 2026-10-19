@@ -304,7 +304,7 @@
         "openai--gpt-5.2-codex",
         "zai--glm-4.7"
       ],
-      "sha256": "3ac08ea0a58b52e2a9ae3fb1698852b5572cd56eeb7aaed3d55f389934826031"
+      "sha256": "cbed84a9a4b3cfc65abc6231d6a95e97432c0c23f6691a6473b963f8f928685a"
     },
     "data/entries/2026.json.gz": {
       "count": 96,
@@ -406,7 +406,7 @@
         "meta--muse-spark-open",
         "deepseek--deepseek-v4.1-flash-1017"
       ],
-      "sha256": "f7cd444302d4100eeeff82eec316cbd76b7ba340039e0b572ec4064c63270e4d"
+      "sha256": "65cb4336855a6703d3e05545beb9eb89d59811fce6aa6e91071d2f88d168f6a6"
     }
   },
   "schema_version": 1

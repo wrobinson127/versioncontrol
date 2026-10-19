@@ -187,7 +187,9 @@ def test_openrouter_page_yields_no_benchmarks_or_claims():
     assert entry["model_name"] == "Mixtral 8x7B"
     assert entry["date"] == "2023-12-11"
     assert entry["availability_class"] == "open_weights"
-    assert entry["summary"]
+    # the summary is dropped too: it carried an Artificial Analysis figure
+    # as the lab's own words (Phase 3 review)
+    assert entry["summary"] is None
     # Links read off an aggregator are not research into the lab.
     assert set(entry["disclosure_links"].values()) == {"NOT_RESEARCHED"}
     assert entry["third_party_source"] is True
@@ -247,3 +249,14 @@ def test_output_ceiling_is_high_enough_for_a_real_draft():
     """1024 truncated 11 of 52 drafts in production; dense extraction JSON
     runs about 2.8 characters per token."""
     assert config.LLM_MAX_OUTPUT_TOKENS >= 2048
+
+
+def test_shared_host_counts_only_under_the_labs_path():
+    from pipeline import config
+    assert config.is_lab_url("google-deepmind",
+        "https://storage.googleapis.com/deepmind-media/Model-Cards/x.pdf")
+    assert not config.is_lab_url("google-deepmind",
+        "https://storage.googleapis.com/someone-else/x.pdf")
+    assert config.is_lab_url("meta", "https://dev.meta.ai/legal/aup")
+    assert config.is_lab_url("meta", "https://huggingface.co/meta-models/x")
+
