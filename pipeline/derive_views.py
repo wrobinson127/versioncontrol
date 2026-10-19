@@ -208,6 +208,11 @@ def build_tiles(entries: list, run_date: str, pending: dict = None) -> dict:
         "releases_recorded": len(releases),
         "entries_recorded": len(entries),
         "days_since_last_release": (_date(run_date) - last).days,
+        # The site shows the newest release's date, not a day count: a count
+        # computed at derive time freezes when updates stop, and a frozen
+        # "4 days since the last release" reads as "nothing has shipped"
+        # (audit 2026-10-19, FAIL 4). A date stays true however old it is.
+        "last_release_date": last.isoformat(),
         "median_gap_days_this_year":
             round(statistics.median(year_gaps), 1) if year_gaps else None,
         "share_with_system_card": (round(with_link("system_card")

@@ -170,6 +170,18 @@
    "status": "APPROVED",
    "notes": "Beta release confirmed via press coverage; no x.ai/news post found this session. Early access product still in beta; the x.ai/safety card index lists a Grok 4.5 card but nothing for 4.3, so system card left blank pending a post GA recheck. Closed weights, no HF repo. AUP fetched 200. No paper.",
    "researched": true
+  },
+  {
+   "entry_id": "xai--grok-4.7",
+   "model_name": "Grok 4.7",
+   "date": "2026-09-21",
+   "system_card": "https://media.x.ai/v1/website/card4p7-3a96f40b.pdf",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section xai--grok-4.7. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "researched": true
   }
  ]
 }

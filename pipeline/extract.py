@@ -168,7 +168,8 @@ def extract_candidate(candidate: dict, announcement_html: str, run_date: str,
                       f"ceiling and was cut off mid-JSON; no draft written")
     try:
         draft = parse_extraction(raw, candidate["announcement_url"],
-                                 retrieval_date=run_date)
+                                 retrieval_date=run_date,
+                                 org=candidate.get("org"))
     except ExtractionError as e:
         # A parse error with no sight of the output is undiagnosable: two
         # candidates on the 2026-08-24 redraft failed at "line 1 column 1"
@@ -177,15 +178,38 @@ def extract_candidate(candidate: dict, announcement_html: str, run_date: str,
         # characters are enough to tell those apart without pasting a page.
         head = " ".join(raw.split())[:120]
         return None, f"extraction output rejected: {e} | output began: {head!r}"
+    if (not draft.get("third_party_source")
+            and re.search(r"artificial\s*analysis", announcement_html or "", re.I)):
+        # A lab page can quote another evaluator's numbers in its own table
+        # (Meta's Muse Spark Open card takes GPQA Diamond from Artificial
+        # Analysis). The page is the lab's, so the class cannot be decided
+        # here; a person checks each figure's footnote (Phase 3 review).
+        draft["review_note"] = (
+            "the lab page mentions Artificial Analysis: check each benchmark "
+            "figure's footnote before approving it as LAB_REPORTED.")
     violations = lint_voice.lint_entry_prose(draft)
+    if violations and all(v["context"] == "summary" for v in violations):
+        # Only the prose failed. Throwing the whole draft away cost four
+        # candidates their structured fields between 2026-09-16 and 10-12
+        # (audit W1), none of which was ever retried. The failing summary
+        # still never enters pending: it is dropped, the reviewer writes one,
+        # and promote refuses an entry with no summary until they do.
+        cats = ", ".join(sorted({v["category"] for v in violations}))
+        draft["summary"] = None
+        draft["summary_note"] = (f"drafted summary failed voice lint "
+                                 f"({cats}) and was dropped; write one by hand")
+        violations = lint_voice.lint_entry_prose(draft)
+        if not violations:
+            return draft, (f"draft extracted; summary failed voice lint "
+                           f"({cats}) and was dropped, structured fields kept")
     if violations:
         cats = ", ".join(sorted({v["category"] for v in violations}))
-        return None, f"draft summary failed voice lint ({cats}); no draft written"
+        return None, f"draft failed voice lint ({cats}); no draft written"
     return draft, "draft extracted, linted clean"
 
 
 def parse_extraction(raw_json: str, announcement_url: str,
-                     retrieval_date: str = None) -> dict:
+                     retrieval_date: str = None, org: str = None) -> dict:
     """Validate the model's JSON and populate provenance.
 
     Returns a draft-entry dict. Every benchmark number that survives carries a
@@ -193,14 +217,25 @@ def parse_extraction(raw_json: str, announcement_url: str,
     benchmark name AND version, retrieval_date. Numbers whose as-stated name
     does not match a pinned benchmark are kept under unpinned_claims for the
     morning report but can never enter the published dataset.
+
+    A page that is not on the lab's own domain (org's lab_domains; any
+    registry lab when org is None) yields identity fields and summary only:
+    no benchmarks, no unpinned claims, no disclosure links. LAB_REPORTED is a
+    claim that the lab said it, and an aggregator page cannot support that.
     """
     if retrieval_date is None:
         retrieval_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
+    # raw_decode, not loads: the model sometimes appends a sentence after a
+    # complete object, and json.loads threw away a valid draft for that
+    # ("Extra data: line 36 column 1", google-deepmind--developing-gemini-4,
+    # audit W1). Anything after the first complete value is ignored.
     try:
-        data = json.loads(raw_json)
+        data, _ = json.JSONDecoder().raw_decode(raw_json.strip())
     except json.JSONDecodeError as e:
         raise ExtractionError(f"extraction output is not valid JSON: {e}")
+    if not isinstance(data, dict):
+        raise ExtractionError("extraction output is not a JSON object")
 
     missing = [f for f in EXTRACTION_FIELDS if f not in data]
     if missing:
@@ -254,7 +289,7 @@ def parse_extraction(raw_json: str, announcement_url: str,
             },
         })
 
-    return {
+    draft = {
         "model_name": str(data["model_name"]).strip(),
         "organization": str(data["organization"]).strip(),
         "date": data["date"],
@@ -269,3 +304,27 @@ def parse_extraction(raw_json: str, announcement_url: str,
             "model": config.LLM_MODEL_ID,
         },
     }
+    if not config.is_lab_url(org, announcement_url):
+        # Audit F1: every OpenRouter-anchored draft carried Artificial
+        # Analysis numbers labelled LAB_REPORTED with the OpenRouter page as
+        # source_url, and validation passed because all five provenance fields
+        # were present. The class was wrong, not missing, so this is the only
+        # place it can be caught. Links found there are likewise not the
+        # registrar's research into what the lab published.
+        dropped = len(benchmarks) + len(unpinned)
+        draft["benchmarks"] = []
+        draft["unpinned_claims"] = []
+        draft["disclosure_links"] = {a: "NOT_RESEARCHED"
+                                     for a in DISCLOSURE_ARTIFACTS}
+        draft["third_party_source"] = True
+        # The summary goes too: it is the field that carried "Anthropic
+        # reports ... Intelligence Index (56.0)", an Artificial Analysis
+        # figure, as the lab's own words (Phase 3 review). A reviewer writes
+        # it from the lab's page instead; promote refuses a null summary.
+        draft["summary"] = None
+        draft["review_note"] = (
+            f"drafted from {config.url_host(announcement_url) or 'an unknown host'},"
+            f" which is not a {org or 'registry lab'} domain; {dropped} "
+            f"benchmark figure(s), all links and the summary dropped. "
+            f"Re-anchor on the lab's own page and write the summary from it.")
+    return draft

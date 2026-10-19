@@ -243,6 +243,42 @@
    "status": "APPROVED",
    "notes": "System card URL fetched this session with a browser UA; it redirects to the Claude Sonnet 5 System Card PDF on www-cdn.anthropic.com, returned 200 application/pdf with a valid PDF header, and is listed on the system cards hub fetched this session. No separate model card; Anthropic folds it into the system card. No arXiv technical report. Usage policy page fetched 200.",
    "researched": true
+  },
+  {
+   "entry_id": "anthropic--claude-haiku-5.5",
+   "model_name": "Claude Haiku 5.5",
+   "date": "2026-10-07",
+   "system_card": "https://www.anthropic.com/claude-haiku-5-5-system-card",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://www.anthropic.com/legal/aup",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section anthropic--claude-haiku-5.5. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "researched": true
+  },
+  {
+   "entry_id": "anthropic--claude-opus-5.5",
+   "model_name": "Claude Opus 5.5",
+   "date": "2026-09-22",
+   "system_card": "https://www.anthropic.com/claude-opus-5-5-system-card",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://www.anthropic.com/legal/aup",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section anthropic--claude-opus-5.5. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "researched": true
+  },
+  {
+   "entry_id": "anthropic--claude-sonnet-5.5",
+   "model_name": "Claude Sonnet 5.5",
+   "date": "2026-09-28",
+   "system_card": "https://www.anthropic.com/claude-sonnet-5-5-system-card",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://www.anthropic.com/legal/aup",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section anthropic--claude-sonnet-5.5. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "researched": true
   }
  ]
 }

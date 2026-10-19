@@ -390,10 +390,22 @@
           label: "of " + (t.system_card_researched || 0) +
             " researched releases carry a system card link" };
 
+    /* "Oct 15": an ISO date is too wide for the tile's display size */
+    function shortDate(iso) {
+      var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
+      if (!m) { return ""; }
+      var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+                    "Sep", "Oct", "Nov", "Dec"];
+      return months[+m[2] - 1] + " " + (+m[3]);
+    }
+
     var tiles = [
       { value: String(t.releases_recorded),
         label: "releases recorded, of " + (t.entries_recorded || t.releases_recorded) + " entries" },
-      { value: String(t.days_since_last_release), label: "days since the last release" },
+      { value: shortDate(t.last_release_date),
+        label: "date of the newest release on record (" +
+          String(t.last_release_date || "").slice(0, 4) +
+          "). Record checked " + t.as_of + "." },
       { value: String(t.median_gap_days_this_year), label: "median gap between releases this year, in days" },
       fourth
     ];

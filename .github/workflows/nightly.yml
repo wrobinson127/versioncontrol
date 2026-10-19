@@ -93,7 +93,20 @@ jobs:
             exit 0
           fi
           git commit -m "nightly: candidate releases awaiting review $(date -u +%F)"
-          git push origin nightly-pending
+          # One retry. Run 36585744246 (2026-09-29) lost the night to a single
+          # "remote rejected ... (Internal Server Error)"; Sonnet 5.5 survived
+          # only because it was still inside the lookback the next night. A
+          # retry first takes anything pushed meanwhile (a promote run); a
+          # conflicted merge fails here, red, rather than being forced.
+          if ! git push origin nightly-pending; then
+            echo "Push failed; fetching, merging and retrying once."
+            sleep 15
+            if git ls-remote --exit-code origin nightly-pending >/dev/null 2>&1; then
+              git fetch origin nightly-pending
+              git merge --no-edit FETCH_HEAD
+            fi
+            git push origin nightly-pending
+          fi
 
       - name: Open or refresh the review PR
         if: always()

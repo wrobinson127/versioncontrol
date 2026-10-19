@@ -254,6 +254,30 @@
    "status": "APPROVED",
    "notes": "No system card. DeepSeek publishes technical reports and news posts only; none of its releases to date ship a system or safety card. V4 preview announced 2026-04-24 on api-docs.deepseek.com/news/news260424 (fetched this session). HF card, arXiv 2606.19348 (DeepSeek-V4 report) and Terms of Use verified HTTP 200 this session.",
    "researched": true
+  },
+  {
+   "entry_id": "deepseek--deepseek-v4-flash-vision-exp",
+   "model_name": "DeepSeek-V4-Flash-Vision-Exp",
+   "date": "2026-08-21",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+   "usage_policy": "https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_other_labs.md, section deepseek--deepseek-v4-flash-vision-exp. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "researched": true
+  },
+  {
+   "entry_id": "deepseek--deepseek-v4.1-flash-1017",
+   "model_name": "DeepSeek-V4.1-Flash-1017",
+   "date": "2026-10-17",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+   "usage_policy": "https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html",
+   "paper": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/DeepSeek_V41_Tech_Report.pdf",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: link fetched 200. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_other_labs.md, section deepseek--deepseek-v4.1-flash-1017. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "researched": true
   }
  ]
 }

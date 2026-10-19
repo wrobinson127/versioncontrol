@@ -12,18 +12,29 @@ hardcodes a URL, an org spelling, or a threshold.
 #   to this org (primary-org match on the first comma-separated token).
 # hf_handles: Hugging Face org handles, org-scoped detection only. An empty
 #   list means the org publishes no open weights under a first-party handle.
-# news: primary announcement source. kind is "rss" or "html_diff".
+# news: announcement source(s). Either one source dict or a list of them;
+#   kind is "rss" or "html_diff". Read through news_sources(), never directly.
+# lab_domains: hosts the lab itself publishes on. A page on any other host is
+#   not the lab's own statement, so nothing read from it may carry the
+#   LAB_REPORTED source class (2026-10-19 audit F1: OpenRouter pages carry
+#   Artificial Analysis numbers, which were drafted as lab-reported). A
+#   subdomain of a listed host counts (api-docs.deepseek.com under
+#   deepseek.com). Huggingface repos under the org's own hf_handles also count.
+# hf_name_filter: optional regex (case-insensitive) a repo name must match
+#   for hf_orgs to emit a signal, for handles that mostly host research repos.
 # --------------------------------------------------------------------------
 
 REGISTRY = {
     "openai": {
         "display": "OpenAI",
+        "lab_domains": ["openai.com"],
         "epoch_names": ["OpenAI"],
         "hf_handles": ["openai"],
         "news": {"kind": "rss", "url": "https://openai.com/news/rss.xml"},
     },
     "anthropic": {
         "display": "Anthropic",
+        "lab_domains": ["anthropic.com", "claude.com"],
         "epoch_names": ["Anthropic"],
         # Org page exists but hosts no models; kept as a tripwire.
         "hf_handles": ["anthropic"],
@@ -31,45 +42,74 @@ REGISTRY = {
     },
     "google-deepmind": {
         "display": "Google DeepMind",
+        # storage.googleapis.com/deepmind-media serves every Gemini model
+        # card and safety report; the path, not the shared host, makes it
+        # Google's own (see config.is_lab_url).
+        "lab_domains": ["deepmind.google", "blog.google", "ai.google.dev",
+                        "developers.googleblog.com", "research.google",
+                        "storage.googleapis.com/deepmind-media"],
         "epoch_names": ["Google DeepMind", "Google", "DeepMind", "Google Brain", "Google Research", "Google AI"],
         "hf_handles": ["google"],
-        "news": {"kind": "rss", "url": "https://deepmind.google/blog/rss.xml"},
+        # The deepmind.google feed alone missed EmbeddingGemma 2 (2026-10-06;
+        # audit F2): Google announces Gemini and Gemma models on blog.google.
+        # The gemini-models section feed runs about seven weeks deep; the
+        # whole-blog feed holds only the last 20 posts (about four days, fine
+        # for a daily run) but is the one that carries Gemma posts filed under
+        # other sections. No leading \b on Gemma so "EmbeddingGemma" matches.
+        "news": [
+            {"kind": "rss", "url": "https://deepmind.google/blog/rss.xml"},
+            {"kind": "rss",
+             "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/rss/"},
+            {"kind": "rss", "url": "https://blog.google/rss/",
+             "title_filter": r"Gemini|Gemma"},
+        ],
     },
     "meta": {
         "display": "Meta",
+        "lab_domains": ["ai.meta.com", "research.meta.ai", "llama.com",
+                        "about.fb.com", "dev.meta.ai", "developer.meta.com"],
         "epoch_names": ["Meta AI", "Facebook AI Research"],
-        "hf_handles": ["meta-llama"],
-        # ai.meta.com returns HTTP 400 to scripted fetches (Phase 0 finding).
-        # No primary news source until retested from an Actions runner;
-        # coverage via HF, Epoch, OpenRouter. FLAGGED in verification report.
-        "news": None,
+        # meta-models hosts the Muse open weights (Muse Spark Open, 2026-10-15),
+        # which only OpenRouter and Epoch had surfaced (Phase 3 review).
+        "hf_handles": ["meta-llama", "meta-models"],
+        # ai.meta.com returns HTTP 400 to scripted fetches (Phase 0 finding),
+        # but research.meta.ai/blog answers 200 (checked 2026-10-19; it
+        # redirects to the research.meta.ai index, which lists the blog posts
+        # as plain anchors). Without it Muse Wonder Full was invisible: not on
+        # OpenRouter, no HF repo (audit F2).
+        "news": {"kind": "html_diff", "url": "https://research.meta.ai/blog"},
     },
     "xai": {
         "display": "xAI",
+        "lab_domains": ["x.ai"],
         "epoch_names": ["xAI"],
         "hf_handles": ["xai-org"],
         "news": {"kind": "html_diff", "url": "https://x.ai/news"},
     },
     "mistral": {
         "display": "Mistral",
+        "lab_domains": ["mistral.ai"],
         "epoch_names": ["Mistral AI"],
         "hf_handles": ["mistralai"],
         "news": {"kind": "html_diff", "url": "https://mistral.ai/news"},
     },
     "deepseek": {
         "display": "DeepSeek",
+        "lab_domains": ["deepseek.com"],
         "epoch_names": ["DeepSeek"],
         "hf_handles": ["deepseek-ai"],
         "news": {"kind": "html_diff", "url": "https://api-docs.deepseek.com/news"},
     },
     "alibaba-qwen": {
         "display": "Alibaba (Qwen)",
+        "lab_domains": ["qwenlm.github.io", "qwen.ai", "alibabacloud.com"],
         "epoch_names": ["Alibaba", "Alibaba DAMO Academy"],
         "hf_handles": ["Qwen"],
         "news": {"kind": "rss", "url": "https://qwenlm.github.io/blog/index.xml"},
     },
     "moonshot": {
         "display": "Moonshot AI",
+        "lab_domains": ["moonshot.ai", "moonshot.cn", "kimi.com", "kimi.ai"],
         "epoch_names": ["Moonshot"],
         "hf_handles": ["moonshotai"],
         # moonshot.ai serves a JS shell; kimi.com/blog is the working index.
@@ -77,12 +117,14 @@ REGISTRY = {
     },
     "zai": {
         "display": "Z.ai (Zhipu)",
+        "lab_domains": ["z.ai", "bigmodel.cn", "zhipuai.cn"],
         "epoch_names": ["Z.ai (Zhipu AI)"],
         "hf_handles": ["zai-org"],
         "news": {"kind": "html_diff", "url": "https://docs.z.ai/release-notes/new-released"},
     },
     "cohere": {
         "display": "Cohere",
+        "lab_domains": ["cohere.com"],
         # Epoch renamed "Cohere for AI" to "Cohere Labs (formerly Cohere for
         # AI)" between the 2026-07-16 and 2026-08-24 captures. Both spellings
         # are pinned: the old one so historical captures still replay, the new
@@ -96,14 +138,73 @@ REGISTRY = {
     },
     "amazon": {
         "display": "Amazon (Nova)",
+        "lab_domains": ["aws.amazon.com", "amazon.science", "nova.amazon.com",
+                        "aboutamazon.com"],
         "epoch_names": ["Amazon", "Amazon Web Services (AWS)"],
-        # Handle is noisy (non-Nova research repos); detector filters on
-        # Nova-pattern repo names.
+        # Handle is noisy (non-Nova research repos); hf_orgs filters on
+        # Nova-pattern repo names. The filter was documented here long before
+        # it existed: nine Amazon research repos (strands-decider, poiss-bge-m3,
+        # ALoDLM, LAR), all fine-tunes of other labs' models, reached the queue
+        # (audit W5).
         "hf_handles": ["amazon"],
+        "hf_name_filter": r"\bnova\b",
         "news": {"kind": "rss", "url": "https://aws.amazon.com/blogs/aws/feed/",
                  "title_filter": r"\bNova\b"},
     },
 }
+
+
+
+def news_sources(org_key: str) -> list:
+    """The org's announcement sources as a list (possibly empty)."""
+    news = REGISTRY[org_key].get("news")
+    if news is None:
+        return []
+    return list(news) if isinstance(news, list) else [news]
+
+
+def url_host(url: str) -> str:
+    from urllib.parse import urlsplit
+    host = (urlsplit(url or "").hostname or "").lower()
+    return host[4:] if host.startswith("www.") else host
+
+
+def is_lab_url(org_key: str, url: str) -> bool:
+    """True when url is on a host the org itself publishes on.
+
+    Pass org_key=None to accept any registry org's hosts (used where the org
+    is not known, so a page on one lab's site is still first-party). An
+    aggregator such as openrouter.ai never qualifies: its model pages carry
+    Artificial Analysis numbers, which must never be drafted as lab-reported
+    (audit F1). A Hugging Face URL qualifies only under the org's own
+    first-party handle, never under a third-party account.
+    """
+    host = url_host(url)
+    if not host:
+        return False
+    orgs = [org_key] if org_key else list(REGISTRY)
+    for key in orgs:
+        org = REGISTRY.get(key)
+        if org is None:
+            continue
+        for d in org.get("lab_domains", []):
+            if "/" in d:
+                # a shared host qualifies only under the lab's own path
+                d_host, d_path = d.split("/", 1)
+                from urllib.parse import urlsplit
+                path = urlsplit(url).path.lstrip("/")
+                if host == d_host and (path == d_path
+                                       or path.startswith(d_path + "/")):
+                    return True
+            elif host == d or host.endswith("." + d):
+                return True
+        if host == "huggingface.co":
+            from urllib.parse import urlsplit
+            first = urlsplit(url).path.strip("/").split("/")[0]
+            if first and first.lower() in {h.lower() for h in org["hf_handles"]}:
+                return True
+    return False
+
 
 # --------------------------------------------------------------------------
 # Epoch adapter

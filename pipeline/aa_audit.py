@@ -1,16 +1,18 @@
 """Artificial Analysis coverage audit (Amendment 2, D19).
 
-Primary role: diff the registry's entries against Artificial Analysis's
-tracked-model list; models they track that the registry lacks become
-detection-QA FLAGs. Runs weekly (not nightly), key-gated, free tier,
-100 requests per day, attribution required.
+Sole role: diff the registry's entries (and the review queue) against
+Artificial Analysis's tracked-model list; models they track that the
+registry lacks become detection-QA FLAGs. Runs weekly (not nightly),
+key-gated, free tier.
 
-Posture mirrors D4: display and cross-check freely with "per Artificial
-Analysis" attribution; their data NEVER enters the downloadable dataset.
-This module writes an audit report artifact only; it writes nothing under
-data/. The second approved use (their GPQA Diamond numbers as additional
-INDEPENDENT display rows) is deliberately not built until Walker confirms
-the key ruling; see the module TODO note in the report it emits.
+Internal coverage audit only. Artificial Analysis data is never displayed,
+never published, and never enters the dataset or the site, in any form. Their
+Data Platform Terms v1.1 (revised 2026-08-19) allow internal use; s.2.4 bars
+making Data available through any customer-facing product or dataset and
+s.2.5 bars use in a product whose purpose is benchmarking or comparison
+(audit W2, 2026-10-19). An earlier plan to show their GPQA Diamond numbers as
+display rows is withdrawn, not deferred. This module writes an audit report
+artifact only; it writes nothing under data/.
 
 The key (ARTIFICIALANALYSIS_API_KEY) lives only in GitHub Actions secrets
 and this process's environment, never in code, git, or client-side files.
@@ -18,17 +20,26 @@ and this process's environment, never in code, git, or client-side files.
 import argparse
 import json
 import os
+import re
 import sys
 
 import requests
 
-from . import config, correlate, store
+from . import config, correlate, pending, store
 
 AA_MODELS_URL = "https://artificialanalysis.ai/api/v2/language/models/free"
 
 # AA creator slugs to registry org keys; unmatched creators are listed in
-# the report so this map can be extended deliberately.
+# the report so this map can be extended deliberately. Keys are compared
+# after _creator_slug lowercases them; AA's spellings are kept as they arrive
+# ("z ai" with a space), which is why both styles appear.
 AA_CREATOR_TO_ORG = {
+    # Added 2026-10-19 from the weekly-audit run of that day, which listed
+    # them as unmapped: xAI's current AA name (9 models), Z.ai (9), Moonshot's
+    # Kimi brand (2). Until then three registry orgs were never audited.
+    "spacexai": "xai",
+    "z ai": "zai",
+    "kimi": "moonshot",
     "openai": "openai",
     "anthropic": "anthropic",
     "google": "google-deepmind",
@@ -70,9 +81,31 @@ def _creator_slug(model: dict) -> str:
     return str(creator).lower()
 
 
-def coverage_audit(aa_models: list, entries: list) -> dict:
-    """Which AA-tracked models have no matching registry entry."""
+# AA lists one model per reasoning-effort setting: "GPT-5.6 Luna (Low)",
+# "Muse Spark 1.2 (Xhigh)". The effort is a serving setting, not a release, and
+# left on the name it slugs to "gpt-5.6-luna-low", which matches nothing: 99
+# rows of the 2026-10-19 audit were "missing" that way (audit F4).
+_EFFORT_SUFFIX_RE = re.compile(r"\s*\([^()]*\)\s*$")
+
+
+def strip_effort_suffix(name: str) -> str:
+    stripped = _EFFORT_SUFFIX_RE.sub("", name)
+    return stripped or name
+
+
+def coverage_audit(aa_models: list, entries: list,
+                   pending_ids: set = None) -> dict:
+    """Which AA-tracked models have no matching registry entry.
+
+    pending_ids (pending.existing_pending_ids: queued candidates, rejections
+    and scope exclusions) count as known: a model already awaiting review or
+    already ruled on is not a detection gap.
+    """
     known = correlate.known_slugs(entries)
+    for pid in pending_ids or ():
+        org, sep, slug = pid.partition("--")
+        if sep and slug:
+            known.setdefault(org, set()).add(slug)
     missing, covered, unmatched_creators = [], 0, {}
     for m in aa_models:
         creator = _creator_slug(m)
@@ -81,7 +114,7 @@ def coverage_audit(aa_models: list, entries: list) -> dict:
             unmatched_creators[creator] = unmatched_creators.get(creator, 0) + 1
             continue
         name = m.get("name") or m.get("slug") or m.get("id") or ""
-        slug = correlate.base_slug(str(name))
+        slug = correlate.base_slug(strip_effort_suffix(str(name)))
         if slug and correlate.is_known(org, slug, known):
             covered += 1
         else:
@@ -101,9 +134,9 @@ def report_markdown(audit: dict, run_date: str) -> str:
                  f"missing from the registry.")
     lines.append("")
     lines.append("Data cross-checked against Artificial Analysis "
-                 "(artificialanalysis.ai); attribution required by their "
-                 "terms; their data never enters the downloadable dataset "
-                 "(D19).")
+                 "(artificialanalysis.ai) for internal coverage QA only; "
+                 "their data is never displayed or published and never "
+                 "enters the dataset (D19; Data Platform Terms v1.1).")
     if audit["missing"]:
         lines.append("")
         lines.append("## Detection-QA FLAGs: tracked there, absent here")
@@ -144,7 +177,8 @@ def main():
 
     aa_models = fetch_models(api_key)
     entries = store.read_entries(root=args.root)
-    audit = coverage_audit(aa_models, entries)
+    audit = coverage_audit(aa_models, entries,
+                           pending_ids=pending.existing_pending_ids(args.root))
     text = report_markdown(audit, args.run_date)
     with open(args.out, "w", encoding="utf-8", newline="\n") as f:
         f.write(text)

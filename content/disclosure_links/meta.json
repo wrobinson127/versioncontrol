@@ -223,6 +223,42 @@
    "paper": "",
    "status": "DRAFT_FLAGGED",
    "notes": ""
+  },
+  {
+   "entry_id": "meta--muse-spark-open",
+   "model_name": "Muse Spark Open",
+   "date": "2026-10-15",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B",
+   "usage_policy": "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B/blob/main/LICENSE.md",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section meta--muse-spark-open. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "researched": true
+  },
+  {
+   "entry_id": "meta--muse-wonder-full",
+   "model_name": "Muse Wonder Full",
+   "date": "2026-10-12",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://research.meta.ai/static/muse-wonder-model-card",
+   "usage_policy": "https://dev.meta.ai/legal/acceptable-use-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section meta--muse-wonder-full. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "researched": true
+  },
+  {
+   "entry_id": "meta--muse-wonder",
+   "model_name": "Muse Wonder",
+   "date": "2026-10-12",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://research.meta.ai/static/muse-wonder-model-card",
+   "usage_policy": "https://dev.meta.ai/legal/acceptable-use-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section meta--muse-wonder. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "researched": true
   }
  ]
 }
