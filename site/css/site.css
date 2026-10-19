@@ -244,7 +244,8 @@ a:hover { color: var(--ink); }
   color: var(--ink-muted);
 }
 
-.controls select {
+.controls select,
+.controls input[type="search"] {
   font: inherit;
   font-size: 0.9rem;
   color: var(--ink);
@@ -253,6 +254,8 @@ a:hover { color: var(--ink); }
   border-radius: 4px;
   padding: 5px 8px;
 }
+
+.controls input[type="search"] { width: 11em; }
 
 .controls input[type="checkbox"] {
   width: 15px; height: 15px;
@@ -378,6 +381,23 @@ a:hover { color: var(--ink); }
      measures the bar into --controls-h (audit F2) */
   scroll-margin-top: calc(var(--nav-h) + var(--controls-h, 110px) + 12px);
 }
+
+.entry-origin { color: var(--ink-faint); }
+
+/* small, quiet, and only loud on focus or hover: a utility, not a CTA */
+.entry-copylink {
+  font: inherit;
+  font-size: 0.8rem;
+  color: var(--annotation);
+  background: none;
+  border: 0;
+  padding: 2px 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.entry-copylink:hover { color: var(--ink); }
 
 .entry-name a { color: inherit; text-decoration: none; }
 .entry-name a:hover { color: var(--accent); }

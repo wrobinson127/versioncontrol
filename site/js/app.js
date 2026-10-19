@@ -21,6 +21,31 @@
     "amazon": "Amazon (Nova)"
   };
 
+  /* Country of the parent company's headquarters; mirrors pipeline/config.py
+     REGISTRY[...]["country"] (a test holds the two together). Context for a
+     filter only: never a ranking, never a grouping in the story. */
+  var ORG_COUNTRY = {
+    "openai": "United States",
+    "anthropic": "United States",
+    "google-deepmind": "United States",
+    "meta": "United States",
+    "xai": "United States",
+    "mistral": "France",
+    "deepseek": "China",
+    "alibaba-qwen": "China",
+    "moonshot": "China",
+    "zai": "China",
+    "cohere": "Canada",
+    "amazon": "United States"
+  };
+
+  /* how an entry first reached the record (methodology: "Who decides") */
+  var ORIGIN_NAMES = {
+    "backfill-epoch": "from Epoch AI data",
+    "nightly-pipeline": "found by nightly detection, approved by hand",
+    "manual": "recorded by hand"
+  };
+
   var AVAIL_NAMES = {
     "open_weights": "open weights",
     "public_api": "public API",
@@ -159,6 +184,9 @@
     html += '<div class="entry-head">';
     html += '<time class="entry-date" datetime="' + esc(e.date) + '">' + esc(e.date) + "</time>";
     html += '<span class="entry-org">' + esc(org) + "</span>";
+    if (ORIGIN_NAMES[e.origin]) {
+      html += '<span class="entry-origin">' + esc(ORIGIN_NAMES[e.origin]) + "</span>";
+    }
     /* "release" is the default and appears on nearly every card, so it is dropped
        as noise; only the exceptions (revisions) carry a tag. */
     if (e.entry_type === "revision") {
@@ -170,6 +198,8 @@
     html += "</div>";
 
     html += '<h3 class="entry-name"><a href="#' + esc(e.id) + '">' + esc(e.model_name) + "</a></h3>";
+    html += '<button type="button" class="entry-copylink" data-id="' + esc(e.id) +
+      '" aria-label="Copy a link to ' + esc(e.model_name) + '">Copy link</button>';
 
     if (e.variants && e.variants.length) {
       html += '<p class="entry-variants">Variants: ' + e.variants.map(esc).join(", ") + "</p>";
@@ -267,7 +297,7 @@
     var timeline = document.getElementById("timeline");
     if (!timeline) { return; }
 
-    var state = { org: "all", type: "all", measured: false, from: null, to: null };
+    var state = { org: "all", country: "all", q: "", type: "all", measured: false, from: null, to: null };
     var entries = [];
     var deltas = {};
     var meta = null;
@@ -277,6 +307,11 @@
 
     function matches(e) {
       if (state.org !== "all" && e.org !== state.org) { return false; }
+      if (state.country !== "all" && ORG_COUNTRY[e.org] !== state.country) { return false; }
+      if (state.q) {
+        var hay = (e.model_name + " " + (e.variants || []).join(" ") + " " + e.id).toLowerCase();
+        if (hay.indexOf(state.q) < 0) { return false; }
+      }
       if (state.type !== "all" && e.entry_type !== state.type) { return false; }
       if (state.measured && !(e.benchmarks && e.benchmarks.length)) { return false; }
       if (state.from && e.date < state.from) { return false; }
@@ -287,6 +322,8 @@
     function filterDescription() {
       var parts = [];
       if (state.org !== "all") { parts.push("organization " + (ORG_NAMES[state.org] || state.org)); }
+      if (state.country !== "all") { parts.push("organizations based in " + state.country); }
+      if (state.q) { parts.push("names containing “" + state.q + "”"); }
       if (state.type !== "all") { parts.push("entry type “" + state.type + "”"); }
       if (state.measured) { parts.push("entries with benchmark measurements"); }
       if (state.from || state.to) {
@@ -415,6 +452,30 @@
       if (typeSel) {
         typeSel.addEventListener("change", function () { state.type = typeSel.value; setFilterNote(null); render(); });
       }
+      var countrySel = document.getElementById("f-country");
+      if (countrySel) {
+        countrySel.addEventListener("change", function () { state.country = countrySel.value; setFilterNote(null); render(); });
+      }
+      var qInput = document.getElementById("f-q");
+      if (qInput) {
+        var qTimer = null;
+        qInput.addEventListener("input", function () {
+          clearTimeout(qTimer);
+          qTimer = setTimeout(function () { state.q = qInput.value.trim().toLowerCase(); render(); }, 150);
+        });
+      }
+      /* copy-link on each card: delegated, since cards re-render on filter */
+      document.addEventListener("click", function (event) {
+        var btn = event.target.closest ? event.target.closest(".entry-copylink") : null;
+        if (!btn) { return; }
+        var url = location.origin + location.pathname + "#" + btn.getAttribute("data-id");
+        var done = function () { btn.textContent = "Link copied"; setTimeout(function () { btn.textContent = "Copy link"; }, 1600); };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(done, function () { location.hash = btn.getAttribute("data-id"); });
+        } else {
+          location.hash = btn.getAttribute("data-id");
+        }
+      });
       if (measChk) {
         measChk.addEventListener("change", function () { state.measured = measChk.checked; render(); });
       }
@@ -448,8 +509,11 @@
 
     function restoreHash() {
       if (userScrolled || !location.hash) { return; }
-      var el = document.getElementById(location.hash.slice(1));
-      if (el && el.classList.contains("entry")) { scrollToCard(el); }
+      var id = decodeURIComponent(location.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el && el.classList.contains("entry")) { scrollToCard(el); return; }
+      /* a shared link to a card the current filters hide: relax them */
+      if (!el) { revealEntry(id); }
     }
 
     /* In-page anchor jumps to entry cards need the same settling, because
@@ -482,6 +546,14 @@
         var measChk = document.getElementById("f-meas");
         if (state.org !== "all" && state.org !== entry.org) {
           state.org = "all"; if (orgSel) { orgSel.value = "all"; }
+        }
+        if (state.country !== "all" && state.country !== ORG_COUNTRY[entry.org]) {
+          state.country = "all";
+          var cSel = document.getElementById("f-country"); if (cSel) { cSel.value = "all"; }
+        }
+        if (state.q) {
+          state.q = "";
+          var qIn = document.getElementById("f-q"); if (qIn) { qIn.value = ""; }
         }
         if (state.type !== "all" && state.type !== entry.entry_type) {
           state.type = "all"; if (typeSel) { typeSel.value = "all"; }
