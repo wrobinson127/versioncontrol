@@ -652,9 +652,34 @@ def _parampct(y): return round(100 * byyr_par[y] / byyr_n[y]) if byyr_n[y] else 
 # because a blank parameter cell means Epoch AI's data has no count, not that
 # we checked the lab's pages (audit 1.2). The words say which.
 _D0, _D1 = slots[0], slots[-1]
+# Which rows of the latest year have been researched is not random: the
+# newest releases are researched as they arrive, older ones of the same year
+# may not be yet. When most researched rows sit in the newer half of the
+# year's releases, the share leans on them, and the copy says so (computed).
+_MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August",
+           "September", "October", "November", "December"]
+def _skew(art):
+    ys = sorted(r["date"] for r in V["disclosure_matrix"]["rows"] if r["org"] in ro and r["date"][:4] == _D1)
+    if not ys: return None
+    # the latest two calendar months with releases on record
+    lm = int(ys[-1][5:7]); cm = max(1, lm - 1)
+    cut = f"{_D1}-{cm:02d}-01"
+    res = [r["date"] for r in V["disclosure_matrix"]["rows"]
+           if r["org"] in ro and r["date"][:4] == _D1 and r["cells"].get(art, "not_researched") != "not_researched"]
+    if not res: return None
+    k = sum(1 for d in res if d >= cut); m = sum(1 for d in ys if d >= cut)
+    # only when the newest months are over-represented among checked rows
+    return (k, len(res), m, len(ys), _MONTHS[cm - 1]) if k / len(res) > m / len(ys) else None
+_SKEW_PAPER = _skew("paper"); _SKEW_SC = _skew("system_card")
+def _skew_sentence(sk, what):
+    k, n, m, N, mon = sk
+    return (f" In {_D1}, {k} of the {n} checked releases are from {mon} or later, a period that holds "
+            f"{m} of the year's {N} releases. The checked releases lean toward the newest ones, so {what} "
+            f"may move as earlier {_D1} releases are checked.")
 DPAPER_NOTE = (f"In {_D0}, {byyr_pap[_D0]} of {byyr_pap_res[_D0]} researched releases had a paper on record "
                f"({_paperpct(_D0)}%). In {_D1} so far, {byyr_pap[_D1]} of {byyr_pap_res[_D1]} "
-               f"({_paperpct(_D1)}%). Papers can come out weeks after a release, so recent years may rise.")
+               f"({_paperpct(_D1)}%). Papers can come out weeks after a release, so recent years may rise."
+               + (_skew_sentence(_SKEW_PAPER, "the share") if _SKEW_PAPER else ""))
 DPARAM_NOTE = (f"In {_D0}, {byyr_par[_D0]} of {byyr_n[_D0]} releases had a parameter count in Epoch AI's data "
                f"({_parampct(_D0)}%). In {_D1} so far, {byyr_par[_D1]} of {byyr_n[_D1]} ({_parampct(_D1)}%). "
                f"Epoch often adds counts for recent models late, and we have not checked the blanks against the labs' own pages.")
@@ -678,7 +703,8 @@ CLOSE_NOTE = (f"From {_D0} to {_D1}, the highest independent GPQA Diamond score 
               f"from {_paperpct(_D0)}% to {_paperpct(_D1)}%, and the share with a parameter count in Epoch AI's data "
               f"{_PARAM_DIR} from {_parampct(_D0)}% to {_parampct(_D1)}%. The share with a system card "
               f"{_SC_DIR} from {_scpct(_D0)}% to {_scpct(_D1)}% ({_sc_dis[_D0]} of {_sc_res[_D0]}, then "
-              f"{_sc_dis[_D1]} of {_sc_res[_D1]}).")
+              f"{_sc_dis[_D1]} of {_sc_res[_D1]})."
+              + (_skew_sentence(_SKEW_PAPER or _SKEW_SC, f"these {_D1} shares") if (_SKEW_PAPER or _SKEW_SC) else ""))
 # the coda's short form (set large on screen); the numbers sit in CLOSE_NOTE
 _cap_dir = _moved(_cap_vals[0], _cap_vals[-1])
 if _PAPER_DIR == "fell" and _PARAM_DIR == "fell":
@@ -1143,7 +1169,7 @@ html:not(.js) .nfallback{{position:static;width:auto;height:auto;overflow:visibl
       <li><b>Cadence</b>{yearly["2023"]} releases in 2023, {yearly["2025"]} in 2025. Pooled across the {nword(N_LABS)} labs, the median time between one release and the next was {MEDGAP["2023"]} days in 2023, {MEDGAP["2024"]} in 2024 and {MEDGAP["2025"]} in 2025.</li>
       <li><b>Independent scores</b>The highest independent GPQA Diamond score went from {_cap_vals[0]} to {_cap_vals[-1]}; SWE-Bench Verified from {swe_lo} to {swe_hi}. Every figure measured by Epoch.</li>
       <li><b>Lab beside independent</b>{n_pair_models} releases were graded both ways, giving {len(PAIRS)} pairs; {near} fall within a single point. That is too few pairs, run at different settings, to test whether labs overstate. Both numbers are kept, neither is averaged.</li>
-      <li><b>Disclosure</b>With a paper on record: {byyr_pap[_D0]} of {byyr_pap_res[_D0]} researched releases in {_D0} ({_paperpct(_D0)}%), {byyr_pap[_D1]} of {byyr_pap_res[_D1]} in {_D1} so far ({_paperpct(_D1)}%). With a parameter count in Epoch AI's data: {_parampct(_D0)}%, then {_parampct(_D1)}%. With a system card: {_scpct(_D0)}%, then {_scpct(_D1)}%.</li>
+      <li><b>Disclosure</b>With a paper on record: {byyr_pap[_D0]} of {byyr_pap_res[_D0]} researched releases in {_D0} ({_paperpct(_D0)}%), {byyr_pap[_D1]} of {byyr_pap_res[_D1]} in {_D1} so far ({_paperpct(_D1)}%). With a parameter count in Epoch AI's data: {_parampct(_D0)}%, then {_parampct(_D1)}%. With a system card: {_sc_dis[_D0]} of {_sc_res[_D0]} ({_scpct(_D0)}%), then {_sc_dis[_D1]} of {_sc_res[_D1]} ({_scpct(_D1)}%).{_skew_sentence(_SKEW_PAPER or _SKEW_SC, f"the {_D1} shares") if (_SKEW_PAPER or _SKEW_SC) else ""}</li>
     </ul>
   </div>
   <p class="endstance"><b>The record is public.</b> Each night it checks its sources and drafts new entries, and a person approves each one before it appears. Every number shows where it came from, or it is left out.</p>
