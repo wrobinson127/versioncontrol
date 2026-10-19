@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Version Control: the release record as a sky</title>
+<meta name="description" content="Every AI model release from twelve tracked labs since ChatGPT, drawn as a sky: when each shipped, what the lab disclosed, and what it scored, with every score's source.">
+<meta name="theme-color" content="#0D0B09">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400..600&family=Mona+Sans:wdth,wght@75..125,400..800&display=swap">
+<link rel="stylesheet" href="./css/obs.css">
+<script>document.documentElement.className = "js";</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <a class="brand" href="./index.html">Version Control</a>
+  <nav aria-label="Site">
+    <ul>
+      <li><a href="#story">Story</a></li>
+      <li><a href="./explorer.html">Explorer</a></li>
+      <li><a href="./page.html">Methodology</a></li>
+      <li><a href="../../data.html">Data</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero" aria-labelledby="hero-h">
+    <div class="hero-copy">
+      <h1 id="hero-h">Every AI model release since ChatGPT.</h1>
+      <p class="lede" id="lede">Each point of light is one release from twelve tracked labs, with its sources, its disclosures and its scores.</p>
+      <a class="btn" href="./explorer.html">Open the explorer <span class="arr" aria-hidden="true">&#8599;</span></a>
+    </div>
+    <div class="hero-sky" data-ui>
+      <canvas id="sky" tabindex="0" role="application" aria-roledescription="star chart"
+        aria-label="The release sky: time runs left to right from ChatGPT to today, one lane per lab, one point of light per release. Use the arrow keys to move between releases and Enter to open one in the explorer."></canvas>
+    </div>
+    <div class="sky-key" data-ui>
+      <p class="key-title">How to read a star</p>
+      <ul class="key">
+        <li><canvas class="kglyph" data-k="ind" width="34" height="34" aria-hidden="true"></canvas><span><b>Larger and lit:</b> an independent score is on record.</span></li>
+        <li><canvas class="kglyph" data-k="lab" width="34" height="34" aria-hidden="true"></canvas><span><b>Amber ring:</b> the lab reported its own score.</span></li>
+        <li><canvas class="kglyph" data-k="halo" width="34" height="34" aria-hidden="true"></canvas><span><b>Halo, clockwise from the top:</b> system card, model card, usage policy, paper. Solid is on record, dashed is not disclosed, a dot is not yet researched.</span></li>
+        <li><canvas class="kglyph" data-k="rev" width="34" height="34" aria-hidden="true"></canvas><span><b>Small hollow ring:</b> a revision of a model already on record.</span></li>
+      </ul>
+    </div>
+    <p id="sky-live" class="sr-only" aria-live="polite"></p>
+  </section>
+
+  <p class="nojs">The charts and figures on this page are drawn from the record with JavaScript. The full record is also on <a href="../../index.html">the timeline</a> and in <a href="../../data.html">the dataset files</a>.</p>
+
+  <section class="story" id="story" aria-label="The record, chapter by chapter">
+    <div class="stage" data-ui>
+      <canvas id="stage" role="img" aria-label="The release sky, redrawn for each chapter below. Each chapter ends with the same data as a table."></canvas>
+    </div>
+    <div class="steps" id="steps"></div>
+  </section>
+
+  <section class="findings" id="findings" aria-labelledby="findings-h">
+    <div class="wrap">
+      <h2 id="findings-h">What the record shows</h2>
+      <ul class="flist" id="flist"></ul>
+    </div>
+  </section>
+
+  <section class="door" id="record" aria-labelledby="door-h">
+    <div class="wrap">
+      <h2 id="door-h">Search the whole record</h2>
+      <div class="door-grid">
+        <div>
+          <form action="./explorer.html" method="get" role="search">
+            <label for="door-q">Model name</label>
+            <input type="search" id="door-q" name="q" placeholder="for example, Claude, Qwen, Llama" autocomplete="off">
+            <button class="btn" type="submit">Search</button>
+          </form>
+          <p id="door-text">Every entry opens to its sources, an archived copy where one exists, its disclosure record and its scores with their provenance. Each entry has its own link.</p>
+          <ul class="more">
+            <li><a href="./explorer.html">Browse the full record in the explorer</a></li>
+            <li><a href="./page.html">Read the four rules behind every number</a></li>
+            <li><a href="../../data.html">Download the dataset (CSV and JSON)</a></li>
+          </ul>
+        </div>
+        <figure class="recent" data-ui>
+          <figcaption class="recent-title" id="recent-title">The newest releases on record</figcaption>
+          <canvas id="recent" tabindex="0" role="application" aria-roledescription="star chart"
+            aria-label="The newest releases on record, one lane per lab. Arrow keys move between releases; Enter opens one in the explorer."></canvas>
+          <p id="recent-note">Select a star to open its record.</p>
+        </figure>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p id="foot-update">Last successful update loads with the dataset.</p>
+    <p>Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>. Dataset licensed CC-BY 4.0 with Epoch AI attribution. <a href="../../data.html">Download the dataset</a>. <a href="https://github.com/wrobinson127/versioncontrol/issues/new" rel="external">Report an error</a>. <a href="https://github.com/wrobinson127/versioncontrol" rel="external">Source on GitHub</a>.</p>
+    <p>Design concept A, Observatory. <a href="../../index.html">The current site</a>.</p>
+  </div>
+</footer>
+
+<div class="tip" id="tip" role="dialog" aria-label="Release record"><button class="tip-close" type="button" aria-label="Close">&times;</button><div class="tip-body"></div></div>
+
+<script src="./js/obs-data.js" defer></script>
+<script src="./js/obs-sky.js" defer></script>
+<script src="./js/obs-index.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+/* Observatory: long text. A reading column with a specimen from the record beside each rule. */
+.read { max-width: 1440px; margin: 0 auto; padding: 72px var(--gutter) 120px; }
+.read-head { max-width: 760px; margin-bottom: 72px; }
+.read-head h1 { font-size: clamp(44px, 6vw, 88px); line-height: 1; font-stretch: 122%; letter-spacing: -0.03em; margin-bottom: 32px; }
+.read-lede { font-size: 22px; line-height: 1.5; color: var(--ink); max-width: 36em; }
+.read-lede + .read-lede { margin-top: 16px; color: var(--ink-2); }
+.rule { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 72px; align-items: start; padding: 56px 0; }
+.prose h2 { font-size: clamp(26px, 2.6vw, 36px); line-height: 1.12; font-stretch: 112%; letter-spacing: -0.015em; margin-bottom: 22px; max-width: 20em; }
+.prose p { font-size: 19px; line-height: 1.68; color: var(--ink-2); max-width: 62ch; }
+.prose p + p { margin-top: 18px; }
+.prose strong, .prose em { color: var(--ink); }
+.prose .prov { font-size: 15px; vertical-align: 1px; margin: 0 2px; }
+.mark-inline { display: inline-flex; align-items: center; color: var(--ink); white-space: nowrap; }
+.mark-inline .dmark { margin-right: 6px; }
+.nr-inline { color: var(--ink); }
+.specimen { position: sticky; top: calc(var(--nav-h) + 28px); margin: 6px 0 0; padding: 22px 22px 24px; background: var(--ground-2); border-radius: var(--r); color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.specimen figcaption { font-size: 14px; font-weight: 650; color: var(--ink-2); margin-bottom: 14px; }
+.spec-title { color: var(--ink); font-weight: 700; font-size: 18px; font-stretch: 108%; }
+.spec-sub { color: var(--ink-2); font-size: 14px; margin-top: 2px; }
+.spec-canvas { width: 100%; height: 150px; margin: 14px 0 8px; }
+.spec-rows { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 10px; }
+.spec-rows li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; }
+.spec-val { font-size: 26px; font-weight: 700; font-stretch: 118%; color: var(--ink); line-height: 1; min-width: 2.6em; }
+.spec-rows .d-on, .spec-rows .d-nd, .spec-rows .d-nr { display: flex; align-items: center; color: var(--ink); grid-template-columns: none; }
+.spec-note { margin-top: 14px; font-size: 14px; color: var(--ink-2); }
+.read-more { max-width: 760px; padding-top: 56px; }
+.read-more h2 { font-size: 30px; font-stretch: 112%; margin-bottom: 14px; }
+.read-more p { font-size: 18px; color: var(--ink-2); }
+.read-more .btn { margin-top: 22px; }
+
+@media (max-width: 899px) {
+  .rule { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
+  .specimen { position: relative; top: auto; }
+}
+@media (max-width: 699px) {
+  .read { padding: 40px 16px 80px; }
+  .read-head { margin-bottom: 32px; }
+  .read-head h1 { font-size: 40px; }
+  .read-lede { font-size: 19px; }
+  .prose p { font-size: 17px; }
+  .prose h2 { font-size: 22px; font-stretch: 100%; }
+}

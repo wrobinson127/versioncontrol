@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Version Control: explore the record</title>
+<meta name="description" content="Search and filter every AI model release on the record by lab, country, type, date and scores. Each entry opens to its sources, archived copies, disclosures and scores with their provenance.">
+<meta name="theme-color" content="#0D0B09">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400..600&family=Mona+Sans:wdth,wght@75..125,400..800&display=swap">
+<link rel="stylesheet" href="./css/obs.css">
+<link rel="stylesheet" href="./css/explorer.css">
+<script>document.documentElement.className = "js";</script>
+</head>
+<body class="ex-page">
+<a class="skip" href="#results-h">Skip to the results</a>
+
+<header class="nav">
+  <a class="brand" href="./index.html">Version Control</a>
+  <nav aria-label="Site">
+    <ul>
+      <li><a href="./index.html#story">Story</a></li>
+      <li><a href="./explorer.html" aria-current="page">Explorer</a></li>
+      <li><a href="./page.html">Methodology</a></li>
+      <li><a href="../../data.html">Data</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main" class="ex">
+  <div class="ex-head">
+    <h1>The record</h1>
+    <p class="ex-count" id="count" aria-live="polite">Loading the record.</p>
+  </div>
+
+  <div class="ex-grid">
+    <form class="rail" id="rail" aria-label="Filters" role="search">
+      <button class="rail-toggle" type="button" id="rail-toggle" aria-expanded="false" aria-controls="rail-body">Filters <span id="rail-n"></span></button>
+      <div class="rail-body" id="rail-body">
+        <div class="field">
+          <label for="f-q">Search model names</label>
+          <input type="search" id="f-q" name="q" autocomplete="off" placeholder="for example, GPT-5, Gemma, Kimi">
+        </div>
+        <div class="field">
+          <label for="f-lab">Lab</label>
+          <select id="f-lab" name="lab"><option value="">All twelve labs</option></select>
+        </div>
+        <div class="field">
+          <label for="f-country">Country of the parent company</label>
+          <select id="f-country" name="country"><option value="">All countries</option></select>
+          <p class="hint">A filter for context, never a ranking.</p>
+        </div>
+        <div class="field">
+          <label for="f-type">Entry type</label>
+          <select id="f-type" name="type">
+            <option value="">All entries</option>
+            <option value="release">Releases only</option>
+            <option value="revision">Revisions only</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-avail">Availability</label>
+          <select id="f-avail" name="avail">
+            <option value="">Any</option>
+            <option value="open_weights">Open weights</option>
+            <option value="public_api">Public API</option>
+            <option value="public_service">Public service</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-scores">Scores</label>
+          <select id="f-scores" name="scores">
+            <option value="">Any</option>
+            <option value="any">Has a benchmark score</option>
+            <option value="ind">Has an independent score</option>
+            <option value="lab">Has a lab-reported score</option>
+            <option value="none">No score on record</option>
+          </select>
+        </div>
+        <fieldset class="field dates">
+          <legend>Released between</legend>
+          <div class="date-row">
+            <div><label for="f-from">From</label><input type="date" id="f-from" name="from"></div>
+            <div><label for="f-to">To</label><input type="date" id="f-to" name="to"></div>
+          </div>
+          <p class="hint">The sky zooms to these dates. Drag the window under the sky to change them.</p>
+        </fieldset>
+        <button class="textbtn" type="button" id="f-reset">Clear all filters</button>
+      </div>
+    </form>
+
+    <section class="ex-main" aria-label="The sky and the results">
+      <div class="skybox" data-ui>
+        <canvas id="xsky" tabindex="0" role="application" aria-roledescription="star chart"
+          aria-label="The release sky for the current filters: one lane per lab, one star per entry. Arrow keys move between entries, Enter opens one, plus and minus zoom."></canvas>
+        <div class="zoomctl">
+          <button type="button" id="z-in" aria-label="Zoom in">+</button>
+          <button type="button" id="z-out" aria-label="Zoom out">&minus;</button>
+          <button type="button" id="z-all" class="z-all">Show all dates</button>
+        </div>
+      </div>
+      <div class="brushbox" data-ui>
+        <canvas id="xbrush" tabindex="0" role="slider" aria-label="Date window. Arrow keys move it; Shift and an arrow key resize it."
+          aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-valuetext=""></canvas>
+      </div>
+      <p class="range-note" id="range-note"></p>
+      <ul class="xkey" aria-label="How to read a star">
+        <li><canvas class="kglyph" data-k="ind" width="30" height="30" aria-hidden="true"></canvas><span><b>Larger and lit:</b> an independent score is on record.</span></li>
+        <li><canvas class="kglyph" data-k="lab" width="30" height="30" aria-hidden="true"></canvas><span><b>Amber ring:</b> the lab reported its own score.</span></li>
+        <li><canvas class="kglyph" data-k="halo" width="30" height="30" aria-hidden="true"></canvas><span><b>Halo, clockwise from the top:</b> system card, model card, usage policy, paper. Solid is on record, dashed is not disclosed, a dot is not yet researched.</span></li>
+        <li><canvas class="kglyph" data-k="rev" width="30" height="30" aria-hidden="true"></canvas><span><b>Small hollow ring:</b> a revision.</span></li>
+      </ul>
+
+      <div class="results-head">
+        <h2 id="results-h" tabindex="-1">Entries</h2>
+        <button type="button" class="textbtn" id="sort">Oldest first</button>
+      </div>
+      <p class="list-key"><span class="discrow" aria-hidden="true"><i class="on"></i><i class="nd"></i><i class="nr"></i></span> The four marks on each row are the system card, model card, usage policy and paper: solid is on record, dashed is not disclosed, a dot is not yet researched.</p>
+      <ol class="results" id="results" aria-labelledby="results-h"></ol>
+      <div class="empty" id="empty" hidden>
+        <p class="empty-title">No entry matches these filters.</p>
+        <p>The record covers releases from the twelve tracked labs since ChatGPT. <button type="button" class="textbtn" id="empty-reset">Clear all filters</button></p>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" aria-labelledby="d-title" role="dialog" aria-modal="false" hidden>
+  <div class="d-bar">
+    <span class="d-handle" aria-hidden="true"></span>
+    <button type="button" class="d-close" id="d-close" aria-label="Close the entry">&times;</button>
+  </div>
+  <div class="d-body" id="d-body"></div>
+</aside>
+
+<div class="tip" id="tip" role="dialog" aria-label="Release record"><button class="tip-close" type="button" aria-label="Close">&times;</button><div class="tip-body"></div></div>
+<p id="live" class="sr-only" aria-live="polite"></p>
+
+<footer class="foot">
+  <div class="wrap">
+    <p id="foot-update">Last successful update loads with the dataset.</p>
+    <p>Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>. Dataset licensed CC-BY 4.0 with Epoch AI attribution. <a href="../../data.html">Download the dataset</a>. <a href="https://github.com/wrobinson127/versioncontrol/issues/new" rel="external">Report an error</a>.</p>
+  </div>
+</footer>
+
+<script src="./js/obs-data.js" defer></script>
+<script src="./js/obs-sky.js" defer></script>
+<script src="./js/obs-explorer.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Version Control: methodology</title>
+<meta name="description" content="How Version Control records AI model releases: every score names its source, missing disclosures are marked, comparisons are refused when they would mislead, and benchmark versions are fixed.">
+<meta name="theme-color" content="#0D0B09">
+<link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400..600&family=Mona+Sans:wdth,wght@75..125,400..800&display=swap">
+<link rel="stylesheet" href="./css/obs.css">
+<link rel="stylesheet" href="./css/page.css">
+<script>document.documentElement.className = "js";</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <a class="brand" href="./index.html">Version Control</a>
+  <nav aria-label="Site">
+    <ul>
+      <li><a href="./index.html#story">Story</a></li>
+      <li><a href="./explorer.html">Explorer</a></li>
+      <li><a href="./page.html" aria-current="page">Methodology</a></li>
+      <li><a href="../../data.html">Data</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="main" class="read">
+  <header class="read-head">
+    <h1>Methodology</h1>
+    <p class="read-lede">Version Control is a public release record of AI models from twelve tracked AI labs. For each release we track when it shipped, how the public can use it, what it scored on independent evaluations, and whether the lab published a paper, a system card, a model card, and a usage policy.</p>
+    <p class="read-lede">Four rules apply to every number on this site.</p>
+  </header>
+
+  <section class="rule" aria-labelledby="r1">
+    <div class="prose">
+      <h2 id="r1">1. Every score names its source</h2>
+      <p>Each benchmark score carries a tag. <span class="prov prov-lab"><span class="pmark" aria-hidden="true"></span>LAB</span> means the lab reported the score. <span class="prov prov-ind"><span class="pmark" aria-hidden="true"></span>IND</span> means an independent evaluator measured it. The tag links to the source, and the record stores the source URL, the benchmark name and version, and the date we retrieved it. Every score on the site has one of these tags. Our checks reject any score that has no source, so an untagged number cannot get onto the site.</p>
+    </div>
+    <figure class="specimen" data-ui id="spec-1">
+      <figcaption>From the record</figcaption>
+      <div class="spec-body">The example loads with the record.</div>
+    </figure>
+  </section>
+
+  <section class="rule" aria-labelledby="r2">
+    <div class="prose">
+      <h2 id="r2">2. We record what a lab did not publish</h2>
+      <p>A release still gets a card when the lab publishes no system card, model card, usage policy, or paper. The card says so. Each missing item is marked <span class="d-nd mark-inline"><span class="dmark" aria-hidden="true"></span>not disclosed</span>.</p>
+      <p>That mark means we looked. We checked the lab's own sites and found nothing. Where we have not checked yet, the card says <span class="d-nr mark-inline"><span class="dmark" aria-hidden="true"></span>not yet researched</span> instead. The two look different on the page and mean different things. "Not disclosed" is a fact about the lab. "Not yet researched" is work we have not done. For these four items, only researched releases count toward a percentage.</p>
+      <p>For releases before July 2026, we looked in July 2026. A document the lab published after launch therefore still counts. A link on record means the document exists. We do not grade what it says.</p>
+      <p>Parameter counts work differently. They come from Epoch AI's data, and we have not checked the labs' pages for them. Where Epoch has no count, the card says <span class="nr-inline">no count on record</span>, not "not disclosed". Parameter percentages divide by all releases and say so.</p>
+    </div>
+    <figure class="specimen" data-ui id="spec-2">
+      <figcaption>From the record</figcaption>
+      <div class="spec-body">The example loads with the record.</div>
+    </figure>
+  </section>
+
+  <section class="rule" aria-labelledby="r3">
+    <div class="prose">
+      <h2 id="r3">3. We do not compare scores that are not comparable</h2>
+      <p>A change against the previous model appears only when both scores are on the same benchmark, the same version of it, and from the same kind of source. If the previous model was scored but the pair does not match, the card says <em>no comparable measurement</em>. If the previous model was never scored, the card says nothing, because a missing score and a refused comparison are different things.</p>
+      <p>Every comparison between models is calculated once, before publishing, and the site displays that result. The site only counts and rounds what is in the published files, and works out how many days old the record is.</p>
+    </div>
+    <figure class="specimen" data-ui id="spec-3">
+      <figcaption>From the record</figcaption>
+      <div class="spec-body">The example loads with the record.</div>
+    </figure>
+  </section>
+
+  <section class="rule" aria-labelledby="r4">
+    <div class="prose">
+      <h2 id="r4">4. Benchmark versions are fixed</h2>
+      <p>Every benchmark label carries its version: <strong>GPQA Diamond</strong>, never "GPQA"; <strong>SWE-Bench Verified</strong>, never "SWE-Bench". A revised benchmark is a different test. We never draw a line, a delta, or a chart across two versions. Where a lab published its evaluation settings, they appear under the score as written.</p>
+    </div>
+    <figure class="specimen" data-ui id="spec-4">
+      <figcaption>From the record</figcaption>
+      <div class="spec-body">The example loads with the record.</div>
+    </figure>
+  </section>
+
+  <section class="read-more" aria-labelledby="more-h">
+    <h2 id="more-h">The rest of the methodology</h2>
+    <p>Scope, how releases are detected, who decides what goes on the record, the two benchmarks, how each number is calculated, sources, corrections and known limits are on <a href="../../methodology.html">the full methodology page</a>.</p>
+    <p><a class="btn" href="./explorer.html">Open the explorer <span class="arr" aria-hidden="true">&#8599;</span></a></p>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <p id="foot-update">Last successful update loads with the dataset.</p>
+    <p>Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>. Dataset licensed CC-BY 4.0 with Epoch AI attribution. <a href="../../data.html">Download the dataset</a>. <a href="https://github.com/wrobinson127/versioncontrol/issues/new" rel="external">Report an error</a>.</p>
+  </div>
+</footer>
+
+<script src="./js/obs-data.js" defer></script>
+<script src="./js/obs-sky.js" defer></script>
+<script src="./js/obs-page.js" defer></script>
+</body>
+</html>
