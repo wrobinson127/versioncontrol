@@ -59,7 +59,7 @@
 
   <h2>3. We do not compare scores that are not comparable</h2>
   <p>A change against the previous model appears only when both scores are on the same benchmark, the same version of it, and from the same kind of source. If the previous model was scored but the pair does not match, the card says <em>no comparable measurement</em>. If the previous model was never scored, the card says nothing, because a missing score and a refused comparison are different things.</p>
-  <p>Every comparison between models is calculated once, before publishing, and the site displays that result. The site only counts and rounds what is in the published files.</p>
+  <p>Every comparison between models is calculated once, before publishing, and the site displays that result. The site only counts and rounds what is in the published files, and works out how many days old the record is.</p>
 
   <h2>4. Benchmark versions are fixed</h2>
   <p>Every benchmark label carries its version: <strong>GPQA Diamond</strong>, never "GPQA"; <strong>SWE-Bench Verified</strong>, never "SWE-Bench". A revised benchmark is a different test. We never draw a line, a delta, or a chart across two versions. Where a lab published its evaluation settings, they appear under the score as written.</p>
@@ -70,7 +70,7 @@
   <p>The twelve labs were chosen in July 2026 for their record up to then, and the same list is applied back to 2022. Labs that were prominent earlier and later faded are not counted, among them Inflection, AI21 Labs, Aleph Alpha, Stability AI and 01.AI. Some large producers are not tracked yet: ByteDance, Tencent, Baidu, MiniMax, StepFun, Microsoft, NVIDIA and IBM. Growth in release counts partly reflects that choice. Because ByteDance, Tencent and Baidu are not tracked, the record cannot support a comparison between countries.</p>
   <p>A release counts if it is a newly named model or version that the public can use: open weights, a public API, or a public service. Language models are in scope, and so are multimodal models that include language, which is why vision-language and audio-language models appear. Not in scope: third-party fine-tunes, quantized copies and reposts, research previews with no public access, and models Epoch AI classifies as neither language nor multimodal. If Epoch AI has left the classification blank, we decide by hand and mark the entry "manual". OpenAI's o3-pro is one such entry.</p>
   <p>A family of sizes announced together counts as one release. The sizes are listed on the card as variants. When a lab updates a model under the same name, as with GPT-4o's dated snapshots, we record a revision. Revisions are counted separately and left out of release counts.</p>
-  <p>A release date is the date in Epoch AI's dataset, which is usually the announcement or paper date. For some open-weight models the paper came weeks after the weights, so Epoch dates them late. Where we found the date the weights went public, the record uses it and the card shows a correction note: DeepSeek's first models are one case (November 2023, where Epoch has January 2024). Other open-weight entries may still carry a paper date. For entries added since July 2026, the date is the day the lab announced the release. Where we have corrected a date, the card shows a correction note with the old value and the evidence.</p>
+  <p>A release date is the date in Epoch AI's dataset, which is usually the announcement or paper date. For some open-weight models the paper came weeks after the weights, so Epoch dates them late. Where we found the date the weights went public, the record uses it and the card shows a correction note: DeepSeek's first models are one case (November 2023, where Epoch has January 2024). Other open-weight entries may still carry a paper date. For entries found by the nightly check or recorded by hand, the date is the day the lab announced the release. Where we have corrected a date, the card shows a correction note with the old value and the evidence.</p>
   <p>We record the country where each lab's parent company is based (Google DeepMind counts as the United States, through Alphabet), and the timeline, the filterable list of every release on the home page, can filter by it. The story never ranks or groups labs by country.</p>
 
   <h3>Rulings on what counts</h3>
@@ -106,18 +106,18 @@
   <p>Each night a script watches four independent sources: Epoch AI's models dataset, lab announcement feeds and page changes, model repository activity, and API catalog listings. Signals about the same model are grouped into one candidate, and a candidate that passes our checks is drafted as an entry. Nothing is published without a person approving it.</p>
 
   <h2 id="who-decides">Who decides, and how</h2>
-  <p>Entries reach the record by three paths. We used AI tools on two of them, and this is exactly where.</p>
+  <p>Entries reach the record by three paths. We used AI tools on all three, and this is exactly where.</p>
   <ul>
     <li><strong>The nightly check.</strong> When the script finds a new release, a language model (Claude Haiku) drafts the entry's summary and pulls the lab's stated benchmark numbers from its announcement. Code checks every draft: a number with no source, or with a benchmark name that is not tied to a version, is rejected. Walker Robinson reads and approves every entry before it appears.</li>
     <li><strong>The October 2026 catch-up.</strong> Releases from September and October 2026 waited in the review queue while it was stalled. Their entries were drafted with AI tools from the labs' own pages. Every URL was fetched, and Walker Robinson approved each entry.</li>
-    <li><strong>The record before July 2026.</strong> A script generated these entries from Epoch AI's data. No language model wrote them. Their disclosure links were researched with AI tools, every URL was fetched, and Walker Robinson approved the links row by row.</li>
+    <li><strong>The record built from Epoch AI's data</strong> (up to its 2026-08-24 release). A script generated these entries from Epoch AI's data. No language model wrote them. Their disclosure links were researched with AI tools, every URL was fetched, and Walker Robinson approved the links row by row. The lab-reported scores on older entries were also found with AI tools from the labs' own pages; each number and its URL was checked and approved the same way.</li>
   </ul>
   <p>Every entry added since launch was approved by a person. The earlier entries were generated by script and checked by code against Epoch AI's rows; their disclosure links were approved by a person.</p>
   <p>Each entry records how it reached the record, in a field called origin:</p>
   <ul>
     <li><strong>backfill-epoch</strong>: generated by script from Epoch AI's dataset.</li>
     <li><strong>nightly-pipeline</strong>: first found by the nightly check. The entry text was drafted by a language model, or, for the October 2026 catch-up, with AI tools from the lab's own pages. Code checked it, and Walker Robinson approved it.</li>
-    <li><strong>manual</strong>: found and recorded by hand, because the nightly check missed it or Epoch AI left its classification blank.</li>
+    <li><strong>manual</strong>: found and recorded by hand, because the nightly check missed it or Epoch AI left its classification blank. Some of these were drafted with AI tools from the lab's own pages, then checked and approved the same way.</li>
   </ul>
 
   <h2>The two benchmarks</h2>
@@ -133,7 +133,7 @@
   <h2>How each number is calculated</h2>
   <p>Every headline number is computed from the published files by a stated rule. Nothing is smoothed or modeled.</p>
   <ul>
-    <li><strong>Median gap between releases (in the published views file)</strong>: the median number of days between one release and the next, across all twelve labs, over the 365 days before each release. Because it pools twelve labs, it drops to a few days once the record is well populated.</li>
+    <li><strong>Median gap between releases (in the published views file)</strong>: the median number of days between one release and the next, across all twelve labs, over the 365 days before each release. Because it pools twelve labs, it drops to a few days once the record is well populated. Releases on the same day count as a gap of zero, and the window runs across year boundaries. The story's per-lab gaps count a lab's same-day releases once.</li>
     <li><strong>Median gap this year (the tile on the home page)</strong>: the median number of days between one release and the next, limited to releases in the current calendar year. A different window, stated where it appears.</li>
     <li><strong>Releases per year and per month</strong>: raw counts by date. Revisions are counted separately and left out of release counts.</li>
     <li><strong>Newest release on record</strong>: the date of the newest release, shown with the date of our last update.</li>
@@ -150,8 +150,8 @@
   <p>A second evaluator that publishes per-benchmark scores openly would strengthen the record. Few exist. We will not use leaderboards that combine several tests into one score, because a combined score cannot name its source. If a second source appears, its numbers will carry their own tag and will never be averaged with Epoch's. Lab-reported scores cite the lab's own publication.</p>
   <p>We use Artificial Analysis's free data only for an internal check of which models we might be missing. Its terms do not allow us to display its numbers, and none appear on the site or in the dataset.</p>
   <p>Where the site says "availability", it is showing Epoch AI's "Model accessibility" field under a shorter name. The values are Epoch's.</p>
-  <p>Parameter counts are almost all lab-stated. About nine across the whole record are Epoch AI estimates rather than a number the lab published. We keep them as recorded and flag them. The parameter figures count whether Epoch AI's data has a parameter count for a release at all.</p>
-  <p>One finding on this site is that fewer recent releases have a parameter count in Epoch AI's data. That is not yet the same as labs publishing fewer counts: Epoch often adds counts for recent models late, and we have not checked the blanks against the labs' own pages. The finding does not depend on the estimated counts. It holds under every definition we tested, including one that drops every flagged estimate.</p>
+  <p>Parameter counts are almost all lab-stated. A small number are Epoch AI estimates rather than a number the lab published, and the record does not yet mark which. The parameter figures count whether Epoch AI's data has a parameter count for a release at all.</p>
+  <p>One finding on this site is that fewer recent releases have a parameter count in Epoch AI's data. That is not yet the same as labs publishing fewer counts: Epoch often adds counts for recent models late, and we have not checked the blanks against the labs' own pages.</p>
 
   <h2>Pricing and context length</h2>
   <p>Prices quoted in an entry's summary are the lab's own figures. We do not show OpenRouter's prices or context lengths on this site, and OpenRouter's catalog is not in the dataset. We use that catalog only to spot new models.</p>

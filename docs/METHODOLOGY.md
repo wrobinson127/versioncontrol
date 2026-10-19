@@ -12,7 +12,7 @@ Version Control is a public release record of AI models from twelve tracked AI l
 
 Parameter counts work differently. They come from Epoch AI's data, and we have not checked the labs' pages for them. In the data a missing count is stored as `NOT_DISCLOSED`, but the site shows it as "no count on record", because nobody looked. Parameter percentages divide by all releases and say so.
 
-**3. We do not compare scores that are not comparable.** A change against the previous model appears only when both scores are on the same benchmark, the same version, and from the same kind of source. Otherwise the card says "no comparable measurement". Every comparison between models is calculated once, before publishing, and the site displays that result. The site only counts and rounds what is in the published files.
+**3. We do not compare scores that are not comparable.** A change against the previous model appears only when both scores are on the same benchmark, the same version, and from the same kind of source. Otherwise the card says "no comparable measurement". Every comparison between models is calculated once, before publishing, and the site displays that result. The site only counts and rounds what is in the published files, and works out how many days old the record is.
 
 **4. Benchmark versions are fixed.** The benchmark set is exactly two: **GPQA Diamond** and **SWE-Bench Verified**. "GPQA Diamond" is never "GPQA". A lab-stated number whose benchmark name lacks the version is held back as an unpinned claim and never published as a number.
 
@@ -28,7 +28,7 @@ A release counts if it is a newly named model or version that the public can use
 
 A family of sizes announced together counts as one release, with the sizes listed as variants. When a lab updates a model under the same name, as with GPT-4o's dated snapshots, we record a `revision`. Revisions are counted separately and left out of release counts.
 
-A release date is the date in Epoch AI's dataset, which is usually the announcement or paper date. For some open-weight models the paper came weeks after the weights, so Epoch dates them late. Where we found the date the weights went public, the record uses it with a correction note (DeepSeek's first models: November 2023, where Epoch has January 2024). Other open-weight entries may still carry a paper date. For entries added since July 2026, the date is the day the lab announced the release. Corrected dates carry a correction note with the old value and the evidence.
+A release date is the date in Epoch AI's dataset, which is usually the announcement or paper date. For some open-weight models the paper came weeks after the weights, so Epoch dates them late. Where we found the date the weights went public, the record uses it with a correction note (DeepSeek's first models: November 2023, where Epoch has January 2024). Other open-weight entries may still carry a paper date. For entries found by the nightly check or recorded by hand, the date is the day the lab announced the release. Corrected dates carry a correction note with the old value and the evidence.
 
 We record the country where each lab's parent company is based (Google DeepMind counts as the United States, through Alphabet), and the timeline can filter by it. The story never ranks or groups labs by country.
 
@@ -38,23 +38,23 @@ Each night a script watches four independent sources: lab announcement feeds and
 
 ## Who decides, and how
 
-Entries reach the record by three paths. We used AI tools on two of them.
+Entries reach the record by three paths. We used AI tools on all three.
 
 - **The nightly check.** A language model (Claude Haiku) drafts the entry's summary and pulls the lab's stated benchmark numbers from its announcement. Code checks every draft: a number with no source, or with a benchmark name that is not tied to a version, is rejected. Walker Robinson reads and approves every entry before it appears.
 - **The October 2026 catch-up.** Releases from September and October 2026 waited in the review queue while it was stalled. Their entries were drafted with AI tools from the labs' own pages. Every URL was fetched, and Walker Robinson approved each entry.
-- **The record before July 2026.** A script generated these entries from Epoch AI's data. No language model wrote them. Their disclosure links were researched with AI tools, every URL was fetched, and Walker Robinson approved the links row by row.
+- **The record built from Epoch AI's data** (up to its 2026-08-24 release). A script generated these entries from Epoch AI's data. No language model wrote them. Their disclosure links were researched with AI tools, every URL was fetched, and Walker Robinson approved the links row by row. The lab-reported scores on older entries were also found with AI tools from the labs' own pages; each number and its URL was checked and approved the same way.
 
 Each entry's `origin` field says which path it took:
 
 - `backfill-epoch`: generated by script from Epoch AI's dataset.
 - `nightly-pipeline`: first found by the nightly check. The entry text was drafted by a language model, or, for the October 2026 catch-up, with AI tools from the lab's own pages. Code checked it, and Walker Robinson approved it.
-- `manual`: found and recorded by hand, because the nightly check missed it or Epoch AI left its classification blank.
+- `manual`: found and recorded by hand, because the nightly check missed it or Epoch AI left its classification blank. Some of these were drafted with AI tools from the lab's own pages, then checked and approved the same way.
 
 ## How each number is calculated
 
 Every headline number is computed from the published files by a stated rule. Nothing is smoothed or modeled.
 
-- **Median gap between releases** (in the published views file): the median number of days between one release and the next, across all twelve labs, over the 365 days before each release. Because it pools twelve labs, it drops to a few days once the record is well populated.
+- **Median gap between releases** (in the published views file): the median number of days between one release and the next, across all twelve labs, over the 365 days before each release. Because it pools twelve labs, it drops to a few days once the record is well populated. Releases on the same day count as a gap of zero, and the window runs across year boundaries. The story's per-lab gaps count a lab's same-day releases once.
 - **Median gap this year** (the tile on the home page): the same gap, limited to releases in the current calendar year.
 - **Releases per year and per month**: raw counts by date. Revisions are left out.
 - **Newest release on record**: the date of the newest release, shown with the date of our last update.

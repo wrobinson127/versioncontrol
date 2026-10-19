@@ -205,6 +205,14 @@ def validate_entry(entry) -> list:
                 errors.append(f"sources[{i}].retrieval_date missing or not ISO")
             if not (isinstance(src.get("kind"), str) and src["kind"].strip()):
                 errors.append(f"sources[{i}].kind missing")
+            # A source shown to readers as "lab announcement" must be the
+            # lab's own page. Two entries once cited an OpenRouter catalog
+            # page under that label (Phase 4 review, 2026-10-19).
+            elif (src["kind"] == "lab_announcement" and isinstance(src.get("url"), str)
+                  and entry.get("org") in config.REGISTRY
+                  and not config.is_lab_url(entry["org"], src["url"])):
+                errors.append(f"sources[{i}] is labelled lab_announcement but "
+                              f"{src['url']} is not on the lab's own domain")
 
     if entry["origin"] not in ORIGIN_KINDS:
         errors.append(f"origin {entry['origin']!r} not in {ORIGIN_KINDS}")
