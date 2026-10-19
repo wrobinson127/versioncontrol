@@ -1,0 +1,2877 @@
+{
+  "https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash": {
+    "archived_url": "https://web.archive.org/web/20261019193904/https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash",
+    "checked": "2026-10-19",
+    "via": "saved"
+  },
+  "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash": {
+    "archived_url": "https://web.archive.org/web/20261019194025/https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash",
+    "checked": "2026-10-19",
+    "via": "saved"
+  },
+  "https://ai.google.dev/gemma/docs/core/model_card_2": {
+    "archived_url": "https://web.archive.org/web/20261019194136/https://ai.google.dev/gemma/docs/core/model_card_2",
+    "checked": "2026-10-19",
+    "via": "saved"
+  },
+  "https://ai.google.dev/gemma/docs/core/model_card_3": {
+    "archived_url": "https://web.archive.org/web/20260920224842/https://ai.google.dev/gemma/docs/core/model_card_3",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.google.dev/gemma/docs/core/model_card_4": {
+    "archived_url": "https://web.archive.org/web/20260719200115/https://ai.google.dev/gemma/docs/core/model_card_4",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.google.dev/gemma/docs/embeddinggemma/model_card_2": {
+    "archived_url": "https://web.archive.org/web/20261010013253/https://ai.google.dev/gemma/docs/embeddinggemma/model_card_2",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://ai.google.dev/gemma/docs/gemma-3n/model_card": {
+    "archived_url": "https://web.archive.org/web/20260811065611/https://ai.google.dev/gemma/docs/gemma-3n/model_card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://ai.google.dev/gemma/docs/model_card": {
+    "archived_url": "https://web.archive.org/web/20250219083858/https://ai.google.dev/gemma/docs/model_card",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.google.dev/gemma/prohibited_use_policy": {
+    "archived_url": "https://web.archive.org/web/20260829052342/https://ai.google.dev/gemma/prohibited_use_policy",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.google.dev/palm_docs/palm#model-sizes": {
+    "archived_url": "https://web.archive.org/web/20260302205917/https://ai.google.dev/palm_docs/palm#model-sizes",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/": {
+    "archived_url": "https://web.archive.org/web/20260828185503/https://ai.meta.com/blog/introducing-muse-spark-meta-model-api/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.meta.com/blog/introducing-muse-spark-msl/": {
+    "archived_url": "https://web.archive.org/web/20260823150204/https://ai.meta.com/blog/introducing-muse-spark-msl/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/": {
+    "archived_url": "https://web.archive.org/web/20260825092806/https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.meta.com/blog/llama-4-multimodal-intelligence/": {
+    "archived_url": "https://web.archive.org/web/20260824190101/https://ai.meta.com/blog/llama-4-multimodal-intelligence/",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://ai.meta.com/blog/meta-llama-3/": {
+    "archived_url": "https://web.archive.org/web/20260824184544/https://ai.meta.com/blog/meta-llama-3/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.meta.com/llama/use-policy/": {
+    "archived_url": "https://web.archive.org/web/20260801223449/https://ai.meta.com/llama/use-policy/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.meta.com/research/publications/code-llama-open-foundation-models-for-code/": {
+    "archived_url": "https://web.archive.org/web/20260909231352/https://ai.meta.com/research/publications/code-llama-open-foundation-models-for-code/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.meta.com/research/publications/llama-2-open-foundation-and-fine-tuned-chat-models/": {
+    "archived_url": "https://web.archive.org/web/20260823061636/https://ai.meta.com/research/publications/llama-2-open-foundation-and-fine-tuned-chat-models/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.meta.com/research/publications/the-llama-3-herd-of-models/": {
+    "archived_url": "https://web.archive.org/web/20260821150814/https://ai.meta.com/research/publications/the-llama-3-herd-of-models/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ai.meta.com/static-resource/muse-spark-1-1-evaluation-report": {
+    "archived_url": "https://web.archive.org/web/20260826084102/https://ai.meta.com/static-resource/muse-spark-1-1-evaluation-report",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://api-docs.deepseek.com/news/news250120": {
+    "archived_url": "https://web.archive.org/web/20260810200453/https://api-docs.deepseek.com/news/news250120",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://api-docs.deepseek.com/news/news250821": {
+    "archived_url": "https://web.archive.org/web/20260814100638/https://api-docs.deepseek.com/news/news250821",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://api-docs.deepseek.com/news/news250922": {
+    "archived_url": "https://web.archive.org/web/20260906233638/https://api-docs.deepseek.com/news/news250922",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://api-docs.deepseek.com/updates/": {
+    "archived_url": "https://web.archive.org/web/20261019115018/https://api-docs.deepseek.com/updates/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2204.05999": {
+    "archived_url": "https://web.archive.org/web/20260811213742/https://arxiv.org/abs/2204.05999",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2205.05131": {
+    "archived_url": "https://web.archive.org/web/20260815233957/https://arxiv.org/abs/2205.05131",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2212.12017": {
+    "archived_url": "https://web.archive.org/web/20260904011257/https://arxiv.org/abs/2212.12017",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2302.13971": {
+    "archived_url": "https://web.archive.org/web/20260826150203/https://arxiv.org/abs/2302.13971",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2303.08774": {
+    "archived_url": "https://web.archive.org/web/20260830011158/https://arxiv.org/abs/2303.08774",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2305.05665": {
+    "archived_url": "https://web.archive.org/web/20260915064051/https://arxiv.org/abs/2305.05665",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2305.10403": {
+    "archived_url": "https://web.archive.org/web/20260825061211/https://arxiv.org/abs/2305.10403",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2305.11172v1": {
+    "archived_url": "https://web.archive.org/web/20260523155253/https://arxiv.org/abs/2305.11172v1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2307.09288": {
+    "archived_url": "https://web.archive.org/web/20260824191149/https://arxiv.org/abs/2307.09288",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2308.12950": {
+    "archived_url": "https://web.archive.org/web/20260824191237/https://arxiv.org/abs/2308.12950",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2308.12966": {
+    "archived_url": "https://web.archive.org/web/20260914030744/https://arxiv.org/abs/2308.12966",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2309.04662": {
+    "archived_url": "https://web.archive.org/web/20260826200421/https://arxiv.org/abs/2309.04662",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2309.16609": {
+    "archived_url": "https://web.archive.org/web/20260904120144/https://arxiv.org/abs/2309.16609",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2310.06825": {
+    "archived_url": "https://web.archive.org/web/20260907003753/https://arxiv.org/abs/2310.06825",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2311.04257": {
+    "archived_url": "https://web.archive.org/web/20260814232408/https://arxiv.org/abs/2311.04257",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2311.07919": {
+    "archived_url": "https://web.archive.org/web/20260814172601/https://arxiv.org/abs/2311.07919",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2312.00738": {
+    "archived_url": "https://web.archive.org/web/20260902095717/https://arxiv.org/abs/2312.00738",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2312.06674": {
+    "archived_url": "https://web.archive.org/web/20260821230420/https://arxiv.org/abs/2312.06674",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2312.11805": {
+    "archived_url": "https://web.archive.org/web/20260829002230/https://arxiv.org/abs/2312.11805",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2401.02954": {
+    "archived_url": "https://web.archive.org/web/20260815234010/https://arxiv.org/abs/2401.02954",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2401.04088": {
+    "archived_url": "https://web.archive.org/web/20260824173512/https://arxiv.org/abs/2401.04088",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2401.06066": {
+    "archived_url": "https://web.archive.org/web/20260820232037/https://arxiv.org/abs/2401.06066",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2401.14196": {
+    "archived_url": "https://web.archive.org/web/20260827154303/https://arxiv.org/abs/2401.14196",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2402.03300": {
+    "archived_url": "https://web.archive.org/web/20260824032421/https://arxiv.org/abs/2402.03300",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2402.07827": {
+    "archived_url": "https://web.archive.org/web/20260905151145/https://arxiv.org/abs/2402.07827",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2403.05525": {
+    "archived_url": "https://web.archive.org/web/20260820112042/https://arxiv.org/abs/2403.05525",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2403.05530": {
+    "archived_url": "https://web.archive.org/web/20260829164518/https://arxiv.org/abs/2403.05530",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2403.08295": {
+    "archived_url": "https://web.archive.org/web/20260822015139/https://arxiv.org/abs/2403.08295",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2404.19737": {
+    "archived_url": "https://web.archive.org/web/20260819003903/https://arxiv.org/abs/2404.19737",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2405.04434": {
+    "archived_url": "https://web.archive.org/web/20260903022811/https://arxiv.org/abs/2405.04434",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2405.09818v1": {
+    "archived_url": "https://web.archive.org/web/20260827154221/https://arxiv.org/abs/2405.09818v1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2405.20797": {
+    "archived_url": "https://web.archive.org/web/20260816042149/https://arxiv.org/abs/2405.20797",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2406.12793": {
+    "archived_url": "https://web.archive.org/web/20260826030959/https://arxiv.org/abs/2406.12793",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2407.10671": {
+    "archived_url": "https://web.archive.org/web/20260822005820/https://arxiv.org/abs/2407.10671",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2407.10759": {
+    "archived_url": "https://web.archive.org/web/20260811032701/https://arxiv.org/abs/2407.10759",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2407.21783": {
+    "archived_url": "https://web.archive.org/web/20260825014816/https://arxiv.org/abs/2407.21783",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2408.00118": {
+    "archived_url": "https://web.archive.org/web/20260820155808/https://arxiv.org/abs/2408.00118",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2408.08152": {
+    "archived_url": "https://web.archive.org/web/20260812140407/https://arxiv.org/abs/2408.08152",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2409.12186": {
+    "archived_url": "https://web.archive.org/web/20260901003032/https://arxiv.org/abs/2409.12186",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2409.12191": {
+    "archived_url": "https://web.archive.org/web/20260830174622/https://arxiv.org/abs/2409.12191",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2409.13741": {
+    "archived_url": "https://web.archive.org/web/20260902132802/https://arxiv.org/abs/2409.13741",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2410.07073": {
+    "archived_url": "https://web.archive.org/web/20260810201034/https://arxiv.org/abs/2410.07073",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2410.13848": {
+    "archived_url": "https://web.archive.org/web/20260816135002/https://arxiv.org/abs/2410.13848",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2410.17434v1": {
+    "archived_url": "https://web.archive.org/web/20260710230141/https://arxiv.org/abs/2410.17434v1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2410.21276": {
+    "archived_url": "https://web.archive.org/web/20260820154714/https://arxiv.org/abs/2410.21276",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2411.14405": {
+    "archived_url": "https://web.archive.org/web/20260914123813/https://arxiv.org/abs/2411.14405",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2412.03555": {
+    "archived_url": "https://web.archive.org/web/20260828213342/https://arxiv.org/abs/2412.03555",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2412.04261": {
+    "archived_url": "https://web.archive.org/web/20260815042214/https://arxiv.org/abs/2412.04261",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2412.15115": {
+    "archived_url": "https://web.archive.org/web/20260824142948/https://arxiv.org/abs/2412.15115",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2412.16720": {
+    "archived_url": "https://web.archive.org/web/20260824030349/https://arxiv.org/abs/2412.16720",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2412.19437": {
+    "archived_url": "https://web.archive.org/web/20260828190419/https://arxiv.org/abs/2412.19437",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2501.12599": {
+    "archived_url": "https://web.archive.org/web/20260825005347/https://arxiv.org/abs/2501.12599",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2501.12599v1": {
+    "archived_url": "https://web.archive.org/web/20260923044137/https://arxiv.org/abs/2501.12599v1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2501.12948": {
+    "archived_url": "https://web.archive.org/web/20260824032421/https://arxiv.org/abs/2501.12948",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2502.13923": {
+    "archived_url": "https://web.archive.org/web/20260824191512/https://arxiv.org/abs/2502.13923",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2503.07891": {
+    "archived_url": "https://web.archive.org/web/20260809230214/https://arxiv.org/abs/2503.07891",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2503.19786": {
+    "archived_url": "https://web.archive.org/web/20260821182820/https://arxiv.org/abs/2503.19786",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2503.20215": {
+    "archived_url": "https://web.archive.org/web/20260818181930/https://arxiv.org/abs/2503.20215",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2504.00698": {
+    "archived_url": "https://web.archive.org/web/20260811020908/https://arxiv.org/abs/2504.00698",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2504.06196": {
+    "archived_url": "https://web.archive.org/web/20260820152444/https://arxiv.org/abs/2504.06196",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2504.06225": {
+    "archived_url": "https://web.archive.org/web/20260820152454/https://arxiv.org/abs/2504.06225",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2504.21801": {
+    "archived_url": "https://web.archive.org/web/20260812193142/https://arxiv.org/abs/2504.21801",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2505.08751": {
+    "archived_url": "https://web.archive.org/web/20260607075415/https://arxiv.org/abs/2505.08751",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2505.09388": {
+    "archived_url": "https://web.archive.org/web/20260825005347/https://arxiv.org/abs/2505.09388",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2506.05176v1": {
+    "archived_url": "https://web.archive.org/web/20260705023248/https://arxiv.org/abs/2506.05176v1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2506.10910": {
+    "archived_url": "https://web.archive.org/web/20260903193307/https://arxiv.org/abs/2506.10910",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2507.01006": {
+    "archived_url": "https://web.archive.org/web/20260827154042/https://arxiv.org/abs/2507.01006",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2507.05201": {
+    "archived_url": "https://web.archive.org/web/20260830054052/https://arxiv.org/abs/2507.05201",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2507.06261": {
+    "archived_url": "https://web.archive.org/web/20260830054047/https://arxiv.org/abs/2507.06261",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2507.13264": {
+    "archived_url": "https://web.archive.org/web/20260904230121/https://arxiv.org/abs/2507.13264",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2507.20534": {
+    "archived_url": "https://web.archive.org/web/20260825005348/https://arxiv.org/abs/2507.20534",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2508.06471": {
+    "archived_url": "https://web.archive.org/web/20260827154028/https://arxiv.org/abs/2508.06471",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2508.10925": {
+    "archived_url": "https://web.archive.org/web/20260827132647/https://arxiv.org/abs/2508.10925",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2508.11737": {
+    "archived_url": "https://web.archive.org/web/20260825211338/https://arxiv.org/abs/2508.11737",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2509.13310": {
+    "archived_url": "https://web.archive.org/web/20260824170012/https://arxiv.org/abs/2509.13310",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2509.17765": {
+    "archived_url": "https://web.archive.org/web/20260903130302/https://arxiv.org/abs/2509.17765",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2510.18234v1": {
+    "archived_url": "https://web.archive.org/web/20260728172743/https://arxiv.org/abs/2510.18234v1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2510.24701": {
+    "archived_url": "https://web.archive.org/web/20260724195619/https://arxiv.org/abs/2510.24701",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2511.22570": {
+    "archived_url": "https://web.archive.org/web/20260815122130/https://arxiv.org/abs/2511.22570",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2602.02276": {
+    "archived_url": "https://web.archive.org/web/20260824205106/https://arxiv.org/abs/2602.02276",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2602.15763": {
+    "archived_url": "https://web.archive.org/web/20260830001953/https://arxiv.org/abs/2602.15763",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2604.15804": {
+    "archived_url": "https://web.archive.org/web/20260825211341/https://arxiv.org/abs/2604.15804",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2606.19348": {
+    "archived_url": "https://web.archive.org/web/20260828060921/https://arxiv.org/abs/2606.19348",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2607.02770": {
+    "archived_url": "https://web.archive.org/web/20260825161015/https://arxiv.org/abs/2607.02770",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/abs/2609.25611": {
+    "archived_url": "https://web.archive.org/web/20260925030316/https://arxiv.org/abs/2609.25611",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/pdf/2305.10403": {
+    "archived_url": "https://web.archive.org/web/20260825061216/https://arxiv.org/pdf/2305.10403",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://arxiv.org/pdf/2602.15763": {
+    "archived_url": "https://web.archive.org/web/20260831193510/https://arxiv.org/pdf/2602.15763",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://assets.amazon.science/96/7d/0d3e59514abf8fdcfafcdc574300/nova-tech-report-20250317-0810.pdf": {
+    "archived_url": "https://web.archive.org/web/20260717140518/https://assets.amazon.science/96/7d/0d3e59514abf8fdcfafcdc574300/nova-tech-report-20250317-0810.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://assets.anthropic.com/m/12f214efcc2f457a/original/Claude-Sonnet-4-5-System-Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260424222000/https://assets.anthropic.com/m/12f214efcc2f457a/original/Claude-Sonnet-4-5-System-Card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://assets.anthropic.com/m/1cd9d098ac3e6467/original/Claude-3-Model-Card-October-Addendum.pdf": {
+    "archived_url": "https://web.archive.org/web/20260505072656/https://assets.anthropic.com/m/1cd9d098ac3e6467/original/Claude-3-Model-Card-October-Addendum.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://assets.anthropic.com/m/785e231869ea8b3b/original/claude-3-7-sonnet-system-card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260507030706/https://assets.anthropic.com/m/785e231869ea8b3b/original/claude-3-7-sonnet-system-card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://assets.anthropic.com/m/99128ddd009bdcb/original/Claude-Haiku-4-5-System-Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260424191042/https://assets.anthropic.com/m/99128ddd009bdcb/original/Claude-Haiku-4-5-System-Card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://aws.amazon.com/about-aws/whats-new/2025/12/nova-2-foundation-models-amazon-bedrock/": {
+    "archived_url": "https://web.archive.org/web/20260912032011/https://aws.amazon.com/about-aws/whats-new/2025/12/nova-2-foundation-models-amazon-bedrock/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://aws.amazon.com/ai/responsible-ai/policy/": {
+    "archived_url": "https://web.archive.org/web/20260824220142/https://aws.amazon.com/ai/responsible-ai/policy/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://aws.amazon.com/bedrock/titan/": {
+    "archived_url": "https://web.archive.org/web/20241111185049/https://aws.amazon.com/bedrock/titan/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://aws.amazon.com/blogs/aws/amazon-q-developer-now-generally-available-includes-new-capabilities-to-reimagine-developer-experience/": {
+    "archived_url": "https://web.archive.org/web/20260825162359/https://aws.amazon.com/blogs/aws/amazon-q-developer-now-generally-available-includes-new-capabilities-to-reimagine-developer-experience/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://aws.amazon.com/blogs/aws/build-rag-and-agent-based-generative-ai-applications-with-new-amazon-titan-text-premier-model-available-in-amazon-bedrock/": {
+    "archived_url": "https://web.archive.org/web/20260703164315/https://aws.amazon.com/blogs/aws/build-rag-and-agent-based-generative-ai-applications-with-new-amazon-titan-text-premier-model-available-in-amazon-bedrock/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://aws.amazon.com/es/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/": {
+    "archived_url": "https://web.archive.org/web/20260224192604/https://aws.amazon.com/es/blogs/aws/introducing-amazon-nova-frontier-intelligence-and-industry-leading-price-performance/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://aws.amazon.com/ru/about-aws/whats-new/2023/11/amazon-titan-models-express-lite-bedrock/": {
+    "archived_url": "https://web.archive.org/web/20261019195652/https://aws.amazon.com/ru/about-aws/whats-new/2023/11/amazon-titan-models-express-lite-bedrock/",
+    "checked": "2026-10-19",
+    "via": "saved"
+  },
+  "https://aws.amazon.com/ru/about-aws/whats-new/2024/05/amazon-titan-text-premier-amazon-bedrock/": {
+    "archived_url": "https://web.archive.org/web/20261019195809/https://aws.amazon.com/ru/about-aws/whats-new/2024/05/amazon-titan-text-premier-amazon-bedrock/",
+    "checked": "2026-10-19",
+    "via": "saved"
+  },
+  "https://bigmodel.cn/dev/howuse/glm-4": {
+    "archived_url": "https://web.archive.org/web/20260226095949/https://bigmodel.cn/dev/howuse/glm-4",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-lite/": {
+    "archived_url": "https://web.archive.org/web/20260824050817/https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-flash-lite/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/": {
+    "archived_url": "https://web.archive.org/web/20260826100617/https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/": {
+    "archived_url": "https://web.archive.org/web/20260824194829/https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-6-flash-3-5-flash-lite-3-5-flash-cyber/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-deep-think/": {
+    "archived_url": "https://web.archive.org/web/20260910181649/https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-deep-think/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/": {
+    "archived_url": "https://web.archive.org/web/20261019120512/https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-argon/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon": {
+    "archived_url": "https://web.archive.org/web/20261018091314/https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/gemini-robotics-er-2/": {
+    "archived_url": "https://web.archive.org/web/20260821215226/https://blog.google/innovation-and-ai/models-and-research/google-deepmind/gemini-robotics-er-2/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/": {
+    "archived_url": "https://web.archive.org/web/20260831031946/https://blog.google/innovation-and-ai/technology/developers-tools/diffusion-gemma-faster-text-generation/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2": {
+    "archived_url": "https://web.archive.org/web/20261016010937/https://blog.google/innovation-and-ai/technology/developers-tools/embeddinggemma-2",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/innovation-and-ai/technology/safety-security/gemini-4-model-safety-security/": {
+    "archived_url": "https://web.archive.org/web/20261013182229/https://blog.google/innovation-and-ai/technology/safety-security/gemini-4-model-safety-security/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/products/gemini/gemini-3/": {
+    "archived_url": "https://web.archive.org/web/20260107054210/https://blog.google/products/gemini/gemini-3/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/technology/google-deepmind/gemini-computer-use-model/": {
+    "archived_url": "https://web.archive.org/web/20251231122711/https://blog.google/technology/google-deepmind/gemini-computer-use-model/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/technology/google-deepmind/gemini-model-thinking-updates-march-2025/#gemini-2-5-thinking": {
+    "archived_url": "https://web.archive.org/web/20260105223342/https://blog.google/technology/google-deepmind/gemini-model-thinking-updates-march-2025/#gemini-2-5-thinking",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024/#ceo-message": {
+    "archived_url": "https://web.archive.org/web/20260102000407/https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024/#ceo-message",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html": {
+    "archived_url": "https://web.archive.org/web/20260828083859/https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/gpt-4-5-system-card-2272025.pdf": {
+    "archived_url": "https://web.archive.org/web/20260823194937/https://cdn.openai.com/gpt-4-5-system-card-2272025.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/gpt-4o-system-card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260901015244/https://cdn.openai.com/gpt-4o-system-card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/gpt-5-system-card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260825020352/https://cdn.openai.com/gpt-5-system-card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/o1-system-card-20241205.pdf": {
+    "archived_url": "https://web.archive.org/web/20260902164836/https://cdn.openai.com/o1-system-card-20241205.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/o1-system-card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260824201949/https://cdn.openai.com/o1-system-card.pdf",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/o3-mini-system-card-feb10.pdf": {
+    "archived_url": "https://web.archive.org/web/20260901155409/https://cdn.openai.com/o3-mini-system-card-feb10.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/papers/GPTV_System_Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260823110940/https://cdn.openai.com/papers/GPTV_System_Card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/pdf/2221c875-02dc-4789-800b-e7758f3722c1/o3-and-o4-mini-system-card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260902155339/https://cdn.openai.com/pdf/2221c875-02dc-4789-800b-e7758f3722c1/o3-and-o4-mini-system-card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/pdf/23eca107-a9b1-4d2c-b156-7deb4fbc697c/GPT-5-3-Codex-System-Card-02.pdf": {
+    "archived_url": "https://web.archive.org/web/20260802181857/https://cdn.openai.com/pdf/23eca107-a9b1-4d2c-b156-7deb4fbc697c/GPT-5-3-Codex-System-Card-02.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/pdf/2a7d98b1-57e5-4147-8d0e-683894d782ae/5p1_codex_max_card_03.pdf": {
+    "archived_url": "https://web.archive.org/web/20260831161430/https://cdn.openai.com/pdf/2a7d98b1-57e5-4147-8d0e-683894d782ae/5p1_codex_max_card_03.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/pdf/3a4153c8-c748-4b71-8e31-aecbde944f8d/oai_5_2_system-card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260919221308/https://cdn.openai.com/pdf/3a4153c8-c748-4b71-8e31-aecbde944f8d/oai_5_2_system-card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/pdf/4173ec8d-1229-47db-96de-06d87147e07e/5_1_system_card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260823110003/https://cdn.openai.com/pdf/4173ec8d-1229-47db-96de-06d87147e07e/5_1_system_card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/pdf/419b6906-9da6-406c-a19d-1bb078ac7637/oai_gpt-oss_model_card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260827034658/https://cdn.openai.com/pdf/419b6906-9da6-406c-a19d-1bb078ac7637/oai_gpt-oss_model_card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/pdf/4375e605-f9a6-438d-bcc8-190599c183a6/o3_cua_system_card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260313195123/https://cdn.openai.com/pdf/4375e605-f9a6-438d-bcc8-190599c183a6/o3_cua_system_card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/pdf/6bcccca6-3b64-43cb-a66e-4647073142d7/chatgpt_agent_system_card_launch.pdf": {
+    "archived_url": "https://web.archive.org/web/20260803133004/https://cdn.openai.com/pdf/6bcccca6-3b64-43cb-a66e-4647073142d7/chatgpt_agent_system_card_launch.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cdn.openai.com/pdf/ac7c37ae-7f4c-4442-b741-2eabdeaf77e0/oai_5_2_Codex.pdf": {
+    "archived_url": "https://web.archive.org/web/20260910181627/https://cdn.openai.com/pdf/ac7c37ae-7f4c-4442-b741-2eabdeaf77e0/oai_5_2_Codex.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://chat.z.ai/legal-agreement/terms-of-service": {
+    "archived_url": "https://web.archive.org/web/20260822192029/https://chat.z.ai/legal-agreement/terms-of-service",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cohere.com/blog/aya-expanse-connecting-our-world": {
+    "archived_url": "https://web.archive.org/web/20260824195226/https://cohere.com/blog/aya-expanse-connecting-our-world",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cohere.com/blog/aya-vision": {
+    "archived_url": "https://web.archive.org/web/20261003201941/https://cohere.com/blog/aya-vision",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cohere.com/blog/command-a": {
+    "archived_url": "https://web.archive.org/web/20260902235528/https://cohere.com/blog/command-a",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cohere.com/blog/command-a-reasoning": {
+    "archived_url": "https://web.archive.org/web/20260601014352/https://cohere.com/blog/command-a-reasoning",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cohere.com/blog/command-a-vision": {
+    "archived_url": "https://web.archive.org/web/20260412090241/https://cohere.com/blog/command-a-vision",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cohere.com/blog/command-r": {
+    "archived_url": "https://web.archive.org/web/20260903053547/https://cohere.com/blog/command-r",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cohere.com/blog/embed-4": {
+    "archived_url": "https://web.archive.org/web/20260904051329/https://cohere.com/blog/embed-4",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cohere.com/blog/embed-5": {
+    "archived_url": "https://web.archive.org/web/20261005145056/https://cohere.com/blog/embed-5",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cohere.com/blog/north-mini-code": {
+    "archived_url": "https://web.archive.org/web/20260912032007/https://cohere.com/blog/north-mini-code",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://cohere.com/models/command": {
+    "archived_url": "https://web.archive.org/web/20240402140448/https://cohere.com/models/command",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://community.openai.com/t/announcing-gpt-6-sol-and-gpt-6-luna-in-the-api-codex-and-chatgpt/1399925": {
+    "archived_url": "https://web.archive.org/web/20261015001320/https://community.openai.com/t/announcing-gpt-6-sol-and-gpt-6-luna-in-the-api-codex-and-chatgpt/1399925",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://data.x.ai/2025-08-20-grok-4-model-card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260812114744/https://data.x.ai/2025-08-20-grok-4-model-card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://data.x.ai/2025-08-26-grok-code-fast-1-model-card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260813100816/https://data.x.ai/2025-08-26-grok-code-fast-1-model-card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://data.x.ai/2025-09-19-grok-4-fast-model-card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260812045958/https://data.x.ai/2025-09-19-grok-4-fast-model-card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://data.x.ai/2025-11-17-grok-4-1-model-card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260831042414/https://data.x.ai/2025-11-17-grok-4-1-model-card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deepmind.google/blog/gemini-robotics-er-1-6/": {
+    "archived_url": "https://web.archive.org/web/20260823150210/https://deepmind.google/blog/gemini-robotics-er-1-6/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deepmind.google/discover/blog/funsearch-making-new-discoveries-in-mathematical-sciences-using-large-language-models/": {
+    "archived_url": "https://web.archive.org/web/20251012035950/https://deepmind.google/discover/blog/funsearch-making-new-discoveries-in-mathematical-sciences-using-large-language-models/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deepmind.google/discover/blog/gemini-robotics-15-brings-ai-agents-into-the-physical-world/": {
+    "archived_url": "https://web.archive.org/web/20251101011844/https://deepmind.google/discover/blog/gemini-robotics-15-brings-ai-agents-into-the-physical-world/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deepmind.google/models/gemini/flash-lite/": {
+    "archived_url": "https://web.archive.org/web/20260823111236/https://deepmind.google/models/gemini/flash-lite/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deepmind.google/models/gemini/flash/": {
+    "archived_url": "https://web.archive.org/web/20260824070908/https://deepmind.google/models/gemini/flash/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deepmind.google/models/model-cards/gemini-3-1-flash-lite/": {
+    "archived_url": "https://web.archive.org/web/20260723180732/https://deepmind.google/models/model-cards/gemini-3-1-flash-lite/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deepmind.google/models/model-cards/gemini-3-5-flash/": {
+    "archived_url": "https://web.archive.org/web/20260830052348/https://deepmind.google/models/model-cards/gemini-3-5-flash/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deepmind.google/technologies/gemini/flash-thinking/": {
+    "archived_url": "https://web.archive.org/web/20250417013352/https://deepmind.google/technologies/gemini/flash-thinking/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deepmind.google/technologies/gemini/pro/": {
+    "archived_url": "https://web.archive.org/web/20250516172421/https://deepmind.google/technologies/gemini/pro/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deploymentsafety.openai.com/gpt-5-4-thinking/gpt-5-4-thinking.pdf": {
+    "archived_url": "https://web.archive.org/web/20260908111833/https://deploymentsafety.openai.com/gpt-5-4-thinking/gpt-5-4-thinking.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deploymentsafety.openai.com/gpt-5-5/gpt-5-5.pdf": {
+    "archived_url": "https://web.archive.org/web/20260826010726/https://deploymentsafety.openai.com/gpt-5-5/gpt-5-5.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deploymentsafety.openai.com/gpt-6-1-sol": {
+    "archived_url": "https://web.archive.org/web/20261013052329/https://deploymentsafety.openai.com/gpt-6-1-sol",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deploymentsafety.openai.com/gpt-6-astra": {
+    "archived_url": "https://web.archive.org/web/20260915145803/https://deploymentsafety.openai.com/gpt-6-astra",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://deploymentsafety.openai.com/gpt-6-october": {
+    "archived_url": "https://web.archive.org/web/20261012072304/https://deploymentsafety.openai.com/gpt-6-october",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://dev.meta.ai/": {
+    "archived_url": "https://web.archive.org/web/20261019103119/https://dev.meta.ai/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://dev.meta.ai/legal/acceptable-use-policy": {
+    "archived_url": "https://web.archive.org/web/20261013145728/https://dev.meta.ai/legal/acceptable-use-policy",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://developer.meta.com/ai/products/muse-code": {
+    "archived_url": "https://web.archive.org/web/20260918062519/https://developer.meta.com/ai/products/muse-code",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://developers.googleblog.com/en/gemma-3-quantized-aware-trained-state-of-the-art-ai-to-consumer-gpus/": {
+    "archived_url": "https://web.archive.org/web/20260811094530/https://developers.googleblog.com/en/gemma-3-quantized-aware-trained-state-of-the-art-ai-to-consumer-gpus/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://developers.googleblog.com/en/introducing-gemma-3-270m/": {
+    "archived_url": "https://web.archive.org/web/20260822032811/https://developers.googleblog.com/en/introducing-gemma-3-270m/",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://developers.googleblog.com/en/introducing-gemma-3n/": {
+    "archived_url": "https://web.archive.org/web/20260907213813/https://developers.googleblog.com/en/introducing-gemma-3n/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://developers.googleblog.com/en/introducing-paligemma-2-mix/": {
+    "archived_url": "https://web.archive.org/web/20250918221415/https://developers.googleblog.com/en/introducing-paligemma-2-mix/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.aws.amazon.com/ai/responsible-ai/nova-2-lite/overview.html": {
+    "archived_url": "https://web.archive.org/web/20260811105305/https://docs.aws.amazon.com/ai/responsible-ai/nova-2-lite/overview.html",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.aws.amazon.com/ai/responsible-ai/nova-micro-lite-pro/overview.html": {
+    "archived_url": "https://web.archive.org/web/20260920211421/https://docs.aws.amazon.com/ai/responsible-ai/nova-micro-lite-pro/overview.html",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.aws.amazon.com/bedrock/latest/userguide/titan-models.html": {
+    "archived_url": "https://web.archive.org/web/20260825161950/https://docs.aws.amazon.com/bedrock/latest/userguide/titan-models.html",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.aws.amazon.com/nova/latest/nova2-userguide/what-is-nova-2.html": {
+    "archived_url": "https://web.archive.org/web/20260906113854/https://docs.aws.amazon.com/nova/latest/nova2-userguide/what-is-nova-2.html",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html": {
+    "archived_url": "https://web.archive.org/web/20260825072710/https://docs.aws.amazon.com/nova/latest/userguide/what-is-nova.html",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.cohere.com/changelog/command-a-plus-05-2026": {
+    "archived_url": "https://web.archive.org/web/20260608121909/https://docs.cohere.com/changelog/command-a-plus-05-2026",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.cohere.com/docs/cohere-embed": {
+    "archived_url": "https://web.archive.org/web/20261018004844/https://docs.cohere.com/docs/cohere-embed",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.cohere.com/docs/responsible-use": {
+    "archived_url": "https://web.archive.org/web/20260821105033/https://docs.cohere.com/docs/responsible-use",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.cohere.com/docs/usage-policy": {
+    "archived_url": "https://web.archive.org/web/20260828212438/https://docs.cohere.com/docs/usage-policy",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.mistral.ai/models/codestral-25-01": {
+    "archived_url": "https://web.archive.org/web/20261006131747/https://docs.mistral.ai/models/codestral-25-01",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.mistral.ai/models/mistral-large-4": {
+    "archived_url": "https://web.archive.org/web/20261010010006/https://docs.mistral.ai/models/mistral-large-4",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.x.ai/developers/models": {
+    "archived_url": "https://web.archive.org/web/20260822171706/https://docs.x.ai/developers/models",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://example.com/3.6-flash-model-card": {
+    "archived_url": null,
+    "checked": "2026-10-19",
+    "reason": "save returned HTTP 523"
+  },
+  "https://example.com/safety_technical_report": {
+    "archived_url": null,
+    "checked": "2026-10-19",
+    "reason": "save returned HTTP 523"
+  },
+  "https://github.com/MoonshotAI/Kimi-Linear/blob/master/tech_report.pdf": {
+    "archived_url": "https://web.archive.org/web/20251230025433/https://github.com/MoonshotAI/Kimi-Linear/blob/master/tech_report.pdf",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://github.com/QwenLM/Qwen3.5?tab=readme-ov-file": {
+    "archived_url": "https://web.archive.org/web/20260323210942/https://github.com/QwenLM/Qwen3.5?tab=readme-ov-file",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://github.com/deepseek-ai/DeepSeek-Coder-V2": {
+    "archived_url": "https://web.archive.org/web/20260810013931/https://github.com/deepseek-ai/DeepSeek-Coder-V2",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/deepseek-ai/DeepSeek-LLM": {
+    "archived_url": "https://web.archive.org/web/20260824194603/https://github.com/deepseek-ai/DeepSeek-LLM",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/deepseek-ai/DeepSeek-V2": {
+    "archived_url": "https://web.archive.org/web/20260824195001/https://github.com/deepseek-ai/DeepSeek-V2",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/deepseek-ai/DeepSeek-V3.2-Exp/blob/main/DeepSeek_V3_2.pdf": {
+    "archived_url": "https://web.archive.org/web/20260821044841/https://github.com/deepseek-ai/DeepSeek-V3.2-Exp/blob/main/DeepSeek_V3_2.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/deepseek-ai/Janus/blob/main/janus_pro_tech_report.pdf": {
+    "archived_url": "https://web.archive.org/web/20260824141630/https://github.com/deepseek-ai/Janus/blob/main/janus_pro_tech_report.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/facebookresearch/ImageBind": {
+    "archived_url": "https://web.archive.org/web/20260624084552/https://github.com/facebookresearch/ImageBind",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/PurpleLlama/blob/main/Llama-Guard/MODEL_CARD.md": {
+    "archived_url": "https://web.archive.org/web/20260828211122/https://github.com/meta-llama/PurpleLlama/blob/main/Llama-Guard/MODEL_CARD.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/codellama/blob/main/MODEL_CARD.md": {
+    "archived_url": "https://web.archive.org/web/20260923003540/https://github.com/meta-llama/codellama/blob/main/MODEL_CARD.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md": {
+    "archived_url": "https://web.archive.org/web/20260825015930/https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/MODEL_CARD.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/USE_POLICY.md": {
+    "archived_url": "https://web.archive.org/web/20260429201233/https://github.com/meta-llama/llama-models/blob/main/models/llama3_1/USE_POLICY.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD_VISION.md": {
+    "archived_url": "https://web.archive.org/web/20260815053702/https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/MODEL_CARD_VISION.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/USE_POLICY.md": {
+    "archived_url": "https://web.archive.org/web/20261005234938/https://github.com/meta-llama/llama-models/blob/main/models/llama3_2/USE_POLICY.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/MODEL_CARD.md": {
+    "archived_url": "https://web.archive.org/web/20260813203547/https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/MODEL_CARD.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/USE_POLICY.md": {
+    "archived_url": "https://web.archive.org/web/20261008161350/https://github.com/meta-llama/llama-models/blob/main/models/llama3_3/USE_POLICY.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/llama-models/blob/main/models/llama4/MODEL_CARD.md": {
+    "archived_url": "https://web.archive.org/web/20260820211626/https://github.com/meta-llama/llama-models/blob/main/models/llama4/MODEL_CARD.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/llama-models/blob/main/models/llama4/USE_POLICY.md": {
+    "archived_url": "https://web.archive.org/web/20260429201233/https://github.com/meta-llama/llama-models/blob/main/models/llama4/USE_POLICY.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/llama/blob/llama_v1/MODEL_CARD.md": {
+    "archived_url": "https://web.archive.org/web/20260126233250/https://github.com/meta-llama/llama/blob/llama_v1/MODEL_CARD.md",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/llama/blob/main/MODEL_CARD.md": {
+    "archived_url": "https://web.archive.org/web/20260824101240/https://github.com/meta-llama/llama/blob/main/MODEL_CARD.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md": {
+    "archived_url": "https://web.archive.org/web/20260828211049/https://github.com/meta-llama/llama3/blob/main/MODEL_CARD.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://github.com/meta-llama/llama3/blob/main/USE_POLICY.md": {
+    "archived_url": "https://web.archive.org/web/20260828093528/https://github.com/meta-llama/llama3/blob/main/USE_POLICY.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://grok.com/release-notes#:~:text=Apr%2017%2C%202026-": {
+    "archived_url": "https://web.archive.org/web/20260922165654/https://grok.com/release-notes#:~:text=Apr%2017%2C%202026-",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://help.aliyun.com/zh/model-studio/models?scm=20140722.S_help%40%40%E6%96%87%E6%A1%A3%40%402840914.S_BB1%40bl%2BBB2%40bl%2BRQW%40ag0%2Bos0.ID_2840914-RL_plus-LOC_doc%7EUND%7Eab-OR_ser-PAR1_2102029c17437872399601371d08f3-V_4-P0_0-P1_0&spm=a2c4g.11186623.help-search.i20": {
+    "archived_url": "https://web.archive.org/web/20260102000131/https://help.aliyun.com/zh/model-studio/models?scm=20140722.S_help%40%40%E6%96%87%E6%A1%A3%40%402840914.S_BB1%40bl%2BBB2%40bl%2BRQW%40ag0%2Bos0.ID_2840914-RL_plus-LOC_doc%7EUND%7Eab-OR_ser-PAR1_2102029c17437872399601371d08f3-V_4-P0_0-P1_0&spm=a2c4g.11186623.help-search.i20",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://help.openai.com/en/articles/10561834-operator-release-notes": {
+    "archived_url": "https://web.archive.org/web/20250815034214/https://help.openai.com/en/articles/10561834-operator-release-notes",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://help.openai.com/en/articles/6825453-chatgpt-release-notes": {
+    "archived_url": "https://web.archive.org/web/20260823223553/https://help.openai.com/en/articles/6825453-chatgpt-release-notes",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://help.openai.com/en/articles/9624314-model-release-notes": {
+    "archived_url": "https://web.archive.org/web/20260818011538/https://help.openai.com/en/articles/9624314-model-release-notes",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/AIDC-AI/Ovis1.6-Gemma2-27B": {
+    "archived_url": "https://web.archive.org/web/20260310093237/https://huggingface.co/AIDC-AI/Ovis1.6-Gemma2-27B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/AIDC-AI/Ovis1.6-Gemma2-9B": {
+    "archived_url": "https://web.archive.org/web/20260309122205/https://huggingface.co/AIDC-AI/Ovis1.6-Gemma2-9B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Alibaba-NLP/gte-modernbert-base": {
+    "archived_url": "https://web.archive.org/web/20260830053953/https://huggingface.co/Alibaba-NLP/gte-modernbert-base",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereForAI/aya-expanse-32b?ref=cohere-ai.ghost.io": {
+    "archived_url": "https://web.archive.org/web/20250319162118/https://huggingface.co/CohereForAI/aya-expanse-32b?ref=cohere-ai.ghost.io",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereForAI/aya-expanse-8b?ref=cohere-ai.ghost.io": {
+    "archived_url": "https://web.archive.org/web/20250313154604/https://huggingface.co/CohereForAI/aya-expanse-8b?ref=cohere-ai.ghost.io",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereForAI/c4ai-command-a-03-2025?ref=cohere-ai.ghost.io": {
+    "archived_url": "https://web.archive.org/web/20250411090111/https://huggingface.co/CohereForAI/c4ai-command-a-03-2025?ref=cohere-ai.ghost.io",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereLabs/North-Micro-Vision-Instruct": {
+    "archived_url": "https://web.archive.org/web/20260817225815/https://huggingface.co/CohereLabs/North-Micro-Vision-Instruct",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereLabs/aya-101": {
+    "archived_url": "https://web.archive.org/web/20261005012649/https://huggingface.co/CohereLabs/aya-101",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereLabs/aya-expanse-32b": {
+    "archived_url": "https://web.archive.org/web/20260831084447/https://huggingface.co/CohereLabs/aya-expanse-32b",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereLabs/aya-vision-32b": {
+    "archived_url": "https://web.archive.org/web/20260822095743/https://huggingface.co/CohereLabs/aya-vision-32b",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereLabs/c4ai-command-a-03-2025": {
+    "archived_url": "https://web.archive.org/web/20260902075300/https://huggingface.co/CohereLabs/c4ai-command-a-03-2025",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereLabs/c4ai-command-r-plus": {
+    "archived_url": "https://web.archive.org/web/20260824191926/https://huggingface.co/CohereLabs/c4ai-command-r-plus",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereLabs/c4ai-command-r-v01": {
+    "archived_url": "https://web.archive.org/web/20260824195228/https://huggingface.co/CohereLabs/c4ai-command-r-v01",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereLabs/command-a-reasoning-08-2025": {
+    "archived_url": "https://web.archive.org/web/20260814144722/https://huggingface.co/CohereLabs/command-a-reasoning-08-2025",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereLabs/command-a-vision-07-2025": {
+    "archived_url": "https://web.archive.org/web/20260821081722/https://huggingface.co/CohereLabs/command-a-vision-07-2025",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/CohereLabs/tiny-aya-base-32K": {
+    "archived_url": "https://web.archive.org/web/20261019200750/https://huggingface.co/CohereLabs/tiny-aya-base-32K",
+    "checked": "2026-10-19",
+    "via": "saved"
+  },
+  "https://huggingface.co/CohereLabs/tiny-aya-en-thinker": {
+    "archived_url": "https://web.archive.org/web/20261019200905/https://huggingface.co/CohereLabs/tiny-aya-en-thinker",
+    "checked": "2026-10-19",
+    "via": "saved"
+  },
+  "https://huggingface.co/CohereLabs/tiny-aya-l2-thinker": {
+    "archived_url": "https://web.archive.org/web/20261002193124/https://huggingface.co/CohereLabs/tiny-aya-l2-thinker",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/QwQ-32B": {
+    "archived_url": "https://web.archive.org/web/20260831080935/https://huggingface.co/Qwen/QwQ-32B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen-72B": {
+    "archived_url": "https://web.archive.org/web/20260818050225/https://huggingface.co/Qwen/Qwen-72B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen-7B": {
+    "archived_url": "https://web.archive.org/web/20260923045717/https://huggingface.co/Qwen/Qwen-7B",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen1.5-110B": {
+    "archived_url": "https://web.archive.org/web/20260602050853/https://huggingface.co/Qwen/Qwen1.5-110B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen1.5-14B": {
+    "archived_url": "https://web.archive.org/web/20260710090439/https://huggingface.co/Qwen/Qwen1.5-14B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen1.5-72B": {
+    "archived_url": "https://web.archive.org/web/20260924150916/https://huggingface.co/Qwen/Qwen1.5-72B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen1.5-7B": {
+    "archived_url": "https://web.archive.org/web/20260807031614/https://huggingface.co/Qwen/Qwen1.5-7B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen2-72B": {
+    "archived_url": "https://web.archive.org/web/20260903155824/https://huggingface.co/Qwen/Qwen2-72B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen2.5-72B": {
+    "archived_url": "https://web.archive.org/web/20260813151349/https://huggingface.co/Qwen/Qwen2.5-72B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen3-235B-A22B": {
+    "archived_url": "https://web.archive.org/web/20260827094929/https://huggingface.co/Qwen/Qwen3-235B-A22B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen3.5-122B-A10B": {
+    "archived_url": "https://web.archive.org/web/20260827013421/https://huggingface.co/Qwen/Qwen3.5-122B-A10B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen3.5-35B-A3B": {
+    "archived_url": "https://web.archive.org/web/20260823193019/https://huggingface.co/Qwen/Qwen3.5-35B-A3B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen3.5-397B-A17B": {
+    "archived_url": "https://web.archive.org/web/20260824124923/https://huggingface.co/Qwen/Qwen3.5-397B-A17B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen3.6-27B": {
+    "archived_url": "https://web.archive.org/web/20260824235910/https://huggingface.co/Qwen/Qwen3.6-27B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B": {
+    "archived_url": "https://web.archive.org/web/20260824104150/https://huggingface.co/Qwen/Qwen3.8-2.4T-A95B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen3.8-Flash-Next": {
+    "archived_url": "https://web.archive.org/web/20260831101202/https://huggingface.co/Qwen/Qwen3.8-Flash-Next",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/blog/CohereLabs/meet-north-micro-vision-instruct": {
+    "archived_url": "https://web.archive.org/web/20260813040021/https://huggingface.co/blog/CohereLabs/meet-north-micro-vision-instruct",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-R1": {
+    "archived_url": "https://web.archive.org/web/20260825151259/https://huggingface.co/deepseek-ai/DeepSeek-R1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V2": {
+    "archived_url": "https://web.archive.org/web/20260731163757/https://huggingface.co/deepseek-ai/DeepSeek-V2",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V2.5": {
+    "archived_url": "https://web.archive.org/web/20260824194842/https://huggingface.co/deepseek-ai/DeepSeek-V2.5",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V3": {
+    "archived_url": "https://web.archive.org/web/20260824142547/https://huggingface.co/deepseek-ai/DeepSeek-V3",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V3.1": {
+    "archived_url": "https://web.archive.org/web/20260825191212/https://huggingface.co/deepseek-ai/DeepSeek-V3.1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V3.1-Terminus": {
+    "archived_url": "https://web.archive.org/web/20260825170908/https://huggingface.co/deepseek-ai/DeepSeek-V3.1-Terminus",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp": {
+    "archived_url": "https://web.archive.org/web/20260821044840/https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731": {
+    "archived_url": "https://web.archive.org/web/20260823134300/https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-0731",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp": {
+    "archived_url": "https://web.archive.org/web/20261003115429/https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash-Vision-Exp",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro": {
+    "archived_url": "https://web.archive.org/web/20260715152547/https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813": {
+    "archived_url": "https://web.archive.org/web/20260823203156/https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro-0813",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf": {
+    "archived_url": "https://web.archive.org/web/20260609005525/https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/DeepSeek_V4.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash": {
+    "archived_url": "https://web.archive.org/web/20260911005103/https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017": {
+    "archived_url": "https://web.archive.org/web/20261019014204/https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/DeepSeek_V41_Tech_Report.pdf": {
+    "archived_url": "https://web.archive.org/web/20261019164008/https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/DeepSeek_V41_Tech_Report.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/deepseek-ai/deepseek-llm-67b-base": {
+    "archived_url": "https://web.archive.org/web/20260823181917/https://huggingface.co/deepseek-ai/deepseek-llm-67b-base",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/google/diffusiongemma-26B-A4B-it": {
+    "archived_url": "https://web.archive.org/web/20260828153000/https://huggingface.co/google/diffusiongemma-26B-A4B-it",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/google/embeddinggemma-2": {
+    "archived_url": "https://web.archive.org/web/20261016155220/https://huggingface.co/google/embeddinggemma-2",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://huggingface.co/google/gemma-1.1-7b-it": {
+    "archived_url": "https://web.archive.org/web/20260822053808/https://huggingface.co/google/gemma-1.1-7b-it",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct": {
+    "archived_url": "https://web.archive.org/web/20260826150220/https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B": {
+    "archived_url": "https://web.archive.org/web/20261018140757/https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B/blob/main/LICENSE.md": {
+    "archived_url": "https://web.archive.org/web/20261017015714/https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B/blob/main/LICENSE.md",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Devstral-2-123B-Instruct-2512": {
+    "archived_url": "https://web.archive.org/web/20260824142550/https://huggingface.co/mistralai/Devstral-2-123B-Instruct-2512",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Magistral-Small-2507": {
+    "archived_url": "https://web.archive.org/web/20260901043616/https://huggingface.co/mistralai/Magistral-Small-2507",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Magistral-Small-2509": {
+    "archived_url": "https://web.archive.org/web/20260827045339/https://huggingface.co/mistralai/Magistral-Small-2509",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Mathstral-7B-v0.1": {
+    "archived_url": "https://web.archive.org/web/20260824194831/https://huggingface.co/mistralai/Mathstral-7B-v0.1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Mistral-7B-v0.1": {
+    "archived_url": "https://web.archive.org/web/20260820000319/https://huggingface.co/mistralai/Mistral-7B-v0.1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Mistral-Large-3-675B-Instruct-2512": {
+    "archived_url": "https://web.archive.org/web/20260820142457/https://huggingface.co/mistralai/Mistral-Large-3-675B-Instruct-2512",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Mistral-Large-Instruct-2407": {
+    "archived_url": "https://web.archive.org/web/20260825054226/https://huggingface.co/mistralai/Mistral-Large-Instruct-2407",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Mistral-Large-Instruct-2411": {
+    "archived_url": "https://web.archive.org/web/20260824194724/https://huggingface.co/mistralai/Mistral-Large-Instruct-2411",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Mistral-Medium-3.5-128B": {
+    "archived_url": "https://web.archive.org/web/20260714165123/https://huggingface.co/mistralai/Mistral-Medium-3.5-128B",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407": {
+    "archived_url": "https://web.archive.org/web/20260824191929/https://huggingface.co/mistralai/Mistral-Nemo-Instruct-2407",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Mistral-Small-24B-Instruct-2501": {
+    "archived_url": "https://web.archive.org/web/20260830140824/https://huggingface.co/mistralai/Mistral-Small-24B-Instruct-2501",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503": {
+    "archived_url": "https://web.archive.org/web/20260824051319/https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Mistral-Small-3.2-24B-Instruct-2506": {
+    "archived_url": "https://web.archive.org/web/20260824191548/https://huggingface.co/mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Mixtral-8x22B-Instruct-v0.1": {
+    "archived_url": "https://web.archive.org/web/20260827054002/https://huggingface.co/mistralai/Mixtral-8x22B-Instruct-v0.1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1": {
+    "archived_url": "https://web.archive.org/web/20260824195309/https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/mistralai/Pixtral-12B-2409": {
+    "archived_url": "https://web.archive.org/web/20260810125203/https://huggingface.co/mistralai/Pixtral-12B-2409",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/moonshotai/Kimi-K2-Instruct": {
+    "archived_url": "https://web.archive.org/web/20260825215204/https://huggingface.co/moonshotai/Kimi-K2-Instruct",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/moonshotai/Kimi-K2-Thinking": {
+    "archived_url": "https://web.archive.org/web/20260829054917/https://huggingface.co/moonshotai/Kimi-K2-Thinking",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/moonshotai/Kimi-K2.5": {
+    "archived_url": "https://web.archive.org/web/20260826060123/https://huggingface.co/moonshotai/Kimi-K2.5",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/moonshotai/Kimi-K2.6": {
+    "archived_url": "https://web.archive.org/web/20260824050812/https://huggingface.co/moonshotai/Kimi-K2.6",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/moonshotai/Kimi-K2.7-Code": {
+    "archived_url": "https://web.archive.org/web/20260824203206/https://huggingface.co/moonshotai/Kimi-K2.7-Code",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/moonshotai/Kimi-K3": {
+    "archived_url": "https://web.archive.org/web/20260825215109/https://huggingface.co/moonshotai/Kimi-K3",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/xai-org/grok-1": {
+    "archived_url": "https://web.archive.org/web/20260902164513/https://huggingface.co/xai-org/grok-1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/xai-org/grok-2": {
+    "archived_url": "https://web.archive.org/web/20260813111619/https://huggingface.co/xai-org/grok-2",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/zai-org/GLM-4-32B-0414": {
+    "archived_url": "https://web.archive.org/web/20260907022730/https://huggingface.co/zai-org/GLM-4-32B-0414",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/zai-org/GLM-4.5": {
+    "archived_url": "https://web.archive.org/web/20260824025126/https://huggingface.co/zai-org/GLM-4.5",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/zai-org/GLM-4.5V": {
+    "archived_url": "https://web.archive.org/web/20260826082404/https://huggingface.co/zai-org/GLM-4.5V",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/zai-org/GLM-4.6": {
+    "archived_url": "https://web.archive.org/web/20260824025126/https://huggingface.co/zai-org/GLM-4.6",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/zai-org/GLM-4.7": {
+    "archived_url": "https://web.archive.org/web/20260824142552/https://huggingface.co/zai-org/GLM-4.7",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/zai-org/GLM-4.7-Flash": {
+    "archived_url": "https://web.archive.org/web/20260821145142/https://huggingface.co/zai-org/GLM-4.7-Flash",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/zai-org/GLM-5": {
+    "archived_url": "https://web.archive.org/web/20260826053613/https://huggingface.co/zai-org/GLM-5",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/zai-org/GLM-5.2": {
+    "archived_url": "https://web.archive.org/web/20260717140442/https://huggingface.co/zai-org/GLM-5.2",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/zai-org/GLM-5.3-Flash": {
+    "archived_url": "https://web.archive.org/web/20260830231429/https://huggingface.co/zai-org/GLM-5.3-Flash",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/zai-org/chatglm3-6b": {
+    "archived_url": "https://web.archive.org/web/20260827213148/https://huggingface.co/zai-org/chatglm3-6b",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://huggingface.co/zai-org/glm-4v-9b": {
+    "archived_url": "https://web.archive.org/web/20260824122826/https://huggingface.co/zai-org/glm-4v-9b",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://legal.mistral.ai/terms/usage-policy": {
+    "archived_url": "https://web.archive.org/web/20260828212516/https://legal.mistral.ai/terms/usage-policy",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://media.x.ai/v1/website/card4p7-3a96f40b.pdf": {
+    "archived_url": "https://web.archive.org/web/20261009070158/https://media.x.ai/v1/website/card4p7-3a96f40b.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/codestral-25-08/": {
+    "archived_url": "https://web.archive.org/web/20260824192941/https://mistral.ai/news/codestral-25-08/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/codestral-2501/": {
+    "archived_url": "https://web.archive.org/web/20261004225206/https://mistral.ai/news/codestral-2501/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/codestral-embed": {
+    "archived_url": "https://web.archive.org/web/20260904032120/https://mistral.ai/news/codestral-embed",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/codestral-mamba/": {
+    "archived_url": "https://web.archive.org/web/20260903202845/https://mistral.ai/news/codestral-mamba/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/codestral/": {
+    "archived_url": "https://web.archive.org/web/20260824184548/https://mistral.ai/news/codestral/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/devstral": {
+    "archived_url": "https://web.archive.org/web/20260824190053/https://mistral.ai/news/devstral",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/devstral-2-vibe-cli": {
+    "archived_url": "https://web.archive.org/web/20260821050218/https://mistral.ai/news/devstral-2-vibe-cli",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/devstral-2-vibe-cli/": {
+    "archived_url": "https://web.archive.org/web/20260821050218/https://mistral.ai/news/devstral-2-vibe-cli/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/devstral-2507": {
+    "archived_url": "https://web.archive.org/web/20260906190114/https://mistral.ai/news/devstral-2507",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/la-plateforme/": {
+    "archived_url": "https://web.archive.org/web/20260909062306/https://mistral.ai/news/la-plateforme/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/leanstral-1-5": {
+    "archived_url": "https://web.archive.org/web/20260814114416/https://mistral.ai/news/leanstral-1-5",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/magistral": {
+    "archived_url": "https://web.archive.org/web/20260824194957/https://mistral.ai/news/magistral",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mathstral": {
+    "archived_url": "https://web.archive.org/web/20260824194831/https://mistral.ai/news/mathstral",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/ministraux/": {
+    "archived_url": "https://web.archive.org/web/20260904032056/https://mistral.ai/news/ministraux/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-3": {
+    "archived_url": "https://web.archive.org/web/20260823082225/https://mistral.ai/news/mistral-3",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-3/": {
+    "archived_url": "https://web.archive.org/web/20260823082225/https://mistral.ai/news/mistral-3/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-large-2407/": {
+    "archived_url": "https://web.archive.org/web/20260824194723/https://mistral.ai/news/mistral-large-2407/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-large-4/": {
+    "archived_url": "https://web.archive.org/web/20261019123028/https://mistral.ai/news/mistral-large-4/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-large/": {
+    "archived_url": "https://web.archive.org/web/20260828171259/https://mistral.ai/news/mistral-large/",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-medium-3": {
+    "archived_url": "https://web.archive.org/web/20260815025105/https://mistral.ai/news/mistral-medium-3",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-moderation": {
+    "archived_url": "https://web.archive.org/web/20260824192940/https://mistral.ai/news/mistral-moderation",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-nemo/": {
+    "archived_url": "https://web.archive.org/web/20260824191931/https://mistral.ai/news/mistral-nemo/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-ocr": {
+    "archived_url": "https://web.archive.org/web/20260828223415/https://mistral.ai/news/mistral-ocr",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-saba": {
+    "archived_url": "https://web.archive.org/web/20260811003027/https://mistral.ai/news/mistral-saba",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-small-3-1": {
+    "archived_url": "https://web.archive.org/web/20260824192010/https://mistral.ai/news/mistral-small-3-1",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-small-3/": {
+    "archived_url": "https://web.archive.org/web/20260813093619/https://mistral.ai/news/mistral-small-3/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-small-4/": {
+    "archived_url": "https://web.archive.org/web/20260824192927/https://mistral.ai/news/mistral-small-4/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mixtral-8x22b/": {
+    "archived_url": "https://web.archive.org/web/20260904032030/https://mistral.ai/news/mixtral-8x22b/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mixtral-of-experts/": {
+    "archived_url": "https://web.archive.org/web/20260824195310/https://mistral.ai/news/mixtral-of-experts/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/pixtral-12b/": {
+    "archived_url": "https://web.archive.org/web/20260824122603/https://mistral.ai/news/pixtral-12b/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/pixtral-large/": {
+    "archived_url": "https://web.archive.org/web/20260810125309/https://mistral.ai/news/pixtral-large/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/september-24-release/": {
+    "archived_url": "https://web.archive.org/web/20260813203746/https://mistral.ai/news/september-24-release/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://modelstudio.console.alibabacloud.com/?tab=doc#/doc/?type=model&url=2840914_2&modelId=qwen3-max-preview": {
+    "archived_url": "https://web.archive.org/web/20260824154228/https://modelstudio.console.alibabacloud.com/?tab=doc#/doc/?type=model&url=2840914_2&modelId=qwen3-max-preview",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://moonshotai.github.io/Kimi-Dev/": {
+    "archived_url": "https://web.archive.org/web/20261002175856/https://moonshotai.github.io/Kimi-Dev/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://moonshotai.github.io/Kimi-K2/": {
+    "archived_url": "https://web.archive.org/web/20260824025138/https://moonshotai.github.io/Kimi-K2/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://moonshotai.github.io/Kimi-K2/thinking": {
+    "archived_url": "https://web.archive.org/web/20260220134424/https://moonshotai.github.io/Kimi-K2/thinking",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://ollama.com/library/embeddinggemma": {
+    "archived_url": "https://web.archive.org/web/20260824184532/https://ollama.com/library/embeddinggemma",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/blog/new-models-and-developer-products-announced-at-devday": {
+    "archived_url": "https://web.archive.org/web/20240430015313/https://openai.com/blog/new-models-and-developer-products-announced-at-devday",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/chatgpt/": {
+    "archived_url": "https://web.archive.org/web/20260717143002/https://openai.com/index/chatgpt/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/computer-using-agent/": {
+    "archived_url": "https://web.archive.org/web/20260824170012/https://openai.com/index/computer-using-agent/",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows/": {
+    "archived_url": "https://web.archive.org/web/20260831090640/https://openai.com/index/expanding-daybreak-as-the-cyber-defense-window-narrows/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/gpt-4-1/": {
+    "archived_url": "https://web.archive.org/web/20260827010407/https://openai.com/index/gpt-4-1/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/": {
+    "archived_url": "https://web.archive.org/web/20260829113408/https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/gpt-4o-system-card/": {
+    "archived_url": "https://web.archive.org/web/20260824223826/https://openai.com/index/gpt-4o-system-card/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/gpt-5-1-codex-max/": {
+    "archived_url": "https://web.archive.org/web/20260825035313/https://openai.com/index/gpt-5-1-codex-max/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/gpt-5-1/": {
+    "archived_url": "https://web.archive.org/web/20260824230735/https://openai.com/index/gpt-5-1/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/gpt-5-5-instant/": {
+    "archived_url": "https://web.archive.org/web/20260826093303/https://openai.com/index/gpt-5-5-instant/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/gpt-5-6/": {
+    "archived_url": "https://web.archive.org/web/20260827114450/https://openai.com/index/gpt-5-6/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/hello-gpt-4o/": {
+    "archived_url": "https://web.archive.org/web/20260825081422/https://openai.com/index/hello-gpt-4o/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-chatgpt-pro/": {
+    "archived_url": "https://web.archive.org/web/20260814083936/https://openai.com/index/introducing-chatgpt-pro/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-codex/": {
+    "archived_url": "https://web.archive.org/web/20260827055111/https://openai.com/index/introducing-codex/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-gpt-4-5/": {
+    "archived_url": "https://web.archive.org/web/20260902065828/https://openai.com/index/introducing-gpt-4-5/",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-gpt-5-2-codex/": {
+    "archived_url": "https://web.archive.org/web/20260827162239/https://openai.com/index/introducing-gpt-5-2-codex/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-gpt-5-2/": {
+    "archived_url": "https://web.archive.org/web/20260819103100/https://openai.com/index/introducing-gpt-5-2/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-gpt-5-3-codex/": {
+    "archived_url": "https://web.archive.org/web/20260821144813/https://openai.com/index/introducing-gpt-5-3-codex/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-gpt-5-4-mini-and-nano/": {
+    "archived_url": "https://web.archive.org/web/20260824142552/https://openai.com/index/introducing-gpt-5-4-mini-and-nano/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-gpt-5-4/": {
+    "archived_url": "https://web.archive.org/web/20260715075014/https://openai.com/index/introducing-gpt-5-4/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-gpt-5-5/": {
+    "archived_url": "https://web.archive.org/web/20260723120245/https://openai.com/index/introducing-gpt-5-5/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-gpt-5/": {
+    "archived_url": "https://web.archive.org/web/20260824095105/https://openai.com/index/introducing-gpt-5/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-gpt-6-1-sol/": {
+    "archived_url": "https://web.archive.org/web/20261015182312/https://openai.com/index/introducing-gpt-6-1-sol/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-gpt-6-sol-and-luna/": {
+    "archived_url": "https://web.archive.org/web/20261010142331/https://openai.com/index/introducing-gpt-6-sol-and-luna/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-gpt-realtime/": {
+    "archived_url": "https://web.archive.org/web/20260917223742/https://openai.com/index/introducing-gpt-realtime/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-o3-and-o4-mini/": {
+    "archived_url": "https://web.archive.org/web/20260829115002/https://openai.com/index/introducing-o3-and-o4-mini/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-openai-o1-preview/": {
+    "archived_url": "https://web.archive.org/web/20260826045055/https://openai.com/index/introducing-openai-o1-preview/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-operator/": {
+    "archived_url": "https://web.archive.org/web/20260824170013/https://openai.com/index/introducing-operator/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/introducing-upgrades-to-codex/": {
+    "archived_url": "https://web.archive.org/web/20260826235626/https://openai.com/index/introducing-upgrades-to-codex/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/learning-to-reason-with-llms/": {
+    "archived_url": "https://web.archive.org/web/20260822162012/https://openai.com/index/learning-to-reason-with-llms/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/new-embedding-models-and-api-updates/": {
+    "archived_url": "https://web.archive.org/web/20260826104118/https://openai.com/index/new-embedding-models-and-api-updates/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/index/openai-o3-mini/": {
+    "archived_url": "https://web.archive.org/web/20260826045708/https://openai.com/index/openai-o3-mini/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openai.com/policies/usage-policies/": {
+    "archived_url": "https://web.archive.org/web/20260825084759/https://openai.com/policies/usage-policies/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openrouter.ai/qwen/qwen3.8-flash": {
+    "archived_url": "https://web.archive.org/web/20260831145230/https://openrouter.ai/qwen/qwen3.8-flash",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://openrouter.ai/qwen/qwen3.8-max-0902": {
+    "archived_url": "https://web.archive.org/web/20260905082443/https://openrouter.ai/qwen/qwen3.8-max-0902",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://platform.kimi.ai/docs/guide/kimi-k2-7-code-quickstart": {
+    "archived_url": "https://web.archive.org/web/20260826095129/https://platform.kimi.ai/docs/guide/kimi-k2-7-code-quickstart",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://platform.openai.com/docs/models/gpt-3.5-turbo": {
+    "archived_url": "https://web.archive.org/web/20260209140022/https://platform.openai.com/docs/models/gpt-3.5-turbo",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://policies.google.com/terms/generative-ai/use-policy": {
+    "archived_url": "https://web.archive.org/web/20260825013757/https://policies.google.com/terms/generative-ai/use-policy",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwen.ai/blog?id=4074cca80393150c248e508aa62983f9cb7d27cd&from=research.latest-advancements-list": {
+    "archived_url": "https://web.archive.org/web/20260829032214/https://qwen.ai/blog?id=4074cca80393150c248e508aa62983f9cb7d27cd&from=research.latest-advancements-list",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwen.ai/blog?id=87dc93fc8a590dc718c77e1f6e84c07b474f6c5a&from=home.latest-research-list": {
+    "archived_url": "https://web.archive.org/web/20260515173254/https://qwen.ai/blog?id=87dc93fc8a590dc718c77e1f6e84c07b474f6c5a&from=home.latest-research-list",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwen.ai/blog?id=qwen3-coder-next": {
+    "archived_url": "https://web.archive.org/web/20260819025011/https://qwen.ai/blog?id=qwen3-coder-next",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwen.ai/blog?id=qwen3-max-thinking": {
+    "archived_url": "https://web.archive.org/web/20260913145712/https://qwen.ai/blog?id=qwen3-max-thinking",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwen.ai/blog?id=qwen3.5": {
+    "archived_url": "https://web.archive.org/web/20260824170008/https://qwen.ai/blog?id=qwen3.5",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwen.ai/blog?id=qwen3.6": {
+    "archived_url": "https://web.archive.org/web/20260823203237/https://qwen.ai/blog?id=qwen3.6",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwen.ai/blog?id=qwen3.6-27b": {
+    "archived_url": "https://web.archive.org/web/20260813044613/https://qwen.ai/blog?id=qwen3.6-27b",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwen.ai/blog?id=qwen3.7": {
+    "archived_url": "https://web.archive.org/web/20260827094929/https://qwen.ai/blog?id=qwen3.7",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwen.ai/blog?id=qwen3.7-plus": {
+    "archived_url": "https://web.archive.org/web/20260909142417/https://qwen.ai/blog?id=qwen3.7-plus",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwen.ai/blog?id=qwen3.8": {
+    "archived_url": "https://web.archive.org/web/20260823183400/https://qwen.ai/blog?id=qwen3.8",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qvq-72b-preview/": {
+    "archived_url": "https://web.archive.org/web/20260517155904/https://qwenlm.github.io/blog/qvq-72b-preview/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwen-vl/": {
+    "archived_url": "https://web.archive.org/web/20260914223407/https://qwenlm.github.io/blog/qwen-vl/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwen1.5-110b/?ref=upstract.com": {
+    "archived_url": "https://web.archive.org/web/20240504132051/https://qwenlm.github.io/blog/qwen1.5-110b/?ref=upstract.com",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwen1.5/": {
+    "archived_url": "https://web.archive.org/web/20260819174756/https://qwenlm.github.io/blog/qwen1.5/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwen2-math/": {
+    "archived_url": "https://web.archive.org/web/20260824195048/https://qwenlm.github.io/blog/qwen2-math/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwen2.5-llm/": {
+    "archived_url": "https://web.archive.org/web/20260829032559/https://qwenlm.github.io/blog/qwen2.5-llm/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwen2.5-math/": {
+    "archived_url": "https://web.archive.org/web/20260829032559/https://qwenlm.github.io/blog/qwen2.5-math/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwen2.5-max/": {
+    "archived_url": "https://web.archive.org/web/20260805025610/https://qwenlm.github.io/blog/qwen2.5-max/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwen2.5-turbo/": {
+    "archived_url": "https://web.archive.org/web/20260305071317/https://qwenlm.github.io/blog/qwen2.5-turbo/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwen2.5/": {
+    "archived_url": "https://web.archive.org/web/20260824190017/https://qwenlm.github.io/blog/qwen2.5/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwen2/": {
+    "archived_url": "https://web.archive.org/web/20260726030757/https://qwenlm.github.io/blog/qwen2/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwen3-coder/": {
+    "archived_url": "https://web.archive.org/web/20260824190653/https://qwenlm.github.io/blog/qwen3-coder/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwen3/": {
+    "archived_url": "https://web.archive.org/web/20260824190022/https://qwenlm.github.io/blog/qwen3/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://qwenlm.github.io/blog/qwq-32b/": {
+    "archived_url": "https://web.archive.org/web/20260824194618/https://qwenlm.github.io/blog/qwq-32b/",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://research.meta.ai/blog/introducing-muse-code-and-muse-spark-1-2": {
+    "archived_url": "https://web.archive.org/web/20260901194219/https://research.meta.ai/blog/introducing-muse-code-and-muse-spark-1-2",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model": {
+    "archived_url": "https://web.archive.org/web/20260824184510/https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://research.meta.ai/blog/introducing-muse-spark-1-3": {
+    "archived_url": "https://web.archive.org/web/20260903124618/https://research.meta.ai/blog/introducing-muse-spark-1-3",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://research.meta.ai/blog/muse-spark-open": {
+    "archived_url": "https://web.archive.org/web/20261018045118/https://research.meta.ai/blog/muse-spark-open",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://research.meta.ai/blog/muse-wonder": {
+    "archived_url": "https://web.archive.org/web/20261019071328/https://research.meta.ai/blog/muse-wonder",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://research.meta.ai/static/muse-spark-open-evaluation-methodology": {
+    "archived_url": "https://web.archive.org/web/20261015170019/https://research.meta.ai/static/muse-spark-open-evaluation-methodology",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://research.meta.ai/static/muse-wonder-model-card": {
+    "archived_url": "https://web.archive.org/web/20261013132621/https://research.meta.ai/static/muse-wonder-model-card",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/LearnLM/LearnLM_paper.pdf": {
+    "archived_url": "https://web.archive.org/web/20260902164158/https://storage.googleapis.com/deepmind-media/LearnLM/LearnLM_paper.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-0-Flash-Model-Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260710063036/https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-0-Flash-Model-Card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-5-Deep-Think-Model-Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260812114742/https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-5-Deep-Think-Model-Card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-5-Flash-Lite-Model-Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260815162122/https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-5-Flash-Lite-Model-Card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-5-Flash-Model-Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260902214128/https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-2-5-Flash-Model-Card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Flash-Lite-Model-Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260910055258/https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Flash-Lite-Model-Card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Pro-Model-Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260821204825/https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-1-Pro-Model-Card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-Pro-Model-Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260828175552/https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-3-Pro-Model-Card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-4-Argon-Model-Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20261018193928/https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-4-Argon-Model-Card.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/gemini-robotics/Gemini-Robotics-1-5-Tech-Report.pdf": {
+    "archived_url": "https://web.archive.org/web/20260908164135/https://storage.googleapis.com/deepmind-media/gemini-robotics/Gemini-Robotics-1-5-Tech-Report.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/gemini/gemini_1_report.pdf": {
+    "archived_url": "https://web.archive.org/web/20260827014649/https://storage.googleapis.com/deepmind-media/gemini/gemini_1_report.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/gemini/gemini_3_pro_fsf_report.pdf": {
+    "archived_url": "https://web.archive.org/web/20260826102231/https://storage.googleapis.com/deepmind-media/gemini/gemini_3_pro_fsf_report.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/gemini/gemini_4_safety_report.pdf": {
+    "archived_url": "https://web.archive.org/web/20261019091145/https://storage.googleapis.com/deepmind-media/gemini/gemini_4_safety_report.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/gemini/gemini_v1_5_report.pdf": {
+    "archived_url": "https://web.archive.org/web/20260823110749/https://storage.googleapis.com/deepmind-media/gemini/gemini_v1_5_report.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/gemini/gemini_v2_5_report.pdf": {
+    "archived_url": "https://web.archive.org/web/20260826050254/https://storage.googleapis.com/deepmind-media/gemini/gemini_v2_5_report.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/gemma/Gemma3Report.pdf": {
+    "archived_url": "https://web.archive.org/web/20260811013804/https://storage.googleapis.com/deepmind-media/gemma/Gemma3Report.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf": {
+    "archived_url": "https://web.archive.org/web/20260902004150/https://storage.googleapis.com/deepmind-media/gemma/gemma-2-report.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/gemma/gemma-report.pdf": {
+    "archived_url": "https://web.archive.org/web/20260811115201/https://storage.googleapis.com/deepmind-media/gemma/gemma-report.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/model-cards/documents/gemini-2-flash-lite.pdf": {
+    "archived_url": "https://web.archive.org/web/20250703131630/https://storage.googleapis.com/model-cards/documents/gemini-2-flash-lite.pdf",
+    "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://twitter.com/AnthropicAI/status/1648353600350060545?lang=en": {
+    "archived_url": null,
+    "checked": "2026-10-19",
+    "reason": "save returned HTTP 523"
+  },
+  "https://txt.cohere.com/command-r-plus-microsoft-azure/": {
+    "archived_url": "https://web.archive.org/web/20260824191927/https://txt.cohere.com/command-r-plus-microsoft-azure/",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://txt.cohere.com/embed-command-light-fine-tuning-on-amazon-bedrock/": {
+    "archived_url": "https://web.archive.org/web/20240409095550/https://txt.cohere.com/embed-command-light-fine-tuning-on-amazon-bedrock/",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://txt.cohere.com/introducing-embed-v3/": {
+    "archived_url": "https://web.archive.org/web/20260828134628/https://txt.cohere.com/introducing-embed-v3/",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www-cdn.anthropic.com/283ef97c476cf442c91d9a37d5b214242a55bb92/Claude%20Sonnet%205%20System%20Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260717084250/https://www-cdn.anthropic.com/283ef97c476cf442c91d9a37d5b214242a55bb92/Claude%20Sonnet%205%20System%20Card.pdf",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www-cdn.anthropic.com/57a52ea7d8f0e54e8a542e908266086df425cdf5/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20260718012916/https://www-cdn.anthropic.com/57a52ea7d8f0e54e8a542e908266086df425cdf5/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www-cdn.anthropic.com/6be99a52cb68eb70eb9572b4cafad13df32ed995.pdf": {
+    "archived_url": "https://web.archive.org/web/20260821182701/https://www-cdn.anthropic.com/6be99a52cb68eb70eb9572b4cafad13df32ed995.pdf",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www-cdn.anthropic.com/bd2a28d2535bfb0494cc8e2a3bf135d2e7523226/Model-Card-Claude-2.pdf": {
+    "archived_url": "https://web.archive.org/web/20260831194110/https://www-cdn.anthropic.com/bd2a28d2535bfb0494cc8e2a3bf135d2e7523226/Model-Card-Claude-2.pdf",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www-cdn.anthropic.com/de8ba9b01c9ab7cbabf5c33b80b7bbc618857627/Model_Card_Claude_3.pdf": {
+    "archived_url": "https://web.archive.org/web/20260904170740/https://www-cdn.anthropic.com/de8ba9b01c9ab7cbabf5c33b80b7bbc618857627/Model_Card_Claude_3.pdf",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www-cdn.anthropic.com/fed9cc193a14b84131812372d8d5857f8f304c52/Model_Card_Claude_3_Addendum.pdf": {
+    "archived_url": "https://web.archive.org/web/20260825113856/https://www-cdn.anthropic.com/fed9cc193a14b84131812372d8d5857f8f304c52/Model_Card_Claude_3_Addendum.pdf",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www-files.anthropic.com/production/images/Model-Card-Claude-2.pdf": {
+    "archived_url": "https://web.archive.org/web/20240325093649/https://www-files.anthropic.com/production/images/Model-Card-Claude-2.pdf",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.53ai.com/news/LargeLanguageModel/2024101137012.html": {
+    "archived_url": "https://web.archive.org/web/20260612022040/https://www.53ai.com/news/LargeLanguageModel/2024101137012.html",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.alibabacloud.com/blog/alibaba-cloud-launches-tongyi-qianwen-2-0-and-industry-specific-models-to-support-customers-reap-benefits-of-generative-ai_600526": {
+    "archived_url": "https://web.archive.org/web/20260308173533/https://www.alibabacloud.com/blog/alibaba-cloud-launches-tongyi-qianwen-2-0-and-industry-specific-models-to-support-customers-reap-benefits-of-generative-ai_600526",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.alibabacloud.com/blog/qwen3-8-omni-flash-omni-senses--agentic-delivery-_603580": {
+    "archived_url": "https://web.archive.org/web/20261012091245/https://www.alibabacloud.com/blog/qwen3-8-omni-flash-omni-senses--agentic-delivery-_603580",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0": {
+    "archived_url": "https://web.archive.org/web/20260830092220/https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.alibabacloud.com/help/en/model-studio/qwen-omni": {
+    "archived_url": "https://web.archive.org/web/20260925103923/https://www.alibabacloud.com/help/en/model-studio/qwen-omni",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.alibabacloud.com/help/en/model-studio/qwq": {
+    "archived_url": "https://web.archive.org/web/20260102000051/https://www.alibabacloud.com/help/en/model-studio/qwq",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.amazon.science/publications/amazon-nova-2-multimodal-reasoning-and-generation-models": {
+    "archived_url": "https://web.archive.org/web/20260813052910/https://www.amazon.science/publications/amazon-nova-2-multimodal-reasoning-and-generation-models",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.amazon.science/publications/amazon-nova-premier-technical-report-and-model-card": {
+    "archived_url": "https://web.archive.org/web/20260904131537/https://www.amazon.science/publications/amazon-nova-premier-technical-report-and-model-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.amazon.science/publications/the-amazon-nova-family-of-models-technical-report-and-model-card": {
+    "archived_url": "https://web.archive.org/web/20260907022844/https://www.amazon.science/publications/the-amazon-nova-family-of-models-technical-report-and-model-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-fable-5-1-mythos-5-1-system-card": {
+    "archived_url": "https://web.archive.org/web/20260901180542/https://www.anthropic.com/claude-fable-5-1-mythos-5-1-system-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-fable-5-mythos-5-system-card": {
+    "archived_url": "https://web.archive.org/web/20260824170007/https://www.anthropic.com/claude-fable-5-mythos-5-system-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-fable-and-mythos-5-1": {
+    "archived_url": "https://web.archive.org/web/20260903020352/https://www.anthropic.com/claude-fable-and-mythos-5-1",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-haiku-5-5": {
+    "archived_url": "https://web.archive.org/web/20261019114212/https://www.anthropic.com/claude-haiku-5-5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-haiku-5-5-system-card": {
+    "archived_url": "https://web.archive.org/web/20261013004617/https://www.anthropic.com/claude-haiku-5-5-system-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-opus-4-1-system-card": {
+    "archived_url": "https://web.archive.org/web/20260804211640/https://www.anthropic.com/claude-opus-4-1-system-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-opus-4-5-system-card": {
+    "archived_url": "https://web.archive.org/web/20260827070248/https://www.anthropic.com/claude-opus-4-5-system-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-opus-4-6-system-card": {
+    "archived_url": "https://web.archive.org/web/20260831224154/https://www.anthropic.com/claude-opus-4-6-system-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-opus-4-7-system-card": {
+    "archived_url": "https://web.archive.org/web/20260824125815/https://www.anthropic.com/claude-opus-4-7-system-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-opus-5-5": {
+    "archived_url": "https://web.archive.org/web/20261019114417/https://www.anthropic.com/claude-opus-5-5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-opus-5-5-system-card": {
+    "archived_url": "https://web.archive.org/web/20261002002106/https://www.anthropic.com/claude-opus-5-5-system-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-sonnet-4-6-system-card": {
+    "archived_url": "https://web.archive.org/web/20260904200412/https://www.anthropic.com/claude-sonnet-4-6-system-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-sonnet-5-5": {
+    "archived_url": "https://web.archive.org/web/20261019185054/https://www.anthropic.com/claude-sonnet-5-5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-sonnet-5-5-system-card": {
+    "archived_url": "https://web.archive.org/web/20261008011236/https://www.anthropic.com/claude-sonnet-5-5-system-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude-sonnet-5-system-card": {
+    "archived_url": "https://web.archive.org/web/20260901162138/https://www.anthropic.com/claude-sonnet-5-system-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude/opus": {
+    "archived_url": "https://web.archive.org/web/20260824223141/https://www.anthropic.com/claude/opus",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/claude/sonnet": {
+    "archived_url": "https://web.archive.org/web/20260824214851/https://www.anthropic.com/claude/sonnet",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/index/claude-2": {
+    "archived_url": "https://web.archive.org/web/20260811132042/https://www.anthropic.com/index/claude-2",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/index/claude-2-1": {
+    "archived_url": "https://web.archive.org/web/20260825063421/https://www.anthropic.com/index/claude-2-1",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/index/introducing-claude": {
+    "archived_url": "https://web.archive.org/web/20260824170450/https://www.anthropic.com/index/introducing-claude",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/legal/aup": {
+    "archived_url": "https://web.archive.org/web/20260824195338/https://www.anthropic.com/legal/aup",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/3-5-models-and-computer-use": {
+    "archived_url": "https://web.archive.org/web/20260820170206/https://www.anthropic.com/news/3-5-models-and-computer-use",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-3-7-sonnet": {
+    "archived_url": "https://web.archive.org/web/20260824170012/https://www.anthropic.com/news/claude-3-7-sonnet",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-4": {
+    "archived_url": "https://web.archive.org/web/20260824025138/https://www.anthropic.com/news/claude-4",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-fable-5-mythos-5": {
+    "archived_url": "https://web.archive.org/web/20260823203407/https://www.anthropic.com/news/claude-fable-5-mythos-5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-haiku-4-5": {
+    "archived_url": "https://web.archive.org/web/20260827150655/https://www.anthropic.com/news/claude-haiku-4-5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-opus-4-1": {
+    "archived_url": "https://web.archive.org/web/20260825162450/https://www.anthropic.com/news/claude-opus-4-1",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-opus-4-5": {
+    "archived_url": "https://web.archive.org/web/20260824025133/https://www.anthropic.com/news/claude-opus-4-5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-opus-4-6": {
+    "archived_url": "https://web.archive.org/web/20260824170008/https://www.anthropic.com/news/claude-opus-4-6",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-opus-4-7": {
+    "archived_url": "https://web.archive.org/web/20260826050533/https://www.anthropic.com/news/claude-opus-4-7",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-opus-4-8": {
+    "archived_url": "https://web.archive.org/web/20260823203250/https://www.anthropic.com/news/claude-opus-4-8",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-opus-5": {
+    "archived_url": "https://web.archive.org/web/20260824050816/https://www.anthropic.com/news/claude-opus-5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-sonnet-4-5": {
+    "archived_url": "https://web.archive.org/web/20260824025138/https://www.anthropic.com/news/claude-sonnet-4-5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-sonnet-4-6": {
+    "archived_url": "https://web.archive.org/web/20260821190800/https://www.anthropic.com/news/claude-sonnet-4-6",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/claude-sonnet-5": {
+    "archived_url": "https://web.archive.org/web/20260824123143/https://www.anthropic.com/news/claude-sonnet-5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/news/releasing-claude-instant-1-2": {
+    "archived_url": "https://web.archive.org/web/20260823003626/https://www.anthropic.com/news/releasing-claude-instant-1-2",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/system-cards": {
+    "archived_url": "https://web.archive.org/web/20261014064431/https://www.anthropic.com/system-cards",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.biorxiv.org/content/10.1101/2025.04.14.648850v2": {
+    "archived_url": "https://web.archive.org/web/20260714165130/https://www.biorxiv.org/content/10.1101/2025.04.14.648850v2",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.kaggle.com/models/google/embeddinggemma-2": {
+    "archived_url": "https://web.archive.org/web/20261007095931/https://www.kaggle.com/models/google/embeddinggemma-2",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.kimi.com/ai-models/kimi-k2-6": {
+    "archived_url": "https://web.archive.org/web/20260829052344/https://www.kimi.com/ai-models/kimi-k2-6",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.kimi.com/user/agreement/modelUse": {
+    "archived_url": "https://web.archive.org/web/20260821213601/https://www.kimi.com/user/agreement/modelUse",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_3/": {
+    "archived_url": "https://web.archive.org/web/20260827121100/https://www.llama.com/docs/model-cards-and-prompt-formats/llama3_3/",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.nature.com/articles/s41586-023-06924-6": {
+    "archived_url": "https://web.archive.org/web/20260724052748/https://www.nature.com/articles/s41586-023-06924-6",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.nature.com/articles/s41586-025-09292-5": {
+    "archived_url": "https://web.archive.org/web/20260809090441/https://www.nature.com/articles/s41586-025-09292-5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.qwencloud.com/models/qwen3.7-flash": {
+    "archived_url": "https://web.archive.org/web/20260814160123/https://www.qwencloud.com/models/qwen3.7-flash",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.tomsguide.com/ai/google-gemini/google-drops-new-gemini-model-and-it-goes-straight-to-the-top-of-the-llm-leaderboard": {
+    "archived_url": "https://web.archive.org/web/20260929113200/https://www.tomsguide.com/ai/google-gemini/google-drops-new-gemini-model-and-it-goes-straight-to-the-top-of-the-llm-leaderboard",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.yitay.net/blog/flan-ul2-20b": {
+    "archived_url": "https://web.archive.org/web/20260228121930/https://www.yitay.net/blog/flan-ul2-20b",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.zhipuai.cn/en/news/76": {
+    "archived_url": "https://web.archive.org/web/20261012035812/https://www.zhipuai.cn/en/news/76",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/": {
+    "archived_url": "https://web.archive.org/web/20260825104456/https://x.ai/",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/blog/grok-1.5": {
+    "archived_url": "https://web.archive.org/web/20260825063416/https://x.ai/blog/grok-1.5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/blog/grok-1.5v": {
+    "archived_url": "https://web.archive.org/web/20260821050119/https://x.ai/blog/grok-1.5v",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/blog/grok-2": {
+    "archived_url": "https://web.archive.org/web/20260824013746/https://x.ai/blog/grok-2",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/blog/grok-3": {
+    "archived_url": "https://web.archive.org/web/20260831055335/https://x.ai/blog/grok-3",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/blog/grok-os": {
+    "archived_url": "https://web.archive.org/web/20260825063428/https://x.ai/blog/grok-os",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/legal/acceptable-use-policy": {
+    "archived_url": "https://web.archive.org/web/20260825014037/https://x.ai/legal/acceptable-use-policy",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/model-card/": {
+    "archived_url": "https://web.archive.org/web/20260811074826/https://x.ai/model-card/",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/news/grok-3": {
+    "archived_url": "https://web.archive.org/web/20260829122645/https://x.ai/news/grok-3",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/news/grok-4": {
+    "archived_url": "https://web.archive.org/web/20260825082741/https://x.ai/news/grok-4",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/news/grok-4-1": {
+    "archived_url": "https://web.archive.org/web/20260824220601/https://x.ai/news/grok-4-1",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/news/grok-4-1-fast": {
+    "archived_url": "https://web.archive.org/web/20260821195652/https://x.ai/news/grok-4-1-fast",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/news/grok-4-5": {
+    "archived_url": "https://web.archive.org/web/20260828181727/https://x.ai/news/grok-4-5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/news/grok-4-6": {
+    "archived_url": "https://web.archive.org/web/20260821084736/https://x.ai/news/grok-4-6",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/news/grok-4-7": {
+    "archived_url": "https://web.archive.org/web/20261018144432/https://x.ai/news/grok-4-7",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/news/grok-4-fast": {
+    "archived_url": "https://web.archive.org/web/20260824170014/https://x.ai/news/grok-4-fast",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/news/grok-build-0-1": {
+    "archived_url": "https://web.archive.org/web/20260817183246/https://x.ai/news/grok-build-0-1",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/news/grok/model-card": {
+    "archived_url": "https://web.archive.org/web/20260811074827/https://x.ai/news/grok/model-card",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.ai/safety": {
+    "archived_url": "https://web.archive.org/web/20261019155226/https://x.ai/safety",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.com/Alibaba_Qwen/status/2088280182356611304": {
+    "archived_url": "https://web.archive.org/web/20260814170943/https://x.com/Alibaba_Qwen/status/2088280182356611304",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.com/GoogleAIStudio/status/2087953811931320341": {
+    "archived_url": null,
+    "checked": "2026-10-19",
+    "reason": "save returned HTTP 523"
+  },
+  "https://x.com/MistralAI/status/1955316715417382979?lang=en": {
+    "archived_url": "https://web.archive.org/web/20251217154658/https://x.com/MistralAI/status/1955316715417382979?lang=en",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.com/OpenAI/status/1778574613813006610": {
+    "archived_url": "https://web.archive.org/web/20260924101846/https://x.com/OpenAI/status/1778574613813006610",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://x.com/deepseek_ai/status/1859200141355536422": {
+    "archived_url": "https://web.archive.org/web/20250813102825/https://x.com/deepseek_ai/status/1859200141355536422",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://z.ai/blog/glm-4.6": {
+    "archived_url": "https://web.archive.org/web/20260824170013/https://z.ai/blog/glm-4.6",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://z.ai/blog/glm-4.7": {
+    "archived_url": "https://web.archive.org/web/20260821044711/https://z.ai/blog/glm-4.7",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://z.ai/blog/glm-5": {
+    "archived_url": "https://web.archive.org/web/20260823080347/https://z.ai/blog/glm-5",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://z.ai/blog/glm-5.1": {
+    "archived_url": "https://web.archive.org/web/20260821044440/https://z.ai/blog/glm-5.1",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://z.ai/blog/glm-5.2": {
+    "archived_url": "https://web.archive.org/web/20260824203145/https://z.ai/blog/glm-5.2",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://z.ai/blog/glm-5.3": {
+    "archived_url": "https://web.archive.org/web/20260824201147/https://z.ai/blog/glm-5.3",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://zhipuai.cn/en/devday": {
+    "archived_url": "https://web.archive.org/web/20260206092547/https://zhipuai.cn/en/devday",
+    "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  }
+}

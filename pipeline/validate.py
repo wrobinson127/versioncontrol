@@ -45,6 +45,34 @@ PROVENANCE_FIELDS = (
 )
 
 
+# Archive snapshots (D5): a Wayback Machine capture of the exact page the
+# field cites, so a lab post edited or taken down still resolves.
+_SNAPSHOT_RE = re.compile(r"^https://web\.archive\.org/web/(\d{14})/(\S+)$")
+
+
+def normalize_url_for_archive(url: str) -> str:
+    """Comparison form: scheme dropped, host lowercased, trailing slash
+    dropped. http and https name the same page for archiving purposes."""
+    u = re.sub(r"^https?://", "", url.strip(), flags=re.I)
+    host, sep, rest = u.partition("/")
+    return (host.lower() + sep + rest).rstrip("/")
+
+
+def check_archived_url(archived, original) -> str:
+    """Return an error string, or "" when `archived` is a well-formed
+    snapshot of `original`."""
+    if not isinstance(archived, str):
+        return "must be a string"
+    m = _SNAPSHOT_RE.match(archived)
+    if not m:
+        return ("must be https://web.archive.org/web/<14-digit timestamp>/"
+                "<original>")
+    if not isinstance(original, str) or \
+            normalize_url_for_archive(m.group(2)) != normalize_url_for_archive(original):
+        return f"archives {m.group(2)!r}, not {original!r}"
+    return ""
+
+
 def make_entry_id(org_key: str, model_name: str) -> str:
     """Stable entry id: registry key, double hyphen, model slug.
 
@@ -87,6 +115,10 @@ def validate_benchmark_number(num, errors, where):
     if "source_url" in prov and isinstance(prov.get("source_url"), str) \
             and prov["source_url"] and not _URL_RE.match(prov["source_url"]):
         errors.append(f"{where}: provenance.source_url is not a URL")
+    if "archived_url" in prov:
+        err = check_archived_url(prov["archived_url"], prov.get("source_url"))
+        if err:
+            errors.append(f"{where}: provenance.archived_url {err}")
     if "retrieval_date" in prov and isinstance(prov.get("retrieval_date"), str) \
             and prov["retrieval_date"] and not _is_iso_date(prov["retrieval_date"]):
         errors.append(f"{where}: provenance.retrieval_date is not ISO YYYY-MM-DD")
@@ -205,6 +237,30 @@ def validate_entry(entry) -> list:
                 errors.append(f"sources[{i}].retrieval_date missing or not ISO")
             if not (isinstance(src.get("kind"), str) and src["kind"].strip()):
                 errors.append(f"sources[{i}].kind missing")
+            if "archived_url" in src:
+                err = check_archived_url(src["archived_url"], src.get("url"))
+                if err:
+                    errors.append(f"sources[{i}].archived_url {err}")
+
+    # Archive snapshots of disclosure links (D5): optional, keyed by
+    # artifact, and only for an artifact whose link is a URL.
+    if "disclosure_archived" in entry:
+        darch = entry["disclosure_archived"]
+        dlinks = links if isinstance(links, dict) else {}
+        if not isinstance(darch, dict):
+            errors.append("disclosure_archived must be an object")
+        else:
+            for artifact, archived in darch.items():
+                link = dlinks.get(artifact)
+                if artifact not in DISCLOSURE_ARTIFACTS:
+                    errors.append(f"disclosure_archived has unknown artifact {artifact!r}")
+                elif not (isinstance(link, str) and _URL_RE.match(link)):
+                    errors.append(f"disclosure_archived.{artifact} archives a "
+                                  f"link that is not a URL ({link!r})")
+                else:
+                    err = check_archived_url(archived, link)
+                    if err:
+                        errors.append(f"disclosure_archived.{artifact} {err}")
 
     if entry["origin"] not in ORIGIN_KINDS:
         errors.append(f"origin {entry['origin']!r} not in {ORIGIN_KINDS}")

@@ -17,7 +17,7 @@ import json
 import os
 import sys
 
-from . import store, validate
+from . import archive, store, validate
 
 TABLES_DIR = os.path.join("content", "disclosure_links")
 
@@ -44,6 +44,7 @@ def load_approved(root: str = ".") -> dict:
 def apply(root: str = ".", run_date: str = None) -> dict:
     approved = load_approved(root)
     entries = store.read_entries(root=root)
+    amap = archive.load_map(root)
     by_id = {e["id"]: e for e in entries}
 
     applied, missing, problems = [], [], []
@@ -54,9 +55,17 @@ def apply(root: str = ".", run_date: str = None) -> dict:
             continue
         before = dict(entry["disclosure_links"])
         entry["disclosure_links"].update(cells)
+        # A changed link takes its own archive snapshot (or none), never
+        # the old link's.
+        before_archived = entry.get("disclosure_archived")
+        archive.apply_to_entry(entry, amap)
         errors = validate.validate_entry(entry)
         if errors:
             entry["disclosure_links"] = before
+            if before_archived is None:
+                entry.pop("disclosure_archived", None)
+            else:
+                entry["disclosure_archived"] = before_archived
             problems.append(f"{entry_id}: {'; '.join(errors)}")
             continue
         if entry["disclosure_links"] != before:
