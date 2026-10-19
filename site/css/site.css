@@ -107,6 +107,9 @@ a:hover { color: var(--ink); }
 .storynav-links a { color: var(--annotation); text-decoration: none; font-size: 13px; }
 .storynav-links a[aria-current="page"] { color: var(--ink); font-weight: 700; text-decoration: underline; }
 .storynav-links a:hover { text-decoration: underline; }
+/* the link row scrolls on narrow screens, and overflow clips anything drawn
+   outside it: keep the ring inside the link (audit F9) */
+.storynav-links a:focus-visible { outline-offset: -2px; }
 @media (max-width: 720px) {
   .storynav { padding: 0 14px; }
   .storynav-brand { font-size: 13px; }
@@ -189,13 +192,16 @@ a:hover { color: var(--ink); }
   padding: 14px 20px;
   background: var(--surface);
   border: 1px solid var(--surface-edge);
-  border-left: 4px solid var(--entry);
+  border-left: 4px solid var(--ink);
   border-radius: 10px;
   text-decoration: none;
   color: var(--ink);
-  transition: border-color 150ms ease, transform 150ms ease;
+  transition: border-color 150ms ease;
 }
-.latest:hover { border-color: var(--surface-edge); border-left-color: var(--accent); transform: translateY(-1px); }
+/* an author display rule beats the hidden attribute; until the dataset loads
+   the card has nothing to say (audit F10). Green is for data marks only. */
+.latest[hidden] { display: none; }
+.latest:hover { border-color: var(--ink); }
 .latest-label {
   display: block;
   font-family: var(--mono);
@@ -219,7 +225,7 @@ a:hover { color: var(--ink); }
 
 .controls {
   position: sticky;
-  top: 0;
+  top: var(--nav-h); /* below the sticky nav, never under it (audit F1) */
   z-index: 10;
   background: var(--paper);
   display: flex;
@@ -368,8 +374,9 @@ a:hover { color: var(--ink); }
 .entry {
   content-visibility: auto;
   contain-intrinsic-size: auto 340px;
-  /* anchored scrolls clear the sticky filter bar */
-  scroll-margin-top: 60px;
+  /* anchored scrolls clear the sticky nav and the filter bar; explorer.js
+     measures the bar into --controls-h (audit F2) */
+  scroll-margin-top: calc(var(--nav-h) + var(--controls-h, 110px) + 12px);
 }
 
 .entry-name a { color: inherit; text-decoration: none; }
@@ -447,7 +454,7 @@ a:hover { color: var(--ink); }
 }
 .prov {
   font-family: var(--mono);
-  font-size: 0.66rem;
+  font-size: 0.75rem; /* 12px: the tag is the site's thesis (audit W4) */
   letter-spacing: 0.06em;
   line-height: 1;
   color: var(--ink);
@@ -986,6 +993,21 @@ a.prov:hover { background: var(--ink); color: var(--surface); }
   font-size: 0.78rem;
   font-variant-numeric: tabular-nums;
 }
+/* Below 480px four columns of cells were wider than the screen and the
+   scroller cut counts mid-number ("16/18" read "16/1"), which is a false
+   number on screen (audit F5). Narrow the cells until all four fit. */
+@media (max-width: 480px) {
+  .matrix-grid {
+    grid-template-columns: minmax(64px, max-content) repeat(var(--dm-cols, 4), minmax(0, 1fr));
+    min-width: 0;
+    gap: 4px 3px;
+  }
+  .dm-rowhead { font-size: 0.72rem; padding-right: 2px; }
+  .dm-colhead { font-size: 0.68rem; padding: 0 0 3px; }
+  .dm-cell { gap: 3px; padding: 5px 3px; justify-content: center; }
+  .dm-dots { display: none; }
+  .dm-count { font-size: 0.74rem; }
+}
 
 /* a column whose links are researched but await approval: the
    registrar's own pending state, visually disjoint from any count
@@ -1094,5 +1116,6 @@ html { scroll-behavior: smooth; }
   text-decoration: none;
 }
 .totop:hover { background: var(--ink); color: var(--paper); }
+@media (max-width: 720px) { .storynav { padding: 0 16px; } }
 @media (max-width: 720px) { .totop { right: 12px; bottom: 12px; width: 36px; height: 36px; font-size: 16px; } }
 @media print { .totop { display: none; } }

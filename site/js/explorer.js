@@ -336,16 +336,44 @@
       moveBrushTo(r.from, r.to);
     }
 
-    /* keyboard access: the paired date inputs are the brush equivalent */
+    /* keyboard access: the paired date inputs are the brush equivalent.
+       Chromium fires "change" after each typed segment, so a year mid-entry
+       reads as 0002 or 0020. Swapping From and To on every change wrote into
+       the field being typed and emptied the timeline (audit F3). A value is
+       used only once its year is complete and inside the record; an
+       out-of-order pair is applied in order without touching the inputs, and
+       the inputs are put in order only when focus leaves them. */
+    var FIRST_YEAR = "2022";
+    function plausible(v) {
+      return !!v && /^\d{4}-\d{2}-\d{2}$/.test(v) && v.slice(0, 4) >= FIRST_YEAR &&
+        v.slice(0, 4) <= "2099";
+    }
     function onInputChange() {
-      var from = fromInput && fromInput.value ? fromInput.value : null;
-      var to = toInput && toInput.value ? toInput.value : null;
-      if (from && to && from > to) { var t = from; from = to; to = t; setInputs(from, to); }
+      var rawFrom = fromInput ? fromInput.value : "";
+      var rawTo = toInput ? toInput.value : "";
+      if ((rawFrom && !plausible(rawFrom)) || (rawTo && !plausible(rawTo))) { return; }
+      var from = rawFrom || null, to = rawTo || null;
+      if (from && to && from > to) { var t = from; from = to; to = t; }
       moveBrushTo(from && to ? from : null, from && to ? to : null);
       api.applyRange(from, to);
     }
-    if (fromInput) { fromInput.addEventListener("change", onInputChange); }
-    if (toInput) { toInput.addEventListener("change", onInputChange); }
+    function onInputBlur() {
+      if (fromInput && toInput && plausible(fromInput.value) && plausible(toInput.value) &&
+          fromInput.value > toInput.value) {
+        setInputs(toInput.value, fromInput.value);
+      }
+    }
+    /* the filter bar's height feeds the cards' scroll margin (audit F2) */
+    var controlsEl = document.querySelector(".controls");
+    function measureControls() {
+      if (controlsEl) {
+        document.documentElement.style.setProperty("--controls-h", controlsEl.offsetHeight + "px");
+      }
+    }
+    measureControls();
+    window.addEventListener("resize", measureControls);
+    if (fromInput) { fromInput.addEventListener("change", onInputChange); fromInput.addEventListener("blur", onInputBlur); }
+    if (toInput) { toInput.addEventListener("change", onInputChange); toInput.addEventListener("blur", onInputBlur); }
     if (clearBtn) {
       clearBtn.addEventListener("click", function () {
         setInputs("", "");
@@ -654,6 +682,28 @@
         });
       });
 
+      /* One tab stop for the whole chart, arrow keys between points in date
+         order (DESIGN Batch 1: "keyboard arrow-explore"). A hundred separate
+         stops put the filters about 170 tabs from the top (audit F4). */
+      var pointNodes = marksG.selectAll("a.traj-point").nodes();
+      pointNodes.sort(function (a, b) {
+        return (+a.querySelector(".dot").getAttribute("cx")) -
+               (+b.querySelector(".dot").getAttribute("cx"));
+      });
+      pointNodes.forEach(function (n, i) { n.setAttribute("tabindex", i === 0 ? "0" : "-1"); });
+      marksG.on("keydown", function (event) {
+        var i = pointNodes.indexOf(document.activeElement);
+        if (i < 0) { return; }
+        var next = { ArrowRight: i + 1, ArrowDown: i + 1, ArrowLeft: i - 1, ArrowUp: i - 1,
+                     Home: 0, End: pointNodes.length - 1 }[event.key];
+        if (next === undefined) { return; }
+        event.preventDefault();
+        next = Math.max(0, Math.min(pointNodes.length - 1, next));
+        pointNodes[i].setAttribute("tabindex", "-1");
+        pointNodes[next].setAttribute("tabindex", "0");
+        pointNodes[next].focus();
+      });
+
       chartMount.appendChild(svg.node());
       updateCaption();
       updateAlt();
@@ -813,6 +863,23 @@
       yearsEl.textContent = segs.length ?
         "Releases with a paper link, by year: " + segs.join(", ") + "." : "";
     }
+
+    /* One tab stop for the grid, arrow keys across and down (audit F4):
+       48 separate stops sat between the chart and the filters. */
+    var cells = Array.prototype.slice.call(grid.querySelectorAll(".dm-cell"));
+    var ncols = Math.max(1, Number(getComputedStyle(grid).getPropertyValue("--dm-cols")) || 4);
+    cells.forEach(function (c, i) { c.setAttribute("tabindex", i === 0 ? "0" : "-1"); });
+    grid.addEventListener("keydown", function (event) {
+      var i = cells.indexOf(document.activeElement);
+      if (i < 0) { return; }
+      var next = { ArrowRight: i + 1, ArrowLeft: i - 1, ArrowDown: i + ncols, ArrowUp: i - ncols,
+                   Home: 0, End: cells.length - 1 }[event.key];
+      if (next === undefined || next < 0 || next >= cells.length) { return; }
+      event.preventDefault();
+      cells[i].setAttribute("tabindex", "-1");
+      cells[next].setAttribute("tabindex", "0");
+      cells[next].focus();
+    });
 
     grid.addEventListener("click", function (event) {
       var cell = event.target.closest ? event.target.closest(".dm-cell") : null;
