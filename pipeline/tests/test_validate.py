@@ -169,3 +169,38 @@ def test_disclosure_links_accept_not_researched_and_reject_null():
     assert any("null" in x for x in validate.validate_entry(e))
     e["disclosure_links"]["system_card"] = "unknown"
     assert any("NOT_RESEARCHED" in x for x in validate.validate_entry(e))
+
+
+def test_record_refuses_a_predecessor_not_on_the_record():
+    entries = _entries()
+    entries[0] = dict(entries[0], predecessor="openai--no-such-model")
+    errors = validate.validate_record(entries)
+    assert any("not on the record" in e for e in errors)
+
+
+def test_record_refuses_duplicate_ids():
+    entries = _entries()
+    entries.append(copy.deepcopy(entries[0]))
+    assert any("duplicate entry id" in e for e in validate.validate_record(entries))
+
+
+def test_record_accepts_the_fixture():
+    entries = _entries()
+    ids = {e["id"] for e in entries}
+    for e in entries:
+        if e["predecessor"] not in ids:
+            e["predecessor"] = None
+    assert validate.validate_record(entries) == []
+
+
+def test_validate_has_an_entry_point():
+    # it once had none: `python -m pipeline.validate` checked nothing and
+    # exited 0 while being cited as a gate
+    assert callable(validate.main)
+
+
+def test_lab_announcement_must_be_on_the_labs_domain():
+    e = copy.deepcopy(_entries()[0])
+    e["sources"] = [{"kind": "lab_announcement", "url": "https://openrouter.ai/x/y",
+                     "retrieval_date": "2026-10-19"}]
+    assert any("not on the lab's own domain" in m for m in validate.validate_entry(e))

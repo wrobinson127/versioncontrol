@@ -65,7 +65,51 @@ UPSTREAM_CORRECTIONS = {
         "evidence": "OpenAI announced Operator on 2025-01-23; Epoch's own "
                     "Computer-Using Agent (CUA) row carries that date.",
     },
+    # Epoch dates these two by their arXiv papers, which came weeks after
+    # the open weights. The record dates a release to when the public could
+    # use it, so both move to the weights date (audit 2026-10-19, 1.6).
+    ("deepseek", "DeepSeek LLM 67B"): {
+        "field": "Publication date",
+        "wrong": "2024-01-05",
+        "corrected": "2023-11-29",
+        "evidence": "Weights published 2023-11-29: Hugging Face "
+                    "deepseek-ai/deepseek-llm-67b-base createdAt "
+                    "2023-11-29 and GitHub deepseek-ai/DeepSeek-LLM created "
+                    "2023-11-29. Epoch's date is the arXiv paper "
+                    "(2401.02954).",
+    },
+    ("deepseek", "DeepSeek Coder 33B"): {
+        "field": "Publication date",
+        "wrong": "2024-01-25",
+        "corrected": "2023-11-02",
+        "evidence": "Weights published 2023-11-02: first commit of GitHub "
+                    "deepseek-ai/DeepSeek-Coder 2023-11-02, Hugging Face "
+                    "deepseek-coder-33b-instruct createdAt 2023-11-01. "
+                    "Epoch's date is the arXiv paper (2401.14196).",
+    },
 }
+# The smaller sizes shipped with their flagship and cluster with it by date,
+# so they take the same correction (otherwise a corrected flagship splits
+# from its own size ladder).
+for _flagship, _siblings in (
+        (("deepseek", "DeepSeek LLM 67B"), ("DeepSeek LLM 7B",)),
+        (("deepseek", "DeepSeek Coder 33B"),
+         ("DeepSeek Coder 6.7B", "DeepSeek Coder 1.3B"))):
+    for _name in _siblings:
+        UPSTREAM_CORRECTIONS[("deepseek", _name)] = UPSTREAM_CORRECTIONS[_flagship]
+UPSTREAM_CORRECTIONS.update({
+    # Epoch carries the same model twice on 2026-03-03, once as "Gemini 3.1
+    # Flash-Lite" and once misnamed "Gemini 3.0 Flash-lite"; the misnamed
+    # row became the flagship. Google never released a 3.0 Flash-Lite.
+    ("google-deepmind", "Gemini 3.0 Flash-lite"): {
+        "field": "Model",
+        "wrong": "Gemini 3.0 Flash-lite",
+        "corrected": "Gemini 3.1 Flash-Lite",
+        "evidence": "Google announced Gemini 3.1 Flash-Lite on 2026-03-03 "
+                    "(blog.google gemini-3-1-flash-lite); Epoch's own "
+                    "duplicate row carries the correct name.",
+    },
+})
 
 
 def _clean_license_note(access_raw: str, notes: str) -> str:
@@ -638,8 +682,10 @@ def build_entries(rows: list, hub_rows: list, retrieval_date: str):
         correction = next((r["_corrected"] for r in cluster
                            if r.get("_corrected")), None)
         if correction:
+            label = {"Model": "name", "Publication date": "date"}.get(
+                correction["field"], correction["field"].lower())
             entry["correction_note"] = (
-                f"The {correction['field'].lower()} corrects an upstream "
+                f"The {label} corrects an upstream "
                 f"dataset error ({correction['wrong']} in the source). "
                 f"{correction['evidence']}")
         entry["_access_raw"] = access_raw
@@ -687,7 +733,8 @@ def build_entries(rows: list, hub_rows: list, retrieval_date: str):
             e["entry_type"], e["availability_class"],
             e.pop("_access_raw"), bool(e["benchmarks"]), has_lab_links)
         if e.get("correction_note"):
-            e["summary"] += (" The recorded date corrects an upstream "
+            what = "name" if e["correction_note"].startswith("The name") else "date"
+            e["summary"] += (f" The recorded {what} corrects an upstream "
                              "dataset error; see the correction note.")
 
     problems = []

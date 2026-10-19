@@ -361,6 +361,21 @@ def test_carried_entries_revert_unresearched_absence(tmp_path, monkeypatch):
         "usage_policy": "NOT_RESEARCHED", "paper": "NOT_RESEARCHED"}
 
 
+def test_corrected_flagship_keeps_its_size_ladder():
+    # A date correction applied to a flagship alone splits it from the
+    # sizes that shipped with it, because clustering is by date.
+    fix = backfill.UPSTREAM_CORRECTIONS
+    for flagship, siblings in ((("deepseek", "DeepSeek LLM 67B"), ["DeepSeek LLM 7B"]),
+                               (("deepseek", "DeepSeek Coder 33B"),
+                                ["DeepSeek Coder 6.7B", "DeepSeek Coder 1.3B"])):
+        for s in siblings:
+            assert fix[("deepseek", s)]["corrected"] == fix[flagship]["corrected"]
+
+
+def test_every_correction_names_its_evidence():
+    for key, fix in backfill.UPSTREAM_CORRECTIONS.items():
+        assert fix["field"] and fix["wrong"] and fix["corrected"], key
+        assert len(fix["evidence"]) > 40, key
 def test_predecessor_override_applies_and_never_invents():
     entries = [{"id": "mistral--codestral-25.08", "predecessor": "mistral--codestral"},
                {"id": "mistral--codestral-25.01", "predecessor": None}]

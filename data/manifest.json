@@ -7,7 +7,7 @@
       "sha256": "17b33ad329cc0cb689b2c78fb42a13360911abf85f745eb4fa40f126733f7a0b"
     },
     "data/derived/views.json.gz": {
-      "sha256": "aa80e8b3de7497dd7213df9b89c67c6b9eff85c4c7a5e17bbae4d813f8bf231f"
+      "sha256": "b4d27201829b491caa113d83221f5dfd70efe0c5431c178bef220b379e0649ec"
     }
   },
   "entry_count": 366,
@@ -21,7 +21,7 @@
       "sha256": "2fda631ae8b81f965a53bb2a6e8686ddbad9dc500b08a548add78b06cc14708f"
     },
     "data/entries/2023.json.gz": {
-      "count": 44,
+      "count": 46,
       "ids": [
         "meta--llama-65b",
         "meta--llama-33b",
@@ -51,6 +51,7 @@
         "zai--chatglm3-6b",
         "alibaba-qwen--tongyi-qianwen-2.0",
         "cohere--cohere-embed",
+        "deepseek--deepseek-coder-33b",
         "xai--grok-0",
         "xai--grok-1",
         "openai--gpt-4-turbo",
@@ -58,6 +59,7 @@
         "alibaba-qwen--qwen-audio-chat",
         "anthropic--claude-2.1",
         "amazon--amazon-titan-text-lite",
+        "deepseek--deepseek-llm-67b",
         "alibaba-qwen--qwen-72b",
         "cohere--cohere-command-light",
         "alibaba-qwen--seallm-7b-v2.5",
@@ -68,17 +70,15 @@
         "google-deepmind--funsearch",
         "google-deepmind--gemini-nano-1"
       ],
-      "sha256": "f381c56b8b36ec78b9a3662ffb4b0ad91074ae1beb04d196e74d75d03f70f674"
+      "sha256": "4e52e48b917b775b89b33118da38efe99a4bb26a8180c9f9338a836e2fd52d19"
     },
     "data/entries/2024.json.gz": {
-      "count": 97,
+      "count": 95,
       "ids": [
         "moonshot--kimi-explorer",
-        "deepseek--deepseek-llm-67b",
         "deepseek--deepseekmoe-16b",
         "zai--glm-4",
         "alibaba-qwen--qwen-vl-max",
-        "deepseek--deepseek-coder-33b",
         "openai--text-embedding-3-large",
         "meta--code-llama-70b",
         "alibaba-qwen--qwen1.5-14b",
@@ -171,7 +171,7 @@
         "deepseek--deepseek-v3",
         "alibaba-qwen--qvq"
       ],
-      "sha256": "eacbefb3c4869fba739776545f376c0d8ade884f27895ec06cd39e46f3d8111c"
+      "sha256": "83838315fd7d273b78fca01f831848d3946726e5964912c52abf02dc6c6a606d"
     },
     "data/entries/2025.json.gz": {
       "count": 127,
@@ -304,7 +304,7 @@
         "openai--gpt-5.2-codex",
         "zai--glm-4.7"
       ],
-      "sha256": "e45f53412dbe8c9477670b17975ddcbec479f0623cc4600335f35371c6725547"
+      "sha256": "cbed84a9a4b3cfc65abc6231d6a95e97432c0c23f6691a6473b963f8f928685a"
     },
     "data/entries/2026.json.gz": {
       "count": 96,
@@ -322,7 +322,7 @@
         "google-deepmind--gemini-3.1-pro",
         "alibaba-qwen--qwen3.5-122b-a10b",
         "alibaba-qwen--qwen3.5-35b-a3b",
-        "google-deepmind--gemini-3.0-flash-lite",
+        "google-deepmind--gemini-3.1-flash-lite",
         "openai--gpt-5.4",
         "mistral--mistral-small-4",
         "openai--gpt-5.4-mini",
@@ -383,10 +383,10 @@
         "zai--glm-5.3-flash",
         "alibaba-qwen--qwen3.8-flash",
         "anthropic--claude-fable-5.1",
+        "alibaba-qwen--qwen3.8-max-0902",
         "cohere--tiny-aya",
         "google-deepmind--gemini-3.8-flash",
         "meta--muse-spark-1.3",
-        "alibaba-qwen--qwen3.8-max-0902",
         "openai--gpt-6-astra",
         "deepseek--deepseek-v4.1-flash",
         "alibaba-qwen--qwen3.8-omni-flash",
@@ -406,7 +406,7 @@
         "meta--muse-spark-open",
         "deepseek--deepseek-v4.1-flash-1017"
       ],
-      "sha256": "22e6b287929ac400cc5c82b1faa39fe41574912e0c7f5608939aa012ea8ded70"
+      "sha256": "93af8158b6c0dff4b0be2d81c82794a7542a6b8f36cd0728427e247afa913c12"
     }
   },
   "schema_version": 1
