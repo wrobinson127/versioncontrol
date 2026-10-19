@@ -1,14 +1,17 @@
-"""Generate the crawler-facing files at deploy time: sitemap.xml with real
-lastmod dates, and llms.txt, the plain-text front door for language-model
-agents. Both read the published record, so neither can drift from it.
+"""Generate the derived public files at deploy time: sitemap.xml with real
+lastmod dates; llms.txt, the plain-text front door for language-model
+agents; and two plain CSVs of the record for spreadsheet readers. All read
+the published record, so none can drift from it.
 
     python -m pipeline.site_files --out dist
 """
 import argparse
+import csv
+import io
 import json
 import os
 
-from . import store
+from . import config, store, validate
 
 SITE = "https://versioncontrol.walker-robinson.com"
 
@@ -66,14 +69,80 @@ The record holds {meta['entry_count']} entries ({meta['releases']} releases and 
 
 ## Data (CC BY 4.0, with Epoch AI attribution)
 
-Entries are gzipped JSON, one file per year, indexed by the manifest. The paths are stable.
+The two CSV files are the easiest way in. The full record is gzipped JSON, one file per year, indexed by the manifest. The paths are stable.
 
+- {SITE}/data/releases.csv : one row per entry (plain CSV)
+- {SITE}/data/scores.csv : one row per benchmark score, with its source
 - {SITE}/data/manifest.json
 {file_lines}
 - {SITE}/data/derived/site_meta.json
 
 Cite as: Walker Robinson, Version Control, {SITE}, accessed on the date you retrieved it. Release data derives from Epoch AI, "Data on AI Models"; independent scores from Epoch AI, "Capabilities & benchmarking".
 """
+
+
+RELEASE_COLUMNS = (
+    "id", "model_name", "org", "organization", "date", "entry_type",
+    "availability_class", "origin", "parameters", "predecessor",
+    "system_card", "model_card", "usage_policy", "paper", "retracted",
+    "correction_note", "primary_source_url")
+SCORE_COLUMNS = (
+    "entry_id", "benchmark", "benchmark_name", "benchmark_version", "value",
+    "source_class", "source_url", "retrieval_date", "configuration")
+
+
+def _csv(columns, rows) -> str:
+    buf = io.StringIO()
+    w = csv.DictWriter(buf, fieldnames=columns, lineterminator="\n")
+    w.writeheader()
+    w.writerows(rows)
+    return buf.getvalue()
+
+
+def releases_csv(entries: list) -> str:
+    """One row per entry. Absence states stay words (NOT_DISCLOSED,
+    NOT_RESEARCHED), never blanks, so a spreadsheet cannot read silence
+    as zero."""
+    rows = []
+    for e in sorted(entries, key=lambda e: (e["date"], e["id"])):
+        links = e["disclosure_links"]
+        rows.append({
+            "id": e["id"], "model_name": e["model_name"], "org": e["org"],
+            "organization": config.REGISTRY[e["org"]]["display"],
+            "date": e["date"], "entry_type": e["entry_type"],
+            "availability_class": e["availability_class"],
+            "origin": e["origin"],
+            "parameters": (int(e["parameters"])
+                           if isinstance(e["parameters"], (int, float))
+                           else e["parameters"]),
+            "predecessor": e["predecessor"] or "",
+            **{a: links.get(a, validate.NOT_RESEARCHED)
+               for a in validate.DISCLOSURE_ARTIFACTS},
+            "retracted": str(e["retracted"]).lower(),
+            "correction_note": e.get("correction_note", ""),
+            "primary_source_url": next(
+                (s["url"] for s in e["sources"]
+                 if s["kind"] != "epoch_csv"), e["sources"][0]["url"]),
+        })
+    return _csv(RELEASE_COLUMNS, rows)
+
+
+def scores_csv(entries: list) -> str:
+    """One row per benchmark number, with its full provenance."""
+    rows = []
+    for e in sorted(entries, key=lambda e: (e["date"], e["id"])):
+        for b in e["benchmarks"]:
+            pv = b["provenance"]
+            rows.append({
+                "entry_id": e["id"], "benchmark": b["benchmark"],
+                "benchmark_name": pv["benchmark_name"],
+                "benchmark_version": pv["benchmark_version"],
+                "value": b["value"], "source_class": pv["source_class"],
+                "source_url": pv["source_url"],
+                "retrieval_date": pv["retrieval_date"],
+                "configuration": b.get("configuration", ""),
+            })
+    return _csv(SCORE_COLUMNS, rows)
 
 
 def main(argv=None) -> int:
@@ -84,13 +153,17 @@ def main(argv=None) -> int:
     meta = _meta(args.root)
     with open(os.path.join(args.root, store.MANIFEST_PATH), encoding="utf-8") as f:
         files = sorted(json.load(f)["files"])
-    os.makedirs(args.out, exist_ok=True)
+    entries = store.read_entries(root=args.root)
+    os.makedirs(os.path.join(args.out, "data"), exist_ok=True)
     for name, text in (("sitemap.xml", sitemap(meta)),
-                       ("llms.txt", llms_txt(meta, files))):
+                       ("llms.txt", llms_txt(meta, files)),
+                       ("data/releases.csv", releases_csv(entries)),
+                       ("data/scores.csv", scores_csv(entries))):
         with open(os.path.join(args.out, name), "w", encoding="utf-8",
                   newline="\n") as f:
             f.write(text)
-    print(f"wrote sitemap.xml and llms.txt to {args.out}")
+    print(f"wrote sitemap.xml, llms.txt, data/releases.csv and "
+          f"data/scores.csv to {args.out}")
     return 0
 
 

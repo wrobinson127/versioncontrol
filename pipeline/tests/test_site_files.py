@@ -32,3 +32,42 @@ def test_main_writes_both_files(tmp_path):
     site_files.main(["--out", str(tmp_path)])
     assert (tmp_path / "sitemap.xml").exists()
     assert (tmp_path / "llms.txt").exists()
+
+
+def _entry(**kw):
+    e = {"id": "openai--x", "model_name": "X", "org": "openai",
+         "date": "2026-01-01", "entry_type": "release",
+         "availability_class": "public_api", "origin": "manual",
+         "parameters": "NOT_DISCLOSED", "predecessor": None,
+         "disclosure_links": {"system_card": "https://example.com/c",
+                              "model_card": "NOT_DISCLOSED",
+                              "usage_policy": "NOT_RESEARCHED",
+                              "paper": "NOT_RESEARCHED"},
+         "retracted": False,
+         "sources": [{"kind": "lab_announcement", "url": "https://example.com/a",
+                      "retrieval_date": "2026-01-02"}],
+         "benchmarks": [{"benchmark": "gpqa-diamond", "value": 80.1,
+                         "configuration": "pass@1",
+                         "provenance": {"benchmark_name": "GPQA Diamond",
+                                        "benchmark_version": "diamond",
+                                        "source_class": "LAB_REPORTED",
+                                        "source_url": "https://example.com/a",
+                                        "retrieval_date": "2026-01-02"}}]}
+    e.update(kw)
+    return e
+
+
+def test_releases_csv_keeps_absence_as_words_never_blank():
+    import csv, io
+    rows = list(csv.DictReader(io.StringIO(site_files.releases_csv([_entry()]))))
+    assert rows[0]["model_card"] == "NOT_DISCLOSED"
+    assert rows[0]["paper"] == "NOT_RESEARCHED"
+    assert rows[0]["parameters"] == "NOT_DISCLOSED"
+    assert rows[0]["organization"] == "OpenAI"
+
+
+def test_scores_csv_carries_full_provenance():
+    import csv, io
+    rows = list(csv.DictReader(io.StringIO(site_files.scores_csv([_entry()]))))
+    assert rows[0]["source_class"] == "LAB_REPORTED"
+    assert rows[0]["source_url"] and rows[0]["retrieval_date"]
