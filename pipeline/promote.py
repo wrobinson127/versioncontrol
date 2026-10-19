@@ -14,7 +14,7 @@ import os
 import re
 import sys
 
-from . import derive, pending, store, validate
+from . import archive, derive, pending, store, validate
 from .backfill import family_key
 
 
@@ -137,9 +137,15 @@ def candidate_to_entry(candidate: dict, existing_entries: list) -> dict:
     return entry
 
 
-def promote(run_date: str, ids: list = None, root: str = ".") -> dict:
+def promote(run_date: str, ids: list = None, root: str = ".",
+            archive_urls: bool = False, archiver=None) -> dict:
     """Promote approved candidates. Returns a report dict; raises nothing
-    for per-candidate problems (they are reported and stay pending)."""
+    for per-candidate problems (they are reported and stay pending).
+
+    `archive_urls` looks up or saves each new entry's lab URLs on
+    archive.org and records them in content/archive_map.json. The CLI
+    turns it on; it defaults off so library callers and tests make no
+    network calls."""
     pending_dir = os.path.join(root, pending.PENDING_DIR)
     promoted, skipped, problems = [], [], []
     entries = store.read_entries(root=root)
@@ -174,6 +180,24 @@ def promote(run_date: str, ids: list = None, root: str = ".") -> dict:
         existing_ids.add(entry["id"])
         promoted.append((cid, path, entry["id"]))
 
+    archive_report = None
+    if promoted and archive_urls:
+        # Snapshot the new entries' lab URLs (D5). Best-effort: archive.org
+        # being slow or down never blocks a promotion; whatever is missing
+        # shows up as the CI warning and the next archive run fills it.
+        new_ids = {e for _, _, e in promoted}
+        new_entries = [e for e in entries if e["id"] in new_ids]
+        archive_report = archive.archive_entries(new_entries, root=root,
+                                                 archiver=archiver)
+        for e in new_entries:
+            if validate.validate_entry(e):
+                # Never publish an entry the archive pass made invalid.
+                for s in e.get("sources", []):
+                    s.pop("archived_url", None)
+                for b in e.get("benchmarks", []):
+                    (b.get("provenance") or {}).pop("archived_url", None)
+                e.pop("disclosure_archived", None)
+
     if promoted:
         store.write_entries(entries, root=root)
         derive.build(root=root, run_date=run_date)
@@ -184,6 +208,7 @@ def promote(run_date: str, ids: list = None, root: str = ".") -> dict:
         "promoted": [{"candidate": c, "entry": e} for c, _, e in promoted],
         "skipped": skipped,
         "problems": problems,
+        "archive": archive_report,
     }
 
 
@@ -194,8 +219,11 @@ def main():
                     help="promote only these candidate ids (default: every "
                          "candidate marked approved)")
     ap.add_argument("--root", default=".")
+    ap.add_argument("--no-archive", action="store_true",
+                    help="skip the archive.org lookup/save for new entries")
     args = ap.parse_args()
-    report = promote(args.run_date, ids=args.ids, root=args.root)
+    report = promote(args.run_date, ids=args.ids, root=args.root,
+                     archive_urls=not args.no_archive)
     print(json.dumps(report, indent=2))
     return 1 if report["problems"] else 0
 

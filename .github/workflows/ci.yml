@@ -22,6 +22,12 @@ jobs:
         run: python -c "from pipeline import store; problems = store.check_manifest(); assert not problems, problems"
       - name: Record validation (every entry, ids, predecessors)
         run: python -m pipeline.validate
+      - name: Archive snapshot coverage
+        # Lab posts get edited or taken down (D5). Counts lab source URLs
+        # with no archive.org snapshot and prints a ::warning:: annotation.
+        # A warning, never a gate: archive.org availability is not ours.
+        continue-on-error: true
+        run: python -m pipeline.archive --report
       - name: Story-drift guard
         # Every figure on the story page is read from data/ at build time, so
         # a refreshed capture silently falsifies it unless a rebuild is forced.

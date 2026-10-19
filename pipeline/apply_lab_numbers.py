@@ -22,7 +22,7 @@ import json
 import os
 import sys
 
-from . import config, store, validate
+from . import archive, config, store, validate
 
 TABLES_DIR = os.path.join("content", "lab_numbers")
 
@@ -60,6 +60,7 @@ def load_approved(root: str = ".") -> list:
 def apply(root: str = ".", run_date: str = None) -> dict:
     approved = load_approved(root)
     entries = store.read_entries(root=root)
+    amap = archive.load_map(root)
     by_id = {e["id"]: e for e in entries}
 
     applied, missing, skipped, problems = [], [], [], []
@@ -82,6 +83,9 @@ def apply(root: str = ".", run_date: str = None) -> dict:
                            "already on the entry")
             continue
         number = row_to_number(row)
+        archived = archive.lookup(amap, number["provenance"]["source_url"])
+        if archived:
+            number["provenance"]["archived_url"] = archived
         before = list(entry.get("benchmarks", []))
         entry.setdefault("benchmarks", []).append(number)
         errors = validate.validate_entry(entry)

@@ -18,7 +18,7 @@
         "openai--chatgpt",
         "meta--opt-iml-175b"
       ],
-      "sha256": "2fda631ae8b81f965a53bb2a6e8686ddbad9dc500b08a548add78b06cc14708f"
+      "sha256": "eea7545e1fb87f49aa6902b9bbc9bc0dced165dcd27eaa3bf2ff0fbe5f3dc1ec"
     },
     "data/entries/2023.json.gz": {
       "count": 46,
@@ -70,7 +70,7 @@
         "google-deepmind--funsearch",
         "google-deepmind--gemini-nano-1"
       ],
-      "sha256": "4e52e48b917b775b89b33118da38efe99a4bb26a8180c9f9338a836e2fd52d19"
+      "sha256": "3fb90f538f8c0ed82841372502ec0103fab867d8e61a67751d3e9f6c90ca7cee"
     },
     "data/entries/2024.json.gz": {
       "count": 95,
@@ -171,7 +171,7 @@
         "deepseek--deepseek-v3",
         "alibaba-qwen--qvq"
       ],
-      "sha256": "83838315fd7d273b78fca01f831848d3946726e5964912c52abf02dc6c6a606d"
+      "sha256": "6f6083c04b6a7b761073dab4e13a4e2b36105c17ed51d0c5b668b6475d7d1c47"
     },
     "data/entries/2025.json.gz": {
       "count": 127,
@@ -304,7 +304,7 @@
         "openai--gpt-5.2-codex",
         "zai--glm-4.7"
       ],
-      "sha256": "cbed84a9a4b3cfc65abc6231d6a95e97432c0c23f6691a6473b963f8f928685a"
+      "sha256": "d6477ed74ce04c7d110a281cacb7c39876369b16403873f36282a4a4805f203f"
     },
     "data/entries/2026.json.gz": {
       "count": 96,
@@ -406,7 +406,7 @@
         "meta--muse-spark-open",
         "deepseek--deepseek-v4.1-flash-1017"
       ],
-      "sha256": "c2ca5f6e55b4ebd663bd2f6e3904bcd20f7679a3a3c969aa54f3caed1a2bc26b"
+      "sha256": "f0bbe1ac8b430cf9ae4da4847ac9343433a672e1d1b4c597c2aeb567523d5e31"
     }
   },
   "schema_version": 1

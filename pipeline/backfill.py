@@ -29,7 +29,7 @@ import re
 import zipfile
 from collections import Counter
 
-from . import config, lint_voice, store, validate
+from . import archive, config, lint_voice, store, validate
 
 HUB_URL = "https://epoch.ai/benchmarks"
 HUB_FILES = {
@@ -797,6 +797,10 @@ def main():
     excluded = apply_scope_exclusions(entries, root=args.root)
     for e in excluded:
         print(f"EXCLUDED (ruled out of scope): {e['id']}")
+
+    # Archive snapshots (D5) live in content/archive_map.json, not in the
+    # capture; re-apply them so a rebuild keeps every archive link.
+    archive.apply_map(entries, root=args.root)
 
     manifest = store.write_entries(entries, root=args.root)
     # Derived views rebuild in the same command so a backfill can never
