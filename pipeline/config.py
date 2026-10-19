@@ -24,8 +24,12 @@ hardcodes a URL, an org spelling, or a threshold.
 #   for hf_orgs to emit a signal, for handles that mostly host research repos.
 # --------------------------------------------------------------------------
 
+# "country" is the country where the organization's parent company has its
+# headquarters (Google DeepMind: Alphabet, United States). It is context for
+# a filter, never a ranking or a grouping in the story.
 REGISTRY = {
     "openai": {
+        "country": "United States",
         "display": "OpenAI",
         "lab_domains": ["openai.com"],
         "epoch_names": ["OpenAI"],
@@ -33,6 +37,7 @@ REGISTRY = {
         "news": {"kind": "rss", "url": "https://openai.com/news/rss.xml"},
     },
     "anthropic": {
+        "country": "United States",
         "display": "Anthropic",
         "lab_domains": ["anthropic.com", "claude.com"],
         "epoch_names": ["Anthropic"],
@@ -41,6 +46,7 @@ REGISTRY = {
         "news": {"kind": "html_diff", "url": "https://www.anthropic.com/news"},
     },
     "google-deepmind": {
+        "country": "United States",
         "display": "Google DeepMind",
         "lab_domains": ["deepmind.google", "blog.google", "ai.google.dev",
                         "developers.googleblog.com", "research.google"],
@@ -61,6 +67,7 @@ REGISTRY = {
         ],
     },
     "meta": {
+        "country": "United States",
         "display": "Meta",
         "lab_domains": ["ai.meta.com", "research.meta.ai", "llama.com",
                         "about.fb.com"],
@@ -74,6 +81,7 @@ REGISTRY = {
         "news": {"kind": "html_diff", "url": "https://research.meta.ai/blog"},
     },
     "xai": {
+        "country": "United States",
         "display": "xAI",
         "lab_domains": ["x.ai"],
         "epoch_names": ["xAI"],
@@ -81,6 +89,7 @@ REGISTRY = {
         "news": {"kind": "html_diff", "url": "https://x.ai/news"},
     },
     "mistral": {
+        "country": "France",
         "display": "Mistral",
         "lab_domains": ["mistral.ai"],
         "epoch_names": ["Mistral AI"],
@@ -88,6 +97,7 @@ REGISTRY = {
         "news": {"kind": "html_diff", "url": "https://mistral.ai/news"},
     },
     "deepseek": {
+        "country": "China",
         "display": "DeepSeek",
         "lab_domains": ["deepseek.com"],
         "epoch_names": ["DeepSeek"],
@@ -95,6 +105,7 @@ REGISTRY = {
         "news": {"kind": "html_diff", "url": "https://api-docs.deepseek.com/news"},
     },
     "alibaba-qwen": {
+        "country": "China",
         "display": "Alibaba (Qwen)",
         "lab_domains": ["qwenlm.github.io", "qwen.ai", "alibabacloud.com"],
         "epoch_names": ["Alibaba", "Alibaba DAMO Academy"],
@@ -102,6 +113,7 @@ REGISTRY = {
         "news": {"kind": "rss", "url": "https://qwenlm.github.io/blog/index.xml"},
     },
     "moonshot": {
+        "country": "China",
         "display": "Moonshot AI",
         "lab_domains": ["moonshot.ai", "moonshot.cn", "kimi.com", "kimi.ai"],
         "epoch_names": ["Moonshot"],
@@ -110,6 +122,7 @@ REGISTRY = {
         "news": {"kind": "html_diff", "url": "https://www.kimi.com/blog/"},
     },
     "zai": {
+        "country": "China",
         "display": "Z.ai (Zhipu)",
         "lab_domains": ["z.ai", "bigmodel.cn", "zhipuai.cn"],
         "epoch_names": ["Z.ai (Zhipu AI)"],
@@ -117,6 +130,7 @@ REGISTRY = {
         "news": {"kind": "html_diff", "url": "https://docs.z.ai/release-notes/new-released"},
     },
     "cohere": {
+        "country": "Canada",
         "display": "Cohere",
         "lab_domains": ["cohere.com"],
         # Epoch renamed "Cohere for AI" to "Cohere Labs (formerly Cohere for
@@ -131,6 +145,7 @@ REGISTRY = {
         "news": {"kind": "html_diff", "url": "https://cohere.com/blog"},
     },
     "amazon": {
+        "country": "United States",
         "display": "Amazon (Nova)",
         "lab_domains": ["aws.amazon.com", "amazon.science", "nova.amazon.com",
                         "aboutamazon.com"],
