@@ -58,7 +58,7 @@ The record holds {meta['entry_count']} entries ({meta['releases']} releases and 
 ## Rules a reader needs
 
 - Each benchmark score carries its source class: LAB_REPORTED (the lab's own figure) or INDEPENDENT (measured by Epoch AI). Do not mix the two when comparing.
-- NOT_DISCLOSED means we checked the lab's pages and found no such document. NOT_RESEARCHED means we have not checked yet. Neither means zero.
+- NOT_DISCLOSED means we checked the lab's pages and found no such document. NOT_RESEARCHED means we have not researched it yet. Neither means zero.
 - A change against a predecessor is published only when both scores share the benchmark, its version, and the source class. Otherwise the comparison is refused.
 
 ## Pages

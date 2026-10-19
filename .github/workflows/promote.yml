@@ -43,7 +43,8 @@ jobs:
           git config user.name "versioncontrol-nightly"
           git config user.email "nightly@users.noreply.github.com"
           # The archive map records the new entries' archive.org snapshots.
-          git add -A -- data content/archive_map.json
+          git add -A -- data
+          if [ -f content/archive_map.json ]; then git add content/archive_map.json; fi
           if git diff --cached --quiet; then
             echo "Nothing promoted."
             exit 0

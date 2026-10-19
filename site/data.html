@@ -125,21 +125,21 @@
     <tbody>
       <tr><td>id</td><td>Stable identifier: organization key, two hyphens, model slug. Also the anchor of the entry's card on the timeline.</td></tr>
       <tr><td>model_name, org</td><td>The model as the lab names it, and the organization key. A correction_note explains any name or date we corrected from the source.</td></tr>
-      <tr><td>date</td><td>The day the public could first use the model, usually the lab's announcement date.</td></tr>
+      <tr><td>date</td><td>The release date: Epoch AI's date for entries built from its data (usually the announcement or paper date), and the lab's announcement date for entries found by the nightly check or recorded by hand. The methodology explains the exceptions.</td></tr>
       <tr><td>entry_type</td><td>release, or revision for an update shipped under the same model name.</td></tr>
       <tr><td>availability_class</td><td>open_weights, public_api, or public_service (a product people can sign up for).</td></tr>
       <tr><td>origin</td><td>How the entry reached the record: backfill-epoch (from Epoch AI's dataset), nightly-pipeline (found by nightly detection, approved by hand), or manual (recorded by hand).</td></tr>
       <tr><td>parameters</td><td>Total parameter count. NOT_DISCLOSED here means no count is on record: the lab stated none we could find, or Epoch AI's dataset has none.</td></tr>
       <tr><td>predecessor</td><td>The id of the model this one follows, where the lab or the model family makes it clear. Comparisons against the predecessor are in derived/deltas.json.gz.</td></tr>
-      <tr><td>system_card, model_card, usage_policy, paper</td><td>A link to the document, NOT_DISCLOSED (we checked the lab's pages and found none), or NOT_RESEARCHED (not checked yet). Neither absence value means zero.</td></tr>
+      <tr><td>system_card, model_card, usage_policy, paper</td><td>A link to the document, NOT_DISCLOSED (we checked the lab's pages and found none), or NOT_RESEARCHED (not yet researched). Neither absence value means zero.</td></tr>
       <tr><td>benchmarks</td><td>Scores on GPQA Diamond and SWE-bench Verified only. Each carries its source class (LAB_REPORTED or INDEPENDENT), source URL, benchmark version, retrieval date and test settings. scores.csv has one row per score.</td></tr>
       <tr><td>sources</td><td>Every page the entry was built from, each with the date we read it.</td></tr>
-      <tr><td>retracted</td><td>true when the entry was withdrawn or corrected; the note says why.</td></tr>
+      <tr><td>retracted</td><td>true when the entry should not have been on the record; the note says why. A corrected entry stays false and carries a correction_note instead.</td></tr>
     </tbody>
   </table>
 
   <h2>License</h2>
-  <p>The published dataset (the gzipped JSON files above) is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/" rel="external">Creative Commons Attribution 4.0 International License (CC-BY 4.0)</a>.</p>
+  <p>The published dataset (the files above) is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/" rel="external">Creative Commons Attribution 4.0 International License (CC-BY 4.0)</a>.</p>
 
   <h2>Required attribution for Epoch AI derived fields</h2>
   <p>Portions of the dataset are derived from two Epoch AI datasets, both used under CC-BY 4.0. If you redistribute or build on those fields, you must retain the following attributions:</p>
@@ -155,7 +155,7 @@
   title        = {Version Control: the release record of the AI model era},
   howpublished = {\url{https://versioncontrol.walker-robinson.com}},
   note         = {Dataset, CC BY 4.0. Record updated <span class="cite-updated">(loads with the dataset)</span>; accessed <span class="cite-accessed">(today)</span>},
-  year         = {2026}
+  year         = {<span class="cite-year">2026</span>}
 }</pre>
   <script>
     (function () {
@@ -167,6 +167,7 @@
         });
       }, Promise.reject()).then(function (m) {
         document.querySelectorAll(".cite-updated").forEach(function (el) { el.textContent = m.last_successful_update; });
+        document.querySelectorAll(".cite-year").forEach(function (el) { el.textContent = m.last_successful_update.slice(0, 4); });
       }).catch(function () {});
     })();
   </script>

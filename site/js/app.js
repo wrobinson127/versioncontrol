@@ -190,6 +190,13 @@
     return html;
   }
 
+  /* the snapshot's own date, read from its Wayback timestamp: an archived
+     copy can predate our retrieval, and the reader should see by how much */
+  function archiveDate(u) {
+    var m = /web\.archive\.org\/web\/(\d{4})(\d{2})(\d{2})/.exec(u || "");
+    return m ? m[1] + "-" + m[2] + "-" + m[3] : "date unknown";
+  }
+
   function entryCard(e, deltaItems) {
     var org = ORG_NAMES[e.org] || e.org;
     var html = '<article class="entry' + (e.retracted ? " is-retracted" : "") +
@@ -278,7 +285,8 @@
       var srcLinks = e.sources.map(function (src) {
         return '<a href="' + esc(src.url) + '" rel="external">' + esc(SOURCE_KIND_NAMES[src.kind] || src.kind.replace(/_/g, " ")) +
           "</a> (retrieved " + esc(src.retrieval_date) +
-          (src.archived_url ? ', <a href="' + esc(src.archived_url) + '" rel="external">archived copy</a>' : "") + ")";
+          (src.archived_url ? ', <a href="' + esc(src.archived_url) + '" rel="external">archived copy, ' +
+            esc(archiveDate(src.archived_url)) + "</a>" : "") + ")";
       });
       foot.push("Sources: " + srcLinks.join(", "));
     }
@@ -536,8 +544,10 @@
        the native jump lands on content-visibility size estimates. */
     window.addEventListener("hashchange", function () {
       if (!location.hash) { return; }
-      var el = document.getElementById(location.hash.slice(1));
-      if (el && el.classList.contains("entry")) { scrollToCard(el); }
+      var id = decodeURIComponent(location.hash.slice(1));
+      var el = document.getElementById(id);
+      if (el && el.classList.contains("entry")) { scrollToCard(el); return; }
+      if (!el) { revealEntry(id); }
     });
 
     /* ---- the explorer API: brush, matrix and trajectory drive this one path ---- */

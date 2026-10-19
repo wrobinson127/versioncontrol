@@ -391,7 +391,7 @@ a:hover { color: var(--ink); }
   color: var(--annotation);
   background: none;
   border: 0;
-  padding: 2px 0;
+  padding: 4px 0;
   cursor: pointer;
   text-decoration: underline;
   text-decoration-thickness: 1px;
