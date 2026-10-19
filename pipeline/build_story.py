@@ -804,8 +804,9 @@ else:
     _c2 = (f"The share with a paper {_PAPER_DIR}; the share with a parameter count on record {_PARAM_DIR}.")
 _c3 = "More came with a system card." if _SC_DIR == "rose" else f"The share with a system card {_SC_DIR}."
 CLOSE_SHORT = f"Independent scores {_cap_dir}. {_c2} {_c3}"
-DIV_NOTE = (f"Each stem is one release on one benchmark, graded twice: the ring is the lab's score, the dot is Epoch's. "
-            f"{near} of the {len(PAIRS)} pairs sit within a single point, and the gaps run both ways. "
+# the beat's teaching sentence already says what a stem is; the note starts
+# with what the pairs show
+DIV_NOTE = (f"{near} of the {len(PAIRS)} pairs sit within a single point, and the gaps run both ways. "
             + (f"In {nword(len(SET_DIFF))} of the {nword(len(PAIRS))} pairs ({_join_and([esc(p['model']) for p in SET_DIFF])}) "
                f"the lab and Epoch ran different reasoning settings, so those gaps include a settings difference. "
                if SET_DIFF else "")
