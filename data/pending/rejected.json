@@ -273,5 +273,405 @@
     "id": "cohere--tiny-aya-l2-thinker",
     "reason": "Recorded as a variant of the single Tiny Aya entry (cohere--tiny-aya), not as its own release.",
     "rejected_on": "2026-09-14"
+  },
+  {
+    "id": "alibaba-qwen--qwen-image-2.1",
+    "reason": "Image generation; no language output. Precedent openai--chatgpt-images-2.5.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/Qwen/Qwen-Image-2.1"
+    ]
+  },
+  {
+    "id": "alibaba-qwen--qwen-image-2.1-pe-i2i",
+    "reason": "Image generation; no language output. Precedent openai--chatgpt-images-2.5.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/Qwen/Qwen-Image-2.1-PE-I2I"
+    ]
+  },
+  {
+    "id": "alibaba-qwen--qwen-image-2.1-pe-t2i",
+    "reason": "Image generation; no language output. Precedent openai--chatgpt-images-2.5.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/Qwen/Qwen-Image-2.1-PE-T2I"
+    ]
+  },
+  {
+    "id": "alibaba-qwen--qwen-image-2.1-turbo",
+    "reason": "Image generation; no language output. Precedent openai--chatgpt-images-2.5.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/Qwen/Qwen-Image-2.1-Turbo"
+    ]
+  },
+  {
+    "id": "alibaba-qwen--qwen3.8-max-prime",
+    "reason": "Same Qwen3.8-Max weights on a faster serving lane; no lab page describes a new model. Precedent anthropic--claude-opus-5-fast.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/qwen/qwen3.8-max-prime"
+    ]
+  },
+  {
+    "id": "amazon--alodlm",
+    "reason": "Amazon research repository built on another lab's model, not an Amazon Nova model. Diffusion language models derived from Qwen3, CC BY-NC.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/amazon/ALoDLM-1.7B",
+      "https://huggingface.co/amazon/ALoDLM-8B"
+    ]
+  },
+  {
+    "id": "amazon--lar",
+    "reason": "Amazon research repository built on another lab's model, not an Amazon Nova model. Post-trained from Qwen3.8-27B.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/amazon/LAR-27B",
+      "https://huggingface.co/amazon/LAR-9B"
+    ]
+  },
+  {
+    "id": "amazon--poiss-bge-m3-reranker",
+    "reason": "Amazon research repository built on another lab's model, not an Amazon Nova model. Fine-tune of BAAI BGE-M3.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/amazon/poiss-bge-m3-reranker"
+    ]
+  },
+  {
+    "id": "amazon--poiss-bge-m3-retriever",
+    "reason": "Amazon research repository built on another lab's model, not an Amazon Nova model. Fine-tune of BAAI BGE-M3.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/amazon/poiss-bge-m3-retriever"
+    ]
+  },
+  {
+    "id": "amazon--strands-decider-a4b-gemma4-v1-2610",
+    "reason": "Amazon research repository built on another lab's model, not an Amazon Nova model. Adapter on Gemma 4.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/amazon/strands-decider-26B-A4B-gemma4-v1-2610"
+    ]
+  },
+  {
+    "id": "amazon--strands-decider-e2b-gemma4-v1-2610",
+    "reason": "Amazon research repository built on another lab's model, not an Amazon Nova model. LoRA on Gemma 4.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/amazon/strands-decider-E2B-gemma4-v1-2610"
+    ]
+  },
+  {
+    "id": "amazon--strands-decider-e4b-gemma4-v1-2610",
+    "reason": "Amazon research repository built on another lab's model, not an Amazon Nova model. LoRA on Gemma 4.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/amazon/strands-decider-E4B-gemma4-v1-2610"
+    ]
+  },
+  {
+    "id": "amazon--strands-decider-gemma4-v1-2610",
+    "reason": "Amazon research repository built on another lab's model, not an Amazon Nova model. Adapter on Gemma 4.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/amazon/strands-decider-12B-gemma4-v1-2610"
+    ]
+  },
+  {
+    "id": "amazon--strands-decider-qwen3.5-v1-2610",
+    "reason": "Amazon research repository built on another lab's model, not an Amazon Nova model. LoRA on Qwen3.5-2B.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/amazon/strands-decider-2B-qwen3.5-v1-2610"
+    ]
+  },
+  {
+    "id": "anthropic--claude-haiku-5.5-batch",
+    "reason": "Batch endpoint of the same model and weights; not a separate release. Precedent: earlier *-batch rulings.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/anthropic/claude-haiku-5.5:batch"
+    ]
+  },
+  {
+    "id": "anthropic--claude-opus-5.5-batch",
+    "reason": "Batch endpoint of the same model and weights; not a separate release. Precedent: earlier *-batch rulings.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/anthropic/claude-opus-5.5:batch"
+    ]
+  },
+  {
+    "id": "anthropic--claude-sonnet-5.5-batch",
+    "reason": "Batch endpoint of the same model and weights; not a separate release. Precedent: earlier *-batch rulings.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/anthropic/claude-sonnet-5.5:batch"
+    ]
+  },
+  {
+    "id": "cohere--north-2",
+    "reason": "Agent platform, not a model.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://cohere.com/blog/introducing-north-2"
+    ]
+  },
+  {
+    "id": "deepseek--deepseek-v4.1-flash-batch",
+    "reason": "Batch endpoint of the same model and weights; not a separate release. Precedent: earlier *-batch rulings.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/deepseek/deepseek-v4.1-flash:batch"
+    ]
+  },
+  {
+    "id": "google-deepmind--developing-gemini-4",
+    "reason": "Safety and robotics posts about Gemini 4; folded into google-deepmind--gemini-4-argon.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://deepmind.google/blog/developing-gemini-4-argon-responsibly-and-safely/",
+      "https://deepmind.google/blog/gemini-4-argon-for-robotics/",
+      "https://deepmind.google/blog/gemini-4-argon-our-next-era-of-frontier-intelligence/",
+      "https://deepmind.google/blog/introducing-gemini-4-argon/"
+    ]
+  },
+  {
+    "id": "google-deepmind--diarizationlm-gemma-4-e4b-v1",
+    "reason": "First-party task fine-tune of Gemma 4 for diarization post-processing. Precedent alibaba-qwen--qwen-drive-1.0.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/google/DiarizationLM-Gemma-4-E4B-v1"
+    ]
+  },
+  {
+    "id": "google-deepmind--gemini-4",
+    "reason": "The 2026-09-30 post was a limited rollout to a closed program (no-access preview); the model is recorded at general availability as google-deepmind--gemini-4-argon. Precedent amazon--nova-2.0-pro-preview.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://deepmind.google/blog/gemini-4-argon-our-next-era-of-frontier-intelligence/"
+    ]
+  },
+  {
+    "id": "google-deepmind--gemini-4-argon-batch",
+    "reason": "Batch endpoint of the same model and weights; not a separate release. Precedent: earlier *-batch rulings.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/google/gemini-4-argon:batch"
+    ]
+  },
+  {
+    "id": "google-deepmind--gemini-nano-banana-2.1",
+    "reason": "Image generation; no language output. Precedent openai--chatgpt-images-2.5.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/google/gemini-nano-banana-2.1"
+    ]
+  },
+  {
+    "id": "mistral--209m",
+    "reason": "Slug drawn from the Timestral post ('209M parameters'); same event as mistral--timestral.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://mistral.ai/news/timestral/"
+    ]
+  },
+  {
+    "id": "mistral--lidstral-arabic",
+    "reason": "fastText language-identification classifier, not a language model.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/mistralai/LIDstral-Arabic"
+    ]
+  },
+  {
+    "id": "mistral--mistral-large-4-0",
+    "reason": "OpenRouter id for the same model; folded into mistral--mistral-large-4.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/mistralai/mistral-large-4-0"
+    ]
+  },
+  {
+    "id": "mistral--timestral",
+    "reason": "Time-series forecaster; no language component. Precedent google-deepmind--timesfm-3.0-pytorch.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/mistralai/Timestral-123M",
+      "https://huggingface.co/mistralai/Timestral-209M",
+      "https://huggingface.co/mistralai/Timestral-28M",
+      "https://huggingface.co/mistralai/Timestral-5M"
+    ]
+  },
+  {
+    "id": "mistral--voxtral-mini-realtime-arabic",
+    "reason": "Streaming speech-to-text model. Out of scope by the 2026-10-19 scope ruling (voice, speech, image, video and time-series models are out).",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://huggingface.co/mistralai/Voxtral-Mini-4B-Realtime-Arabic"
+    ]
+  },
+  {
+    "id": "moonshot--kimi-code-101",
+    "reason": "Academy guide for a CLI tool, not a model.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://www.kimi.com/academy/kimi-code-cheat-sheet"
+    ]
+  },
+  {
+    "id": "moonshot--kimi-work-101",
+    "reason": "User guide, not a model.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://www.kimi.com/academy/kimi-work-getting-started"
+    ]
+  },
+  {
+    "id": "openai--devday-2026",
+    "reason": "Event recap; its model is recorded as openai--gpt-6.1-sol.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openai.com/index/devday-2026-recap"
+    ]
+  },
+  {
+    "id": "openai--gpt-5.3-codex-spark",
+    "reason": "Research preview limited to paid ChatGPT Pro users; paid-tier research previews are out of scope by the 2026-10-19 scope ruling.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openai.com/index/introducing-gpt-5-3-codex-spark/"
+    ]
+  },
+  {
+    "id": "openai--gpt-6-luna-batch",
+    "reason": "Batch endpoint of the same model and weights; not a separate release. Precedent: earlier *-batch rulings.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/openai/gpt-6-luna:batch"
+    ]
+  },
+  {
+    "id": "openai--gpt-6-luna-pro",
+    "reason": "Same model with reasoning.mode set to pro; not a separate release. Precedent openai--gpt-6-astra-pro.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/openai/gpt-6-luna-pro"
+    ]
+  },
+  {
+    "id": "openai--gpt-6-luna-pro-batch",
+    "reason": "Same model with reasoning.mode set to pro; not a separate release. Precedent openai--gpt-6-astra-pro. Batch endpoint.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/openai/gpt-6-luna-pro:batch"
+    ]
+  },
+  {
+    "id": "openai--gpt-6-sol-batch",
+    "reason": "Batch endpoint of the same model and weights; not a separate release. Precedent: earlier *-batch rulings.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/openai/gpt-6-sol:batch"
+    ]
+  },
+  {
+    "id": "openai--gpt-6-sol-pro",
+    "reason": "Same model with reasoning.mode set to pro; not a separate release. Precedent openai--gpt-6-astra-pro.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/openai/gpt-6-sol-pro"
+    ]
+  },
+  {
+    "id": "openai--gpt-6-sol-pro-batch",
+    "reason": "Same model with reasoning.mode set to pro; not a separate release. Precedent openai--gpt-6-astra-pro. Batch endpoint.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/openai/gpt-6-sol-pro:batch"
+    ]
+  },
+  {
+    "id": "openai--gpt-6.1",
+    "reason": "Same announcement as openai--gpt-6.1-sol; folded in.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openai.com/index/introducing-gpt-6-1-sol"
+    ]
+  },
+  {
+    "id": "openai--gpt-6.1-sol-batch",
+    "reason": "Batch endpoint of the same model and weights; not a separate release. Precedent: earlier *-batch rulings.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/openai/gpt-6.1-sol:batch"
+    ]
+  },
+  {
+    "id": "openai--gpt-6.1-sol-pro",
+    "reason": "Same model with reasoning.mode set to pro; not a separate release. Precedent openai--gpt-6-astra-pro.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/openai/gpt-6.1-sol-pro"
+    ]
+  },
+  {
+    "id": "openai--gpt-6.1-sol-pro-batch",
+    "reason": "Same model with reasoning.mode set to pro; not a separate release. Precedent openai--gpt-6-astra-pro. Batch endpoint.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/openai/gpt-6.1-sol-pro:batch"
+    ]
+  },
+  {
+    "id": "xai--grok-voice-1.0",
+    "reason": "Same model already ruled out as xai--voice-think-fast-1.0 (post retitled). Out of scope by the 2026-10-19 scope ruling (voice, speech, image, video and time-series models are out).",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://x.ai/news/grok-voice-think-fast-1"
+    ]
+  },
+  {
+    "id": "xai--grok-voice-2.0",
+    "reason": "Same model already ruled out as xai--voice-think-fast-2.0 (post retitled). Out of scope by the 2026-10-19 scope ruling (voice, speech, image, video and time-series models are out).",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://x.ai/news/grok-voice-think-fast-2"
+    ]
+  },
+  {
+    "id": "xai--grok-voice-3.0",
+    "reason": "Voice model. Out of scope by the 2026-10-19 scope ruling (voice, speech, image, video and time-series models are out).",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://x.ai/news/grok-voice-3"
+    ]
+  },
+  {
+    "id": "xai--grok-voice-transcribe-2.0",
+    "reason": "Speech-to-text model. Out of scope by the 2026-10-19 scope ruling (voice, speech, image, video and time-series models are out).",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://x.ai/news/grok-voice-transcribe-2"
+    ]
+  },
+  {
+    "id": "zai--glm-5.3-flashx",
+    "reason": "Faster serving tier of the GLM-5.3-Flash weights; Z.ai release notes list no new model. Precedent anthropic--claude-opus-5-fast.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/z-ai/glm-5.3-flashx"
+    ]
+  },
+  {
+    "id": "zai--glm-5.3-prime",
+    "reason": "Accelerated serving tier of the GLM-5.3 weights; same basis. Precedent anthropic--claude-opus-5-fast.",
+    "rejected_on": "2026-10-19",
+    "urls": [
+      "https://openrouter.ai/z-ai/glm-5.3-prime"
+    ]
   }
 ]
