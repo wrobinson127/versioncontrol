@@ -1,962 +1,531 @@
-/* Version Control : explorer (amendment 1, D13-D17)
-   Pulse strip, registry measures, measured trajectory, disclosure record.
-   Everything here renders the derived views file verbatim and drives the
-   existing timeline filter path in app.js. Marks share the ink palette;
-   organization identity is label-first (DESIGN.md rule 7). The trajectory
-   renders marks only: no line ever connects points, so no line can cross
-   benchmark versions or provenance classes (amendment D15). */
+/* The explorer: the full record as a grid. A sticky header with a
+   filter in every column, a sticky first column, windowed rows, and an
+   inspector with every source, its archived copy and each score's settings.
+   The whole view lives in the address: filters, sort and the open entry. */
 
 (function () {
   "use strict";
+  var CR = window.CR, esc = CR.esc, $ = CR.$, $$ = CR.$$;
+  var D = null;
+  var RH = 40;
+  var rows = [];           /* entries after filters and sort */
+  var openId = null;
+  var focusI = 0;
 
-  /* Fixed registry order (pipeline/config.py). Never score order. */
-  var REGISTRY_ORDER = [
-    "openai", "anthropic", "google-deepmind", "meta", "xai", "mistral",
-    "deepseek", "alibaba-qwen", "moonshot", "zai", "cohere", "amazon"
-  ];
+  var F = { q: "", model: "", lab: [], year: "", type: "", avail: "", country: "", gpqa: "", swe: "", sc: "", mc: "", up: "", pa: "", params: "", origin: "", from: "", to: "" };
+  var SORT = { k: "date", dir: -1 };
 
-  var ARTIFACT_NAMES = {
-    "system_card": "system card",
-    "model_card": "model card",
-    "usage_policy": "usage policy",
-    "paper": "paper"
-  };
+  var DISC_KEY = { sc: "system_card", mc: "model_card", up: "usage_policy", pa: "paper" };
+  var SCORE_OPTS = [["", "Any"], ["any", "Has a score"], ["INDEPENDENT", "IND score"], ["LAB_REPORTED", "LAB score"], ["none", "No score"]];
+  var DISC_OPTS = [["", "Any"], ["disclosed", "Link on record"], ["not_disclosed", "Not disclosed"], ["not_researched", "Not yet researched"]];
 
-  var CLASS_NAMES = {
-    "INDEPENDENT": "independent",
-    "LAB_REPORTED": "lab reported"
-  };
+  function opts(list) { return list.map(function (o) { return '<option value="' + esc(o[0]) + '">' + esc(o[1]) + "</option>"; }).join(""); }
 
-  /* Fixed legend order for provenance classes (amendment D15). */
-  var CLASS_ORDER = ["INDEPENDENT", "LAB_REPORTED"];
-
-  var parseDate = null; /* bound after d3 loads */
-
-  function esc(s) {
-    return String(s).replace(/[&<>"']/g, function (c) {
-      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
-    });
-  }
-
-  function fmtDate(d) {
-    /* UTC date -> YYYY-MM-DD without locale drift */
-    return d.toISOString().slice(0, 10);
-  }
-
-  function chartsUnavailable(message) {
-    ["pulse-strip", "traj-chart"].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) {
-        el.innerHTML = '<p class="chart-unavailable">' + esc(message) + "</p>";
-      }
-    });
-  }
-
-  /* ---- shared tooltip: one absolutely positioned annotation card ---- */
-
-  function makeTip(container) {
-    var tip = document.createElement("div");
-    tip.className = "mark-tip";
-    tip.hidden = true;
-    container.appendChild(tip);
-    return {
-      show: function (html, x, y) {
-        tip.innerHTML = html;
-        tip.hidden = false;
-        var maxX = container.clientWidth - tip.offsetWidth - 4;
-        tip.style.left = Math.max(0, Math.min(x + 10, maxX)) + "px";
-        tip.style.top = Math.max(0, y - tip.offsetHeight - 10) + "px";
-      },
-      hide: function () { tip.hidden = true; }
-    };
-  }
-
-  /* =================== pulse strip (D13) =================== */
-
-  function initPulse(api, entries, meta, views) {
-    var holder = document.getElementById("pulse-strip");
-    if (!holder || !window.d3) { return; }
-
-    var d3 = window.d3;
-    var byId = {};
-    entries.forEach(function (e) { byId[e.id] = e; });
-    var monthly = (views && views.cadence && views.cadence.monthly) || [];
-
-    /* the pulse legend: one concise line; counts and dates live in the measures
-       tiles and on the chart itself, so they are not repeated in prose here. */
-    var summaryEl = document.getElementById("pulse-summary");
-    if (summaryEl) {
-      summaryEl.textContent = "One mark per entry, one row per lab. Filled marks are releases, faint marks revisions. Drag to filter the timeline below.";
-    }
-
-    var domainStart = parseDate(meta.first_date);
-    var domainEnd = parseDate(meta.last_date);
-    /* pad the axis ten days each side so edge marks are not sliced */
-    var pad = 10 * 86400000;
-    var x0 = new Date(domainStart.getTime() - pad);
-    var x1 = new Date(domainEnd.getTime() + pad);
-
-    var fromInput = document.getElementById("range-from");
-    var toInput = document.getElementById("range-to");
-    var clearBtn = document.getElementById("range-clear");
-    if (fromInput) { fromInput.min = meta.first_date; fromInput.max = meta.last_date; }
-    if (toInput) { toInput.min = meta.first_date; toInput.max = meta.last_date; }
-
-    var scroller = document.createElement("div");
-    scroller.className = "pulse-scroll";
-    holder.appendChild(scroller);
-    var tip = makeTip(holder);
-
-    var histH = monthly.length ? 62 : 0;
-    var x, brush, brushG, rowH = 15, labelW = 128,
-      margin = { top: 4, right: 10, bottom: 22 },
-      innerH = REGISTRY_ORDER.length * rowH,
-      height = margin.top + innerH + margin.bottom + histH;
-
-    var suppressBrushEvents = false;
-    var brushing = false;
-    var markIndex = []; /* {px, rowTop, entry} for proximity hit tests */
-
-    /* Marks are pointer-transparent so the whole strip brushes; hover and
-       click resolve against the nearest mark instead. */
-    function hitTest(px, py) {
-      var best = null, bestDx = 5;
-      for (var i = 0; i < markIndex.length; i++) {
-        var m = markIndex[i];
-        if (py < m.rowTop || py > m.rowTop + rowH) { continue; }
-        var dx = Math.abs(px - m.px);
-        if (dx < bestDx) { bestDx = dx; best = m; }
-      }
-      return best;
-    }
-
-    function draw() {
-      scroller.innerHTML = "";
-      var width = Math.max(holder.clientWidth, 560);
-
-      var svg = d3.create("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("viewBox", "0 0 " + width + " " + height)
-        .attr("aria-hidden", "true")
-        .attr("class", "pulse-svg");
-
-      x = d3.scaleUtc().domain([x0, x1]).range([labelW, width - margin.right]);
-
-      /* ledger ruling: one faint rule per organization row */
-      var rows = svg.append("g");
-      REGISTRY_ORDER.forEach(function (org, i) {
-        var y = margin.top + i * rowH;
-        rows.append("line")
-          .attr("class", "pulse-rule")
-          .attr("x1", labelW).attr("x2", width - margin.right)
-          .attr("y1", y + rowH - 3).attr("y2", y + rowH - 3);
-        rows.append("text")
-          .attr("class", "pulse-label")
-          .attr("x", labelW - 8)
-          .attr("y", y + rowH - 5)
-          .attr("text-anchor", "end")
-          .text(api.orgNames[org] || org);
-      });
-
-      /* year ticks along the base */
-      var axis = svg.append("g").attr("class", "pulse-axis");
-      d3.utcYear.range(x0, x1).forEach(function (t) {
-        var px = x(t);
-        axis.append("line")
-          .attr("x1", px).attr("x2", px)
-          .attr("y1", margin.top + innerH - 1)
-          .attr("y2", margin.top + innerH + 5);
-        axis.append("text")
-          .attr("x", px + 4)
-          .attr("y", margin.top + innerH + 16)
-          .text(t.getUTCFullYear());
-      });
-
-      /* releases per month on the same time scale: the cadence itself,
-         as raw counts, beneath the strip. Bars are data marks. */
-      if (histH) {
-        var bars = svg.append("g").attr("class", "pulse-bars");
-        var histTop = margin.top + innerH + 26;
-        var histBase = histTop + histH - 26;
-        var maxCount = d3.max(monthly, function (m) { return m.releases; }) || 1;
-        var yBar = d3.scaleLinear().domain([0, maxCount]).range([0, histH - 34]);
-        bars.append("text")
-          .attr("class", "pulse-bar-label")
-          .attr("x", labelW - 8).attr("y", histBase - 1)
-          .attr("text-anchor", "end")
-          .text("releases per month");
-        bars.append("text")
-          .attr("class", "pulse-bar-max")
-          .attr("x", labelW - 8).attr("y", histBase - yBar(maxCount) + 3)
-          .attr("text-anchor", "end")
-          .text(maxCount);
-        bars.append("line")
-          .attr("class", "pulse-rule")
-          .attr("x1", labelW).attr("x2", width - margin.right)
-          .attr("y1", histBase).attr("y2", histBase);
-        monthly.forEach(function (m) {
-          if (!m.releases) { return; }
-          var t0m = parseDate(m.month + "-01");
-          var next = new Date(Date.UTC(t0m.getUTCFullYear(),
-                                       t0m.getUTCMonth() + 1, 1));
-          var bx = x(t0m);
-          var bw = Math.max(2, x(next) - bx - 1.5);
-          bars.append("rect")
-            .attr("class", "pulse-bar")
-            .attr("x", bx).attr("width", bw)
-            .attr("y", histBase - yBar(m.releases))
-            .attr("height", yBar(m.releases));
-        });
-      }
-
-      /* the brush overlay owns every gesture on the strip: a drag selects
-         a range, a plain click on a mark opens its entry card, a plain
-         click on empty strip clears the range */
-      var gestureStart = null;
-      brush = d3.brushX()
-        .extent([[labelW, margin.top], [width - margin.right, margin.top + innerH]])
-        .on("start", function (event) {
-          if (!suppressBrushEvents && event.sourceEvent) {
-            brushing = true;
-            tip.hide();
-            gestureStart = d3.pointer(event.sourceEvent, svg.node());
-          }
-        })
-        .on("brush", function (event) {
-          if (suppressBrushEvents || !event.sourceEvent) { return; }
-          var sel = event.selection;
-          if (sel) { setInputs(fmtDate(x.invert(sel[0])), fmtDate(x.invert(sel[1]))); }
-        })
-        .on("end", function (event) {
-          if (suppressBrushEvents || !event.sourceEvent) { return; }
-          brushing = false;
-          var pt = d3.pointer(event.sourceEvent, svg.node());
-          var moved = !gestureStart ||
-            Math.abs(pt[0] - gestureStart[0]) > 3 || Math.abs(pt[1] - gestureStart[1]) > 3;
-          gestureStart = null;
-          var sel = event.selection;
-          if (!moved) {
-            /* a plain click, wherever it lands on the strip: on a mark it
-               opens the entry and keeps the active range; on empty strip
-               it clears the range */
-            var hit = hitTest(pt[0], pt[1]);
-            if (hit) {
-              restoreBrush();
-              api.revealEntry(hit.entry.id);
-              return;
-            }
-            if (!sel) {
-              setInputs("", "");
-              api.applyRange(null, null);
-            }
-            return;
-          }
-          if (!sel) {
-            setInputs("", "");
-            api.applyRange(null, null);
-            return;
-          }
-          var from = fmtDate(x.invert(sel[0]));
-          var to = fmtDate(x.invert(sel[1]));
-          setInputs(from, to);
-          api.applyRange(from, to);
-        });
-
-      brushG = svg.append("g").attr("class", "pulse-brush").call(brush);
-
-      var marks = svg.append("g").attr("class", "pulse-marks");
-      var rowIndex = {};
-      REGISTRY_ORDER.forEach(function (org, i) { rowIndex[org] = i; });
-
-      markIndex = [];
-      entries.forEach(function (e) {
-        var ri = rowIndex[e.org];
-        if (ri === undefined) { return; }
-        var isRev = e.entry_type === "revision";
-        var mx = x(parseDate(e.date));
-        var rowTop = margin.top + ri * rowH;
-        var yBase = rowTop + rowH - 3;
-        var h = isRev ? 6 : 9;
-        var w = isRev ? 1.5 : 2.5;
-        marks.append("rect")
-          .attr("class", "pulse-mark" + (isRev ? " is-revision" : ""))
-          .attr("x", mx - w / 2).attr("y", yBase - h)
-          .attr("width", w).attr("height", h);
-        markIndex.push({ px: mx, rowTop: rowTop, entry: e });
-      });
-
-      /* proximity hover: tooltip and cursor from the nearest mark */
-      svg.on("mousemove", function (event) {
-        if (brushing) { return; }
-        var pt = d3.pointer(event, svg.node());
-        var hit = hitTest(pt[0], pt[1]);
-        brushG.select(".overlay").attr("cursor", hit ? "pointer" : "crosshair");
-        if (!hit) { tip.hide(); return; }
-        var hp = d3.pointer(event, holder);
-        var e = hit.entry;
-        tip.show(
-          '<span class="tip-name">' + esc(e.model_name) + "</span>" +
-          '<span class="tip-date">' + esc(e.date) + "</span>" +
-          '<span class="tip-org">' + esc(api.orgNames[e.org] || e.org) +
-          ", " + esc(e.entry_type) + "</span>",
-          hp[0], hp[1]);
-      }).on("mouseleave", tip.hide);
-
-      scroller.appendChild(svg.node());
-      restoreBrush();
-    }
-
-    function setInputs(from, to) {
-      if (fromInput) { fromInput.value = from; }
-      if (toInput) { toInput.value = to; }
-    }
-
-    function moveBrushTo(from, to) {
-      if (!brushG) { return; }
-      suppressBrushEvents = true;
-      var moved = false;
-      if (from && to) {
-        /* clamp to the brushable extent; a range wholly outside the
-           record shows no selection while the inputs keep the dates */
-        var a = Math.max(x(parseDate(from)), x.range()[0]);
-        var b = Math.min(x(parseDate(to)), x.range()[1]);
-        if (b - a >= 1) {
-          brushG.call(brush.move, [a, b]);
-          moved = true;
-        }
-      }
-      if (!moved) { brushG.call(brush.move, null); }
-      suppressBrushEvents = false;
-    }
-
-    function restoreBrush() {
-      var r = api.getRange();
-      setInputs(r.from || "", r.to || "");
-      moveBrushTo(r.from, r.to);
-    }
-
-    /* keyboard access: the paired date inputs are the brush equivalent.
-       Chromium fires "change" after each typed segment, so a year mid-entry
-       reads as 0002 or 0020. Swapping From and To on every change wrote into
-       the field being typed and emptied the timeline (audit F3). A value is
-       used only once its year is complete and inside the record; an
-       out-of-order pair is applied in order without touching the inputs, and
-       the inputs are put in order only when focus leaves them. */
-    var FIRST_YEAR = "2022";
-    function plausible(v) {
-      return !!v && /^\d{4}-\d{2}-\d{2}$/.test(v) && v.slice(0, 4) >= FIRST_YEAR &&
-        v.slice(0, 4) <= "2099";
-    }
-    function onInputChange() {
-      var rawFrom = fromInput ? fromInput.value : "";
-      var rawTo = toInput ? toInput.value : "";
-      if ((rawFrom && !plausible(rawFrom)) || (rawTo && !plausible(rawTo))) { return; }
-      var from = rawFrom || null, to = rawTo || null;
-      if (from && to && from > to) { var t = from; from = to; to = t; }
-      moveBrushTo(from && to ? from : null, from && to ? to : null);
-      api.applyRange(from, to);
-    }
-    function onInputBlur() {
-      if (fromInput && toInput && plausible(fromInput.value) && plausible(toInput.value) &&
-          fromInput.value > toInput.value) {
-        setInputs(toInput.value, fromInput.value);
-      }
-    }
-    /* the filter bar's height feeds the cards' scroll margin (audit F2) */
-    var controlsEl = document.querySelector(".controls");
-    function measureControls() {
-      if (controlsEl) {
-        document.documentElement.style.setProperty("--controls-h", controlsEl.offsetHeight + "px");
-      }
-    }
-    measureControls();
-    window.addEventListener("resize", measureControls);
-    if (fromInput) { fromInput.addEventListener("change", onInputChange); fromInput.addEventListener("blur", onInputBlur); }
-    if (toInput) { toInput.addEventListener("change", onInputChange); toInput.addEventListener("blur", onInputBlur); }
-    if (clearBtn) {
-      clearBtn.addEventListener("click", function () {
-        setInputs("", "");
-        moveBrushTo(null, null);
-        api.applyRange(null, null);
-      });
-    }
-
-    /* app-side range changes (revealEntry relaxing a range) reach the brush */
-    api.registerRangeSync(function (from, to) {
-      setInputs(from || "", to || "");
-      moveBrushTo(from, to);
-    });
-
-    draw();
-
-    var resizeTimer = null;
-    window.addEventListener("resize", function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(draw, 150);
-    });
-  }
-
-  /* =================== registry measures (D14) =================== */
-
-  function initTiles(views) {
-    var row = document.getElementById("tile-row");
-    var foot = document.getElementById("tiles-foot");
-    if (!row || !views || !views.tiles) { return; }
-    var t = views.tiles;
-
-    var sharePct = Math.round((t.share_with_system_card || 0) * 1000) / 10;
-
-    /* while system card links sit in the registrar's review queue, a 0%
-       headline would misstate the labs' record (DESIGN rule 2); the
-       papers measure is the honest tile until approvals land */
-    var pendingCards = (t.system_card_links_pending || 0) > 0 &&
-      !(t.share_with_system_card > 0);
-    var fourth = pendingCards
-      ? { value: String(t.papers_on_record), label: "releases with a paper link" }
-      : { value: sharePct + "%",
-          label: "of " + (t.system_card_researched || 0) +
-            " researched releases carry a system card link" };
-
-    /* "Oct 15": an ISO date is too wide for the tile's display size */
-    function shortDate(iso) {
-      var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || "");
-      if (!m) { return ""; }
-      var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-                    "Sep", "Oct", "Nov", "Dec"];
-      return months[+m[2] - 1] + " " + (+m[3]);
-    }
-
-    var tiles = [
-      { value: String(t.releases_recorded),
-        label: "releases recorded, of " + (t.entries_recorded || t.releases_recorded) + " entries" },
-      { value: shortDate(t.last_release_date),
-        label: "date of the newest release on record (" +
-          String(t.last_release_date || "").slice(0, 4) +
-          "). Record checked " + t.as_of + "." },
-      { value: String(t.median_gap_days_this_year), label: "median gap between releases this year, in days" },
-      fourth
+  var COLS = null;
+  function defineCols() {
+    var years = []; for (var y = +D.meta.first_date.slice(0, 4); y <= +D.asOf.slice(0, 4); y++) { years.push([String(y), String(y)]); }
+    var countries = []; CR.ORG_ORDER.forEach(function (o) { if (countries.indexOf(CR.ORG_COUNTRY[o]) < 0) { countries.push(CR.ORG_COUNTRY[o]); } });
+    COLS = [
+      { k: "model", label: "Model", w: 268, sort: function (e) { return e.model_name.toLowerCase(); }, f: { type: "text", key: "model", ph: "Filter names", aria: "Filter by model name" } },
+      { k: "lab", label: "Lab", w: 156, sort: function (e) { return e._orgName.toLowerCase(); }, f: { type: "select", key: "lab", aria: "Filter by lab", o: [["", "All labs"]].concat(CR.ORG_ORDER.map(function (o) { return [o, CR.ORG_NAMES[o]]; })) } },
+      { k: "date", label: "Date", w: 112, num: true, sort: function (e) { return e.date; }, f: { type: "select", key: "year", aria: "Filter by year", o: [["", "All years"]].concat(years) } },
+      { k: "type", label: "Type", w: 104, sort: function (e) { return e.entry_type; }, f: { type: "select", key: "type", aria: "Filter by entry type", o: [["", "All"], ["release", "Release"], ["revision", "Revision"]] } },
+      { k: "avail", label: "Availability", w: 136, sort: function (e) { return e.availability_class; }, f: { type: "select", key: "avail", aria: "Filter by availability", o: [["", "All"], ["open_weights", "Open weights"], ["public_api", "Public API"], ["public_service", "Public service"]] } },
+      { k: "country", label: "Country", w: 132, sort: function (e) { return e._country; }, f: { type: "select", key: "country", aria: "Filter by the country of the lab's parent company", o: [["", "All"]].concat(countries.map(function (c) { return [c, c]; })) } },
+      { k: "gpqa", label: "GPQA Diamond", w: 216, num: true, sort: function (e) { return scoreSort(e, "gpqa-diamond"); }, f: { type: "select", key: "gpqa", aria: "Filter by GPQA Diamond score", o: SCORE_OPTS } },
+      { k: "swe", label: "SWE-Bench Verified", w: 216, num: true, sort: function (e) { return scoreSort(e, "swe-bench-verified"); }, f: { type: "select", key: "swe", aria: "Filter by SWE-Bench Verified score", o: SCORE_OPTS } },
+      { k: "sc", label: "System card", w: 152, disc: "system_card", sort: function (e) { return discSort(e, "system_card"); }, f: { type: "select", key: "sc", aria: "Filter by system card", o: DISC_OPTS } },
+      { k: "mc", label: "Model card", w: 152, disc: "model_card", sort: function (e) { return discSort(e, "model_card"); }, f: { type: "select", key: "mc", aria: "Filter by model card", o: DISC_OPTS } },
+      { k: "up", label: "Usage policy", w: 152, disc: "usage_policy", sort: function (e) { return discSort(e, "usage_policy"); }, f: { type: "select", key: "up", aria: "Filter by usage policy", o: DISC_OPTS } },
+      { k: "pa", label: "Paper", w: 152, disc: "paper", sort: function (e) { return discSort(e, "paper"); }, f: { type: "select", key: "pa", aria: "Filter by paper", o: DISC_OPTS } },
+      { k: "params", label: "Parameters", w: 120, num: true, sort: function (e) { return typeof e.parameters === "number" ? e.parameters : -1; }, f: { type: "select", key: "params", aria: "Filter by parameter count", o: [["", "Any"], ["count", "Count on record"], ["none", "No count on record"]] } },
+      { k: "origin", label: "Origin", w: 176, sort: function (e) { return e.origin; }, f: { type: "select", key: "origin", aria: "Filter by how the entry reached the record", o: [["", "Any"], ["backfill-epoch", "From Epoch AI data"], ["nightly-pipeline", "Nightly detection"], ["manual", "Recorded by hand"]] } }
     ];
+  }
+  function scoreSort(e, b) { var s = e._score[b]; if (!s) { return -1; } return (s.INDEPENDENT || s.LAB_REPORTED).value; }
+  function discSort(e, slot) { return { disclosed: 2, not_disclosed: 1, not_researched: 0 }[e._disc[slot]]; }
 
-    row.innerHTML = tiles.map(function (tile) {
-      return '<div class="tile">' +
-        '<span class="tile-value">' + esc(tile.value) + "</span>" +
-        '<span class="tile-label">' + esc(tile.label) + "</span></div>";
-    }).join("");
+  /* ---------- state in the address ---------- */
 
-    if (foot) {
-      foot.textContent = "Figures as of " + t.as_of + "." +
-        (pendingCards ? " System card, model card, and usage policy links are awaiting review and not yet on record." : "");
+  var KEYS = ["q", "model", "year", "type", "avail", "country", "gpqa", "swe", "sc", "mc", "up", "pa", "params", "origin", "from", "to"];
+  function readUrl() {
+    var p = new URLSearchParams(location.search);
+    KEYS.forEach(function (k) { F[k] = p.get(k) || ""; });
+    if (F.from && !CR.validDate(F.from)) { F.from = ""; }
+    if (F.to && !CR.validDate(F.to)) { F.to = ""; }
+    F.lab = (p.get("lab") || p.get("labs") || "").split(",").filter(function (o) { return CR.ORG_NAMES[o]; });
+    var s = p.get("sort");
+    if (s) { var m = /^(-?)([a-z]+)$/.exec(s); if (m && COLS.some(function (c) { return c.k === m[2]; })) { SORT.k = m[2]; SORT.dir = m[1] ? -1 : 1; } }
+    var id = p.get("id") || p.get("entry");
+    openId = id && D.byId[id] ? id : null;
+    if (!openId && location.hash && D.byId[decodeURIComponent(location.hash.slice(1))]) { openId = decodeURIComponent(location.hash.slice(1)); }
+  }
+  function urlFor(withId) {
+    var p = new URLSearchParams();
+    KEYS.forEach(function (k) { if (F[k]) { p.set(k, F[k]); } });
+    if (F.lab.length) { p.set("lab", F.lab.join(",")); }
+    if (!(SORT.k === "date" && SORT.dir === -1)) { p.set("sort", (SORT.dir < 0 ? "-" : "") + SORT.k); }
+    if (withId && openId) { p.set("id", openId); }
+    var q = p.toString();
+    return location.pathname + (q ? "?" + q : "");
+  }
+  function writeUrl(push) {
+    var u = urlFor(true);
+    if (push) { history.pushState({ id: openId }, "", u); } else { history.replaceState({ id: openId }, "", u); }
+  }
+  function nFilters() {
+    var n = KEYS.filter(function (k) { return F[k]; }).length + (F.lab.length ? 1 : 0);
+    return n;
+  }
+
+  /* ---------- filtering and sorting ---------- */
+
+  function matches(e) {
+    if (F.q && e._hay.indexOf(F.q.toLowerCase()) < 0) { return false; }
+    if (F.model && (e.model_name + " " + (e.variants || []).join(" ")).toLowerCase().indexOf(F.model.toLowerCase()) < 0) { return false; }
+    if (F.lab.length && F.lab.indexOf(e.org) < 0) { return false; }
+    if (F.year && e._year !== F.year) { return false; }
+    if (F.type && e.entry_type !== F.type) { return false; }
+    if (F.avail && e.availability_class !== F.avail) { return false; }
+    if (F.country && e._country !== F.country) { return false; }
+    if (F.from && e.date < F.from) { return false; }
+    if (F.to && e.date > F.to) { return false; }
+    var sb = { gpqa: "gpqa-diamond", swe: "swe-bench-verified" };
+    for (var k in sb) {
+      if (!F[k]) { continue; }
+      var s = e._score[sb[k]];
+      if (F[k] === "any" && !s) { return false; }
+      if (F[k] === "none" && s) { return false; }
+      if ((F[k] === "INDEPENDENT" || F[k] === "LAB_REPORTED") && !(s && s[F[k]])) { return false; }
+    }
+    for (var d in DISC_KEY) { if (F[d] && e._disc[DISC_KEY[d]] !== F[d]) { return false; } }
+    if (F.params === "count" && typeof e.parameters !== "number") { return false; }
+    if (F.params === "none" && typeof e.parameters === "number") { return false; }
+    if (F.origin && e.origin !== F.origin) { return false; }
+    return true;
+  }
+  function compute() {
+    var col = COLS.filter(function (c) { return c.k === SORT.k; })[0] || COLS[2];
+    rows = D.entries.filter(matches);
+    rows.sort(function (a, b) {
+      var x = col.sort(a), y = col.sort(b);
+      if (x < y) { return -SORT.dir; } if (x > y) { return SORT.dir; }
+      return a.date < b.date ? 1 : a.date > b.date ? -1 : (a.id < b.id ? -1 : 1);
+    });
+  }
+
+  /* ---------- cells ---------- */
+
+  function provChip(cls, v) {
+    var k = cls === "LAB_REPORTED" ? "lab" : "ind";
+    return '<span class="sv sv-' + k + '" title="' + esc(CR.PROV_TITLES[cls]) + '"><span class="num">' + v + "</span>" + CR.provGlyph(cls, 9) + '<span class="sv-t">' + (k === "lab" ? "LAB" : "IND") + "</span></span>";
+  }
+  function scoreCell(e, b) {
+    var s = e._score[b];
+    var out = "";
+    if (s) {
+      if (s.INDEPENDENT) { out += provChip("INDEPENDENT", s.INDEPENDENT.value); }
+      if (s.LAB_REPORTED) { out += provChip("LAB_REPORTED", s.LAB_REPORTED.value); }
+      e._deltas.forEach(function (d) {
+        if (d.kind === "delta" && d.benchmark === b) {
+          out += '<span class="dl num" title="Change against the predecessor, ' + (d.source_class === "LAB_REPORTED" ? "lab-reported" : "independent") + ' scores on the same benchmark version">' + (d.value >= 0 ? "+" : "−") + Math.abs(d.value).toFixed(1) + "</span>";
+        }
+      });
+    }
+    var firstB = e._score["gpqa-diamond"] ? "gpqa-diamond" : "swe-bench-verified";
+    if (b === firstB) {
+      e._deltas.forEach(function (d) {
+        if (d.kind === "REFUSED_COMPARISON") { out += '<span class="rf" title="No comparable measurement against the predecessor: ' + esc(d.reason) + '.">refused</span>'; }
+      });
+    }
+    return out || '<span class="na" aria-label="no score">-</span>';
+  }
+  function discCell(e, slot) {
+    var st = e._disc[slot];
+    return '<span class="dc dc-' + st + '" title="' + esc(CR.DISC_TITLES[st]) + '">' + CR.discGlyph(st, 10) + "<span>" + CR.DISC_WORDS[st] + "</span></span>";
+  }
+  function cell(c, e) {
+    switch (c.k) {
+      case "lab": return esc(e._orgName);
+      case "date": return '<span class="num">' + e.date + "</span>";
+      case "type": return e.entry_type === "revision" ? '<span class="tag">revision</span>' : '<span class="t-m">release</span>';
+      case "avail": return esc(CR.AVAIL_NAMES[e.availability_class] || e.availability_class);
+      case "country": return esc(e._country);
+      case "gpqa": return scoreCell(e, "gpqa-diamond");
+      case "swe": return scoreCell(e, "swe-bench-verified");
+      case "params": return typeof e.parameters === "number" ? '<span class="num">' + CR.fmtParams(e.parameters) + "</span>" : '<span class="nc" title="Epoch AI\'s data has no parameter count for this model. We have not checked whether the lab stated one.">no count</span>';
+      case "origin": return '<span class="t-m">' + esc({ "backfill-epoch": "Epoch AI data", "nightly-pipeline": "nightly detection", "manual": "by hand" }[e.origin] || e.origin) + "</span>";
+      default: return c.disc ? discCell(e, c.disc) : "";
     }
   }
 
-  /* =================== measured trajectory (D15) =================== */
+  /* ---------- grid ---------- */
 
-  function initTrajectory(api, views) {
-    var holder = document.getElementById("traj-chart");
-    var captionEl = document.getElementById("traj-caption");
-    var altEl = document.getElementById("traj-alt");
-    if (!holder || !views || !views.trajectory || !window.d3) { return; }
+  var gridW = 0;
+  function buildHead() {
+    var t = $("#grid");
+    var cg = "<colgroup>" + COLS.map(function (c) { return '<col style="width:' + c.w + 'px">'; }).join("") + "</colgroup>";
+    gridW = COLS.reduce(function (a, c) { return a + c.w; }, 0);
+    t.style.width = gridW + "px";
+    var h1 = '<tr class="hrow">' + COLS.map(function (c, i) {
+      return '<th scope="col" class="' + (i === 0 ? "stick " : "") + (c.num ? "n" : "") + '" aria-sort="none" data-k="' + c.k + '"><button type="button" class="sortb" data-k="' + c.k + '">' + esc(c.label) + '<span class="sg" aria-hidden="true"></span></button></th>';
+    }).join("") + "</tr>";
+    var h2 = '<tr class="frow">' + COLS.map(function (c, i) { return '<td class="' + (i === 0 ? "stick" : "") + '" data-slot="' + c.f.key + '"></td>'; }).join("") + "</tr>";
+    t.innerHTML = cg + "<thead>" + h1 + h2 + '</thead><tbody id="grid-body"></tbody>';
+  }
 
-    var d3 = window.d3;
-    var series = views.trajectory.series || [];
-    var eras = views.trajectory.eras || {};
-
-    var state = {
-      benchmark: "gpqa-diamond",
-      classes: { "INDEPENDENT": true, "LAB_REPORTED": true }
-    };
-
-    var tip = makeTip(holder);
-    var chartMount = document.createElement("div");
-    chartMount.className = "traj-mount";
-    holder.appendChild(chartMount);
-
-    function visibleSeries() {
-      /* fixed order: benchmark series in file order, classes in CLASS_ORDER */
-      var out = [];
-      CLASS_ORDER.forEach(function (cls) {
-        if (!state.classes[cls]) { return; }
-        series.forEach(function (s) {
-          if (s.benchmark === state.benchmark && s.source_class === cls) { out.push(s); }
-        });
+  /* One control per column, built once; on a phone the same controls move
+     into the filters sheet, so the state never forks. */
+  var CTRL = {};
+  function buildControls() {
+    COLS.forEach(function (c) {
+      var wrap = document.createElement("label");
+      wrap.className = "fctl";
+      var lab = '<span class="fctl-l">' + esc(c.label) + "</span>";
+      if (c.f.type === "text") {
+        wrap.innerHTML = lab + '<input type="text" data-f="' + c.f.key + '" placeholder="' + esc(c.f.ph) + '" aria-label="' + esc(c.f.aria) + '" autocomplete="off" spellcheck="false">';
+      } else {
+        wrap.innerHTML = lab + '<select data-f="' + c.f.key + '" aria-label="' + esc(c.f.aria) + '">' + opts(c.f.o) + "</select>";
+      }
+      CTRL[c.f.key] = wrap;
+    });
+    var t = null;
+    Object.keys(CTRL).forEach(function (k) {
+      var el = CTRL[k].querySelector("input, select");
+      el.addEventListener(el.tagName === "INPUT" ? "input" : "change", function () {
+        var v = el.value;
+        clearTimeout(t);
+        t = setTimeout(function () {
+          if (k === "lab") { F.lab = v === "__multi" ? F.lab : (v ? [v] : []); } else { F[k] = v; }
+          update(true);
+        }, el.tagName === "INPUT" ? 140 : 0);
       });
-      return out;
-    }
+    });
+  }
+  function placeControls() {
+    var mobile = window.innerWidth <= 720;
+    COLS.forEach(function (c) {
+      var host = mobile ? $("#fsheet-body") : $('#grid .frow td[data-slot="' + c.f.key + '"]');
+      if (host && CTRL[c.f.key].parentNode !== host) { host.appendChild(CTRL[c.f.key]); }
+    });
+  }
+  function syncControls() {
+    Object.keys(CTRL).forEach(function (k) {
+      var el = CTRL[k].querySelector("input, select");
+      if (k === "lab") {
+        var multi = el.querySelector('option[value="__multi"]');
+        if (F.lab.length > 1) {
+          if (!multi) { multi = document.createElement("option"); multi.value = "__multi"; el.insertBefore(multi, el.children[1]); }
+          multi.textContent = F.lab.length + " labs";
+          el.value = "__multi";
+        } else { if (multi) { multi.remove(); } el.value = F.lab[0] || ""; }
+      } else if (document.activeElement !== el) { el.value = F[k]; }
+      CTRL[k].classList.toggle("on", k === "lab" ? F.lab.length > 0 : !!F[k]);
+    });
+    if (document.activeElement !== $("#x-q")) { $("#x-q").value = F.q; }
+    $("#x-from").value = F.from; $("#x-to").value = F.to;
+    $$("#grid .hrow th").forEach(function (th) {
+      var k = th.getAttribute("data-k");
+      th.setAttribute("aria-sort", k === SORT.k ? (SORT.dir > 0 ? "ascending" : "descending") : "none");
+    });
+  }
 
-    function benchMeta() {
-      for (var i = 0; i < series.length; i++) {
-        if (series[i].benchmark === state.benchmark) {
-          return { name: series[i].benchmark_name, version: series[i].benchmark_version };
-        }
-      }
-      return { name: state.benchmark, version: "" };
-    }
-
-    function updateCaption() {
-      var bm = benchMeta();
-      var eraList = eras[state.benchmark] || [];
-      var eraText = eraList.map(function (er) {
-        return "era " + er.version + " from " + er.start + (er.end ? " to " + er.end : " onward");
-      }).join("; ");
-      if (captionEl) {
-        captionEl.textContent = bm.name + ", benchmark version " + bm.version +
-          ", scored on the benchmark's own 0 to 100 scale" +
-          (eraText ? "; " + eraText : "") +
-          ". Marks only; no line connects points across versions or provenance classes.";
-      }
-    }
-
-    function updateAlt() {
-      var vis = visibleSeries();
-      if (!altEl) { return; }
-      if (!vis.length) {
-        var anyChecked = CLASS_ORDER.some(function (c) { return state.classes[c]; });
-        altEl.textContent = anyChecked ?
-          "No measurements in the selected provenance classes for this benchmark; the chart shows no points." :
-          "No provenance class is selected; the chart shows no points.";
-        return;
-      }
-      altEl.textContent = vis.map(function (s) {
-        var vals = s.points.map(function (p) { return p.value; });
-        var dates = s.points.map(function (p) { return p.date; });
-        return s.benchmark_name + " version " + s.benchmark_version + ", " +
-          (CLASS_NAMES[s.source_class] || s.source_class) + ": " +
-          s.points.length + " points from " + d3.min(dates) + " to " + d3.max(dates) +
-          ", values " + d3.min(vals) + " to " + d3.max(vals) + ".";
-      }).join(" ");
-    }
-
-    function updateSource() {
-      /* the source and retrieval line, at point of use */
-      var srcEl = document.getElementById("traj-source");
-      if (!srcEl) { return; }
-      var vis = visibleSeries();
-      if (!vis.length) { srcEl.textContent = ""; return; }
-      var parts = [];
-      vis.forEach(function (s) {
-        var dates = s.points.map(function (p) { return p.retrieval_date; }).filter(Boolean);
-        var latest = dates.sort()[dates.length - 1];
-        if (s.source_class === "INDEPENDENT") {
-          parts.push("independent measurements: Epoch AI Benchmarking Hub" +
-            (latest ? ", retrieved " + latest : ""));
+  var range = [0, 0];
+  function renderRows(force) {
+    var sc = $("#grid-scroll");
+    var headH = $("#grid thead").offsetHeight;
+    var a = Math.max(0, Math.floor((sc.scrollTop - headH) / RH) - 8);
+    var b = Math.min(rows.length, a + Math.ceil(sc.clientHeight / RH) + 18);
+    if (!force && a === range[0] && b === range[1]) { return; }
+    range = [a, b];
+    var h = '<tr class="spacer" aria-hidden="true"><td colspan="' + COLS.length + '" style="height:' + a * RH + 'px"></td></tr>';
+    for (var i = a; i < b; i++) {
+      var e = rows[i];
+      h += '<tr aria-rowindex="' + (i + 3) + '" data-i="' + i + '"' + (e.id === openId ? ' class="is-sel" aria-selected="true"' : "") + ">";
+      COLS.forEach(function (c, j) {
+        if (j === 0) {
+          h += '<th scope="row" class="stick"><button type="button" class="rbtn" data-i="' + i + '" tabindex="' + (i === focusI ? 0 : -1) + '">' + esc(e.model_name) + "</button>" +
+            (e.variants && e.variants.length ? '<span class="rv-n" title="Variants: ' + esc(e.variants.join(", ")) + '">+' + e.variants.length + "</span>" : "") +
+            (e._retracted ? ' <span class="tag-retracted">retracted</span>' : "") + "</th>";
         } else {
-          parts.push("lab reported numbers: the releasing labs' own publications" +
-            (latest ? ", retrieved " + latest : ""));
+          h += '<td class="' + (c.num ? "n" : "") + '">' + cell(c, e) + "</td>";
         }
       });
-      srcEl.textContent = "Sources: " + parts.join("; ") + ".";
+      h += "</tr>";
     }
+    h += '<tr class="spacer" aria-hidden="true"><td colspan="' + COLS.length + '" style="height:' + (rows.length - b) * RH + 'px"></td></tr>';
+    if (!rows.length) {
+      h = '<tr><td colspan="' + COLS.length + '" class="g-empty"><div><p><b>No entries match this view.</b> The record covers the twelve tracked labs from ' + D.meta.first_date + " to " + D.meta.last_date + '.</p><button type="button" class="btn btn-sm" data-clear>Clear filters</button></div></td></tr>';
+    }
+    $("#grid-body").innerHTML = h;
+  }
 
-    function draw() {
-      chartMount.innerHTML = "";
-      var width = Math.max(holder.clientWidth, 300);
-      var height = 300;
-      var margin = { top: 16, right: 14, bottom: 28, left: 40 };
+  function renderList() {
+    var ml = $("#mlist");
+    if (!rows.length) {
+      ml.innerHTML = '<li class="g-empty"><p><b>No entries match this view.</b></p><button type="button" class="btn btn-sm" data-clear>Clear filters</button></li>';
+      return;
+    }
+    var legend = '<li class="m-legend" aria-hidden="true"><span>Squares: system card, model card, usage policy, paper.</span>' +
+      ["disclosed", "not_disclosed", "not_researched"].map(function (s) { return '<span class="lg-item">' + CR.discGlyph(s, 9) + " " + CR.DISC_WORDS[s] + "</span>"; }).join("") + "</li>";
+    ml.innerHTML = legend + rows.map(function (e, i) {
+      var s = e._score["gpqa-diamond"] || e._score["swe-bench-verified"];
+      var sb = e._score["gpqa-diamond"] ? "GPQA" : "SWE";
+      var sc = s ? '<span class="m-sc">' + sb + " " + (s.INDEPENDENT ? provChip("INDEPENDENT", s.INDEPENDENT.value) : "") + (s.LAB_REPORTED ? provChip("LAB_REPORTED", s.LAB_REPORTED.value) : "") + "</span>" : "";
+      return '<li><button type="button" class="mrow' + (e.id === openId ? " is-sel" : "") + '" data-i="' + i + '">' +
+        '<span class="m-name">' + esc(e.model_name) + (e.entry_type === "revision" ? ' <span class="tag">revision</span>' : "") + (e._retracted ? ' <span class="tag-retracted">retracted</span>' : "") + "</span>" +
+        '<span class="m-date num">' + e.date + "</span>" +
+        '<span class="m-meta">' + esc(e._orgName) + ", " + esc(CR.AVAIL_NAMES[e.availability_class]) + "</span>" +
+        '<span class="m-disc" aria-label="System card, model card, usage policy, paper: ' + CR.DISC_SLOTS.map(function (sl) { return CR.DISC_WORDS[e._disc[sl[0]]]; }).join(", ") + '">' + CR.DISC_SLOTS.map(function (sl) { return CR.discGlyph(e._disc[sl[0]], 9); }).join("") + "</span>" +
+        sc + "</button></li>";
+    }).join("");
+  }
 
-      var allBench = series.filter(function (s) { return s.benchmark === state.benchmark; });
-      var allDates = [];
-      allBench.forEach(function (s) {
-        s.points.forEach(function (p) { allDates.push(parseDate(p.date)); });
-      });
-      var visNow = visibleSeries();
-      if (!allDates.length || !visNow.length) {
-        /* an empty selection states itself in the chart area; a silently
-           blank chart reads as broken */
-        var msg = !allDates.length ?
-          "No measurements on record for this benchmark." :
-          "No measurements of the selected kinds for this benchmark. Older entries have independent scores only. Lab scores are added as new releases come in.";
-        chartMount.innerHTML = '<p class="chart-empty-note">' + esc(msg) + "</p>";
-        updateCaption();
-        updateAlt();
-        updateSource();
+  function update(resetScroll) {
+    compute();
+    syncControls();
+    var n = rows.length, nf = nFilters();
+    $("#ex-count").innerHTML = 'Showing <b class="num">' + n + "</b> of " + D.entries.length + " entries";
+    $("#x-clear").hidden = !nf;
+    $("#x-filters-btn").textContent = nf ? "Filters (" + nf + ")" : "Filters";
+    $("#fs-apply").textContent = "Show " + CR.plural(n, "entry", "entries");
+    $("#grid").setAttribute("aria-rowcount", n + 2);
+    if (resetScroll) { $("#grid-scroll").scrollTop = 0; focusI = 0; }
+    focusI = Math.min(focusI, Math.max(0, n - 1));
+    if (window.innerWidth <= 720) { renderList(); } else { renderRows(true); }
+    writeUrl(false);
+  }
+
+  /* ---------- keyboard in the grid ---------- */
+
+  function focusRow(i) {
+    if (!rows.length) { return; }
+    focusI = Math.max(0, Math.min(rows.length - 1, i));
+    var sc = $("#grid-scroll"), headH = $("#grid thead").offsetHeight;
+    var top = headH + focusI * RH, bottom = top + RH;
+    if (top - headH < sc.scrollTop) { sc.scrollTop = top - headH; }
+    else if (bottom > sc.scrollTop + sc.clientHeight) { sc.scrollTop = bottom - sc.clientHeight; }
+    renderRows(true);
+    var b = $('#grid-body .rbtn[data-i="' + focusI + '"]');
+    if (b) { b.focus({ preventScroll: true }); }
+  }
+  function wireGrid() {
+    var sc = $("#grid-scroll"), raf = 0;
+    sc.addEventListener("scroll", function () { if (!raf) { raf = requestAnimationFrame(function () { raf = 0; renderRows(false); }); } }, { passive: true });
+    $("#grid").addEventListener("click", function (ev) {
+      var s = ev.target.closest(".sortb");
+      if (s) {
+        var k = s.getAttribute("data-k");
+        if (SORT.k === k) { SORT.dir = -SORT.dir; } else { SORT.k = k; SORT.dir = (k === "date" || COLS.filter(function (c) { return c.k === k; })[0].num) ? -1 : 1; }
+        update(true);
+        var nb = $('#grid .sortb[data-k="' + k + '"]'); if (nb) { nb.focus(); }
         return;
       }
-      var monthPad = 40 * 86400000;
-      var x = d3.scaleUtc()
-        .domain([new Date(d3.min(allDates).getTime() - monthPad),
-                 new Date(d3.max(allDates).getTime() + monthPad)])
-        .range([margin.left, width - margin.right]);
-      var y = d3.scaleLinear().domain([0, 100]).range([height - margin.bottom, margin.top]);
-
-      var svg = d3.create("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .attr("viewBox", "0 0 " + width + " " + height)
-        .attr("class", "traj-svg")
-        .attr("role", "group")
-        .attr("aria-label", "Benchmark points over time; each point links to its entry card");
-
-      /* score rules: faint horizontal ledger lines */
-      var grid = svg.append("g").attr("class", "traj-grid");
-      [0, 20, 40, 60, 80, 100].forEach(function (v) {
-        grid.append("line")
-          .attr("x1", margin.left).attr("x2", width - margin.right)
-          .attr("y1", y(v)).attr("y2", y(v));
-        grid.append("text")
-          .attr("x", margin.left - 6).attr("y", y(v) + 3)
-          .attr("text-anchor", "end")
-          .text(v);
-      });
-      /* the unit, stated on the axis itself */
-      svg.append("text")
-        .attr("class", "traj-unit")
-        .attr("x", margin.left).attr("y", y(100) - 5)
-        .text("score, on the benchmark's own scale");
-
-      /* time axis: year ticks */
-      var axis = svg.append("g").attr("class", "traj-axis");
-      d3.utcYear.range(x.domain()[0], x.domain()[1]).forEach(function (t) {
-        var px = x(t);
-        axis.append("line")
-          .attr("x1", px).attr("x2", px)
-          .attr("y1", height - margin.bottom).attr("y2", height - margin.bottom + 5);
-        axis.append("text")
-          .attr("x", px + 4).attr("y", height - margin.bottom + 17)
-          .text(t.getUTCFullYear());
-      });
-
-      /* era bands: outlined annotation layers, drawn only when a benchmark
-         carries more than one era (generic; today each has exactly one,
-         and the era label rides in the caption instead) */
-      var eraList = eras[state.benchmark] || [];
-      if (eraList.length > 1) {
-        var bands = svg.append("g").attr("class", "traj-eras");
-        eraList.forEach(function (er) {
-          var sx = x(parseDate(er.start));
-          var ex = er.end ? x(parseDate(er.end)) : (width - margin.right);
-          bands.append("line")
-            .attr("x1", sx).attr("x2", sx)
-            .attr("y1", margin.top).attr("y2", height - margin.bottom);
-          if (er.end) {
-            bands.append("line")
-              .attr("x1", ex).attr("x2", ex)
-              .attr("y1", margin.top).attr("y2", height - margin.bottom);
-          }
-          bands.append("text")
-            .attr("x", Math.min(sx + 6, width - margin.right - 40))
-            .attr("y", margin.top + 10)
-            .text("era " + er.version);
-        });
-      }
-
-      /* marks only: solid = INDEPENDENT, hollow = LAB_REPORTED (D15).
-         Each point is a real link to its entry card, keyboard focusable. */
-      var marksG = svg.append("g").attr("class", "traj-points");
-      /* the chronologically newest visible measurement wears an outlined
-         annotation ring: orientation, never emphasis of value */
-      var newest = null;
-      visNow.forEach(function (s) {
-        s.points.forEach(function (p) {
-          if (!newest || p.date > newest.date) { newest = p; }
-        });
-      });
-      if (newest) {
-        marksG.append("circle")
-          .attr("class", "traj-latest-ring")
-          .attr("cx", x(parseDate(newest.date)))
-          .attr("cy", y(newest.value))
-          .attr("r", 7.5);
-      }
-      visNow.forEach(function (s) {
-        var solid = s.source_class === "INDEPENDENT";
-        s.points.forEach(function (p) {
-          var a = marksG.append("a")
-            .attr("class", "traj-point")
-            .attr("href", "#" + p.entry_id)
-            .attr("aria-label", p.model_name + ", " + s.benchmark_name +
-              " " + p.value + ", " + p.date + ", " +
-              (api.orgNames[p.org] || p.org) + ", " +
-              (CLASS_NAMES[s.source_class] || s.source_class) + ". Opens the entry card.");
-          a.append("circle")
-            .attr("class", "focus-ring")
-            .attr("cx", x(parseDate(p.date))).attr("cy", y(p.value)).attr("r", 8);
-          a.append("circle")
-            .attr("class", solid ? "dot dot-solid" : "dot dot-hollow")
-            .attr("cx", x(parseDate(p.date))).attr("cy", y(p.value)).attr("r", 4);
-          a.on("click", function (event) {
-            event.preventDefault();
-            tip.hide();
-            api.revealEntry(p.entry_id);
-          }).on("mouseenter", function (event) {
-            var pt = d3.pointer(event, holder);
-            tip.show(
-              '<span class="tip-name">' + esc(p.model_name) + "</span>" +
-              '<span class="tip-val">' + esc(p.value) + " on " + esc(s.benchmark_name) +
-              ' <span class="tip-class">' + esc(CLASS_NAMES[s.source_class] || s.source_class) + "</span></span>" +
-              '<span class="tip-date">' + esc(p.date) + "</span>" +
-              '<span class="tip-org">' + esc(api.orgNames[p.org] || p.org) + "</span>" +
-              (p.configuration ? '<span class="tip-config">configuration: ' + esc(p.configuration) + "</span>" : "") +
-              (p.retrieval_date ? '<span class="tip-config">retrieved ' + esc(p.retrieval_date) + "</span>" : ""),
-              pt[0], pt[1]);
-          }).on("mouseleave", tip.hide);
-        });
-      });
-
-      /* One tab stop for the whole chart, arrow keys between points in date
-         order (DESIGN Batch 1: "keyboard arrow-explore"). A hundred separate
-         stops put the filters about 170 tabs from the top (audit F4). */
-      var pointNodes = marksG.selectAll("a.traj-point").nodes();
-      pointNodes.sort(function (a, b) {
-        return (+a.querySelector(".dot").getAttribute("cx")) -
-               (+b.querySelector(".dot").getAttribute("cx"));
-      });
-      pointNodes.forEach(function (n, i) { n.setAttribute("tabindex", i === 0 ? "0" : "-1"); });
-      marksG.on("keydown", function (event) {
-        var i = pointNodes.indexOf(document.activeElement);
-        if (i < 0) { return; }
-        var next = { ArrowRight: i + 1, ArrowDown: i + 1, ArrowLeft: i - 1, ArrowUp: i - 1,
-                     Home: 0, End: pointNodes.length - 1 }[event.key];
-        if (next === undefined) { return; }
-        event.preventDefault();
-        next = Math.max(0, Math.min(pointNodes.length - 1, next));
-        pointNodes[i].setAttribute("tabindex", "-1");
-        pointNodes[next].setAttribute("tabindex", "0");
-        pointNodes[next].focus();
-      });
-
-      chartMount.appendChild(svg.node());
-      updateCaption();
-      updateAlt();
-      updateSource();
-    }
-
-    /* controls */
-    var radios = document.querySelectorAll('input[name="traj-bench"]');
-    radios.forEach(function (r) {
-      r.addEventListener("change", function () {
-        if (r.checked) { state.benchmark = r.value; draw(); }
-      });
+      if (ev.target.closest("[data-clear]")) { clearAll(); return; }
+      var tr = ev.target.closest("tbody tr[data-i]");
+      if (tr && !ev.target.closest("a")) { var i = +tr.getAttribute("data-i"); focusI = i; openEntry(rows[i].id); }
     });
-    var provInd = document.getElementById("prov-independent");
-    var provLab = document.getElementById("prov-lab");
-    if (provInd) {
-      provInd.addEventListener("change", function () {
-        state.classes.INDEPENDENT = provInd.checked; draw();
-      });
-    }
-    if (provLab) {
-      provLab.addEventListener("change", function () {
-        state.classes.LAB_REPORTED = provLab.checked; draw();
-      });
-    }
+    $("#grid").addEventListener("keydown", function (ev) {
+      var b = ev.target.closest(".rbtn"); if (!b) { return; }
+      var i = +b.getAttribute("data-i"), page = Math.max(1, Math.floor($("#grid-scroll").clientHeight / RH) - 2);
+      var map = { ArrowDown: i + 1, j: i + 1, ArrowUp: i - 1, k: i - 1, PageDown: i + page, PageUp: i - page, Home: 0, End: rows.length - 1 };
+      if (ev.key in map) {
+        ev.preventDefault(); ev.stopPropagation();
+        focusRow(map[ev.key]);
+        if (openId && (ev.key === "j" || ev.key === "k")) { openEntry(rows[focusI].id, true); }
+      }
+    });
+    $("#mlist").addEventListener("click", function (ev) {
+      if (ev.target.closest("[data-clear]")) { clearAll(); return; }
+      var b = ev.target.closest(".mrow"); if (b) { focusI = +b.getAttribute("data-i"); openEntry(rows[focusI].id); }
+    });
+  }
 
-    draw();
+  /* ---------- inspector ---------- */
 
-    var resizeTimer = null;
+  function host(u) { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (err) { return u; } }
+  function archLink(u) {
+    return u ? '<a href="' + esc(u) + '" rel="external noopener" target="_blank" class="arch">archived copy, <span class="num">' + CR.archiveDate(u) + "</span></a>" : '<span class="t-m">no archived copy yet</span>';
+  }
+  function inspectorHtml(e) {
+    var pred = e.predecessor && D.byId[e.predecessor] ? D.byId[e.predecessor] : null;
+    var outside = !matches(e);
+    var h = '<div class="ins-head">' +
+      '<button type="button" class="btn btn-sm ins-back" data-close-ins>Back to the list</button>' +
+      '<div class="ins-nav"><button type="button" class="btn btn-sm" data-step="-1" aria-label="Previous entry in the list"' + (rowIndex(e.id) <= 0 ? " disabled" : "") + '>Previous <kbd>k</kbd></button><button type="button" class="btn btn-sm" data-step="1" aria-label="Next entry in the list"' + (rowIndex(e.id) < 0 || rowIndex(e.id) >= rows.length - 1 ? " disabled" : "") + '>Next <kbd>j</kbd></button>' +
+      '<button type="button" class="btn btn-sm btn-icon ins-x" data-close-ins aria-label="Close the inspector (Escape)">×</button></div></div>';
+    h += '<div class="ins-body">';
+    if (outside) { h += '<p class="ins-out">This entry is outside the current filters. <button type="button" class="link-btn" data-clear>Clear filters</button></p>'; }
+    h += '<p class="ins-kicker">' + esc(e._orgName) + ", " + '<span class="num">' + e.date + "</span>" + (e.entry_type === "revision" ? ', <span class="tag">revision</span>' : "") + "</p>";
+    h += '<h2 id="ins-h" tabindex="-1">' + esc(e.model_name) + "</h2>";
+    if (e._retracted) { h += '<p class="ins-retracted"><b>Retracted.</b> ' + esc(e.retraction_note || "This entry should not have been on the record.") + "</p>"; }
+    if (e.variants && e.variants.length) { h += '<p class="ins-var">Variants: ' + e.variants.map(esc).join(", ") + "</p>"; }
+    h += '<div class="ins-acts"><button type="button" class="btn btn-sm" data-copy-entry>Copy link to this entry</button></div>';
+    h += '<p class="ins-sum">' + esc(e.summary) + "</p>";
+    if (e.correction_note) { h += '<p class="ins-corr"><b>Correction.</b> ' + esc(e.correction_note) + "</p>"; }
+
+    h += '<dl class="ins-facts">' +
+      "<div><dt>Availability</dt><dd>" + esc(CR.AVAIL_NAMES[e.availability_class] || e.availability_class) + "</dd></div>" +
+      "<div><dt>Parameters</dt><dd>" + (typeof e.parameters === "number" ? '<span class="num">' + CR.fmtParams(e.parameters) + "</span>" : '<span class="nc">no count on record</span>') + "</dd></div>" +
+      "<div><dt>Country</dt><dd>" + esc(e._country) + "</dd></div>" +
+      "<div><dt>Origin</dt><dd>" + esc(CR.ORIGIN_NAMES[e.origin] || e.origin) + "</dd></div>" +
+      "<div><dt>Predecessor</dt><dd>" + (pred ? '<button type="button" class="link-btn" data-open="' + esc(pred.id) + '">' + esc(pred.model_name) + "</button>" : '<span class="t-m">none on record</span>') + "</dd></div>" +
+      (e.license_note ? "<div><dt>Licence</dt><dd>" + esc(e.license_note) + "</dd></div>" : "") + "</dl>";
+
+    /* scores */
+    h += '<h3 class="ins-h3">Scores</h3>';
+    var benches = Object.keys(e._score);
+    if (!benches.length) { h += '<p class="t-m">No benchmark measurements recorded for this entry.</p>'; }
+    benches.forEach(function (b) {
+      h += '<div class="ins-bench"><p class="ib-name">' + esc(CR.BENCH[b] || b) + "</p>";
+      ["INDEPENDENT", "LAB_REPORTED"].forEach(function (cls) {
+        var s = e._score[b][cls]; if (!s) { return; }
+        var p = s.provenance || {};
+        h += '<div class="ib-row"><span class="ib-v num">' + s.value + "</span>" + CR.provTag(cls, p.source_url, p.retrieval_date) +
+          '<span class="ib-src">' + (cls === "INDEPENDENT" ? "Epoch AI" : "the lab") + ", retrieved <span class=\"num\">" + esc(p.retrieval_date) + "</span>. Version: " + esc(p.benchmark_version || "") + ".</span>" +
+          '<p class="ib-cfg"><span>Settings</span> ' + (s.configuration ? esc(s.configuration) : "not stated") + "</p></div>";
+      });
+      e._deltas.forEach(function (d) {
+        if (d.kind !== "delta" || d.benchmark !== b) { return; }
+        h += '<p class="ib-delta"><span class="num">' + (d.value >= 0 ? "+" : "−") + Math.abs(d.value).toFixed(1) + "</span> against the predecessor" + (pred ? ", " + esc(pred.model_name) : "") +
+          ' (<span class="num">' + d.predecessor + "</span> to <span class=\"num\">" + d.current + "</span>), " + (d.source_class === "INDEPENDENT" ? "both independent" : "both lab-reported") + ". " + CR.provTag(d.source_class, d.source_url, null) + "</p>";
+      });
+      h += "</div>";
+    });
+    e._deltas.forEach(function (d) {
+      if (d.kind === "REFUSED_COMPARISON") { h += '<p class="ib-refused"><b>No comparable measurement against the predecessor.</b> Reason on record: ' + esc(d.reason) + ". A change is shown only when both scores share a benchmark, its version and the kind of source.</p>"; }
+    });
+
+    /* disclosure */
+    h += '<h3 class="ins-h3">Disclosure</h3><dl class="ins-disc">';
+    CR.DISC_SLOTS.forEach(function (sl) {
+      var v = (e.disclosure_links || {})[sl[0]], st = e._disc[sl[0]];
+      h += "<div><dt>" + sl[1] + "</dt><dd>" + CR.discMark(st);
+      if (st === "disclosed") {
+        h += '<span class="ins-links"><a href="' + esc(v) + '" rel="external noopener" target="_blank">' + esc(host(v)) + "</a>" + archLink((e.disclosure_archived || {})[sl[0]]) + "</span>";
+      }
+      h += "</dd></div>";
+    });
+    h += "</dl>";
+
+    /* sources */
+    h += '<h3 class="ins-h3">Sources</h3><ul class="ins-src">';
+    (e.sources || []).forEach(function (s) {
+      h += '<li><a href="' + esc(s.url) + '" rel="external noopener" target="_blank">' + esc(CR.SOURCE_KIND_NAMES[s.kind] || s.kind.replace(/_/g, " ")) + '</a> <span class="t-m">' + esc(host(s.url)) +
+        '</span><span class="src-meta">Retrieved <span class="num">' + esc(s.retrieval_date) + "</span>. " + (s.archived_url ? archLink(s.archived_url) : (s.kind === "epoch_csv" ? '<span class="t-m">a dataset, not archived</span>' : '<span class="t-m">no archived copy yet</span>')) + "</span></li>";
+    });
+    h += "</ul>";
+    h += '<p class="ins-foot">Entry id <code class="num">' + esc(e.id) + '</code>. See something wrong? <a href="https://github.com/wrobinson127/versioncontrol/issues/new">Report an error</a>.</p>';
+    return h + "</div>";
+  }
+  function rowIndex(id) { for (var i = 0; i < rows.length; i++) { if (rows[i].id === id) { return i; } } return -1; }
+  function openEntry(id, keepFocus) {
+    var e = D.byId[id]; if (!e) { return; }
+    var wasOpen = !!openId;
+    openId = id;
+    var ins = $("#inspector");
+    ins.innerHTML = inspectorHtml(e);
+    ins.hidden = false;
+    document.body.classList.add("ins-open");
+    $("#ex-layout").classList.add("has-ins");
+    var ri = rowIndex(id); if (ri >= 0) { focusI = ri; }
+    writeUrl(!wasOpen && window.innerWidth <= 720);
+    document.title = e.model_name + ", " + e._orgName + ", Version Control explorer";
+    if (window.innerWidth <= 720) { renderList(); } else { renderRows(true); }
+    if (!keepFocus) { var hh = $("#ins-h"); if (hh) { hh.focus({ preventScroll: true }); } }
+    ins.scrollTop = 0;
+  }
+  function closeEntry(fromPop) {
+    if (!openId) { return; }
+    var id = openId;
+    openId = null;
+    $("#inspector").hidden = true;
+    $("#ex-layout").classList.remove("has-ins");
+    document.body.classList.remove("ins-open");
+    document.title = "Version Control explorer";
+    if (!fromPop) { writeUrl(false); }
+    if (window.innerWidth <= 720) {
+      renderList();
+      var mb = $$(".mrow").filter(function (b) { return rows[+b.getAttribute("data-i")].id === id; })[0];
+      if (mb) { mb.focus(); }
+    } else {
+      renderRows(true);
+      var ri = rowIndex(id); if (ri >= 0) { focusRow(ri); }
+    }
+  }
+  function wireInspector() {
+    var ins = $("#inspector");
+    ins.addEventListener("click", function (ev) {
+      if (ev.target.closest("[data-close-ins]")) { if (window.innerWidth <= 720 && history.state && history.state.id) { history.back(); } else { closeEntry(); } return; }
+      var st = ev.target.closest("[data-step]");
+      if (st) { var i = rowIndex(openId) + (+st.getAttribute("data-step")); if (rows[i]) { openEntry(rows[i].id, true); } return; }
+      var o = ev.target.closest("[data-open]"); if (o) { openEntry(o.getAttribute("data-open")); return; }
+      if (ev.target.closest("[data-copy-entry]")) { CR.copyText(location.origin + location.pathname + "?id=" + encodeURIComponent(openId), "Link to this entry copied"); return; }
+      if (ev.target.closest("[data-clear]")) { clearAll(); openEntry(openId); }
+    });
+    window.addEventListener("popstate", function () {
+      var id = new URLSearchParams(location.search).get("id");
+      if (id && D.byId[id]) { openEntry(id); } else { closeEntry(true); }
+    });
+  }
+
+  /* ---------- toolbar, sheet, boot ---------- */
+
+  function clearAll() {
+    KEYS.forEach(function (k) { F[k] = ""; }); F.lab = [];
+    update(true);
+  }
+  function wireToolbar() {
+    var t = null;
+    $("#x-q").addEventListener("input", function () { var v = this.value; clearTimeout(t); t = setTimeout(function () { F.q = v.trim(); update(true); }, 140); });
+    $("#x-q").addEventListener("keydown", function (ev) { if (ev.key === "Escape" && this.value) { ev.stopPropagation(); this.value = ""; F.q = ""; update(true); } if (ev.key === "ArrowDown" || ev.key === "Enter") { ev.preventDefault(); if (window.innerWidth > 720) { focusRow(0); } } });
+    $("#x-from").addEventListener("change", function () { F.from = CR.validDate(this.value) ? this.value : ""; update(true); });
+    $("#x-to").addEventListener("change", function () { F.to = CR.validDate(this.value) ? this.value : ""; update(true); });
+    $("#x-clear").addEventListener("click", clearAll);
+    $("#x-copy").addEventListener("click", function () { CR.copyText(location.href, "Link to this view copied"); });
+    CR.wireDialog($("#fsheet"));
+    $("#x-filters-btn").addEventListener("click", function () { CR.openDialog($("#fsheet"), "select, input"); });
+    $("#fs-apply").addEventListener("click", function () { $("#fsheet").close(); });
+    $("#fs-clear").addEventListener("click", clearAll);
+    var lastMobile = window.innerWidth <= 720, rt = null;
     window.addEventListener("resize", function () {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(draw, 150);
+      clearTimeout(rt);
+      rt = setTimeout(function () {
+        var m = window.innerWidth <= 720;
+        placeControls();
+        if (m !== lastMobile) { lastMobile = m; update(false); } else if (!m) { renderRows(true); }
+      }, 100);
     });
   }
 
-  /* =================== disclosure record (D16) =================== */
+  CR.initShell();
+  CR.shortcut("f", "Focus the search box", function () { $("#x-q").focus(); $("#x-q").select(); }, "Explorer");
+  CR.shortcut("j", "Next entry (opens it when the inspector is open)", function () { if (openId) { var i = rowIndex(openId) + 1; if (rows[i]) { openEntry(rows[i].id, true); } } else { focusRow(focusI); } }, "Explorer");
+  CR.shortcut("k", "Previous entry", function () { if (openId) { var i = rowIndex(openId) - 1; if (rows[i]) { openEntry(rows[i].id, true); } } else { focusRow(focusI); } }, "Explorer");
+  CR.shortcut("Escape", "Close the inspector", function () { if (openId) { closeEntry(); } }, "Explorer");
+  CR.shortcut("l", "Copy a link to the open entry", function () { if (openId) { CR.copyText(location.origin + location.pathname + "?id=" + encodeURIComponent(openId), "Link to this entry copied"); } }, "Explorer");
+  CR.shortcut("↓", "In the grid: move between rows (Page Down, Home and End work too)", null, "Explorer");
 
-  function initMatrix(api, views) {
-    var grid = document.getElementById("matrix-grid");
-    var tableHolder = document.getElementById("matrix-table-holder");
-    if (!grid || !views || !views.disclosure_matrix) { return; }
-
-    var dm = views.disclosure_matrix;
-    var artifacts = dm.artifacts || [];
-    var status = dm.artifact_status || {};
-
-    /* a column with zero links on record but researched rows awaiting
-       approval is the registrar's own pending state; it renders as
-       'under review', never as a wall of zeros (DESIGN rule 2) */
-    function isPendingCol(a) {
-      var st = status[a];
-      return !!(st && st.links_on_record === 0 && st.pending_review > 0);
-    }
-
-    /* aggregate the per-release rows into organization x artifact counts */
-    var agg = {};
-    REGISTRY_ORDER.forEach(function (org) {
-      agg[org] = {};
-      artifacts.forEach(function (a) { agg[org][a] = { disclosed: 0, total: 0, not_researched: 0 }; });
+  CR.load().then(function (data) {
+    D = data;
+    defineCols();
+    readUrl();
+    CR.addRecordToPalette(D, function (o) { KEYS.forEach(function (k) { F[k] = ""; }); F.lab = [o]; update(true); }, function (e) { openEntry(e.id); });
+    CR.paletteSource(function () {
+      return [{ group: "Actions", rank: 30, title: "Clear filters", meta: nFilters() ? CR.plural(nFilters(), "filter") + " set" : "No filter is set", run: clearAll },
+        { group: "Actions", rank: 31, title: "Show entries with an independent score", meta: "Any benchmark", run: function () { F.gpqa = "INDEPENDENT"; update(true); } },
+        { group: "Actions", rank: 32, title: "Show releases with a system card on record", run: function () { F.type = "release"; F.sc = "disclosed"; update(true); } }];
     });
-    (dm.rows || []).forEach(function (r) {
-      if (!agg[r.org]) { return; }
-      artifacts.forEach(function (a) {
-        /* Three states per cell. "not_researched" is the registrar's own gap
-           and is excluded from every share: the denominator is releases the
-           registrar looked at, never all releases. A lab's silence nobody has
-           checked for is not a lab's silence. */
-        var state = r.cells ? r.cells[a] : "not_researched";
-        if (state === "not_researched") { agg[r.org][a].not_researched += 1; return; }
-        agg[r.org][a].total += 1;
-        if (state === "disclosed") { agg[r.org][a].disclosed += 1; }
-      });
-    });
-
-    /* the glyph legend, where a legend belongs (not inside data cells) */
-    var legendEl = document.getElementById("matrix-legend");
-    if (legendEl) {
-      legendEl.innerHTML =
-        '<span><svg width="9" height="8" viewBox="0 0 9 8" aria-hidden="true"><circle cx="4" cy="4" r="3" class="dm-dot-filled"/></svg> links on record</span>' +
-        '<span><svg width="9" height="8" viewBox="0 0 9 8" aria-hidden="true"><circle cx="4" cy="4" r="3" class="dm-dot-hollow"/></svg> none on record</span>' +
-        (artifacts.some(isPendingCol) ?
-          "<span><em>under review</em>: researched links awaiting review; no counts shown</span>" : "") +
-        (artifacts.some(function (a) {
-          var st = status[a];
-          return !!(st && st.links_on_record > 0 && st.pending_review > 0);
-        }) ? "<span><em>more under review</em>: counts shown are links on record; further researched links await approval</span>" : "");
-    }
-
-    /* a mixed column (some links on record, more researched rows in the
-       queue) states its own incompleteness so a true 0-count cell cannot
-       be misread as the lab's final record */
-    function isMixedCol(a) {
-      var st = status[a];
-      return !!(st && st.links_on_record > 0 && st.pending_review > 0);
-    }
-
-    var html = '<div class="dm-corner" aria-hidden="true"></div>';
-    artifacts.forEach(function (a) {
-      var head = "";
-      if (isPendingCol(a)) { head = "under review"; }
-      else if (isMixedCol(a)) { head = "more under review"; }
-      html += '<div class="dm-colhead" aria-hidden="true">' + esc(ARTIFACT_NAMES[a] || a) +
-        (head ? '<span class="dm-head-status">' + head + "</span>" : "") + "</div>";
-    });
-    REGISTRY_ORDER.forEach(function (org) {
-      html += '<div class="dm-rowhead" aria-hidden="true">' + esc(api.orgNames[org] || org) + "</div>";
-      artifacts.forEach(function (a) {
-        var c = agg[org][a];
-        if (isPendingCol(a)) {
-          var pLabel = "Under review: " + (api.orgNames[org] || org) + ", " +
-            (ARTIFACT_NAMES[a] || a) +
-            " links are researched and awaiting review; no count is on record. " +
-            "Filters the timeline to this organization's releases.";
-          html += '<button type="button" class="dm-cell is-pending" data-org="' + esc(org) +
-            '" data-artifact="' + esc(a) + '" aria-label="' + esc(pLabel) + '">' +
-            '<span class="dm-pending-word">under review</span></button>';
-          return;
-        }
-        // The visible text (e.g. "9/37") must appear inside the accessible
-        // name (WCAG 2.5.3 label-in-name). The single glyph encodes the
-        // cell's state: filled = links on record, hollow = none.
-        var label = c.disclosed + "/" + c.total + ": " +
-          (api.orgNames[org] || org) + ", " + (ARTIFACT_NAMES[a] || a) + ", " +
-          c.disclosed + " of " + c.total +
-          " researched releases with a link on record" +
-          (c.not_researched ? ", " + c.not_researched + " not yet researched" : "") +
-          ". Filters the timeline to this organization's releases.";
-        var glyph = c.disclosed > 0
-          ? '<circle cx="4" cy="4" r="3" class="dm-dot-filled"/>'
-          : '<circle cx="4" cy="4" r="3" class="dm-dot-hollow"/>';
-        html += '<button type="button" class="dm-cell" data-org="' + esc(org) +
-          '" data-artifact="' + esc(a) + '" aria-label="' + esc(label) + '">' +
-          '<svg class="dm-dots" width="9" height="8" viewBox="0 0 9 8" aria-hidden="true">' +
-          glyph + "</svg>" +
-          '<span class="dm-count">' + c.disclosed + "/" + c.total + "</span></button>";
-      });
-    });
-    grid.innerHTML = html;
-    grid.style.setProperty("--dm-cols", String(artifacts.length));
-
-    /* the disclosure record's time dimension: paper links by year (the
-       only artifact fully on record today), raw counts, no smoothing */
-    var yearsEl = document.getElementById("matrix-years");
-    if (yearsEl) {
-      var byYear = {};
-      (dm.rows || []).forEach(function (r) {
-        var yKey = r.date.slice(0, 4);
-        var b = byYear[yKey] = byYear[yKey] || { with_paper: 0, total: 0 };
-        var ps = r.cells ? r.cells.paper : "not_researched";
-        if (ps === "not_researched") { return; }
-        b.total += 1;
-        if (ps === "disclosed") { b.with_paper += 1; }
-      });
-      var segs = Object.keys(byYear).sort().map(function (yKey) {
-        return yKey + " " + byYear[yKey].with_paper + " of " + byYear[yKey].total + " researched";
-      });
-      yearsEl.textContent = segs.length ?
-        "Releases with a paper link, by year: " + segs.join(", ") + "." : "";
-    }
-
-    /* One tab stop for the grid, arrow keys across and down (audit F4):
-       48 separate stops sat between the chart and the filters. */
-    var cells = Array.prototype.slice.call(grid.querySelectorAll(".dm-cell"));
-    var ncols = Math.max(1, Number(getComputedStyle(grid).getPropertyValue("--dm-cols")) || 4);
-    cells.forEach(function (c, i) { c.setAttribute("tabindex", i === 0 ? "0" : "-1"); });
-    grid.addEventListener("keydown", function (event) {
-      var i = cells.indexOf(document.activeElement);
-      if (i < 0) { return; }
-      var next = { ArrowRight: i + 1, ArrowLeft: i - 1, ArrowDown: i + ncols, ArrowUp: i - ncols,
-                   Home: 0, End: cells.length - 1 }[event.key];
-      if (next === undefined || next < 0 || next >= cells.length) { return; }
-      event.preventDefault();
-      cells[i].setAttribute("tabindex", "-1");
-      cells[next].setAttribute("tabindex", "0");
-      cells[next].focus();
-    });
-
-    grid.addEventListener("click", function (event) {
-      var cell = event.target.closest ? event.target.closest(".dm-cell") : null;
-      if (!cell) { return; }
-      var org = cell.getAttribute("data-org");
-      var artifact = cell.getAttribute("data-artifact");
-      var c = agg[org][artifact];
-      api.filterOrgReleases(org,
-        "Timeline filtered to " + (api.orgNames[org] || org) + " releases from the disclosure record. " +
-        "Selected artifact: " + (ARTIFACT_NAMES[artifact] || artifact) + ", " +
-        (isPendingCol(artifact) ?
-          "links awaiting review, not yet on record." :
-          c.disclosed + " of " + c.total + " researched releases with a link on record."));
-    });
-
-    /* text alternative: a real table with the same counts. The clipping
-       class sits on the wrapper div; table boxes do not honor overflow. */
-    if (tableHolder) {
-      tableHolder.className = "visually-hidden";
-      var pendingNote = artifacts.some(function (a) {
-        var st = status[a];
-        return !!(st && st.pending_review > 0);
-      }) ? " Some researched links await review and are not yet counted." : "";
-      var t = '<table><caption>Disclosure links on record by organization and artifact, releases only. Each value is the count of releases with a link on record, out of the releases we have checked for that item.' +
-        esc(pendingNote) + '</caption><thead><tr><th scope="col">Organization</th>';
-      artifacts.forEach(function (a) {
-        t += '<th scope="col">' + esc(ARTIFACT_NAMES[a] || a) + "</th>";
-      });
-      t += "</tr></thead><tbody>";
-      REGISTRY_ORDER.forEach(function (org) {
-        t += '<tr><th scope="row">' + esc(api.orgNames[org] || org) + "</th>";
-        artifacts.forEach(function (a) {
-          var c = agg[org][a];
-          t += "<td>" + (isPendingCol(a) ? "under review" :
-            c.disclosed + " of " + c.total) + "</td>";
-        });
-        t += "</tr>";
-      });
-      t += "</tbody></table>";
-      tableHolder.innerHTML = t;
-    }
-  }
-
-  /* =================== boot =================== */
-
-  window.VCExplorer = {
-    init: function (api) {
-      api.loadGzJson("derived/views.json.gz").then(function (views) {
-        initTiles(views);
-        if (!window.d3) {
-          chartsUnavailable("The explorer charts could not be loaded in this session; the timeline below is unaffected.");
-          initMatrix(api, views);
-          return;
-        }
-        parseDate = function (s) { return new Date(s + "T00:00:00Z"); };
-        initPulse(api, api.entries.slice().reverse(), api.meta, views);
-        initTrajectory(api, views);
-        initMatrix(api, views);
-        if (api.layoutSettled) { api.layoutSettled(); }
-      }).catch(function () {
-        chartsUnavailable("The derived views file could not be loaded in this session; the timeline below is unaffected.");
-        var row = document.getElementById("tile-row");
-        if (row) {
-          row.innerHTML = '<p class="tiles-loading">Registry measures could not be loaded in this session.</p>';
-        }
-      });
-    }
-  };
+    buildHead();
+    buildControls();
+    placeControls();
+    wireGrid(); wireInspector(); wireToolbar();
+    $("#ex-sub").textContent = "Every entry in the record: " + D.meta.releases + " releases and " + D.meta.revisions + " revisions from twelve tracked labs, " + D.meta.first_date + " to " + D.meta.last_date + ". Filter any column; select a row for its sources.";
+    update(false);
+    document.documentElement.classList.add("ready");
+    if (openId) { var id = openId; openId = null; openEntry(id); var ri = rowIndex(id); if (ri >= 0 && window.innerWidth > 720) { var sc = $("#grid-scroll"); sc.scrollTop = Math.max(0, ri * RH - sc.clientHeight / 3); renderRows(true); } }
+  }).catch(function (err) {
+    console.error(err);
+    $("#grid-scroll").innerHTML = '<div class="load-error"><p>The record could not be loaded in this session (' + esc(err && err.message ? err.message : "unknown error") + ").</p><p>The dataset itself is unaffected; it is versioned with the site. Reloading the page retries the fetch.</p></div>";
+  });
 })();
