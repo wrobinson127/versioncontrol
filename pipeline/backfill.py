@@ -204,6 +204,31 @@ def apply_scope_exclusions(entries: list, root: str = ".") -> list:
 CARRIED_ORIGINS = ("manual", "nightly-pipeline")
 
 
+# Predecessor links the family heuristic cannot derive, each with its source.
+# Applied after carrying, so a link to a hand-recorded entry survives every
+# rebuild (Phase 3 review: the rebuild re-chained Codestral 25.08 to the 2024
+# Codestral, skipping 25.01).
+PREDECESSOR_OVERRIDES = {
+    "mistral--codestral-25.08": (
+        "mistral--codestral-25.01",
+        "Mistral's model page for Codestral 25.01 names 25.08 as its "
+        "replacement (docs.mistral.ai, retrieved 2026-10-19)."),
+}
+
+
+def apply_predecessor_overrides(entries: list) -> list:
+    """Set overridden predecessors; return the ids changed. An override whose
+    target is not on the record is skipped, never invented."""
+    ids = {e["id"] for e in entries}
+    changed = []
+    for e in entries:
+        target = PREDECESSOR_OVERRIDES.get(e["id"])
+        if target and target[0] in ids and e["predecessor"] != target[0]:
+            e["predecessor"] = target[0]
+            changed.append(e["id"])
+    return changed
+
+
 def carry_manual_entries(entries: list, root: str = ".") -> list:
     """Keep entries the capture cannot produce.
 
@@ -765,6 +790,9 @@ def main():
     carried = carry_manual_entries(entries, root=args.root)
     for e in carried:
         print(f"CARRIED ({e.get('origin')}, not in this capture): {e['id']}")
+
+    for eid in apply_predecessor_overrides(entries):
+        print(f"PREDECESSOR OVERRIDE: {eid}")
 
     excluded = apply_scope_exclusions(entries, root=args.root)
     for e in excluded:
