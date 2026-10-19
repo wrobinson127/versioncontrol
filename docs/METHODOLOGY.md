@@ -65,7 +65,7 @@ GPQA Diamond has 198 questions, so one question is worth about half a point, and
 
 ## Sources and licensing
 
-- **Epoch AI, "Data on AI Models"** (release dates, lab names, parameter counts, availability) and **Epoch AI, "Capabilities & benchmarking"** (every independent score): CC-BY 4.0, citations in `DATA_LICENSE.md`. All independent scores come from one evaluator, Epoch AI. The lab-versus-independent view holds five pairs so far, picked from recent major releases and run at different settings, so it is not a test of whether labs overstate.
+- **Epoch AI, "Data on AI Models"** (release dates, lab names, parameter counts, availability) and **Epoch AI, "Capabilities & benchmarking"** (every independent score): CC-BY 4.0, citations in `DATA_LICENSE.md`. All independent scores come from one evaluator, Epoch AI. The lab-versus-independent view holds only a few pairs so far, picked from recent major releases and run at different settings, so it is not a test of whether labs overstate.
 - **Lab announcements**: facts and links only; no republication of announcement text beyond short attributed fragments. Lab-reported scores cite the lab's own publication.
 - **OpenRouter**: used only to spot new models. The site does not show OpenRouter's prices or context lengths, and its catalog is not in the dataset. Prices quoted in an entry's summary are the lab's own figures.
 - **Artificial Analysis**: used only for an internal coverage check (models they track that we lack become review flags). Its terms do not allow us to display its numbers, so none appear on the site or in the dataset.
