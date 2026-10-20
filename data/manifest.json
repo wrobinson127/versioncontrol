@@ -7,7 +7,7 @@
       "sha256": "17b33ad329cc0cb689b2c78fb42a13360911abf85f745eb4fa40f126733f7a0b"
     },
     "data/derived/views.json.gz": {
-      "sha256": "3b04975dff813fc8c9ffc859620936eb2e4625c957c0d13d058fef913b0e9f4e"
+      "sha256": "c480407b0557195a4ce7c76c543b3c92563719e2b7226f3dd11a1c549b1ed231"
     }
   },
   "entry_count": 366,
@@ -18,7 +18,7 @@
         "openai--chatgpt",
         "meta--opt-iml-175b"
       ],
-      "sha256": "ff69f1dcf6f5fe0f1f2d22a9b47d273c7a6eb8faf6bdf6c1bbd4889b9514488e"
+      "sha256": "99601680a1e1567a376b9f1ac57a4bc039900ef4c073990f4e4c85bc39963f69"
     },
     "data/entries/2023.json.gz": {
       "count": 46,
@@ -70,12 +70,11 @@
         "google-deepmind--funsearch",
         "google-deepmind--gemini-nano-1"
       ],
-      "sha256": "dfad51562d8f1a0faeca38af5ea012dbed6d632160a1fe7288ff2557a3912c89"
+      "sha256": "c5e5de65ba8265915b5e47756f672a15a9064d21aabe52c0bbc0bd961efb78da"
     },
     "data/entries/2024.json.gz": {
       "count": 95,
       "ids": [
-        "moonshot--kimi-explorer",
         "deepseek--deepseekmoe-16b",
         "zai--glm-4",
         "alibaba-qwen--qwen-vl-max",
@@ -146,6 +145,7 @@
         "alibaba-qwen--qwen2.5-72b",
         "alibaba-qwen--qwen2.5-math-7b-base",
         "meta--llama-3.2-90b",
+        "moonshot--kimi-explorer",
         "alibaba-qwen--marco-o1",
         "mistral--ministral-8b",
         "deepseek--janus-1.3b",
@@ -171,7 +171,7 @@
         "deepseek--deepseek-v3",
         "alibaba-qwen--qvq"
       ],
-      "sha256": "99207f20b3c147d55af18438147bd7dad626702660e9bb59512d458ba8c55133"
+      "sha256": "df33cde62c790bd64287b3243c9cd90c0d6c78d3cbd86f86483c4770df6ec356"
     },
     "data/entries/2025.json.gz": {
       "count": 127,
@@ -233,13 +233,13 @@
         "mistral--codestral-embed",
         "alibaba-qwen--qwen3-reranker",
         "google-deepmind--gemini-2.5-pro-jun-2025",
-        "mistral--devstral-medium",
         "mistral--magistral-small-1.0",
         "openai--o3-pro",
         "google-deepmind--gemini-2.5-flash-lite",
         "mistral--mistral-small-3.2",
         "moonshot--kimi-dev-72b",
         "xai--grok-4",
+        "mistral--devstral-medium",
         "moonshot--kimi-k2",
         "google-deepmind--gemini-embedding",
         "mistral--voxtral-mini",
@@ -304,7 +304,7 @@
         "openai--gpt-5.2-codex",
         "zai--glm-4.7"
       ],
-      "sha256": "c0282ed54786f330289ef47d0cbe11fd2c5046db6d6e025cef6f91745d07c78e"
+      "sha256": "d5d45d479dd64760eccfe604b081496fa94537e771472855dbe5713919db0e9d"
     },
     "data/entries/2026.json.gz": {
       "count": 96,
@@ -355,12 +355,12 @@
         "zai--glm-5.2",
         "anthropic--claude-sonnet-5",
         "mistral--leanstral-1.5",
-        "xai--grok-4.5",
         "meta--muse-spark-1.1",
         "openai--gpt-5.6-luna",
         "openai--gpt-5.6-sol",
         "openai--gpt-5.6-terra",
         "moonshot--kimi-k3",
+        "xai--grok-4.5",
         "alibaba-qwen--qwen-3.8-max",
         "google-deepmind--gemini-3.5-flash-lite",
         "google-deepmind--gemini-3.6-flash",
@@ -406,7 +406,7 @@
         "meta--muse-spark-open",
         "deepseek--deepseek-v4.1-flash-1017"
       ],
-      "sha256": "ede9b374fba0d81063850b7ef43d130cbd3f7193402f28af1d62786e482c9cd6"
+      "sha256": "30fabb5f9c70ef3369fbbafd8a22a7dc5ad74313f7e459d2a6ef813c70a15f08"
     }
   },
   "schema_version": 1

@@ -20,23 +20,25 @@
    "entry_id": "cohere--cohere-embed",
    "model_name": "Cohere Embed",
    "date": "2023-11-02",
-   "system_card": "",
-   "model_card": "",
-   "usage_policy": "",
-   "paper": "",
-   "status": "DRAFT_FLAGGED",
-   "notes": "Not researched this pass; embedding model outside the top-priority set."
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/CohereLabs/Cohere-embed-english-v3.0",
+   "usage_policy": "https://docs.cohere.com/docs/usage-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Not researched this pass; embedding model outside the top-priority set. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: CohereLabs HF README for embed-english-v3.0 fetched 200 (repo created 2023-11-02, launch day, with MTEB results and usage notes). JUDGMENT CALL: the repo holds only the tokenizer, no weights; a multilingual twin is at CohereLabs/Cohere-embed-multilingual-v3.0; paper: not found: checked arXiv title, abstract and Cohere author searches, the announcement post and the HF README Evidence: docs/finish/evidence/disclosure_research_2026-10-19/cohere.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
   },
   {
    "entry_id": "cohere--cohere-command-light",
    "model_name": "Cohere Command Light",
    "date": "2023-11-30",
-   "system_card": "",
-   "model_card": "",
-   "usage_policy": "",
-   "paper": "",
-   "status": "DRAFT_FLAGGED",
-   "notes": "Not researched this pass; lightweight variant of Command, which is covered above."
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://docs.cohere.com/docs/usage-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Not researched this pass; lightweight variant of Command, which is covered above. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: not found: no CohereLabs HF repo; the docs page 'Cohere's Command and Command Light' is a deprecated product listing, and its 'Command model card' link now resolves to the R/R+ responsible-use page (same ruling as approved cohere--cohere-command); paper: not found: checked arXiv search, the Bedrock announcement post and the docs Evidence: docs/finish/evidence/disclosure_research_2026-10-19/cohere.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
   },
   {
    "entry_id": "cohere--aya",
@@ -114,12 +116,13 @@
    "entry_id": "cohere--cohere-embed-4",
    "model_name": "Cohere Embed 4",
    "date": "2025-04-15",
-   "system_card": "",
-   "model_card": "",
-   "usage_policy": "",
-   "paper": "",
-   "status": "DRAFT_FLAGGED",
-   "notes": "Not researched this pass; embedding model outside the top-priority set."
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://docs.cohere.com/docs/usage-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Not researched this pass; embedding model outside the top-priority set. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: not found: no CohereLabs HF repo (only v3.0 embed repos) and the blog links none; the docs embed page is a product listing (Embed 5 ruling); paper: not found: checked arXiv title, abstract and Cohere author searches and the announcement post Evidence: docs/finish/evidence/disclosure_research_2026-10-19/cohere.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
   },
   {
    "entry_id": "cohere--command-a-vision",
@@ -149,12 +152,13 @@
    "entry_id": "cohere--north-mini-code",
    "model_name": "North Mini Code",
    "date": "2026-06-09",
-   "system_card": "",
-   "model_card": "",
-   "usage_policy": "",
-   "paper": "",
-   "status": "DRAFT_FLAGGED",
-   "notes": "Not researched this pass; candidate for the next research cycle."
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/CohereLabs/North-Mini-Code-1.0",
+   "usage_policy": "https://docs.cohere.com/docs/usage-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Not researched this pass; candidate for the next research cycle. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: CohereLabs HF North-Mini-Code-1.0 fetched 200, linked from the launch blog; paper: not found on arXiv (title, abstract and author searches); the HF community blog introducing-north-mini-code is a technical write-up, but the approved Command A Vision row rules that an HF launch blog is not a paper Evidence: docs/finish/evidence/disclosure_research_2026-10-19/cohere.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
   },
   {
    "entry_id": "cohere--embed-5",
@@ -166,6 +170,42 @@
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
    "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_other_labs.md, section cohere--embed-5. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "researched": true
+  },
+  {
+   "entry_id": "cohere--command-a-plus",
+   "model_name": "Command A+",
+   "date": "2026-05-20",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/CohereLabs/command-a-plus-05-2026-bf16",
+   "usage_policy": "https://docs.cohere.com/docs/usage-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: CohereLabs HF 'Model Card for Command A+' (bf16 repo, the first one the launch blog links; fp8 and w4a4 variants also exist) fetched 200; paper: not found: checked arXiv search (the Team Cohere author has only the Command A report), the launch blog (its only arXiv link is the third-party tau2-bench 2506.07982), the docs changelog and the HF card Evidence: docs/finish/evidence/disclosure_research_2026-10-19/cohere.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "cohere--north-micro-vision-instruct",
+   "model_name": "North Micro Vision Instruct",
+   "date": "2026-08-10",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "",
+   "usage_policy": "https://docs.cohere.com/docs/usage-policy",
+   "paper": "",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (system_card, usage_policy). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention) Evidence: docs/finish/evidence/disclosure_research_2026-10-19/cohere.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "cohere--tiny-aya",
+   "model_name": "Tiny Aya",
+   "date": "2026-09-02",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "",
+   "usage_policy": "https://docs.cohere.com/docs/usage-policy",
+   "paper": "https://arxiv.org/abs/2609.10445",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); paper: arXiv 2609.10445 (Cohere Labs authors) fetched 200; the abstract builds Tiny Aya L2-Thinker, and the en-thinker HF card tags and cites it. The earlier Tiny Aya report 2603.11510 covers the February 2026 base, global and regional release Evidence: docs/finish/evidence/disclosure_research_2026-10-19/cohere.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
    "researched": true
   }
  ]
