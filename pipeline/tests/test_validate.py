@@ -93,6 +93,7 @@ def test_null_parameters_rejected_not_disclosed_accepted():
     entry["parameters"] = None
     assert any("invariant 4" in e for e in validate.validate_entry(entry))
     entry["parameters"] = "NOT_DISCLOSED"
+    entry["parameters_basis"] = "NOT_DISCLOSED"
     assert validate.validate_entry(entry) == []
 
 

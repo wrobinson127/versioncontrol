@@ -61,6 +61,7 @@ The record holds {meta['entry_count']} entries ({meta['releases']} releases and 
 - Each benchmark score carries its source class: LAB_REPORTED (the lab's own figure) or INDEPENDENT (measured by Epoch AI). Do not mix the two when comparing.
 - NOT_DISCLOSED means we checked the lab's pages and found no such document. NOT_RESEARCHED means we have not researched it yet. Neither means zero.
 - A change against a predecessor is published only when both scores share the benchmark, its version, and the source class. Otherwise the comparison is refused.
+- Parameter counts come from Epoch AI's data and are not checked against the labs' pages. parameters_basis marks counts reported by others (third_party); the site leaves those out of its parameter findings.
 
 ## Pages
 
@@ -88,7 +89,7 @@ Cite as: Walker Robinson, Version Control, {SITE}, accessed on the date you retr
 
 RELEASE_COLUMNS = (
     "id", "model_name", "org", "organization", "date", "entry_type",
-    "availability_class", "origin", "parameters", "predecessor",
+    "availability_class", "origin", "parameters", "parameters_basis", "predecessor",
     "system_card", "model_card", "usage_policy", "paper", "retracted",
     "correction_note", "primary_source_url")
 SCORE_COLUMNS = (
@@ -120,6 +121,7 @@ def releases_csv(entries: list) -> str:
             "parameters": (int(e["parameters"])
                            if isinstance(e["parameters"], (int, float))
                            else e["parameters"]),
+            "parameters_basis": e["parameters_basis"],
             "predecessor": e["predecessor"] or "",
             **{a: links.get(a, validate.NOT_RESEARCHED)
                for a in validate.DISCLOSURE_ARTIFACTS},

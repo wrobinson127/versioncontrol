@@ -7,6 +7,7 @@
     "date": "2023-12-11",
     "availability_class": "open_weights",
     "parameters": 46700000000,
+    "parameters_basis": "lab",
     "summary": "Mistral AI released Mixtral 8x7B, a sparse mixture-of-experts language model, with open weights under the Apache 2.0 license. Mistral AI reports results on public benchmarks and provides a paper and model card. Neither pinned benchmark existed in the lab's announcement; no comparable measurement is recorded.",
     "benchmarks": [],
     "disclosure_links": {
@@ -32,6 +33,7 @@
     "date": "2025-08-07",
     "availability_class": "public_api",
     "parameters": "NOT_DISCLOSED",
+    "parameters_basis": "NOT_DISCLOSED",
     "summary": "OpenAI released GPT-5, available by public API and in ChatGPT. OpenAI reports benchmark results in the announcement and published a system card.",
     "benchmarks": [
       {
@@ -79,6 +81,7 @@
     "date": "2025-03-27",
     "availability_class": "public_api",
     "parameters": "NOT_DISCLOSED",
+    "parameters_basis": "NOT_DISCLOSED",
     "summary": "OpenAI updated the GPT-4o snapshot served in ChatGPT and by API. OpenAI documents the change in its release notes; no benchmark results were published for this revision.",
     "benchmarks": [],
     "disclosure_links": {

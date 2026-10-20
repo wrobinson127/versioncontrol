@@ -71,7 +71,9 @@ _epoch_bench_rd = []    # INDEPENDENT scores (Epoch's benchmarking data)
 _pairs = {}
 for yr in sorted(json.loads((ROOT / "data/manifest.json").read_text(encoding="utf-8"))["files"]):
     for e in json.loads(gzip.decompress((ROOT / yr).read_bytes())):
-        param_by_entry[e["id"]] = e.get("parameters") not in (None, "NOT_DISCLOSED", "")
+        # a count reported by others (a rumour, a leak, a post on X) is kept
+        # in the entry but left out of every parameter finding
+        param_by_entry[e["id"]] = e.get("parameters_basis") == "lab"
         avail_by_entry[e["id"]] = e.get("availability_class")
         for s in e.get("sources", []):
             if s.get("kind") == "epoch_csv" and s.get("retrieval_date"):
@@ -378,8 +380,9 @@ DPAPER_NOTE = (f"In {_D0}, {byyr_pap[_D0]} of {byyr_pap_res[_D0]} checked releas
                f"({_paperpct(_D0)}%). In {_D1} so far, {byyr_pap[_D1]} of {byyr_pap_res[_D1]} "
                f"({_paperpct(_D1)}%). Papers can come out weeks after a release, so recent years may rise."
                + (_skew_sentence(_SKEW_PAPER, "the share") if _SKEW_PAPER else ""))
-DPARAM_NOTE = (f"In {_D0}, {byyr_par[_D0]} of {byyr_n[_D0]} releases had a parameter count in Epoch AI's data "
+DPARAM_NOTE = (f"In {_D0}, {byyr_par[_D0]} of {byyr_n[_D0]} releases had a parameter count on record "
                f"({_parampct(_D0)}%). In {_D1} so far, {byyr_par[_D1]} of {byyr_n[_D1]} ({_parampct(_D1)}%). "
+               f"Counts reported by others are left out. "
                f"Epoch often adds counts for recent models late, and we have not checked the blanks against the labs' own pages.")
 _sc_dis = defaultdict(int); _sc_res = defaultdict(int)
 for r in V["disclosure_matrix"]["rows"]:
@@ -401,7 +404,7 @@ _DPAPER_T = {"fell": "Fewer arrive with a paper", "rose": "More arrive with a pa
 _DPARAM_T = {"fell": "And fewer have a parameter count on record", "rose": "And more have a parameter count on record"}.get(_PARAM_DIR, "And a parameter count on record")
 CLOSE_NOTE = (f"From {_D0} to {_D1}, the highest independent GPQA Diamond score {_moved(_cap_vals[0], _cap_vals[-1])} "
               f"from {_cap_vals[0]} to {_cap_vals[-1]}. The share of checked releases with a paper {_PAPER_DIR} "
-              f"from {_paperpct(_D0)}% to {_paperpct(_D1)}%, and the share with a parameter count in Epoch AI's data "
+              f"from {_paperpct(_D0)}% to {_paperpct(_D1)}%, and the share with a parameter count on record "
               f"{_PARAM_DIR} from {_parampct(_D0)}% to {_parampct(_D1)}%. The share with a system card "
               f"{_SC_DIR} from {_scpct(_D0)}% to {_scpct(_D1)}% ({_sc_dis[_D0]} of {_sc_res[_D0]}, then "
               f"{_sc_dis[_D1]} of {_sc_res[_D1]})."
@@ -539,7 +542,7 @@ FIND_H = (f"From {_D0} to {_D1}, {_more.get(_PAPER_DIR, 'as many')} releases cam
           f"and {_more.get(_SC_DIR, 'as many')} with a system card")
 FIND_P = ("Papers can come out weeks after a release, so recent years may rise."
           + (_skew_sentence(_SKEW_PAPER or _SKEW_SC, f"the {_D1} shares") if (_SKEW_PAPER or _SKEW_SC) else "")
-          + " Parameter counts are Epoch AI's and divide by all releases; Epoch often adds counts for recent "
+          + " Parameter counts are Epoch AI's and divide by all releases, leaving out counts reported by others; Epoch often adds counts for recent "
             "models late, and we have not checked the blanks against the labs' own pages.")
 
 # ---------------------------------------------------------------------------
@@ -652,7 +655,7 @@ MAIN = f"""<main id="main" class="story" tabindex="-1">
 <a class="enddoor" href="about.html"><b>About</b><span>what this is, and who keeps it</span></a>
 <a class="enddoor" href="data.html"><b>Data</b><span>download the dataset, CC-BY 4.0</span></a>
 </div>
-<p class="protonote">A few parameter counts are Epoch AI's own estimates, which the record does not yet mark. Data current as of {AS_OF}.</p>
+<p class="protonote">Parameter counts reported by others are left out of the parameter figures. Data current as of {AS_OF}.</p>
 </section>
 </main>
 """

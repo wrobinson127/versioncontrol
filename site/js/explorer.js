@@ -50,6 +50,13 @@
 
   /* ---------- state in the address ---------- */
 
+  /* A count Epoch AI records from a report by others (a rumour, a leak, a
+     post on X) shows as reported by others, with Epoch's note on hover. */
+  function paramsHTML(e) {
+    var n = '<span class="num">' + CR.fmtParams(e.parameters) + "</span>";
+    if (e.parameters_basis !== "third_party") { return n; }
+    return '<span class="p-other" title="' + CR.esc("Epoch AI's note: " + (e.parameters_note || "")) + '">' + n + ", reported by others</span>";
+  }
   var KEYS = ["q", "model", "year", "type", "avail", "country", "gpqa", "swe", "sc", "mc", "up", "pa", "params", "origin", "from", "to"];
   function readUrl() {
     var p = new URLSearchParams(location.search);
@@ -150,7 +157,7 @@
       case "country": return esc(e._country);
       case "gpqa": return scoreCell(e, "gpqa-diamond");
       case "swe": return scoreCell(e, "swe-bench-verified");
-      case "params": return typeof e.parameters === "number" ? '<span class="num">' + CR.fmtParams(e.parameters) + "</span>" : '<span class="nc" title="Epoch AI\'s data has no parameter count for this model. We have not checked whether the lab stated one.">no count</span>';
+      case "params": return typeof e.parameters === "number" ? paramsHTML(e) : '<span class="nc" title="Epoch AI\'s data has no parameter count for this model. We have not checked whether the lab stated one.">no count</span>';
       case "origin": return '<span class="t-m">' + esc({ "backfill-epoch": "Epoch AI data", "nightly-pipeline": "nightly detection", "manual": "by hand" }[e.origin] || e.origin) + "</span>";
       default: return c.disc ? discCell(e, c.disc) : "";
     }
@@ -376,7 +383,7 @@
 
     h += '<dl class="ins-facts">' +
       "<div><dt>Availability</dt><dd>" + esc(CR.AVAIL_NAMES[e.availability_class] || e.availability_class) + "</dd></div>" +
-      "<div><dt>Parameters</dt><dd>" + (typeof e.parameters === "number" ? '<span class="num">' + CR.fmtParams(e.parameters) + "</span>" : '<span class="nc">no count on record</span>') + "</dd></div>" +
+      "<div><dt>Parameters</dt><dd>" + (typeof e.parameters === "number" ? paramsHTML(e) : '<span class="nc">no count on record</span>') + "</dd></div>" +
       "<div><dt>Country</dt><dd>" + esc(e._country) + "</dd></div>" +
       "<div><dt>Origin</dt><dd>" + esc(CR.ORIGIN_NAMES[e.origin] || e.origin) + "</dd></div>" +
       "<div><dt>Predecessor</dt><dd>" + (pred ? '<button type="button" class="link-btn" data-open="' + esc(pred.id) + '">' + esc(pred.model_name) + "</button>" : '<span class="t-m">none on record</span>') + "</dd></div>" +

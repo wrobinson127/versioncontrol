@@ -14,6 +14,7 @@ def _seed_entries(root):
         "id": "openai--gpt-5.5", "entry_type": "release",
         "model_name": "GPT-5.5", "org": "openai", "date": "2026-04-23",
         "availability_class": "public_api", "parameters": "NOT_DISCLOSED",
+        "parameters_basis": "NOT_DISCLOSED",
         "summary": "OpenAI released GPT-5.5, available by public API. "
                    "The entry is backfilled from Epoch AI's models dataset.",
         "benchmarks": [], "disclosure_links": {

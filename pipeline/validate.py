@@ -40,9 +40,14 @@ _URL_RE = re.compile(r"^https?://\S+$")
 # everywhere else in this codebase, so the schema says which is allowed.
 REQUIRED_FIELDS = (
     "id", "entry_type", "model_name", "org", "date", "availability_class",
-    "parameters", "summary", "benchmarks", "disclosure_links", "predecessor",
-    "license_note", "sources", "origin", "retracted",
+    "parameters", "parameters_basis", "summary", "benchmarks",
+    "disclosure_links", "predecessor", "license_note", "sources", "origin",
+    "retracted",
 )
+
+# Whose parameter count it is: the lab's own, or a report by others that
+# Epoch AI records (a rumour, a leak, an estimate, a post on X).
+PARAMETERS_BASES = ("lab", "third_party")
 
 PROVENANCE_FIELDS = (
     "source_class", "source_url", "benchmark_name", "benchmark_version",
@@ -179,6 +184,20 @@ def validate_entry(entry) -> list:
             not isinstance(params, (int, float)) or isinstance(params, bool) or params <= 0):
         errors.append(f"parameters must be a positive number or the string "
                       f"{NOT_DISCLOSED!r}, got {params!r} (invariant 4: never null)")
+    basis = entry["parameters_basis"]
+    if params == NOT_DISCLOSED:
+        if basis != NOT_DISCLOSED:
+            errors.append(f"parameters_basis must be {NOT_DISCLOSED!r} when there "
+                          f"is no count, got {basis!r}")
+    elif basis not in PARAMETERS_BASES:
+        errors.append(f"parameters_basis {basis!r} not in {PARAMETERS_BASES}")
+    if basis == "third_party":
+        note = entry.get("parameters_note")
+        if not isinstance(note, str) or not note.strip():
+            errors.append("a third_party parameter count must carry parameters_note, "
+                          "the source's note on where the count came from")
+    elif "parameters_note" in entry:
+        errors.append("parameters_note belongs only to a third_party count")
 
     if not isinstance(entry["summary"], str) or not entry["summary"].strip():
         errors.append("summary must be a non-empty string")

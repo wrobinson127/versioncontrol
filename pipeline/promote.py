@@ -112,6 +112,9 @@ def candidate_to_entry(candidate: dict, existing_entries: list) -> dict:
         # two headline findings on the site, so a promoted entry that
         # under-reports it biases the exact number the story rests on.
         "parameters": _parameters(draft),
+        # Drafts read the lab's own announcement, so a count is the lab's.
+        "parameters_basis": ("lab" if isinstance(_parameters(draft), float)
+                             else validate.NOT_DISCLOSED),
         "summary": draft["summary"],
         "benchmarks": benchmarks,
         # Extraction reads one announcement page; it can find a link but it

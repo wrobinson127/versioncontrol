@@ -100,7 +100,9 @@
       <tr><td><code>entry_type</code></td><td>release, or revision: an update to a model already on record, shipped under the same name.</td></tr>
       <tr><td><code>availability_class</code></td><td>open_weights, public_api, or public_service (a product people can sign up for).</td></tr>
       <tr><td><code>origin</code></td><td>How the entry reached the record: backfill-epoch (from Epoch AI's dataset), nightly-pipeline (found by nightly detection, approved by hand), or manual (recorded by hand).</td></tr>
-      <tr><td><code>parameters</code></td><td>Total parameter count. NOT_DISCLOSED here means no count is on record: the lab stated none we could find, or Epoch AI's dataset has none.</td></tr>
+      <tr><td><code>parameters</code></td><td>Total parameter count. NOT_DISCLOSED here means Epoch AI's dataset has no count; we have not checked the labs' pages. parameters_basis says whether a count is the lab's own or reported by others.</td></tr>
+      <tr><td><code>parameters_basis</code></td><td>lab (the lab's own count), third_party (a count Epoch AI records from a report by others: a rumor, a leak, an estimate, a newsletter, another party's paper or a post on X), or NOT_DISCLOSED when there is no count. Third-party counts are left out of every parameter finding.</td></tr>
+      <tr><td><code>parameters_note</code></td><td>JSON only, on third_party counts: Epoch AI's note on where the count came from.</td></tr>
       <tr><td><code>predecessor</code></td><td>The id of the model this one follows, where the lab or the model family makes it clear. Comparisons against the predecessor are in derived/deltas.json.gz.</td></tr>
       <tr><td><code>system_card, model_card, usage_policy, paper</code></td><td>A link to the document, NOT_DISCLOSED (we checked the lab's pages and found none), or NOT_RESEARCHED (not yet checked). Neither means zero.</td></tr>
       <tr><td><code>benchmarks</code></td><td>Scores on GPQA Diamond and SWE-bench Verified only. Each carries its source class (LAB_REPORTED or INDEPENDENT), source URL, benchmark version, retrieval date and test settings. scores.csv has one row per score.</td></tr>

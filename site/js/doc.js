@@ -231,7 +231,7 @@
 
   function jsonHtml(D) {
     var e = D.entries[0], keep = {};
-    ["id", "model_name", "org", "date", "entry_type", "availability_class", "origin", "parameters", "predecessor", "disclosure_links"].forEach(function (k) { if (k in e) { keep[k] = e[k]; } });
+    ["id", "model_name", "org", "date", "entry_type", "availability_class", "origin", "parameters", "parameters_basis", "predecessor", "disclosure_links"].forEach(function (k) { if (k in e) { keep[k] = e[k]; } });
     keep.benchmarks = (e.benchmarks || []).length + " on record";
     keep.sources = (e.sources || []).map(function (s) { return { kind: s.kind, retrieval_date: s.retrieval_date, archived: !!s.archived_url }; });
     var txt = JSON.stringify(keep, null, 2).replace(/"(https?:\/\/[^"]{0,38})[^"]*"/g, '"$1..."');

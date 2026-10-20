@@ -279,6 +279,11 @@ def carry_manual_entries(entries: list, root: str = ".") -> list:
         for a, v in list(e.get("disclosure_links", {}).items()):
             if v == validate.NOT_DISCLOSED:
                 e["disclosure_links"][a] = validate.NOT_RESEARCHED
+        # Carried entries were drafted from the lab's own pages, so a count
+        # they hold is the lab's.
+        e.setdefault("parameters_basis",
+                     "lab" if isinstance(e.get("parameters"), (int, float))
+                     else validate.NOT_DISCLOSED)
     if carried:
         entries.extend(carried)
         entries.sort(key=lambda e: (e["date"], e["id"]))
@@ -389,6 +394,39 @@ def _params(row) -> object:
         return value if value > 0 else validate.NOT_DISCLOSED
     except ValueError:
         return validate.NOT_DISCLOSED
+
+
+# Epoch AI records some parameter counts from reports by others: a rumour,
+# a leak, an estimate, a newsletter, another party's paper, or a post on X
+# (a lab CEO's post on X is still not an official lab publication). Its
+# "Parameters notes" column says so. Those counts stay in the entry,
+# labelled third_party, and are left out of every parameter finding.
+_THIRD_PARTY_PARAM_RE = re.compile(
+    r"\brumou?r|\bleak|\bestimat|\bspeculat|\breportedly\b"
+    r"|newsletter|substack\.com|\bimport ai\b|semianalysis"
+    r"|according to [^.]*\bpaper\b"
+    r"|(?:^|[/.\s])x\.com/|twitter\.com/|\bon x\b|\btweet",
+    re.I)
+
+
+def parameters_basis(note: str) -> str:
+    """"third_party" when Epoch's note marks the count as reported by
+    others, otherwise "lab"."""
+    return "third_party" if _THIRD_PARTY_PARAM_RE.search(note or "") else "lab"
+
+
+def _params_fields(row) -> dict:
+    """parameters, parameters_basis and, for a count reported by others,
+    Epoch's note on where it came from."""
+    value = _params(row)
+    if value == validate.NOT_DISCLOSED:
+        return {"parameters": value, "parameters_basis": validate.NOT_DISCLOSED}
+    note = " ".join((row.get("Parameters notes") or "").split())
+    basis = parameters_basis(note)
+    out = {"parameters": value, "parameters_basis": basis}
+    if basis == "third_party":
+        out["parameters_note"] = note
+    return out
 
 
 def pick_flagship(cluster: list) -> dict:
@@ -684,7 +722,7 @@ def build_entries(rows: list, hub_rows: list, retrieval_date: str):
             "org": org,
             "date": entry_date,
             "availability_class": flagship["_availability"],
-            "parameters": _params(flagship),
+            **_params_fields(flagship),
             "summary": "",  # set after hub numbers attach
             "benchmarks": [],
             # The capture can establish a paper link (Epoch records arXiv
