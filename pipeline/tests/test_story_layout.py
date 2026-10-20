@@ -100,7 +100,7 @@ def test_step_headings_state_their_point():
 
 
 def test_step_text_does_not_restate_the_chart_or_teach_it():
-    """Walker's copy audit (2026-10-19): no sentence that explains how to read
+    """The copy rule: no sentence that explains how to read
     the chart, no dropdown holding the real detail, no small figure under the
     steps that repeats the main chart."""
     main = STORY[STORY.index('<main'):STORY.index('</main>')]
@@ -169,7 +169,7 @@ def test_every_pair_shows_both_settings():
 
 
 def test_the_pairs_step_states_the_finding():
-    """a review point 8: how many pairs, how many within a point, which pairs
+    """The pairs step states how many pairs, how many within a point, which pairs
     differ in settings, and that so few pairs cannot test overstatement."""
     body = [b for n, _, _, b in _steps() if n == "4"][0]
     title = [t for n, _, t, _ in _steps() if n == "4"][0]
@@ -181,14 +181,14 @@ def test_the_pairs_step_states_the_finding():
 
 
 def test_no_refused_comparisons_in_the_story():
-    """a review point 10: the refusals section, its canvas text and its data
+    """The refusals section, its canvas text and its data
     are gone from the story."""
     assert "efused" not in STORY
     assert "REFUSED_COMPARISON" not in JS and "S.refused" not in JS
 
 
 def test_every_mark_reads_its_record():
-    """a review point 6: in every settled view a mark shows name, lab, date,
+    """In every settled view a mark shows name, lab, date,
     the value drawn, and each score with its tag and setting; a click or
     Enter opens it in the explorer."""
     assert "function scoreRows(e, first)" in JS
@@ -202,7 +202,7 @@ def test_every_mark_reads_its_record():
 
 
 def test_views_finish_forming_mid_screen():
-    """a review point 5: a view finishes forming when its step text is in the
+    """A view finishes forming when its step text is in the
     middle of the viewport, not when it reaches the top."""
     assert 'start: "top bottom",' in JS
     assert 'end: function () { return "center " + midPct() + "%"; },' in JS

@@ -1,6 +1,6 @@
-"""a design review of the Control Room site (2026-10-19), held in place.
+"""The site's copy rules, held in place.
 
-The copy audit removed framing phrases and sentences that restate a chart;
+A copy review removed framing phrases and sentences that restate a chart;
 these tests fail if one comes back. They also hold the decisions that came
 with it: the overview's fourth measure is the open-weights share (the
 newest release is the feed's job), a revision is glossed where it first
@@ -124,9 +124,9 @@ def test_the_lean_caveat_needs_a_material_lean():
 
 
 def test_refusals_appear_only_in_the_explorer_inspector():
-    """Walker: refused comparisons read as confusing and random. They are
-    gone from every page and script except the explorer inspector's one
-    line; the overview panel, its styles and the grid chip are removed."""
+    """A refused comparison is shown in one place only, the explorer
+    inspector's one line; every other page and script carries none, and the
+    overview panel, its styles and the grid chip are removed."""
     hits = []
     for name, text in {**PAGES, **JS}.items():
         for line in text.splitlines():
