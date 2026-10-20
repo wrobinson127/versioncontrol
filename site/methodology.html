@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Version Control: methodology</title>
-<meta name="description" content="How Version Control records AI model releases: every score names its source, missing disclosures are marked, comparisons are refused when they would mislead, and benchmark versions are fixed.">
+<meta name="description" content="How Version Control records AI model releases: every score names its source, missing disclosures are marked, scores are compared only when they are comparable, and benchmark versions are fixed.">
 <meta name="color-scheme" content="dark light">
 <link rel="canonical" href="https://versioncontrol.walker-robinson.com/methodology.html">
 <meta property="og:title" content="Version Control: methodology">
-<meta property="og:description" content="How Version Control records AI model releases: every score names its source, missing disclosures are marked, comparisons are refused when they would mislead, and benchmark versions are fixed.">
+<meta property="og:description" content="How Version Control records AI model releases: every score names its source, missing disclosures are marked, scores are compared only when they are comparable, and benchmark versions are fixed.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://versioncontrol.walker-robinson.com/methodology.html">
 <meta property="og:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
@@ -62,7 +62,7 @@
   <p>For releases before July 2026, we looked in July or October 2026, so a document the lab published after launch still counts. A link on record means the document exists; we do not grade what it says.</p>
   <p>Parameter counts work differently. They come from Epoch AI's data, and we have not checked the labs' pages for them. Where Epoch has no count, the entry says <span class="nc">no count on record</span>, not "not disclosed". Parameter percentages divide by all releases and say so.</p></div><div class="specs"><aside class="spec" id="sp-r2" data-ui aria-label="In the record today"><p class="rn-h">In the record today</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
 <section class="doc-sec rule" aria-labelledby="r3"><div class="rule-text"><h2 id="r3">3. We do not compare scores that are not comparable</h2>
-  <p>A change against the previous model appears only when both scores are on the same benchmark, the same version of it, and from the same kind of source. If the previous model was scored but the pair does not match, the entry says <em>no change shown</em>, and why. If the previous model was never scored, the entry says nothing: a missing score and a refused comparison are different things.</p>
+  <p>A change against the previous model appears only when both scores are on the same benchmark, the same version of it, and from the same kind of source. If the previous model was scored but the pair does not match, the entry says <em>no change shown</em>, and why. If the previous model was never scored, the entry says nothing: a missing score and a mismatched one are different things.</p>
   <p>Every comparison between models is calculated once, before publishing, and the site displays that result. The site only counts and rounds what is in the published files, and works out how many days old the record is.</p></div><div class="specs"><aside class="spec" id="sp-r3" data-ui aria-label="In the record today"><p class="rn-h">In the record today</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
 <section class="doc-sec rule" aria-labelledby="r4"><div class="rule-text"><h2 id="r4">4. Benchmark versions are fixed</h2>
   <p>Every benchmark label carries its version: <strong>GPQA Diamond</strong>, never "GPQA"; <strong>SWE-Bench Verified</strong>, never "SWE-Bench". A revised benchmark is a different test. We never draw a line, a delta, or a chart across two versions. Where a lab published its evaluation settings, they appear under the score as written.</p></div><div class="specs"><aside class="spec" id="sp-r4" data-ui aria-label="In the record today"><p class="rn-h">In the record today</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>

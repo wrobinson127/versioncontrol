@@ -1106,7 +1106,7 @@
       }).join("") + (pts.length ? "" : '<tr><td colspan="6" class="empty">No ' + CR.BENCH[S.bench] + " score in view.</td></tr>") + "</tbody></table>";
   }
 
-  /* ---------- pairs and refusals ---------- */
+  /* ---------- pairs ---------- */
 
   function renderPairs() {
     var P = CR.pairs(D);
@@ -1123,18 +1123,6 @@
     });
     h += '</tbody></table><p class="pr-note">Gap: the lab\'s number minus Epoch\'s.</p>';
     $("#pairs-body").innerHTML = h;
-    renderRefused();
-  }
-  function renderRefused() {
-    var h;
-    var refused = [];
-    Object.keys(D.deltas).forEach(function (id) { D.deltas[id].forEach(function (d) { if (d.kind === "REFUSED_COMPARISON") { refused.push({ e: D.byId[id], r: d.reason }); } }); });
-    refused.sort(function (a, b) { return a.e.date < b.e.date ? 1 : -1; });
-    h = '<p class="rf-big"><span class="num">' + D.meta.delta_chips + '</span> changes against a predecessor are on record; <span class="num">' + refused.length + "</span> " + (refused.length === 1 ? "is" : "are") + " not shown:</p><ul class=\"refusals\">" +
-      refused.map(function (x) {
-        return '<li><a href="explorer.html?id=' + encodeURIComponent(x.e.id) + '">' + esc(x.e.model_name) + '</a> <span class="ref-r">' + esc(x.r.charAt(0).toUpperCase() + x.r.slice(1)) + ".</span></li>";
-      }).join("") + "</ul>";
-    $("#refused-body").innerHTML = h;
   }
 
   /* ---------- disclosure squares ---------- */
@@ -1346,7 +1334,7 @@
     renderFindings();
     /* on a phone the long panels start folded; their headers stay in place */
     if (window.innerWidth <= 720) {
-      ["#p-labs", "#p-pairs", "#p-access", "#p-refused"].forEach(function (sel) {
+      ["#p-labs", "#p-pairs", "#p-access"].forEach(function (sel) {
         var b = $(sel + " .pcollapse"); if (!b) { return; }
         b.setAttribute("aria-expanded", "false");
         document.getElementById(b.getAttribute("aria-controls")).hidden = true;

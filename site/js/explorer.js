@@ -135,12 +135,6 @@
         }
       });
     }
-    var firstB = e._score["gpqa-diamond"] ? "gpqa-diamond" : "swe-bench-verified";
-    if (b === firstB) {
-      e._deltas.forEach(function (d) {
-        if (d.kind === "REFUSED_COMPARISON") { out += '<span class="rf" title="' + esc(NO_CHANGE) + '">no change shown</span>'; }
-      });
-    }
     return out || '<span class="na" aria-label="no score">-</span>';
   }
   function discCell(e, slot) {

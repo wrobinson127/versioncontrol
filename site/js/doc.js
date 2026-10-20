@@ -115,8 +115,6 @@
         if (p.source_url && p.benchmark_name && p.benchmark_version && p.retrieval_date) { scores.full++; }
       });
     });
-    var refused = [];
-    Object.keys(D.deltas).forEach(function (id) { D.deltas[id].forEach(function (d) { if (d.kind === "REFUSED_COMPARISON" && D.byId[id]) { refused.push({ e: D.byId[id], r: d.reason }); } }); });
     var sc = CR.discCounts(D.releases, "system_card");
     var scStrip = D.releases.slice().reverse().map(function (e, i) { return CR.discGlyph(e._disc.system_card, 7).replace('<svg ', '<svg style="--i:' + i + '" '); }).join("");
     var years = D.views.cadence.yearly;
@@ -131,8 +129,7 @@
       "<li>" + CR.discGlyph("not_disclosed", 10) + " " + num(sc.not_disclosed) + " not disclosed (we checked)</li>" +
       (sc.not_researched ? "<li>" + CR.discGlyph("not_researched", 10) + " " + num(sc.not_researched) + " not yet checked</li>" : "") + "</ul>" +
       '<p class="rn-s">The share counts only the ' + sc.researched + " checked: <b>" + num(Math.round(100 * sc.share) + "%") + "</b>.</p>";
-    var refusedHtml = '<p class="rn-big">' + num(m.delta_chips) + ' changes</p><p class="rn-s">against a predecessor are on record. ' + CR.plural(refused.length, "comparison was", "comparisons were") + " refused:</p><ul class=\"rn-list rn-ref\">" +
-      refused.map(function (x) { return '<li><a href="' + entryHref(x.e) + '">' + esc(x.e.model_name) + '</a><span class="t-m">' + esc(x.r) + "</span></li>"; }).join("") + "</ul>";
+    var changesHtml = '<p class="rn-big">' + num(m.delta_chips) + ' changes</p><p class="rn-s">against a predecessor are on record, each between scores on one benchmark version from one kind of source.</p>';
     var countHtml = bars(years.map(function (r) { return r.year === y ? r.year + "*" : r.year; }), years.map(function (r) { return r.releases; }),
       "Releases per year: " + years.map(function (r) { return r.releases + " in " + r.year; }).join(", ") + ".", { partial: y + "*" }) +
       '<p class="rn-s">* ' + y + " so far, to " + esc(D.asOf) + ". Revisions are counted apart.</p>";
@@ -147,10 +144,9 @@
 
     if (has("r1")) { fill("r1", scoresHtml); }
     if (has("r2")) { fill("r2", discHtml); }
-    if (has("r3")) { fill("r3", refusedHtml); }
+    if (has("r3")) { fill("r3", changesHtml); }
     if (has("r4")) { fill("r4", eraHtml(D)); }
     if (has("scores")) { fill("scores", scoresHtml); }
-    if (has("refused")) { fill("refused", refusedHtml); }
     if (has("record")) { fill("record", recordHtml); }
     if (has("count")) { fill("count", countHtml); }
     if (has("disc")) { fill("disc", discHtml); }

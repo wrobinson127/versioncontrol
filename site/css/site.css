@@ -224,6 +224,10 @@ h1 { font-size: 22px; line-height: 28px; font-weight: 650; font-stretch: 112%; l
 /* ---------- rows and panels ---------- */
 .row { display: grid; grid-template-columns: minmax(0, 1fr) 368px; gap: var(--gap); margin-top: var(--gap); align-items: stretch; }
 .col { display: flex; flex-direction: column; gap: var(--gap); min-width: 0; }
+/* availability fills the column beside the disclosure squares: its year rows share the height, so the row ends on one line */
+.row-d .col > #p-access { flex: 1 1 auto; display: flex; flex-direction: column; }
+#p-access > #access-body:not([hidden]) { flex: 1 1 auto; display: flex; flex-direction: column; }
+#access-body .dt.av { flex: 1 1 auto; }
 .panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-panel); display: flex; flex-direction: column; min-width: 0; }
 .ph { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "t tools" "m tools"; column-gap: 16px; padding: 14px var(--pad) 10px; align-items: start; }
 .ph h2 { grid-area: t; font-size: 15px; line-height: 22px; font-weight: 650; font-stretch: 108%; letter-spacing: -0.005em; }
@@ -395,13 +399,6 @@ svg .num-t { fill: var(--text); }
 .pr-diff { color: var(--text); }
 .pr-note { color: var(--muted); font-size: 12.5px; line-height: 18px; margin-top: 10px; }
 .sub-h { font-size: 13.5px; font-weight: 650; margin-top: 18px; }
-.refusals { margin-top: 8px; }
-.rf-big { color: var(--muted); font-size: 12.5px; line-height: 18px; }
-.rf-big .num { color: var(--text); font-size: 13px; }
-.refusals li { padding: 7px 0; border-top: 1px solid var(--rule); font-size: 13px; }
-.refusals a { font-weight: 550; text-decoration: none; }
-.refusals a:hover { text-decoration: underline; }
-.ref-r { display: block; color: var(--muted); font-size: 12.5px; }
 
 /* ---------- disclosure squares ---------- */
 .wf-grid { display: grid; grid-template-columns: var(--wf-label) repeat(var(--wf-cols), minmax(0, 1fr)); gap: 12px 16px; align-items: start; }
@@ -652,7 +649,6 @@ th[aria-sort="descending"] .sg::after { content: "↓"; }
 .sv-ind .sv-t { color: var(--ind-text); }
 .sv-lab .sv-t { color: var(--lab-text); }
 .dl { color: var(--muted); font-size: 11.5px; margin-right: 8px; }
-.rf { display: inline-flex; align-items: center; height: 18px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--control-strong); color: var(--muted); font-size: 11px; }
 .na { color: var(--faint); }
 .dc { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; }
 .dc-disclosed { color: var(--text); }
@@ -692,7 +688,6 @@ th[aria-sort="descending"] .sg::after { content: "↓"; }
 .ib-delta { font-size: 12.5px; line-height: 22px; color: var(--muted); padding: 4px 0; }
 .ib-delta > .num:first-child { color: var(--text); font-size: 13px; }
 .ib-refused { font-size: 12.5px; color: var(--muted); padding: 8px 10px; border: 1px solid var(--control-strong); border-radius: 5px; margin-top: 6px; }
-.ib-refused b { color: var(--text); font-weight: 600; }
 .ins-disc div { display: grid; grid-template-columns: 100px 1fr; gap: 10px; padding: 6px 0; border-bottom: 1px solid var(--rule); font-size: 13px; }
 .ins-disc dt { color: var(--muted); font-size: 12.5px; }
 .ins-links { display: flex; flex-wrap: wrap; gap: 2px 12px; margin-top: 3px; font-size: 12.5px; }
