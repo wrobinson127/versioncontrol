@@ -47,7 +47,7 @@
   </div>
 </header>
 <main id="main" class="canvas" tabindex="-1">
-  <noscript><p class="noscript">The console draws from the published dataset with JavaScript. Without it, every entry is in the <a href="data.html">dataset files</a>, and the computed findings are in <a href="story.html">the story's text version</a>.</p></noscript>
+  <noscript><p class="noscript">The console needs JavaScript. Without it, every entry is in the <a href="data.html">dataset files</a>, and <a href="story.html">the story</a> reads in full.</p></noscript>
   <div class="titlerow">
     <div class="title-text">
       <h1>AI model release record</h1>
@@ -76,15 +76,15 @@
   <section class="kpis" aria-label="Headline measures">
     <div class="kpi" id="k1"><p class="k-l">Releases this year</p><p class="k-v"><span class="sk sk-v"></span></p><p class="k-s">&nbsp;</p><div class="k-spark"></div></div>
     <div class="kpi" id="k2"><p class="k-l">Median days between releases</p><p class="k-v"><span class="sk sk-v"></span></p><p class="k-s">&nbsp;</p><div class="k-spark"></div></div>
-    <div class="kpi" id="k3"><p class="k-l">Researched releases with a system card</p><p class="k-v"><span class="sk sk-v"></span></p><p class="k-s">&nbsp;</p><div class="k-spark"></div></div>
-    <div class="kpi" id="k4"><p class="k-l">Newest release</p><p class="k-v"><span class="sk sk-v"></span></p><p class="k-s">&nbsp;</p><div class="k-spark"></div></div>
+    <div class="kpi" id="k3"><p class="k-l">Checked releases with a system card</p><p class="k-v"><span class="sk sk-v"></span></p><p class="k-s">&nbsp;</p><div class="k-spark"></div></div>
+    <div class="kpi" id="k4"><p class="k-l">Open-weights share of releases</p><p class="k-v"><span class="sk sk-v"></span></p><p class="k-s">&nbsp;</p><div class="k-spark"></div></div>
   </section>
 
   <div class="row row-a">
     <section class="panel" id="p-cadence" aria-labelledby="h-cadence">
     <header class="ph">
     <h2 id="h-cadence">Release weeks by lab</h2>
-    <p class="pmeta" id="cad-meta">One cell per lab per week since 2022-11-28. Drag across the grid to select a range.</p>
+    <p class="pmeta" id="cad-meta">Drag across the grid to filter every panel.</p>
     <div class="ptools">
     <span class="legend" id="cad-legend" aria-hidden="true"></span>
     <button type="button" class="btn btn-sm tbl-toggle" aria-pressed="false" aria-controls="cad-table">Table</button>
@@ -112,7 +112,7 @@
     <section class="panel" id="p-labs" aria-labelledby="h-labs">
     <header class="ph">
     <h2 id="h-labs">Twelve labs, one scale</h2>
-    <p class="pmeta">Releases per quarter, what each recent release disclosed, and independent GPQA Diamond scores. Select a lab to filter the console.</p>
+    <p class="pmeta">Select a lab to filter the console.</p>
     <div class="ptools">
     <span class="legend" id="labs-legend" aria-hidden="true"></span>
     <button type="button" class="pcollapse" aria-expanded="true" aria-controls="labs-grid"><span class="sr">Collapse the lab panels</span></button>
@@ -122,8 +122,8 @@
     </section>
     <aside class="panel findings" id="p-findings" aria-labelledby="h-findings">
     <header class="ph">
-    <h2 id="h-findings">What the record shows</h2>
-    <p class="pmeta">Computed from the published files each time this page loads.</p>
+    <h2 id="h-findings">Findings</h2>
+    <p class="pmeta">Computed from the record at each load.</p>
     <div class="ptools"><button type="button" class="pcollapse" aria-expanded="true" aria-controls="findings-list"><span class="sr">Collapse the findings</span></button></div>
     </header>
     <ol class="findings-list pbody" id="findings-list"></ol>
@@ -134,7 +134,7 @@
     <section class="panel" id="p-scores" aria-labelledby="h-scores">
     <header class="ph">
     <h2 id="h-scores">Scores over time</h2>
-    <p class="pmeta" id="scores-meta">Every score on record, by release date. Scores are percentages from 0 to 100.</p>
+    <p class="pmeta" id="scores-meta">A vertical line joins the lab's score and Epoch's for one release.</p>
     <div class="ptools">
     <div class="seg seg-sm" role="radiogroup" aria-label="Benchmark" id="bench-seg">
     <button type="button" role="radio" aria-checked="true" data-b="gpqa-diamond">GPQA Diamond</button>
@@ -153,7 +153,7 @@
     <aside class="panel" id="p-pairs" aria-labelledby="h-pairs">
     <header class="ph">
     <h2 id="h-pairs">Lab beside independent</h2>
-    <p class="pmeta">The same release and benchmark, scored by the lab and by Epoch AI. Both numbers are kept; they are never averaged.</p>
+    <p class="pmeta">The same release and benchmark, scored by the lab and by Epoch AI.</p>
     <div class="ptools"><button type="button" class="pcollapse" aria-expanded="true" aria-controls="pairs-body"><span class="sr">Collapse the pairs</span></button></div>
     </header>
     <div class="pbody" id="pairs-body"></div>
@@ -164,7 +164,7 @@
     <section class="panel" id="p-disc" aria-labelledby="h-disc">
     <header class="ph">
     <h2 id="h-disc">What labs publish, by year</h2>
-    <p class="pmeta">One square per release. Shares divide by researched releases only.</p>
+    <p class="pmeta">Shares count checked releases only.</p>
     <div class="ptools">
     <span class="legend" id="disc-legend" aria-hidden="true"></span>
     <button type="button" class="btn btn-sm tbl-toggle" aria-pressed="false" aria-controls="disc-table">Table</button>
@@ -195,10 +195,6 @@
       </aside>
     </div>
   </div>
-  <section class="panel prehistory" aria-labelledby="h-pre">
-    <header class="ph"><h2 id="h-pre">Before this record begins</h2></header>
-    <div class="pbody"><p>The record starts on 2022-11-30, the day OpenAI released ChatGPT and the release cadence of large AI models became a public event. Models existed before that date. GPT-3 shipped as an API in 2020. Instruction-tuned variants, open research models, and commercial systems came before it and alongside it. The registry does not attempt to reconstruct that earlier history: disclosure practices, benchmark conventions, and release mechanics before late 2022 differ enough from what followed that entries built from today's sources would misrepresent them. For the earlier record, <a href="https://epoch.ai/data/ai-models" rel="external">Epoch AI's "Data on AI Models"</a> dataset reaches back decades and documents its own methods.</p></div>
-  </section>
 </main>
 
 <footer class="foot">

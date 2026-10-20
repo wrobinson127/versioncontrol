@@ -44,13 +44,13 @@
 
   var DISC_WORDS = {
     disclosed: "link on record",
-    not_disclosed: "not disclosed",
-    not_researched: "not yet researched"
+    not_disclosed: "not disclosed (we checked)",
+    not_researched: "not yet checked"
   };
   var DISC_TITLES = {
-    disclosed: "A link is on record: the document exists. We do not grade what it says.",
-    not_disclosed: "Not disclosed: we checked the lab's own sites and found nothing. Absence is the recorded signal, not a zero.",
-    not_researched: "Not yet researched: a gap in our record, not a statement about the lab."
+    disclosed: "The document exists. We do not grade what it says.",
+    not_disclosed: "We checked the lab's own sites and found nothing.",
+    not_researched: "A gap in our record, not a statement about the lab."
   };
   var PROV_TITLES = {
     LAB_REPORTED: "LAB: reported by the releasing lab.",
@@ -146,6 +146,13 @@
       return '<a class="prov prov-' + k + '" href="' + esc(url) + '" title="' + esc(title) + '" rel="external noopener" target="_blank">' + inner + '<span class="sr"> (' + (k === "lab" ? "lab-reported" : "independent") + ", source)</span></a>";
     }
     return '<span class="prov prov-' + k + '" title="' + esc(title) + '">' + inner + "</span>";
+  }
+  /* A revision is read in place: the tag names the model it updates, and
+     its title carries the one-line gloss. */
+  var REVISION_GLOSS = "Revision: an update to a model already on record.";
+  function revisionOf(e, D) {
+    var p = D && D.byId[e.predecessor];
+    return ' <span class="tag tag-rev" title="' + esc(REVISION_GLOSS) + '">revision of ' + esc(p ? p.model_name : "an earlier entry") + "</span>";
   }
   function discMark(state, withWord) {
     return '<span class="dmark dm-' + state + '" title="' + esc(DISC_TITLES[state]) + '">' + discGlyph(state, 10) +
@@ -713,12 +720,12 @@
         });
         for (var yy2 = 2023; yy2 <= +y; yy2++) { g += '<text x="' + gx(dayNum(yy2 + "-01-01")).toFixed(1) + '" y="' + (gh + 14) + '" class="ax-t">' + (W < 260 ? "'" + String(yy2).slice(2) : yy2) + "</text>"; }
         h += g + "</svg>";
-        h += '<h4>Disclosure, researched releases only</h4><dl class="cmp-disc">';
+        h += '<h4>Disclosure, checked releases only</h4><dl class="cmp-disc">';
         DISC_SLOTS.forEach(function (sl) {
           var c = discCounts(d.rel, sl[0]);
           var strip = d.rel.slice().reverse().map(function (e) { return discGlyph(e._disc[sl[0]], 7); }).join("");
-          h += "<div><dt>" + sl[1] + "</dt><dd>" + (c.researched ? '<b class="num">' + Math.round(100 * c.share) + "%</b> " + c.disclosed + " of " + c.researched : '<span class="nr-w">none researched</span>') +
-            ' <span class="t-m">' + c.not_researched + ' not yet researched</span><span class="cmp-strip" aria-hidden="true">' + strip + "</span></dd></div>";
+          h += "<div><dt>" + sl[1] + "</dt><dd>" + (c.researched ? '<b class="num">' + Math.round(100 * c.share) + "%</b> " + c.disclosed + " of " + c.researched : '<span class="nr-w">none checked</span>') +
+            ' <span class="t-m">' + c.not_researched + ' not yet checked</span><span class="cmp-strip" aria-hidden="true">' + strip + "</span></dd></div>";
         });
         h += "</dl><h4>Independent GPQA Diamond</h4>";
         var sh = 92;
@@ -744,6 +751,7 @@
     esc: esc, $: $, $$: $$, dayNum: dayNum, dateOf: dateOf, validDate: validDate, median: median, fmtNum: fmtNum,
     pct: pct, fmtParams: fmtParams, plural: plural, nword: nword, archiveDate: archiveDate, svgOpen: svgOpen,
     discGlyph: discGlyph, provGlyph: provGlyph, provTag: provTag, discMark: discMark,
+    REVISION_GLOSS: REVISION_GLOSS, revisionOf: revisionOf,
     load: load, discCounts: discCounts, pooledGaps: pooledGaps, labGaps: labGaps, firstLately: firstLately,
     pairs: pairs, labSetting: labSetting, indSetting: indSetting,
     getTheme: getTheme, setTheme: setTheme, toggleTheme: toggleTheme,

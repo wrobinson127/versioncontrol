@@ -264,34 +264,30 @@
       var c = CR.discCounts(D.releases.filter(function (e) { return e._year === yy && labIn(e.org); }), "system_card");
       if (c.researched) { pts.push({ x: +yy, y: 100 * c.share }); }
     });
-    var label3 = f ? "Researched releases in view with a system card" : "Researched releases with a system card";
+    var label3 = f ? "Checked releases in view with a system card" : "Checked releases with a system card";
     if (!f) { console.assert(Math.abs(sc.share - D.views.tiles.share_with_system_card) < 0.001, "system card share matches the derived tile"); }
     kpi("k3", label3, sc.researched ? '<span class="num">' + Math.round(100 * sc.share) + '</span><span class="unit">%</span>' : '<span class="num dash">-</span>',
-      sc.researched ? '<span class="num">' + sc.disclosed + "</span> of " + sc.researched + " researched. " + sc.not_researched + " not yet researched, so not counted."
-        : "None of the " + CR.plural(sc.not_researched, "release") + " in view has been researched for a system card.",
+      sc.researched ? '<span class="num">' + sc.disclosed + "</span> of " + sc.researched + " checked; " + sc.not_researched + " not yet checked."
+        : "None of the " + CR.plural(sc.not_researched, "release") + " in view has been checked for a system card.",
       pts.length > 1 ? sparkLine(pts, pts[0].x, pts[pts.length - 1].x, 100, w, sh) : "");
 
-    /* newest release */
-    var newest = (f ? rel : D.releases)[0];
-    var spanDays = 120, d1 = D.asOfDay, d0 = d1 - spanDays + 1;
-    var dayHit = {};
-    (f ? rel : D.releases).forEach(function (e) { if (e._day >= d0) { dayHit[e._day] = (dayHit[e._day] || 0) + 1; } });
-    var s = svgOpen(w, sh, "spark");
-    Object.keys(dayHit).forEach(function (k) {
-      var x = 1 + (w - 3) * (k - d0) / (spanDays - 1);
-      var on = newest && +k === newest._day;
-      s += '<rect x="' + x.toFixed(1) + '" y="' + (on ? 2 : 8) + '" width="2" height="' + (sh - (on ? 2 : 8)) + '" class="' + (on ? "sp-new" : "sp-on") + '"/>';
+    /* open weights: this year's share of releases against last year's, for
+       the labs in view; the line is the share year by year */
+    var owYears = ["2023", "2024", "2025", "2026"].filter(function (yy) { return yy <= y; }), owPts = [], ow = {};
+    owYears.forEach(function (yy) {
+      var list = D.releases.filter(function (e) { return e._year === yy && labIn(e.org); });
+      var k = list.filter(function (e) { return e.availability_class === "open_weights"; }).length;
+      ow[yy] = { k: k, n: list.length };
+      if (list.length) { owPts.push({ x: +yy, y: 100 * k / list.length }); }
     });
-    s += '<line x1="0" x2="' + w + '" y1="' + (sh - 0.5) + '" y2="' + (sh - 0.5) + '" class="sp-base"/></svg>';
-    if (newest) {
-      var ago = D.asOfDay - newest._day;
-      kpi("k4", f ? "Newest release in view" : "Newest release",
-        '<a class="k-name" href="explorer.html?id=' + encodeURIComponent(newest.id) + '">' + esc(newest.model_name) + "</a>",
-        esc(newest._orgName) + ", " + newest.date + ". " + (ago === 0 ? "The day of the last update." : CR.plural(ago, "day") + " before the last update (" + D.asOf + ")."),
-        s + '<span class="sr">Release days in the last 120 days before the update.</span>');
-    } else {
-      kpi("k4", "Newest release in view", '<span class="num dash">-</span>', "No release in view.", "");
-    }
+    var cur = ow[y] || { k: 0, n: 0 }, prev = ow[py] || { k: 0, n: 0 };
+    var labs4 = S.labs.length ? (S.labs.length === 1 ? CR.ORG_NAMES[S.labs[0]] : CR.plural(S.labs.length, "lab")) + ", " : (S.country ? S.country + ", " : "");
+    kpi("k4", "Open-weights share of releases, " + labs4 + y,
+      cur.n ? '<span class="num">' + CR.pct(cur.k, cur.n) + '</span><span class="unit">%</span>' : '<span class="num dash">-</span>',
+      (cur.n ? '<span class="num">' + cur.k + "</span> of " + cur.n + " so far. " : "No release this year. ") +
+        (prev.n ? py + ": " + CR.pct(prev.k, prev.n) + "% (" + prev.k + " of " + prev.n + ")." : py + ": no releases."),
+      owPts.length > 1 ? sparkLine(owPts, owPts[0].x, owPts[owPts.length - 1].x, 100, w, sh) + '<span class="sr">Open-weights share by year: ' +
+        owYears.filter(function (yy) { return ow[yy].n; }).map(function (yy) { return yy + " " + CR.pct(ow[yy].k, ow[yy].n) + "%"; }).join(", ") + ".</span>" : "");
   }
 
   /* ---------- the release grid ---------- */
@@ -406,7 +402,7 @@
       '<div class="heat-labels">' + labs + "</div>" +
       '<div class="heat-plot" tabindex="0" role="application" aria-roledescription="release grid" aria-label="Release weeks by lab. Arrow keys move between cells, Enter selects the cell\'s ' + B.unit + ', Shift and an arrow extends the selection, Escape clears it." aria-describedby="cad-meta">' + s + "</div>" +
       '<div class="heat-counts" aria-hidden="true">' + counts + "</div></div>";
-    $("#cad-meta").textContent = "One cell per lab per " + B.unit + " since " + CR.dateOf(B.bins[0].a) + ". Drag across the grid to select a range; every panel follows.";
+    $("#cad-meta").textContent = (B.unit === "week" ? "" : "One cell per lab per " + B.unit + ". ") + "Drag across the grid to filter every panel.";
     $("#cad-legend").innerHTML = heatLegend();
     wireHeat();
     paintSelection();
@@ -418,7 +414,7 @@
     var cells = [1, 2, 3, 4].map(function (lv) { return '<svg width="9" height="12" aria-hidden="true"><rect x="0" y="0" width="9" height="12" rx="1" class="lv' + lv + '"/></svg>'; }).join("");
     return '<span class="lg-item">' + '<svg width="9" height="12" aria-hidden="true"><rect x="0.5" y="0.5" width="8" height="11" rx="1" class="lv0"/></svg>' + " none</span>" +
       '<span class="lg-item">' + cells + " 1 to 4 or more releases</span>" +
-      '<span class="lg-item"><svg width="9" height="12" aria-hidden="true"><rect x="0.5" y="0.5" width="8" height="11" rx="1" class="lv0 rv"/></svg> revision only</span>';
+      '<span class="lg-item"><svg width="9" height="12" aria-hidden="true"><rect x="0.5" y="0.5" width="8" height="11" rx="1" class="lv0 rv"/></svg> revision only (an update to a model already on record)</span>';
   }
   function xOfDay(day) {
     var i = binIndex(day), b = H.bins[i];
@@ -679,11 +675,10 @@
   function renderFeed() {
     var list = D.entries.filter(inView);
     $("#h-feed").textContent = filtered() ? "In view, newest first" : "Newest on record";
-    $("#feed-meta").textContent = filtered() ? CR.plural(list.length, "entry", "entries") + " match. Hover a row, or move with the arrow keys, to find it in the grid." : "The latest entries, releases and revisions. Hover a row, or move with the arrow keys, to find it in the grid.";
+    $("#feed-meta").textContent = filtered() ? CR.plural(list.length, "entry", "entries") + " match. Hover a row to find it in the grid." : "Releases and revisions. Hover a row to find it in the grid.";
     var shown = list.slice(0, 80);
     var h = shown.map(function (e) {
       var tags = "";
-      if (!e._rel) { tags += '<span class="tag">revision</span>'; }
       var sc = e._score[S.bench] || e._score["gpqa-diamond"] || e._score["swe-bench-verified"];
       if (sc) {
         var b = sc.INDEPENDENT || sc.LAB_REPORTED;
@@ -692,7 +687,7 @@
       return '<li><a class="fr" href="explorer.html?id=' + encodeURIComponent(e.id) + '" data-id="' + esc(e.id) + '" data-org="' + e.org + '">' +
         '<time class="num" datetime="' + e.date + '">' + e.date + "</time>" +
         '<span class="fr-name">' + esc(e.model_name) + "</span>" +
-        '<span class="fr-lab">' + esc(e._orgName) + "</span>" + (tags ? '<span class="fr-tags">' + tags + "</span>" : "") + "</a></li>";
+        '<span class="fr-lab">' + esc(e._orgName) + "</span>" + (e._rel || !D.byId[e.predecessor] ? "" : '<span class="fr-rev" title="' + esc(CR.REVISION_GLOSS) + '">revision of ' + esc(D.byId[e.predecessor].model_name) + "</span>") + (tags ? '<span class="fr-tags">' + tags + "</span>" : "") + "</a></li>";
     }).join("");
     if (list.length > shown.length) {
       h += '<li class="fr-more"><a href="' + esc($("#to-explorer").getAttribute("href")) + '">' + (list.length - shown.length) + " more in the explorer</a></li>";
@@ -811,12 +806,12 @@
         recent.forEach(function (e) {
           html += '<span class="ld-c" data-id="' + esc(e.id) + '" data-slot="' + sl[0] + '">' + CR.discGlyph(e._disc[sl[0]], 8) + "</span>";
         });
-        html += '<span class="sr">' + c.disclosed + " with a link, " + c.not_disclosed + " not disclosed, " + c.not_researched + " not yet researched</span></span>" +
+        html += '<span class="sr">' + c.disclosed + " with a link, " + c.not_disclosed + " not disclosed, " + c.not_researched + " not yet checked</span></span>" +
           '<span class="ld-n" role="cell">' + (c.researched ? '<span class="num">' + c.disclosed + "</span>/" + c.researched : '<span class="nr-w">none checked</span>') + "</span></div>";
       });
       html += "</div>";
-      if (view.length > recent.length) { html += '<p class="lab-note">Squares show the latest ' + recent.length + " of " + view.length + " releases; counts are links on record of researched releases, all " + view.length + ".</p>"; }
-      else if (view.length) { html += '<p class="lab-note">Counts: links on record of researched releases.</p>'; }
+      if (view.length > recent.length) { html += '<p class="lab-note">Squares: the latest ' + recent.length + " of " + view.length + " releases. Counts: all " + view.length + ", checked releases only.</p>"; }
+      else if (view.length) { html += '<p class="lab-note">Counts: checked releases only.</p>'; }
 
       /* independent score trend */
       var sh = 44, pts = [];
@@ -853,9 +848,7 @@
     $("#labs-legend").innerHTML = discLegend() + '<span class="lg-item">' + CR.provGlyph("INDEPENDENT", 9) + " IND</span>";
   }
   function discLegend() {
-    return '<span class="lg-item">' + CR.discGlyph("disclosed", 9) + " link on record</span>" +
-      '<span class="lg-item">' + CR.discGlyph("not_disclosed", 9) + " not disclosed</span>" +
-      '<span class="lg-item">' + CR.discGlyph("not_researched", 9) + " not yet researched</span>";
+    return ["disclosed", "not_disclosed", "not_researched"].map(function (s) { return '<span class="lg-item">' + CR.discGlyph(s, 9) + " " + CR.DISC_WORDS[s] + "</span>"; }).join("");
   }
   function wireLabs() {
     var grid = $("#labs-grid");
@@ -880,62 +873,71 @@
 
   /* ---------- findings ---------- */
 
+  /* How a count changed, in words a reader can check (the story's rule). */
+  function growth(a, b) {
+    var r = a ? b / a : 0;
+    if (r >= 3.05) { return "more than tripled"; }
+    if (r >= 2.85) { return "tripled"; }
+    if (r >= 2.5) { return "nearly tripled"; }
+    if (r >= 2.05) { return "more than doubled"; }
+    if (r >= 1.9) { return "doubled"; }
+    if (r >= 1.75) { return "nearly doubled"; }
+    if (r > 1) { return "rose by " + Math.round((r - 1) * 100) + "%"; }
+    return r === 1 ? "held level" : "fell by " + Math.round((1 - r) * 100) + "%";
+  }
+  /* Each finding's title states its point; the text under it adds only what
+     the panels do not print. */
   function findings() {
     var F = [];
     var rel = D.releases;
     var yearly = {}; D.views.cadence.yearly.forEach(function (y) { yearly[y.year] = y.releases; });
-    var y = D.asOf.slice(0, 4), py = String(+y - 1), cut = py + D.asOf.slice(4);
-    var nY = rel.filter(function (e) { return e._year === y && e.date <= D.asOf; }).length;
-    var nP = rel.filter(function (e) { return e._year === py && e.date <= cut; }).length;
+    var y = D.asOf.slice(0, 4), full = Object.keys(yearly).filter(function (k) { return k !== "2022" && k < y; }).sort();
+    var y0 = full[0], y1 = full[full.length - 1];
     F.push({
-      t: "Releases per year",
-      p: '<span class="num">' + yearly["2023"] + "</span> releases in 2023, <span class=\"num\">" + yearly["2024"] + "</span> in 2024 and <span class=\"num\">" + yearly["2025"] + "</span> in 2025. A partial year: <span class=\"num\">" + nY + "</span> releases by " + D.asOf + ". By the same date in " + py + " there were <span class=\"num\">" + nP + "</span>.",
+      t: "Releases " + growth(yearly[y0], yearly[y1]) + " from " + y0 + " to " + y1,
+      p: full.map(function (k) { return '<span class="num">' + yearly[k] + "</span> in " + k; }).join(", ") + ".",
       a: "Select " + y, run: function () { set({ from: y + "-01-01", to: null }); scrollTo("#p-cadence"); }
     });
 
-    var fl = {};
-    ["openai", "anthropic"].forEach(function (o) { fl[o] = CR.firstLately(rel.filter(function (e) { return e.org === o; })); });
+    var fl = {}, waitLabs = ["openai", "anthropic"];
+    waitLabs.forEach(function (o) { fl[o] = CR.firstLately(rel.filter(function (e) { return e.org === o; })); });
+    var shorter = waitLabs.filter(function (o) { return fl[o] && fl[o].lately < fl[o].first; });
     F.push({
-      t: "The wait between releases",
-      p: "OpenAI: about <span class=\"num\">" + fl.openai.first + "</span> days between releases at first, about <span class=\"num\">" + fl.openai.lately + "</span> lately. Anthropic: about <span class=\"num\">" + fl.anthropic.first + "</span> at first, about <span class=\"num\">" + fl.anthropic.lately + "</span> lately.",
+      t: shorter.length === 2 ? "The wait between releases shortened at OpenAI and Anthropic" : "The wait between releases at OpenAI and Anthropic",
+      p: "Median days between releases, at first and lately: OpenAI <span class=\"num\">" + fl.openai.first + "</span> to <span class=\"num\">" + fl.openai.lately +
+        "</span>, Anthropic <span class=\"num\">" + fl.anthropic.first + "</span> to <span class=\"num\">" + fl.anthropic.lately + "</span>.",
       a: "Compare the two", run: function () { CR.openCompare("openai", "anthropic"); }
     });
 
     var ind = D.views.trajectory.series.filter(function (s) { return s.benchmark === "gpqa-diamond" && s.source_class === "INDEPENDENT"; })[0].points;
-    var maxBy = {};
-    ind.forEach(function (p) { var yy = p.date.slice(0, 4); if (CR.ORG_NAMES[p.org]) { maxBy[yy] = Math.max(maxBy[yy] || 0, p.value); } });
-    var ys = Object.keys(maxBy).sort();
+    var maxBy = {}, run = 0;
+    ind.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; }).forEach(function (p) { if (CR.ORG_NAMES[p.org]) { run = Math.max(run, p.value); maxBy[p.date.slice(0, 4)] = run; } });
+    var ys = Object.keys(maxBy).sort(), m0 = Math.round(maxBy[ys[0]]), m1 = Math.round(maxBy[ys[ys.length - 1]]);
     F.push({
-      t: "Independent scores climbed",
-      p: "From " + ys[0] + " to " + ys[ys.length - 1] + ", the highest independent GPQA Diamond score rose from <span class=\"num\">" + Math.round(maxBy[ys[0]]) + "</span> to <span class=\"num\">" + Math.round(maxBy[ys[ys.length - 1]]) + "</span>. Every one is Epoch AI's measurement.",
+      t: "The highest independent GPQA Diamond score " + (m1 > m0 ? "rose" : m1 < m0 ? "fell" : "held") + " from " + m0 + " in " + ys[0] + " to " + m1 + " in " + ys[ys.length - 1],
+      p: "Every independent score is Epoch AI's measurement.",
       a: "Show the scores", run: function () { set({ bench: "gpqa-diamond" }); scrollTo("#p-scores"); }
     });
 
     var p0 = CR.discCounts(rel.filter(function (e) { return e._year === "2023"; }), "paper");
     var p1 = CR.discCounts(rel.filter(function (e) { return e._year === y; }), "paper");
+    var s0 = CR.discCounts(rel.filter(function (e) { return e._year === "2023"; }), "system_card");
+    var s1 = CR.discCounts(rel.filter(function (e) { return e._year === y; }), "system_card");
+    var more = function (a, b) { return b.share > a.share ? "more" : b.share < a.share ? "fewer" : "as many"; };
     F.push({
-      t: p1.share < p0.share ? "Fewer arrive with a paper" : "Releases with a paper",
-      p: "In 2023, <span class=\"num\">" + p0.disclosed + "</span> of " + p0.researched + " researched releases had a paper on record (" + CR.pct(p0.disclosed, p0.researched) + "%). In " + y + " so far, <span class=\"num\">" + p1.disclosed + "</span> of " + p1.researched + " (" + CR.pct(p1.disclosed, p1.researched) + "%). Papers can come out weeks after a release, so recent years may rise." + skewSentence("paper", "the share"),
+      t: "Since 2023, " + more(p0, p1) + " checked releases come with a paper, " + more(s0, s1) + " with a system card",
+      p: "Papers can come out weeks after a release, so recent years may rise." + skewSentence("paper", "the " + y + " shares"),
       a: "Show disclosure", run: function () { scrollTo("#p-disc"); }
     });
 
-    var s0 = CR.discCounts(rel.filter(function (e) { return e._year === "2023"; }), "system_card");
-    var s1 = CR.discCounts(rel.filter(function (e) { return e._year === y; }), "system_card");
-    F.push({
-      t: s1.share > s0.share ? "More arrive with a system card" : "Releases with a system card",
-      p: "The share of researched releases with a system card " + (s1.share > s0.share ? "rose" : s1.share < s0.share ? "fell" : "held") + " from " + CR.pct(s0.disclosed, s0.researched) + "% in 2023 to " + CR.pct(s1.disclosed, s1.researched) + "% in " + y + " (<span class=\"num\">" + s0.disclosed + "</span> of " + s0.researched + ", then <span class=\"num\">" + s1.disclosed + "</span> of " + s1.researched + ")." + skewSentence("system_card", "these " + y + " shares"),
-      a: "Show " + y, run: function () { set({ from: y + "-01-01", to: null }); scrollTo("#p-disc"); }
-    });
-
     var P = CR.pairs(D);
-    var nModels = {}; P.forEach(function (p) { nModels[p.e.id] = 1; });
     var within = P.filter(function (p) { return Math.abs(p.lab.value - p.ind.value) <= 1; }).length;
-    var up = P.filter(function (p) { return p.lab.value > p.ind.value; }).length, down = P.filter(function (p) { return p.lab.value < p.ind.value; }).length;
+    var up = P.filter(function (p) { return p.lab.value > p.ind.value; }).length;
     var diff = P.filter(function (p) { var a = CR.labSetting(p.lab.configuration), b = CR.indSetting(p.ind.configuration); return a.lvl && b.lvl && a.lvl !== b.lvl; });
     F.push({
-      t: "What the lab said, beside what Epoch measured",
-      p: "<span class=\"num\">" + Object.keys(nModels).length + "</span> releases were graded twice on the same benchmark: once by the releasing lab, once by Epoch. " + within + " of the " + P.length + " pairs sit within a single point" + (up && down ? ", and the gaps run both ways" : "") + "." +
-        (diff.length ? " In " + CR.nword(diff.length) + " of the " + CR.nword(P.length) + " pairs the lab and Epoch ran different reasoning settings, so those gaps include a settings difference." : "") + " With so few pairs this is not a test of whether labs overstate.",
+      t: "The lab's score is above Epoch's in " + (up === P.length ? "all " + CR.nword(P.length) : CR.nword(up) + " of " + CR.nword(P.length)) + " pairs",
+      p: within + " of the " + P.length + " are within a point." +
+        (diff.length ? " In " + CR.nword(diff.length) + " the lab and Epoch ran different reasoning settings." : "") + " So few pairs cannot test whether labs overstate.",
       a: "Show the pairs", run: function () { scrollTo("#p-pairs"); }
     });
     return F;
@@ -953,7 +955,7 @@
     var k = res.filter(function (d) { return d >= cut; }).length, m = ys.filter(function (d) { return d >= cut; }).length;
     if (!(k / res.length > m / ys.length)) { return ""; }
     var MON = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    return " In " + y + ", " + k + " of the " + res.length + " checked releases are from " + MON[cm - 1] + " or later, a period that holds " + m + " of the year's " + ys.length + " releases. The checked releases lean toward the newest ones, so " + what + " may move as earlier " + y + " releases are checked.";
+    return " In " + y + ", " + k + " of the " + res.length + " checked releases are from " + MON[cm - 1] + " or later, a period holding " + m + " of the year's " + ys.length + " releases, so " + what + " may move as earlier releases are checked.";
   }
   var FINDINGS = [];
   function renderFindings() {
@@ -1046,7 +1048,7 @@
     $("#scores-legend").innerHTML = '<span class="lg-item">' + CR.provGlyph("INDEPENDENT", 10) + ' <b>IND</b> measured by Epoch AI</span><span class="lg-item">' + CR.provGlyph("LAB_REPORTED", 10) +
       ' <b>LAB</b> reported by the lab</span><span class="lg-item"><svg width="16" height="10" aria-hidden="true"><line x1="0" x2="16" y1="5" y2="5" class="sc-best"/></svg> highest independent score so far</span>' +
       '<span class="lg-item lg-n">' + CR.plural(nIn.length, "score") + " in view</span>";
-    $("#scores-meta").textContent = "Every " + CR.BENCH[S.bench] + " score on record, by release date. Percentages from 0 to 100; a vertical line joins two scores of one release.";
+    $("#scores-meta").textContent = "A vertical line joins the lab's score and Epoch's for one release.";
     $$("#bench-seg button").forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-b") === S.bench ? "true" : "false"); b.tabIndex = b.getAttribute("data-b") === S.bench ? 0 : -1; });
     wireScores();
   }
@@ -1116,7 +1118,7 @@
         '<td class="n"><a class="num" href="' + esc(p.ind.provenance.source_url) + '" rel="external noopener" target="_blank" title="IND: measured by Epoch AI. Retrieved ' + esc(p.ind.provenance.retrieval_date) + '.">' + p.ind.value + "</a></td>" +
         '<td class="n num">' + (gap > 0 ? "+" : gap < 0 ? "−" : "") + Math.abs(gap).toFixed(1) + "</td></tr>";
     });
-    h += '</tbody></table><p class="pr-note">Gap is the lab\'s number minus Epoch\'s. Settings are read from the configuration on record; "not stated" means the record does not say.</p>';
+    h += '</tbody></table><p class="pr-note">Gap: the lab\'s number minus Epoch\'s.</p>';
     $("#pairs-body").innerHTML = h;
     renderRefused();
   }
@@ -1125,9 +1127,9 @@
     var refused = [];
     Object.keys(D.deltas).forEach(function (id) { D.deltas[id].forEach(function (d) { if (d.kind === "REFUSED_COMPARISON") { refused.push({ e: D.byId[id], r: d.reason }); } }); });
     refused.sort(function (a, b) { return a.e.date < b.e.date ? 1 : -1; });
-    h = '<p class="rf-big"><span class="num">' + D.meta.delta_chips + '</span> changes against a predecessor are on record. <span class="num">' + refused.length + "</span> " + (refused.length === 1 ? "comparison was" : "comparisons were") + " refused:</p><ul class=\"refusals\">" +
+    h = '<p class="rf-big"><span class="num">' + D.meta.delta_chips + '</span> changes against a predecessor are on record; <span class="num">' + refused.length + "</span> " + (refused.length === 1 ? "is" : "are") + " not shown:</p><ul class=\"refusals\">" +
       refused.map(function (x) {
-        return '<li><a href="explorer.html?id=' + encodeURIComponent(x.e.id) + '">' + esc(x.e.model_name) + '</a> <span class="ref-r">No comparable measurement against the predecessor: ' + esc(x.r) + ".</span></li>";
+        return '<li><a href="explorer.html?id=' + encodeURIComponent(x.e.id) + '">' + esc(x.e.model_name) + '</a> <span class="ref-r">' + esc(x.r.charAt(0).toUpperCase() + x.r.slice(1)) + ".</span></li>";
       }).join("") + "</ul>";
     $("#refused-body").innerHTML = h;
   }
@@ -1158,7 +1160,7 @@
         var list = byYear[yy].slice().sort(function (a, b) { return order[a._disc[sl[0]]] - order[b._disc[sl[0]]] || a._day - b._day; });
         var c = CR.discCounts(list, sl[0]);
         var hh = rowsMax * pitch;
-        var lab = sl[1] + ", " + yy + ": " + c.disclosed + " with a link on record, " + c.not_disclosed + " not disclosed, " + c.not_researched + " not yet researched.";
+        var lab = sl[1] + ", " + yy + ": " + c.disclosed + " with a link on record, " + c.not_disclosed + " not disclosed, " + c.not_researched + " not yet checked.";
         var s = svgOpen(perRow * pitch, Math.max(pitch, Math.ceil(list.length / perRow) * pitch), "wf", lab);
         list.forEach(function (e, i) {
           var cx = (i % perRow) * pitch, cy = Math.floor(i / perRow) * pitch, st = e._disc[sl[0]];
@@ -1168,8 +1170,8 @@
         });
         s += "</svg>";
         h += '<div class="wf-cell" data-slot="' + sl[0] + '">' + (mobile ? '<p class="wf-mh">' + sl[1] + "</p>" : "") + '<div class="wf-sq" style="min-height:' + hh + 'px">' + s + "</div>" +
-          '<p class="wf-n">' + (c.researched ? '<b class="num">' + Math.round(100 * c.share) + "%</b> <span>" + c.disclosed + " of " + c.researched + "</span>" : '<span class="nr-w">none researched</span>') + "</p>" +
-          '<p class="wf-nr">' + (list.length ? c.not_researched + " not yet researched" : "no releases in view") + "</p></div>";
+          '<p class="wf-n">' + (c.researched ? '<b class="num">' + Math.round(100 * c.share) + "%</b> <span>" + c.disclosed + " of " + c.researched + "</span>" : '<span class="nr-w">none checked</span>') + "</p>" +
+          '<p class="wf-nr">' + (list.length ? c.not_researched + " not yet checked" : "no releases in view") + "</p></div>";
       });
     });
     h += "</div>";
@@ -1192,7 +1194,7 @@
   function renderDiscTable() {
     var y = D.asOf.slice(0, 4);
     var years = ["2022", "2023", "2024", "2025", "2026"].filter(function (yy) { return yy <= y; });
-    var h = '<table class="dt"><caption>Disclosure by year for releases in view. A share divides by researched releases only; not yet researched releases are listed apart and never counted as absent.</caption><thead><tr><th scope="col">Document</th><th scope="col">Year</th><th scope="col" class="n">Link on record</th><th scope="col" class="n">Not disclosed</th><th scope="col" class="n">Not yet researched</th><th scope="col" class="n">Share of researched</th></tr></thead><tbody>';
+    var h = '<table class="dt"><caption>Disclosure by year for releases in view. Shares count checked releases only.</caption><thead><tr><th scope="col">Document</th><th scope="col">Year</th><th scope="col" class="n">Link on record</th><th scope="col" class="n">Not disclosed</th><th scope="col" class="n">Not yet checked</th><th scope="col" class="n">Share of checked</th></tr></thead><tbody>';
     CR.DISC_SLOTS.forEach(function (sl) {
       years.forEach(function (yy) {
         var c = CR.discCounts(D.releases.filter(function (e) { return e._year === yy && inView(e); }), sl[0]);
@@ -1230,7 +1232,7 @@
     });
     var all = D.releases.filter(inView), ow2 = all.filter(function (e) { return e.availability_class === "open_weights"; }).length;
     h += "</tbody></table>";
-    h += '<p class="pr-note">' + (all.length ? "<span class=\"num\">" + ow2 + "</span> of " + CR.plural(all.length, "release") + " in view shipped with open weights (" + CR.pct(ow2, all.length) + "%). This share divides by all releases: availability is on record for every one." : "No releases in view.") + "</p>";
+    h += '<p class="pr-note">' + (all.length ? "<span class=\"num\">" + ow2 + "</span> of " + CR.plural(all.length, "release") + " in view shipped with open weights (" + CR.pct(ow2, all.length) + "%). Availability is on record for every release, so shares divide by all of them." : "No releases in view.") + "</p>";
     host.innerHTML = h;
   }
 
