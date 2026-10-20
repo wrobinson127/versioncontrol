@@ -830,8 +830,6 @@ th[aria-sort="descending"] .sg::after { content: "↓"; }
 
 /* ================= retractions and corrections (the one use of red) ================= */
 .tag-rev { white-space: normal; height: auto; min-height: 18px; max-width: 100%; line-height: 15px; padding: 1px 6px; }
-.sclose-specs { margin: 22px 0 6px; }
-html:not(.js) .sclose-specs { display: none; }
 .tag-retracted { display: inline-flex; align-items: center; height: 18px; padding: 0 6px; border-radius: 4px; border: 1px solid var(--alarm); color: var(--alarm); font-size: 11px; font-weight: 650; white-space: nowrap; }
 .ins-corr { border-color: var(--alarm) !important; }
 .ins-corr b { color: var(--alarm) !important; }

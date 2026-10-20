@@ -704,24 +704,8 @@
 
   /* ======================= boot ======================= */
   document.documentElement.classList.add("story-js");
-  /* the close: the newest entries and the record's own counts, live */
-  function closeSpecimens(D) {
-    var nw = document.querySelector("#sp-newest .rn-b"), rc = document.querySelector("#sp-record .rn-b"), m = D.meta;
-    if (nw) {
-      nw.innerHTML = '<ul class="rn-list rn-ref">' + D.entries.slice(0, 5).map(function (e) {
-        return '<li><a href="explorer.html?id=' + encodeURIComponent(e.id) + '">' + esc(e.model_name) + "</a>" + (e._rel ? "" : CR.revisionOf(e, D)) +
-          '<span class="t-m">' + esc(e._orgName) + ", " + esc(e.date) + "</span></li>";
-      }).join("") + "</ul>";
-    }
-    if (rc) {
-      rc.innerHTML = "<dl><div><dt>Entries</dt><dd>" + m.entry_count + " (" + m.releases + " releases, " + m.revisions + " revisions)</dd></div>" +
-        "<div><dt>First and newest entry</dt><dd>" + esc(m.first_date) + " to " + esc(m.last_date) + "</dd></div>" +
-        "<div><dt>Last successful update</dt><dd>" + esc(m.last_successful_update) + "</dd></div></dl>";
-    }
-  }
   CR.load().then(function (D) {
     CR.addRecordToPalette(D);
-    closeSpecimens(D);
     S = derive(D);
     readColors();
     buildMarks();

@@ -642,7 +642,6 @@ MAIN = f"""<main id="main" class="story" tabindex="-1">
 
 <section class="sclose" aria-labelledby="ch">
 <p class="endstance"><b>The record is public.</b> Each night it checks its sources and drafts new entries; a person approves each one before it appears. Every number shows where it came from, or it is left out.</p>
-<div class="spec-grid sclose-specs"><aside class="spec" id="sp-newest" data-ui aria-label="Newest on record"><p class="rn-h">Newest on record</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside><aside class="spec" id="sp-record" data-ui aria-label="The record today"><p class="rn-h">The record today</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div>
 <h2 class="readmore-h" id="ch">The full record, its rules and who keeps it</h2>
 <div class="enddoors">
 <a class="enddoor" href="explorer.html"><b>Explorer</b><span>every entry, filterable</span></a>

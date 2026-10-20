@@ -121,3 +121,26 @@ def test_the_lean_caveat_needs_a_material_lean():
     assert "material = len(res) < 0.9 * len(ys) and k / len(res) - m / len(ys) >= 0.1" in src
     assert "res.length < 0.9 * ys.length && k / res.length - m / ys.length >= 0.1" in JS["overview.js"]
     assert "a period holding" not in PAGES["story.html"]
+
+
+def test_refusals_appear_only_in_the_explorer_inspector():
+    """Walker: refused comparisons read as confusing and random. They are
+    gone from every page and script except the explorer inspector's one
+    line; the overview panel, its styles and the grid chip are removed."""
+    hits = []
+    for name, text in {**PAGES, **JS}.items():
+        for line in text.splitlines():
+            if "refus" in line.lower() or "REFUSED_COMPARISON" in line:
+                hits.append((name, line.strip()[:120]))
+    assert len(hits) == 1 and hits[0][0] == "explorer.js" and "ib-refused" in hits[0][1], hits
+    assert 'id="p-refused"' not in PAGES["index.html"] and "renderRefused" not in JS["overview.js"]
+    css = (SITE / "css" / "site.css").read_text(encoding="utf-8")
+    assert ".refusals" not in css and ".rf-big" not in css and ".rf {" not in css
+
+
+def test_the_story_close_carries_no_filler():
+    """The two live boxes added only to satisfy an inspector rule are gone:
+    the story's charts are its pictures."""
+    story = PAGES["story.html"]
+    assert "sclose-specs" not in story and 'id="sp-newest"' not in story and 'id="sp-record"' not in story
+    assert "closeSpecimens" not in JS["story.js"]
