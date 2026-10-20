@@ -38,6 +38,10 @@ jobs:
           else
             python -m pipeline.promote --run-date "$(date -u +%F)"
           fi
+      - name: Regenerate the story
+        # story.html is built from data/; CI fails a branch whose story
+        # has drifted from its data.
+        run: python -m pipeline.build_story
       - name: Commit the promotion
         run: |
           git config user.name "versioncontrol-nightly"
@@ -45,6 +49,7 @@ jobs:
           # The archive map records the new entries' archive.org snapshots.
           git add -A -- data
           if [ -f content/archive_map.json ]; then git add content/archive_map.json; fi
+          git add site/story.html
           if git diff --cached --quiet; then
             echo "Nothing promoted."
             exit 0

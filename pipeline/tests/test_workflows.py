@@ -14,6 +14,20 @@ def _step(workflow: str, name: str) -> str:
     return text[start:nxt if nxt != -1 else len(text)]
 
 
+def test_promotion_regenerates_the_story_before_it_commits():
+    """A promotion changes data/, and CI fails any branch whose story.html
+    has drifted from the data (build_story --check)."""
+    with open(os.path.join(WORKFLOWS, "promote.yml"), encoding="utf-8") as f:
+        text = f.read()
+    promote = text.index("- name: Promote approved candidates")
+    story = text.index("- name: Regenerate the story")
+    commit = text.index("- name: Commit the promotion")
+    assert promote < story < commit
+    assert "python -m pipeline.build_story" in _step("promote.yml", "Regenerate the story")
+    assert "--check" not in _step("promote.yml", "Regenerate the story")
+    assert "git add site/story.html" in _step("promote.yml", "Commit the promotion")
+
+
 def test_nightly_push_is_retried_once_after_fetch_and_merge():
     """Run 36585744246 (2026-09-29) lost a night to one 'Internal Server
     Error' on push (audit W12)."""
