@@ -13,7 +13,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Row added 2026-07-17 for the D24 ChatGPT entry (pending candidate data/pending/openai--chatgpt.json). Not yet researched; fill during the content pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: openai.com/index/chatgpt/ (200) links no card; Deployment Safety Hub sitemap has no ChatGPT 2022 entry; OpenAI system cards begin with GPT-4. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: the post calls ChatGPT a sibling of InstructGPT but links no ChatGPT report; arXiv title search found none. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Row added 2026-07-17 for the D24 ChatGPT entry (pending candidate data/pending/openai--chatgpt.json). Not yet researched; fill during the content pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: openai.com/index/chatgpt/ (200) links no card; Deployment Safety Hub sitemap has no ChatGPT 2022 entry; OpenAI system cards begin with GPT-4. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: the post calls ChatGPT a sibling of InstructGPT but links no ChatGPT report; arXiv title search found none. Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -25,7 +25,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Operator System Card PDF fetched 200; title page January 23, 2025 matches. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Operator System Card PDF fetched 200; title page January 23, 2025 matches. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -37,7 +37,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: no card on the Deployment Safety Hub sitemap or cdn.openai.com; model shipped as an API endpoint without a release document. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: no card on the Deployment Safety Hub sitemap or cdn.openai.com; model shipped as an API endpoint without a release document. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -61,7 +61,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: no card on the Deployment Safety Hub sitemap or cdn.openai.com; API-only endpoint with no release document. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: no card on the Deployment Safety Hub sitemap or cdn.openai.com; API-only endpoint with no release document. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -73,7 +73,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: announcement (200) links only safety best-practices docs and a third-party arXiv paper (Matryoshka, 2205.13147, not OpenAI); hub sitemap has no entry. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: no OpenAI report on text-embedding-3; arXiv title search found none. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: announcement (200) links only safety best-practices docs and a third-party arXiv paper (Matryoshka, 2205.13147, not OpenAI); hub sitemap has no entry. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: no OpenAI report on text-embedding-3; arXiv title search found none. Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -157,7 +157,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Operator System Card PDF fetched 200; it describes Operator as a research preview of the CUA model; linked from the CUA post via openai.com/index/operator-system-card/ (200), which adds a March 11, 2025 note on the CUA API. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: the CUA post is a research blog with an eval appendix PDF (CUA_eval_extra_information.pdf), not a technical report; arXiv title search found none. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Operator System Card PDF fetched 200; it describes Operator as a research preview of the CUA model; linked from the CUA post via openai.com/index/operator-system-card/ (200), which adds a March 11, 2025 note on the CUA API. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: the CUA post is a research blog with an eval appendix PDF (CUA_eval_extra_information.pdf), not a technical report; arXiv title search found none. Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -193,7 +193,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "https://arxiv.org/abs/2412.16720",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: December 2024 o1 system card PDF fetched 200; o1 pro mode is o1 with more compute (introducing-chatgpt-pro, 200) and launched the same day; the card does not name o1 pro, recorded under the approved gpt-5.2-pro ruling (family card counts). paper: arXiv 2412.16720 (OpenAI o1 System Card) fetched 200, same document, following the o1 row; does not name o1 pro either. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: December 2024 o1 system card PDF fetched 200; o1 pro mode is o1 with more compute (introducing-chatgpt-pro, 200) and launched the same day; the card does not name o1 pro, recorded under the approved gpt-5.2-pro ruling (family card counts). paper: arXiv 2412.16720 (OpenAI o1 System Card) fetched 200, same document, following the o1 row; does not name o1 pro either. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -229,7 +229,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Addendum to o3 and o4-mini system card: Codex PDF fetched 200; dated May 16, 2025; says Codex is powered by codex-1; linked from openai.com/index/o3-o4-mini-codex-system-card-addendum/ (200). model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Addendum to o3 and o4-mini system card: Codex PDF fetched 200; dated May 16, 2025; says Codex is powered by codex-1; linked from openai.com/index/o3-o4-mini-codex-system-card-addendum/ (200). model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -241,7 +241,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Addendum to OpenAI o3 and o4-mini system card: OpenAI o3 Operator PDF fetched 200; dated May 23, 2025, matches. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Addendum to OpenAI o3 and o4-mini system card: OpenAI o3 Operator PDF fetched 200; dated May 23, 2025, matches. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -253,7 +253,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: ChatGPT Agent System Card PDF fetched 200; dated July 17, 2025, matches; also on the hub at deploymentsafety.openai.com/chatgpt-agent (200). model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: ChatGPT Agent System Card PDF fetched 200; dated July 17, 2025, matches; also on the hub at deploymentsafety.openai.com/chatgpt-agent (200). model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -289,7 +289,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: announcement (200) says only that system card details are in the October 2024 Realtime API beta post, which points to the GPT-4o System Card (an earlier model); hub sitemap has no gpt-realtime entry (GPT-Live is a different, later model). model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: announcement (200) says only that system card details are in the October 2024 Realtime API beta post, which points to the GPT-4o System Card (an earlier model); hub sitemap has no gpt-realtime entry (GPT-Live is a different, later model). model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -301,7 +301,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Addendum to GPT-5 system card: GPT-5-Codex PDF fetched 200; dated September 15, 2025, matches; linked from the announcement and hub page deploymentsafety.openai.com/gpt-5-codex (200). model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Addendum to GPT-5 system card: GPT-5-Codex PDF fetched 200; dated September 15, 2025, matches; linked from the announcement and hub page deploymentsafety.openai.com/gpt-5-codex (200). model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -313,7 +313,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "https://arxiv.org/abs/2601.03267",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: GPT-5 system card PDF fetched 200; it names gpt-5-thinking-pro (successor to o3 Pro) and evaluates it on biology. paper: arXiv 2601.03267 OpenAI GPT-5 System Card fetched 200 (v1 19 Dec 2025, OpenAI authors), recorded under the o1/GPT-4o ruling that an arXiv system card counts as a paper; conflicts with the approved GPT-5 row, which has paper NOT_DISCLOSED. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: GPT-5 system card PDF fetched 200; it names gpt-5-thinking-pro (successor to o3 Pro) and evaluates it on biology. paper: arXiv 2601.03267 OpenAI GPT-5 System Card fetched 200 (v1 19 Dec 2025, OpenAI authors), recorded under the o1/GPT-4o ruling that an arXiv system card counts as a paper; conflicts with the approved GPT-5 row, which has paper NOT_DISCLOSED. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -445,7 +445,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section openai--gpt-6-luna. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/evidence/catchup_2026-10-19_us_labs.md, section openai--gpt-6-luna. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -457,7 +457,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section openai--gpt-6-sol. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/evidence/catchup_2026-10-19_us_labs.md, section openai--gpt-6-sol. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -469,7 +469,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section openai--gpt-6.1-sol. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/evidence/catchup_2026-10-19_us_labs.md, section openai--gpt-6.1-sol. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -481,7 +481,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). system_card: GPT-4 System Card PDF fetched 200, linked from openai.com/index/gpt-4-research/. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper unchanged. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). system_card: GPT-4 System Card PDF fetched 200, linked from openai.com/index/gpt-4-research/. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper unchanged. Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -493,7 +493,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: DevDay announcement (200) links no card; hub sitemap has no GPT-4 Turbo entry; the GPT-4V card covers GPT-4 with vision, not Turbo. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: DevDay announcement (200) links no card; hub sitemap has no GPT-4 Turbo entry; the GPT-4V card covers GPT-4 with vision, not Turbo. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -505,7 +505,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: o3 and o4-mini system card PDF fetched 200; the model release notes (200) say o3-pro uses the same underlying model as o3 and full safety details are in the o3 system card. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: no o3 report (o3 row is NOT_DISCLOSED); arXiv title search found none. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: o3 and o4-mini system card PDF fetched 200; the model release notes (200) say o3-pro uses the same underlying model as o3 and full safety details are in the o3 system card. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: no o3 report (o3 row is NOT_DISCLOSED); arXiv title search found none. Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -517,7 +517,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: GPT-5.5 Instant System Card PDF on the Deployment Safety Hub fetched 200; hub page says Published May 5, 2026 (PDF title page May 4, 2026). model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: GPT-5.5 Instant System Card PDF on the Deployment Safety Hub fetched 200; hub page says Published May 5, 2026 (PDF title page May 4, 2026). model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -529,7 +529,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: GPT-5.6 System Card PDF on the Deployment Safety Hub fetched 200; title page 2026-07-09 matches; intro says GPT-5.6 is a family of Sol, Terra and Luna, so it covers Luna; linked from openai.com/index/gpt-5-6/. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement, hub (only the system card and its preview/August-update versions) and arXiv title search. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: GPT-5.6 System Card PDF on the Deployment Safety Hub fetched 200; title page 2026-07-09 matches; intro says GPT-5.6 is a family of Sol, Terra and Luna, so it covers Luna; linked from openai.com/index/gpt-5-6/. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement, hub (only the system card and its preview/August-update versions) and arXiv title search. Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -541,7 +541,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: GPT-5.6 System Card PDF on the Deployment Safety Hub fetched 200; title page 2026-07-09 matches; intro says GPT-5.6 is a family of Sol, Terra and Luna, so it covers Sol; linked from openai.com/index/gpt-5-6/. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement, hub (only the system card and its preview/August-update versions) and arXiv title search. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: GPT-5.6 System Card PDF on the Deployment Safety Hub fetched 200; title page 2026-07-09 matches; intro says GPT-5.6 is a family of Sol, Terra and Luna, so it covers Sol; linked from openai.com/index/gpt-5-6/. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement, hub (only the system card and its preview/August-update versions) and arXiv title search. Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -553,7 +553,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: GPT-5.6 System Card PDF on the Deployment Safety Hub fetched 200; title page 2026-07-09 matches; intro says GPT-5.6 is a family of Sol, Terra and Luna, so it covers Terra; linked from openai.com/index/gpt-5-6/. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement, hub (only the system card and its preview/August-update versions) and arXiv title search. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: GPT-5.6 System Card PDF on the Deployment Safety Hub fetched 200; title page 2026-07-09 matches; intro says GPT-5.6 is a family of Sol, Terra and Luna, so it covers Terra; linked from openai.com/index/gpt-5-6/. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement, hub (only the system card and its preview/August-update versions) and arXiv title search. Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -565,7 +565,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found as of 2026-10-19: the Daybreak post (200, August 10, 2026) says We will publish a system card with further evaluations of GPT-5.6-Cyber at a later date; hub homepage and sitemap list no Cyber card; GPT-5.6 card and August update do not cover it. Recheck later. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found as of 2026-10-19: the Daybreak post (200, August 10, 2026) says We will publish a system card with further evaluations of GPT-5.6-Cyber at a later date; hub homepage and sitemap list no Cyber card; GPT-5.6 card and August update do not cover it. Recheck later. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: checked announcement links and arXiv title search (no OpenAI-authored report). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -577,7 +577,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (model_card, usage_policy, paper). system_card unchanged. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: hub has only the system card; arXiv title search for GPT-6 Astra returns only third-party papers. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/openai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (model_card, usage_policy, paper). system_card unchanged. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper: not found: hub has only the system card; arXiv title search for GPT-6 Astra returns only third-party papers. Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   }
  ]

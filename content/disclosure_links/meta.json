@@ -13,7 +13,7 @@
    "usage_policy": "NOT_DISCLOSED",
    "paper": "https://arxiv.org/abs/2212.12017",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). model_card: not found: metaseq projects/OPT-IML holds a README, the 175B download notes and the paper PDF only; HF has opt-iml-30b and 1.3b cards, but none names the request-only 175B model; OPT model_card.md covers base OPT. system_card: not found in metaseq, on HF or on the paper page. usage_policy: not found: weights are under the OPT-175B License Agreement, a non-commercial research license with no acceptable use policy (0 hits for acceptable use); LLaMA-65B precedent. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/meta.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). model_card: not found: metaseq projects/OPT-IML holds a README, the 175B download notes and the paper PDF only; HF has opt-iml-30b and 1.3b cards, but none names the request-only 175B model; OPT model_card.md covers base OPT. system_card: not found in metaseq, on HF or on the paper page. usage_policy: not found: weights are under the OPT-175B License Agreement, a non-commercial research license with no acceptable use policy (0 hits for acceptable use); LLaMA-65B precedent. Evidence: docs/evidence/disclosure_research_2026-10-19/meta.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -37,7 +37,7 @@
    "usage_policy": "NOT_DISCLOSED",
    "paper": "https://arxiv.org/abs/2302.13971",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). model_card: llama_v1 MODEL_CARD.md fetched 200; it states sizes 7B, 13B, 33B and 65B. system_card and usage_policy: not found; same release artifacts as the approved LLaMA-65B row (bespoke non-commercial license with no AUP, no system card). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/meta.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). model_card: llama_v1 MODEL_CARD.md fetched 200; it states sizes 7B, 13B, 33B and 65B. system_card and usage_policy: not found; same release artifacts as the approved LLaMA-65B row (bespoke non-commercial license with no AUP, no system card). Evidence: docs/evidence/disclosure_research_2026-10-19/meta.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -49,7 +49,7 @@
    "usage_policy": "NOT_DISCLOSED",
    "paper": "https://arxiv.org/abs/2204.05999",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). model_card: HF facebook/incoder-6B card fetched 200 (InCoder 6B is the 6.7B model of arXiv 2204.05999, which the card links). system_card: not found: checked the HF card, the dpfried/incoder GitHub and the project site link. usage_policy: not found: released under CC-BY-NC-4.0, with no acceptable use policy. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/meta.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). model_card: HF facebook/incoder-6B card fetched 200 (InCoder 6B is the 6.7B model of arXiv 2204.05999, which the card links). system_card: not found: checked the HF card, the dpfried/incoder GitHub and the project site link. usage_policy: not found: released under CC-BY-NC-4.0, with no acceptable use policy. Evidence: docs/evidence/disclosure_research_2026-10-19/meta.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -61,7 +61,7 @@
    "usage_policy": "NOT_DISCLOSED",
    "paper": "https://arxiv.org/abs/2305.05665",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). model_card: model_card.md in facebookresearch/ImageBind fetched 200 (Model Card for ImageBind, Developed by Meta AI). system_card: not found: the repo holds only a README, LICENSE, model_card.md and code. usage_policy: not found: CC BY-NC-SA 4.0 license, no AUP file in the repo. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/meta.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). model_card: model_card.md in facebookresearch/ImageBind fetched 200 (Model Card for ImageBind, Developed by Meta AI). system_card: not found: the repo holds only a README, LICENSE, model_card.md and code. usage_policy: not found: CC BY-NC-SA 4.0 license, no AUP file in the repo. Evidence: docs/evidence/disclosure_research_2026-10-19/meta.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -145,7 +145,7 @@
    "usage_policy": "https://ai.meta.com/llama/use-policy/",
    "paper": "https://arxiv.org/abs/2404.19737",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). model_card: HF facebook/multi-token-prediction card fetched 200; it describes the four 7B checkpoints of arXiv 2404.19737. system_card: not found on the HF card or the paper page. usage_policy: the Multi-token Prediction Research License incorporates the LLaMA Acceptable Use Policy at ai.meta.com/llama/use-policy/, fetched 200 with browser headers. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/meta.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). model_card: HF facebook/multi-token-prediction card fetched 200; it describes the four 7B checkpoints of arXiv 2404.19737. system_card: not found on the HF card or the paper page. usage_policy: the Multi-token Prediction Research License incorporates the LLaMA Acceptable Use Policy at ai.meta.com/llama/use-policy/, fetched 200 with browser headers. Evidence: docs/evidence/disclosure_research_2026-10-19/meta.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -157,7 +157,7 @@
    "usage_policy": "https://github.com/facebookresearch/chameleon/blob/main/USE_POLICY.md",
    "paper": "https://arxiv.org/abs/2405.09818v1",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). model_card: HF facebook/chameleon-30b card (Meta Chameleon 30B) fetched 200; safetensors total 34.3B params, so this is the paper's 34B model. The card is thin. system_card: not found: checked the HF card and the facebookresearch/chameleon repo. usage_policy: Meta Chameleon Acceptable Use Policy (USE_POLICY.md) fetched 200; the HF gate also names it. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/meta.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). model_card: HF facebook/chameleon-30b card (Meta Chameleon 30B) fetched 200; safetensors total 34.3B params, so this is the paper's 34B model. The card is thin. system_card: not found: checked the HF card and the facebookresearch/chameleon repo. usage_policy: Meta Chameleon Acceptable Use Policy (USE_POLICY.md) fetched 200; the HF gate also names it. Evidence: docs/evidence/disclosure_research_2026-10-19/meta.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -193,7 +193,7 @@
    "usage_policy": "",
    "paper": "https://arxiv.org/abs/2410.17434v1",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card). model_card: left NOT_RESEARCHED: the only weights and card are on Vision-CAIR (KAUST) HF and GitHub, not a Meta page; whether a co-author lab's card counts for Meta needs a ruling. system_card: not found: checked the Vision-CAIR GitHub repo and HF cards; no Meta release page found. usage_policy: left NOT_RESEARCHED: the repo is Apache-2.0 with no AUP, but the Llama 3.2-based checkpoints may inherit the Llama 3.2 AUP, so this is ambiguous. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/meta.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card). model_card: left NOT_RESEARCHED: the only weights and card are on Vision-CAIR (KAUST) HF and GitHub, not a Meta page; whether a co-author lab's card counts for Meta needs a ruling. system_card: not found: checked the Vision-CAIR GitHub repo and HF cards; no Meta release page found. usage_policy: left NOT_RESEARCHED: the repo is Apache-2.0 with no AUP, but the Llama 3.2-based checkpoints may inherit the Llama 3.2 AUP, so this is ambiguous. Evidence: docs/evidence/disclosure_research_2026-10-19/meta.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -229,7 +229,7 @@
    "usage_policy": "https://www.facebook.com/legal/ai-terms",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Muse Spark Safety & Preparedness Report PDF (160 pp), linked from the launch blog, fetched 200; treated as the system card per the google-deepmind FSF safety report ruling. model_card: not found: the blog links only the eval methodology PDF and the safety report, the report's model card footnote points back to the blog, dev.meta.ai/models/muse-spark is a product page, and research.meta.ai/static/muse-spark-model-card is 404. usage_policy: Meta AIs Terms of Service (Acceptable Uses section), fetched 200; Muse Spark 1.0 shipped only in Meta AI (the Model API docs call 1.1 the original API version), so the Model API AUP does not apply; this extends the DeepSeek terms-of-use convention. paper: not found: no technical report on the blog, ai.meta.com, arXiv or in a web search. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/meta.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Muse Spark Safety & Preparedness Report PDF (160 pp), linked from the launch blog, fetched 200; treated as the system card per the google-deepmind FSF safety report ruling. model_card: not found: the blog links only the eval methodology PDF and the safety report, the report's model card footnote points back to the blog, dev.meta.ai/models/muse-spark is a product page, and research.meta.ai/static/muse-spark-model-card is 404. usage_policy: Meta AIs Terms of Service (Acceptable Uses section), fetched 200; Muse Spark 1.0 shipped only in Meta AI (the Model API docs call 1.1 the original API version), so the Model API AUP does not apply; this extends the DeepSeek terms-of-use convention. paper: not found: no technical report on the blog, ai.meta.com, arXiv or in a web search. Evidence: docs/evidence/disclosure_research_2026-10-19/meta.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -241,7 +241,7 @@
    "usage_policy": "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B/blob/main/LICENSE.md",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section meta--muse-spark-open. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/evidence/catchup_2026-10-19_us_labs.md, section meta--muse-spark-open. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -253,7 +253,7 @@
    "usage_policy": "https://dev.meta.ai/legal/acceptable-use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section meta--muse-wonder-full. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/evidence/catchup_2026-10-19_us_labs.md, section meta--muse-wonder-full. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -265,7 +265,7 @@
    "usage_policy": "https://dev.meta.ai/legal/acceptable-use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section meta--muse-wonder. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/evidence/catchup_2026-10-19_us_labs.md, section meta--muse-wonder. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -277,7 +277,7 @@
    "usage_policy": "https://dev.meta.ai/legal/acceptable-use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Muse Spark 1.1 Evaluation Report PDF (112 pp, Advanced AI Scaling Framework catastrophic-risk evals), fetched 200; the blog says the full safety posture for 1.1 is documented there. model_card: not found: checked the blog, dev.meta.ai/models/muse-spark-1-1 (product page) and research.meta.ai/static/muse-spark-1-1-model-card (404). usage_policy: Meta Model API Acceptable Use Policy, fetched 200; 1.1 is on Meta Model API (Muse Wonder convention). paper: not found: only the evaluation report (used as the system card) and a methodology link (500). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/meta.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Muse Spark 1.1 Evaluation Report PDF (112 pp, Advanced AI Scaling Framework catastrophic-risk evals), fetched 200; the blog says the full safety posture for 1.1 is documented there. model_card: not found: checked the blog, dev.meta.ai/models/muse-spark-1-1 (product page) and research.meta.ai/static/muse-spark-1-1-model-card (404). usage_policy: Meta Model API Acceptable Use Policy, fetched 200; 1.1 is on Meta Model API (Muse Wonder convention). paper: not found: only the evaluation report (used as the system card) and a methodology link (500). Evidence: docs/evidence/disclosure_research_2026-10-19/meta.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -289,7 +289,7 @@
    "usage_policy": "https://dev.meta.ai/legal/acceptable-use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: the blog has no safety section and links only the 1.2 methodology PDF (3 pp, benchmarks only). model_card: not found: checked the blog, dev.meta.ai/models/muse-spark-1-2 (product page) and research.meta.ai/static/muse-spark-1-2-model-card (404). usage_policy: Meta Model API AUP, fetched 200; 1.2 is served on Meta Model API. paper: not found on the blog, dev.meta.ai or arXiv. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/meta.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: the blog has no safety section and links only the 1.2 methodology PDF (3 pp, benchmarks only). model_card: not found: checked the blog, dev.meta.ai/models/muse-spark-1-2 (product page) and research.meta.ai/static/muse-spark-1-2-model-card (404). usage_policy: Meta Model API AUP, fetched 200; 1.2 is served on Meta Model API. paper: not found on the blog, dev.meta.ai or arXiv. Evidence: docs/evidence/disclosure_research_2026-10-19/meta.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -301,7 +301,7 @@
    "usage_policy": "https://huggingface.co/meta-models/Muse-Glimmer-30B/blob/main/USAGE_POLICY.md",
    "paper": "https://ai.meta.com/research/publications/muse-glimmer-30b-an-on-device-agentic-model/",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). model_card: HF Muse Glimmer Model Card fetched 200. usage_policy: Muse Glimmer Usage Policy on HF, linked from the card, fetched 200. paper: ai.meta.com publication page Muse Glimmer 30B: An On-Device Agentic Model (dated October 19, 2026, linked from the blog as the Technical Report), fetched 200. system_card: not found: the safety results sit in the model card, which defers methodology to the Muse Spark report; there is no standalone Glimmer safety report (google-deepmind Flash-Lite precedent). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/meta.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). model_card: HF Muse Glimmer Model Card fetched 200. usage_policy: Muse Glimmer Usage Policy on HF, linked from the card, fetched 200. paper: ai.meta.com publication page Muse Glimmer 30B: An On-Device Agentic Model (dated October 19, 2026, linked from the blog as the Technical Report), fetched 200. system_card: not found: the safety results sit in the model card, which defers methodology to the Muse Spark report; there is no standalone Glimmer safety report (google-deepmind Flash-Lite precedent). Evidence: docs/evidence/disclosure_research_2026-10-19/meta.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -313,7 +313,7 @@
    "usage_policy": "https://dev.meta.ai/legal/acceptable-use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: the blog has a short Safety paragraph but links only the multimodal evaluation methodology PDF (4 pp). model_card: not found: dev.meta.ai/models/muse-spark-1-3 is 404, dev.meta.ai/models/muse-spark is a product page, and research.meta.ai/static/muse-spark-1-3-model-card is 404. usage_policy: Meta Model API AUP, fetched 200; 1.3 is on Meta Model API and Muse Code. paper: not found on the blog, dev.meta.ai or arXiv. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/meta.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: the blog has a short Safety paragraph but links only the multimodal evaluation methodology PDF (4 pp). model_card: not found: dev.meta.ai/models/muse-spark-1-3 is 404, dev.meta.ai/models/muse-spark is a product page, and research.meta.ai/static/muse-spark-1-3-model-card is 404. usage_policy: Meta Model API AUP, fetched 200; 1.3 is on Meta Model API and Muse Code. paper: not found on the blog, dev.meta.ai or arXiv. Evidence: docs/evidence/disclosure_research_2026-10-19/meta.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   }
  ]

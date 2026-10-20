@@ -13,7 +13,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2305.11172v1",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: ModelScope card (Alibaba DAMO), fetched 200; HF OFA-Sys/ONE-PEACE exists but holds only a metadata-only README and no weights, so ModelScope used (convention extension). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: ModelScope card (Alibaba DAMO), fetched 200; HF OFA-Sys/ONE-PEACE exists but holds only a metadata-only README and no weights, so ModelScope used (convention extension). Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -25,7 +25,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2308.12966",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -37,7 +37,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2309.16609",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -49,7 +49,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API and chat product, no weights; nothing in the Qwen HF org; announcement is an Alibaba Cloud blog only; paper NOT_DISCLOSED: no technical report; the announcement blog (fetched 200) cites none; arXiv title search \"Tongyi Qianwen\" returns nothing. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API and chat product, no weights; nothing in the Qwen HF org; announcement is an Alibaba Cloud blog only; paper NOT_DISCLOSED: no technical report; the announcement blog (fetched 200) cites none; arXiv title search \"Tongyi Qianwen\" returns nothing. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -61,7 +61,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2311.04257",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF repo that the X-PLUG/mPLUG-Owl GitHub lists as the official HF download, fetched 200; the card is a stub (title and figure). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF repo that the X-PLUG/mPLUG-Owl GitHub lists as the official HF download, fetched 200; the card is a stub (title and figure). Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -73,7 +73,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2311.07919",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -97,7 +97,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2312.00738",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card (SeaLLMs, Alibaba DAMO), fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card (SeaLLMs, Alibaba DAMO), fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -109,7 +109,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen-VL-Max returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: release blog qwenlm.github.io/blog/qwen-vl (fetched 200) cites no report; the Qwen-VL paper 2308.12966 predates Max and does not cover it; arXiv search finds nothing. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen-VL-Max returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: release blog qwenlm.github.io/blog/qwen-vl (fetched 200) cites no report; the Qwen-VL paper 2308.12966 predates Max and does not cover it; arXiv search finds nothing. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -121,7 +121,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: Qwen1.5 shipped with a blog only (approved Qwen1.5-72B ruling); the card cites only the Qwen-1 report. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: Qwen1.5 shipped with a blog only (approved Qwen1.5-72B ruling); the card cites only the Qwen-1 report. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -145,7 +145,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: Qwen1.5 shipped with a blog only (approved Qwen1.5-72B ruling). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: Qwen1.5 shipped with a blog only (approved Qwen1.5-72B ruling). Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -157,7 +157,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: Qwen1.5 shipped with a blog only (approved Qwen1.5-72B ruling). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: Qwen1.5 shipped with a blog only (approved Qwen1.5-72B ruling). Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -169,7 +169,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen-Plus returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: API-only 2024 Plus model; no report found on the Qwen blog, Model Studio docs or arXiv. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen-Plus returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: API-only 2024 Plus model; no report found on the Qwen blog, Model Studio docs or arXiv. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -205,7 +205,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2405.20797",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card for the 7B Ovis release (org AIDC-AI renamed ATH-MaaS; the old URL redirects), fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card for the 7B Ovis release (org AIDC-AI renamed ATH-MaaS; the old URL redirects), fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -217,7 +217,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2407.10759",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -229,7 +229,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2409.12122",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper: Qwen2.5-Math Technical Report, fetched 200; it describes the Qwen2-Math-72B training pipeline (Qwen2-Math named 70 times). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper: Qwen2.5-Math Technical Report, fetched 200; it describes the Qwen2-Math-72B training pipeline (Qwen2-Math named 70 times). Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -241,7 +241,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card (AIDC-AI renamed ATH-MaaS), fetched 200; paper NOT_DISCLOSED: the card cites only the original Ovis paper 2405.20797, whose text never mentions Ovis1.6 or Gemma2; arXiv abstract search \"Ovis1.6\" finds nothing. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card (AIDC-AI renamed ATH-MaaS), fetched 200; paper NOT_DISCLOSED: the card cites only the original Ovis paper 2405.20797, whose text never mentions Ovis1.6 or Gemma2; arXiv abstract search \"Ovis1.6\" finds nothing. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -253,7 +253,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2412.15115",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper: Qwen2.5 Technical Report, fetched 200, reports Qwen2.5-32B results. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper: Qwen2.5 Technical Report, fetched 200, reports Qwen2.5-32B results. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -265,7 +265,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2409.12191",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -277,7 +277,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2409.12186",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -289,7 +289,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2412.15115",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper: Qwen2.5 Technical Report, fetched 200, reports Qwen2.5-3B results. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper: Qwen2.5 Technical Report, fetched 200, reports Qwen2.5-3B results. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -313,7 +313,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2409.12122",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card for the base model, fetched 200; paper: Qwen2.5-Math Technical Report, fetched 200, cited by the HF card. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card for the base model, fetched 200; paper: Qwen2.5-Math Technical Report, fetched 200, cited by the HF card. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -325,7 +325,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2411.14405",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card (AIDC-AI renamed ATH-MaaS), fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card (AIDC-AI renamed ATH-MaaS), fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -337,7 +337,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2409.12186",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -349,7 +349,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2412.15115",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen2.5-Turbo returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper: Qwen2.5 Technical Report, fetched 200; it covers the proprietary Qwen2.5-Turbo explicitly (33 mentions). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen2.5-Turbo returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper: Qwen2.5 Technical Report, fetched 200; it covers the proprietary Qwen2.5-Turbo explicitly (33 mentions). Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -361,7 +361,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card (AIDC-AI renamed ATH-MaaS), fetched 200; paper NOT_DISCLOSED: the card cites only the original Ovis paper 2405.20797, which never mentions Ovis1.6 or Gemma2; arXiv abstract search \"Ovis1.6\" finds nothing. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card (AIDC-AI renamed ATH-MaaS), fetched 200; paper NOT_DISCLOSED: the card cites only the original Ovis paper 2405.20797, which never mentions Ovis1.6 or Gemma2; arXiv abstract search \"Ovis1.6\" finds nothing. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -373,7 +373,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Prefilled arXiv link 2502.13923 resolves to the Qwen2.5-VL Technical Report, not a QVQ paper, so it was removed pending review; QVQ-72B-Preview appears to be blog only. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Prefilled arXiv link 2502.13923 resolves to the Qwen2.5-VL Technical Report, not a QVQ paper, so it was removed pending review; QVQ-72B-Preview appears to be blog only. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -385,7 +385,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card, fetched 200; paper NOT_DISCLOSED: the card cites only the earlier GTE and mGTE papers (2407.19669 covers the mGTE encoder, not the ModernBERT version); arXiv abstract search \"gte-modernbert\" finds only third-party work. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card, fetched 200; paper NOT_DISCLOSED: the card cites only the earlier GTE and mGTE papers (2407.19669 covers the mGTE encoder, not the ModernBERT version); arXiv abstract search \"gte-modernbert\" finds only third-party work. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -409,7 +409,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2502.13923",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card (Instruct; no base repo was released), fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card (Instruct; no base repo was released), fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -433,7 +433,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2503.20215",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -445,7 +445,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/QwQ-Plus returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: the Model Studio QwQ doc (fetched 200) cites no report; the QwQ line has no report (approved QwQ-32B ruling); arXiv title search QwQ finds nothing from Qwen. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/QwQ-Plus returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: the Model Studio QwQ doc (fetched 200) cites no report; the QwQ line has no report (approved QwQ-32B ruling); arXiv title search QwQ finds nothing from Qwen. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -469,7 +469,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2506.05176v1",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card for the largest size of the family (0.6B, 4B and 8B cards share the same text), fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card for the largest size of the family (0.6B, 4B and 8B cards share the same text), fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -481,7 +481,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: blog qwenlm.github.io/blog/qwen3-coder (fetched 200) has no report; the card cites only the Qwen3 report 2505.09388, which does not cover Qwen3-Coder (Qwen3-Max ruling); arXiv title search Qwen3-Coder finds only Qwen3-Coder-Next. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: blog qwenlm.github.io/blog/qwen3-coder (fetched 200) has no report; the card cites only the Qwen3 report 2505.09388, which does not cover Qwen3-Coder (Qwen3-Max ruling); arXiv title search Qwen3-Coder finds only Qwen3-Coder-Next. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -493,7 +493,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2508.11737",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card (AIDC-AI renamed ATH-MaaS), fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card (AIDC-AI renamed ATH-MaaS), fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -517,7 +517,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card (Instruct; a Thinking variant also exists, no base repo), fetched 200; paper NOT_DISCLOSED: the release blog (rendered in a browser) has no report; the card cites the Qwen3 and Qwen2.5-1M reports, neither of which covers Qwen3-Next; arXiv title search Qwen3-Next finds nothing. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card (Instruct; a Thinking variant also exists, no base repo), fetched 200; paper NOT_DISCLOSED: the release blog (rendered in a browser) has no report; the card cites the Qwen3 and Qwen2.5-1M reports, neither of which covers Qwen3-Next; arXiv title search Qwen3-Next finds nothing. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -529,7 +529,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2509.13310",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card NOT_DISCLOSED: no weights released; HF Alibaba-NLP/AgentFounder-30B-A3B returns 404, HF search AgentFounder is empty, GitHub Alibaba-NLP/DeepResearch Agent/AgentFounder holds only a README. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card NOT_DISCLOSED: no weights released; HF Alibaba-NLP/AgentFounder-30B-A3B returns 404, HF search AgentFounder is empty, GitHub Alibaba-NLP/DeepResearch Agent/AgentFounder holds only a README. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -541,7 +541,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2509.17765",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card (Instruct), fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card (Instruct), fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -553,7 +553,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2510.24701",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms, fetched 200; convention extended from Qwen-team rows to this other Alibaba group's release; model_card: HF card, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -565,7 +565,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen3-Max-Thinking returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: blog qwen.ai/blog?id=qwen3-max-thinking (rendered) has no report link; arXiv title search Qwen3-Max finds nothing. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen3-Max-Thinking returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: blog qwen.ai/blog?id=qwen3-max-thinking (rendered) has no report link; arXiv title search Qwen3-Max finds nothing. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -577,7 +577,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2603.00729",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper: Qwen3-Coder-Next Technical Report (arXiv version of the PDF the blog links), fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper: Qwen3-Coder-Next Technical Report (arXiv version of the PDF the blog links), fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -613,7 +613,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2604.15804",
    "status": "APPROVED",
-   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen3.5-Omni-Plus returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); no Qwen3.5-Omni weights on HF. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass; prefilled arXiv link re-fetched HTTP 200 this session with a matching title. Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen3.5-Omni-Plus returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); no Qwen3.5-Omni weights on HF. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -625,7 +625,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen3.6-Plus returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: blog qwen.ai/blog?id=qwen3.6 (rendered) mentions no report; arXiv title search Qwen3.6 finds nothing. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Not researched this pass. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen3.6-Plus returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: blog qwen.ai/blog?id=qwen3.6 (rendered) mentions no report; arXiv title search Qwen3.6 finds nothing. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -637,7 +637,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2609.25611",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: link fetched 200. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_other_labs.md, section alibaba-qwen--qwen3.8-omni-flash. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: link fetched 200. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/evidence/catchup_2026-10-19_other_labs.md, section alibaba-qwen--qwen3.8-omni-flash. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -649,7 +649,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: the Qwen3.5 blog still calls the report upcoming; the card cites only the blog; arXiv title search Qwen3.5 finds only the Qwen3.5-Omni report and third-party work. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: the Qwen3.5 blog still calls the report upcoming; the card cites only the blog; arXiv title search Qwen3.5 finds only the Qwen3.5-Omni report and third-party work. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -661,7 +661,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: blog qwen.ai/blog?id=qwen3.6-27b and the card cite only the blog; arXiv title search Qwen3.6 finds nothing. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: blog qwen.ai/blog?id=qwen3.6-27b and the card cite only the blog; arXiv title search Qwen3.6 finds nothing. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -673,7 +673,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen3.7-Max returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: blog qwen.ai/blog?id=qwen3.7 calls the technical report upcoming; arXiv title search Qwen3.7 finds nothing. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen3.7-Max returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: blog qwen.ai/blog?id=qwen3.7 calls the technical report upcoming; arXiv title search Qwen3.7 finds nothing. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -685,7 +685,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen3.7-Plus returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: blog qwen.ai/blog?id=qwen3.7-plus mentions no report; arXiv title search Qwen3.7 finds nothing. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen3.7-Plus returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); paper NOT_DISCLOSED: blog qwen.ai/blog?id=qwen3.7-plus mentions no report; arXiv title search Qwen3.7 finds nothing. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -697,7 +697,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card for Qwen3.8-2.4T-A95B, fetched 200; it names Qwen3.8-Max as the official API version based on these weights (family card that names it; doubtful, see report); paper NOT_DISCLOSED: blog qwen.ai/blog?id=qwen3.8 has no report; the card cites only the blog; arXiv title search Qwen3.8 finds only the Omni and Flash-Next architecture reports. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card for Qwen3.8-2.4T-A95B, fetched 200; it names Qwen3.8-Max as the official API version based on these weights (family card that names it; doubtful, see report); paper NOT_DISCLOSED: blog qwen.ai/blog?id=qwen3.8 has no report; the card cites only the blog; arXiv title search Qwen3.8 finds only the Omni and Flash-Next architecture reports. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -709,7 +709,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen3.7-Flash returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); the QwenCloud page is a product listing; paper NOT_DISCLOSED: the QwenCloud model page and Model Studio release notes cite no report; arXiv title search Qwen3.7 finds nothing. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card NOT_DISCLOSED: API-only, no weights; HF Qwen/Qwen3.7-Flash returns 404 and the Qwen HF org has no repo for it (Qwen2.5-Max and Qwen3-Max convention); the QwenCloud page is a product listing; paper NOT_DISCLOSED: the QwenCloud model page and Model Studio release notes cite no report; arXiv title search Qwen3.7 finds nothing. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -721,7 +721,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: the card cites only the Qwen3.8 blog; arXiv title search Qwen3.8 finds only the Omni and Flash-Next architecture reports. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: the card cites only the Qwen3.8 blog; arXiv title search Qwen3.8 finds only the Omni and Flash-Next architecture reports. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -733,7 +733,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: the card cites only the Qwen3.8 blog; arXiv title search Qwen3.8 finds only the Omni and Flash-Next architecture reports. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card, fetched 200; paper NOT_DISCLOSED: the card cites only the Qwen3.8 blog; arXiv title search Qwen3.8 finds only the Omni and Flash-Next architecture reports. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -745,7 +745,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "https://arxiv.org/abs/2608.30320",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; paper: On the Design of Qwen3.8-Next Architecture (Qwen Team tech report cited by the HF card; the blog links its PDF), fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; paper: On the Design of Qwen3.8-Next Architecture (Qwen Team tech report cited by the HF card; the blog links its PDF), fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -757,7 +757,7 @@
    "usage_policy": "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0",
    "paper": "",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card for Qwen3.8-Flash-Next, fetched 200; it names Qwen3.8-Flash as the official API version based on these weights (doubtful, see report); paper left NOT_RESEARCHED: arXiv 2608.30320 covers Qwen3.8-Flash-Next, the open model Qwen3.8-Flash is served from, but never names Qwen3.8-Flash; needs a ruling. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). system_card NOT_DISCLOSED: not found, checked the HF card, the release blog or announcement, the Qwen blog (Qwen publishes no system or safety cards) and arXiv; usage_policy: lab-wide Alibaba Cloud International product terms (Model Studio sections), fetched 200, per the approved Qwen convention; model_card: HF card for Qwen3.8-Flash-Next, fetched 200; it names Qwen3.8-Flash as the official API version based on these weights (doubtful, see report); paper left NOT_RESEARCHED: arXiv 2608.30320 covers Qwen3.8-Flash-Next, the open model Qwen3.8-Flash is served from, but never names Qwen3.8-Flash; needs a ruling. Evidence: docs/evidence/disclosure_research_2026-10-19/alibaba-qwen.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   }
  ]

@@ -13,7 +13,7 @@
    "usage_policy": "NOT_DISCLOSED",
    "paper": "https://arxiv.org/abs/2205.05131",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: checked Yi Tay announcement blog, HF google/flan-ul2, UL2 arXiv paper; no system card. model_card: HF card in google org fetched 200 (Model card for Flan-UL2; added to HF by HF staff per its Contribution section). usage_policy: not found: Apache 2.0 checkpoint; HF card and announcement link no use policy, and the Generative AI Prohibited Use Policy only covers Google services that refer to it. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: checked Yi Tay announcement blog, HF google/flan-ul2, UL2 arXiv paper; no system card. model_card: HF card in google org fetched 200 (Model card for Flan-UL2; added to HF by HF staff per its Contribution section). usage_policy: not found: Apache 2.0 checkpoint; HF card and announcement link no use policy, and the Generative AI Prohibited Use Policy only covers Google services that refer to it. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -37,7 +37,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "https://arxiv.org/abs/2305.10403",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: no system card for PaLM 2 (matches approved PaLM 2 row); ai.google.dev/palm_docs/palm now 404. model_card: PaLM 2 report PDF fetched 200, Appendix D.10 PaLM 2 Model Card covers the family and its API release; Bison is a PaLM 2 size per blog.google PaLM 2 post (fetched 200); same URL as approved PaLM 2 row. usage_policy: Generative AI Prohibited Use Policy fetched 200; PaLM 2 report cites it and the PaLM API terms. paper: PaLM 2 Technical Report fetched 200; Google names Bison as one of the four PaLM 2 sizes (blog.google, fetched 200). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: no system card for PaLM 2 (matches approved PaLM 2 row); ai.google.dev/palm_docs/palm now 404. model_card: PaLM 2 report PDF fetched 200, Appendix D.10 PaLM 2 Model Card covers the family and its API release; Bison is a PaLM 2 size per blog.google PaLM 2 post (fetched 200); same URL as approved PaLM 2 row. usage_policy: Generative AI Prohibited Use Policy fetched 200; PaLM 2 report cites it and the PaLM API terms. paper: PaLM 2 Technical Report fetched 200; Google names Bison as one of the four PaLM 2 sizes (blog.google, fetched 200). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -49,7 +49,7 @@
    "usage_policy": "NOT_DISCLOSED",
    "paper": "https://arxiv.org/abs/2309.04662",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: checked HF google/madlad400-10b-mt and the arXiv paper; no system card. model_card: HF card in google org fetched 200 (Model Card for MADLAD-400-10B-MT; card notes it was written by a converter not involved in the research). usage_policy: not found: Apache 2.0 checkpoint; HF card and paper link no use policy. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: checked HF google/madlad400-10b-mt and the arXiv paper; no system card. model_card: HF card in google org fetched 200 (Model Card for MADLAD-400-10B-MT; card notes it was written by a converter not involved in the research). usage_policy: not found: Apache 2.0 checkpoint; HF card and paper link no use policy. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -61,7 +61,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "https://arxiv.org/abs/2312.11805",
    "status": "APPROVED",
-   "notes": "Paper verified on arXiv (Gemini: A Family of Highly Capable Multimodal Models, 200). No standalone system card; the tech report states card content is released within tech report updates. Model card left blank: the report's Appendix 10.1 card covers Gemini Ultra only, and the old storage.googleapis.com/model-cards bucket URL now returns 403, so a Pro-specific card could not be confirmed. Usage policy page fetched 200. Researched 2026-10-19 (model_card). Researched 2026-10-19. model_card: not found: the only Gemini 1.0 card (hub link gemini_1_report.pdf#page=71, fetched 200) is titled Gemini Ultra Model Card and covers models built on the Ultra pre-trained model; deepmind-media Gemini-1-0-Pro probe 404; Wayback CDX of old model-cards bucket lists only 2.x and later cards. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Paper verified on arXiv (Gemini: A Family of Highly Capable Multimodal Models, 200). No standalone system card; the tech report states card content is released within tech report updates. Model card left blank: the report's Appendix 10.1 card covers Gemini Ultra only, and the old storage.googleapis.com/model-cards bucket URL now returns 403, so a Pro-specific card could not be confirmed. Usage policy page fetched 200. Researched 2026-10-19 (model_card). Researched 2026-10-19. model_card: not found: the only Gemini 1.0 card (hub link gemini_1_report.pdf#page=71, fetched 200) is titled Gemini Ultra Model Card and covers models built on the Ultra pre-trained model; deepmind-media Gemini-1-0-Pro probe 404; Wayback CDX of old model-cards bucket lists only 2.x and later cards. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -73,7 +73,7 @@
    "usage_policy": "NOT_DISCLOSED",
    "paper": "https://www.nature.com/articles/s41586-023-06924-6",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: checked DeepMind blog post, Nature paper, github.com/google-deepmind/funsearch; FunSearch is a method run on PaLM 2. model_card: not found: checked DeepMind blog post, GitHub repo README, model-card hub; no model card. usage_policy: not found: code released Apache 2.0, no use policy on blog or repo. paper: Nature paper Mathematical discoveries from program search with large language models, fetched 200 (DeepMind authors). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: checked DeepMind blog post, Nature paper, github.com/google-deepmind/funsearch; FunSearch is a method run on PaLM 2. model_card: not found: checked DeepMind blog post, GitHub repo README, model-card hub; no model card. usage_policy: not found: code released Apache 2.0, no use policy on blog or repo. paper: Nature paper Mathematical discoveries from program search with large language models, fetched 200 (DeepMind authors). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -85,7 +85,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "https://arxiv.org/abs/2312.11805",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: no standalone system card for Gemini 1.0 (matches approved Gemini 1.0 Pro row). model_card: not found: Gemini 1.0 report's only card is the Gemini Ultra Model Card; model-card hub lists no Nano card. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini Nano page links ML Kit GenAI API Additional Terms (fetched 200), which require compliance with it. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: no standalone system card for Gemini 1.0 (matches approved Gemini 1.0 Pro row). model_card: not found: Gemini 1.0 report's only card is the Gemini Ultra Model Card; model-card hub lists no Nano card. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini Nano page links ML Kit GenAI API Additional Terms (fetched 200), which require compliance with it. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -97,7 +97,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: checked the deepmind.google model-card hub, the release model card, and deepmind-media FSF report probes; Google publishes no system card, safety content sits in the model card (lab convention). model_card: Model card PDF fetched 200 (application/pdf), text reads Gemini 2.0 Flash-Lite Model Card, published April 10, 2025; linked from the hub. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 2.0 tech report (matches approved Gemini 2.0 Flash row). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: checked the deepmind.google model-card hub, the release model card, and deepmind-media FSF report probes; Google publishes no system card, safety content sits in the model card (lab convention). model_card: Model card PDF fetched 200 (application/pdf), text reads Gemini 2.0 Flash-Lite Model Card, published April 10, 2025; linked from the hub. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 2.0 tech report (matches approved Gemini 2.0 Flash row). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -109,7 +109,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "https://arxiv.org/abs/2312.11805",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: no standalone system card for Gemini 1.0 (matches approved Gemini 1.0 Pro row). model_card: not found: Gemini 1.0 report's only card is the Gemini Ultra Model Card; hub lists no Pro Vision card. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models); gemini-pro-vision listed in the Gemini API changelog (fetched 200). paper: Gemini 1.0 report arXiv 2312.11805 fetched 200; covers Gemini Pro multimodal (image) capabilities. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: no standalone system card for Gemini 1.0 (matches approved Gemini 1.0 Pro row). model_card: not found: Gemini 1.0 report's only card is the Gemini Ultra Model Card; hub lists no Pro Vision card. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models); gemini-pro-vision listed in the Gemini API changelog (fetched 200). paper: Gemini 1.0 report arXiv 2312.11805 fetched 200; covers Gemini Pro multimodal (image) capabilities. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -145,7 +145,7 @@
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "https://arxiv.org/abs/2403.08295",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: Gemma model card fetched 200 (redirects to core/model_card); page has Gemma 1.1 IT 7B tables; same URL as approved Gemma 7B row. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases). paper: Gemma report fetched 200; v2 to v4 (April 2024) report Gemma 1.1 IT 7B results. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: Gemma model card fetched 200 (redirects to core/model_card); page has Gemma 1.1 IT 7B tables; same URL as approved Gemma 7B row. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases). paper: Gemma report fetched 200; v2 to v4 (April 2024) report Gemma 1.1 IT 7B results. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -157,7 +157,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "https://arxiv.org/abs/2403.05530",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: no standalone system card for Gemini 1.5 (matches approved Gemini 1.5 Pro row). model_card: not found: Gemini 1.5 report Appendix 12.1 card (fetched 200) names only 1.5 Pro and 1.5 Flash, not Flash-8B; hub lists no Flash-8B card; old bucket gemini-1.5-flash-8b.pdf returns 403 and is absent from the Wayback listing. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: Gemini 1.5 report fetched 200; Section 8 Flash-8B: Pushing the frontier for more efficient models. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: no standalone system card for Gemini 1.5 (matches approved Gemini 1.5 Pro row). model_card: not found: Gemini 1.5 report Appendix 12.1 card (fetched 200) names only 1.5 Pro and 1.5 Flash, not Flash-8B; hub lists no Flash-8B card; old bucket gemini-1.5-flash-8b.pdf returns 403 and is absent from the Wayback listing. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: Gemini 1.5 report fetched 200; Section 8 Flash-8B: Pushing the frontier for more efficient models. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -169,7 +169,7 @@
    "usage_policy": "NOT_DISCLOSED",
    "paper": "https://arxiv.org/abs/2407.12687",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: report says internal model and system cards exist but only the external model card is published. model_card: LearnLM report PDF fetched 200; Supplementary A is the LearnLM-Tutor model card (card-in-report convention as for Gemini 1.5). usage_policy: not found: research model deployed only in restricted beta studies; report and card link no use policy. paper: arXiv Towards Responsible Development of Generative AI for Education fetched 200; same report as the deepmind-media PDF. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: report says internal model and system cards exist but only the external model card is published. model_card: LearnLM report PDF fetched 200; Supplementary A is the LearnLM-Tutor model card (card-in-report convention as for Gemini 1.5). usage_policy: not found: research model deployed only in restricted beta studies; report and card link no use policy. paper: arXiv Towards Responsible Development of Generative AI for Education fetched 200; same report as the deepmind-media PDF. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -193,7 +193,7 @@
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "https://arxiv.org/abs/2409.13741",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: HF DataGemma RIG model card in google org fetched 200 (RAG card also exists at google/datagemma-rag-27b-it); ai.google.dev has no DataGemma model card page (404). usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases); DataGemma ships under the Gemma license. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: HF DataGemma RIG model card in google org fetched 200 (RAG card also exists at google/datagemma-rag-27b-it); ai.google.dev has no DataGemma model card page (404). usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases); DataGemma ships under the Gemma license. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -205,7 +205,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: experimental model; no card on the model-card hub, no safety report. model_card: not found: model-card hub lists no experimental 1114 model; Gemini API changelog (fetched 200) announces it as an experimental model only. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models); released as gemini-exp-1114 in the Gemini API (changelog fetched 200). paper: not found: Gemini 2.5 report has no mention of exp-1114; arXiv Gemini Team author search shows no report for it. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: experimental model; no card on the model-card hub, no safety report. model_card: not found: model-card hub lists no experimental 1114 model; Gemini API changelog (fetched 200) announces it as an experimental model only. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models); released as gemini-exp-1114 in the Gemini API (changelog fetched 200). paper: not found: Gemini 2.5 report has no mention of exp-1114; arXiv Gemini Team author search shows no report for it. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -229,7 +229,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: no FSF or safety report; Gemini-2-0-Pro model card probe 404. model_card: not found: model-card hub footnote reads Gemini 2.0 Pro was released as an experimental model only; deepmind-media Gemini-2-0-Pro-Model-Card.pdf 404. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 2.0 tech report (matches approved Gemini 2.0 Flash row); Gemini 2.5 report section 2.7 gives it one paragraph and defers to blog posts. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: no FSF or safety report; Gemini-2-0-Pro model card probe 404. model_card: not found: model-card hub footnote reads Gemini 2.0 Pro was released as an experimental model only; deepmind-media Gemini-2-0-Pro-Model-Card.pdf 404. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 2.0 tech report (matches approved Gemini 2.0 Flash row); Gemini 2.5 report section 2.7 gives it one paragraph and defers to blog posts. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -241,7 +241,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: experimental model, no safety report. model_card: not found: not on model-card hub; Gemini-2-0-Flash-Thinking-Model-Card.pdf probe 404; Gemini 2.0 Flash card does not mention Thinking; source page deepmind.google/technologies/gemini/flash-thinking now 404. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models); gemini-2.0-flash-thinking-exp in Gemini API changelog. paper: not found: no Gemini 2.0 tech report (matches approved Gemini 2.0 Flash row); Gemini 2.5 report only mentions it as the origin of the thinking recipe. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: experimental model, no safety report. model_card: not found: not on model-card hub; Gemini-2-0-Flash-Thinking-Model-Card.pdf probe 404; Gemini 2.0 Flash card does not mention Thinking; source page deepmind.google/technologies/gemini/flash-thinking now 404. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models); gemini-2.0-flash-thinking-exp in Gemini API changelog. paper: not found: no Gemini 2.0 tech report (matches approved Gemini 2.0 Flash row); Gemini 2.5 report only mentions it as the origin of the thinking recipe. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -253,7 +253,7 @@
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "https://arxiv.org/abs/2412.03555",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: PaliGemma 2 model card fetched 200; covers the mix models; HF google/paligemma2-3b-mix-224 card also fetched 200. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases); the card links it. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: PaliGemma 2 model card fetched 200; covers the mix models; HF google/paligemma2-3b-mix-224 card also fetched 200. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases); the card links it. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -277,7 +277,7 @@
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "https://arxiv.org/abs/2504.06225",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: HF card in google org fetched 200 (Gemma license); ai.google.dev/gemma/docs/t5gemma/model_card is 404. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases); the HF card links it. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: HF card in google org fetched 200 (Gemma license); ai.google.dev/gemma/docs/t5gemma/model_card is 404. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases); the HF card links it. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -289,7 +289,7 @@
    "usage_policy": "https://developers.google.com/health-ai-developer-foundations/prohibited-use-policy",
    "paper": "https://arxiv.org/abs/2504.06196",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: checked HAI-DEF TxGemma docs and HF card; no system card. model_card: TxGemma model card fetched 200 (covers 2B, 9B, 27B). usage_policy: HAI-DEF Prohibited Use Policy fetched 200; card says TxGemma is governed by the HAI-DEF terms, which incorporate this policy (extension: health models use HAI-DEF policy, not the Gemma one). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: checked HAI-DEF TxGemma docs and HF card; no system card. model_card: TxGemma model card fetched 200 (covers 2B, 9B, 27B). usage_policy: HAI-DEF Prohibited Use Policy fetched 200; card says TxGemma is governed by the HAI-DEF terms, which incorporate this policy (extension: health models use HAI-DEF policy, not the Gemma one). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -313,7 +313,7 @@
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "https://arxiv.org/abs/2503.19786",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: HF QAT card in google org fetched 200; ai.google.dev Gemma 3 card does not mention QAT. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases). paper: Gemma 3 Technical Report fetched 200; Section 2.3 Quantization Aware Training covers the QAT checkpoints. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: HF QAT card in google org fetched 200; ai.google.dev Gemma 3 card does not mention QAT. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases). paper: Gemma 3 Technical Report fetched 200; Section 2.3 Quantization Aware Training covers the QAT checkpoints. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -325,7 +325,7 @@
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Model card page fetched 200 with title Gemma 3n model card. No system card for Gemma releases. Gemma Prohibited Use Policy fetched 200. Paper left blank: no dedicated Gemma 3n tech report was located this session but absence was not confirmed. Researched 2026-10-19 (paper). Researched 2026-10-19. paper: not found: card citation points to the ai.google.dev docs page, not a report; arXiv searches for Gemma 3n find no Google report; the Gemma 4 report cites Gemma 3n only by a deepmind.google web page. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Model card page fetched 200 with title Gemma 3n model card. No system card for Gemma releases. Gemma Prohibited Use Policy fetched 200. Paper left blank: no dedicated Gemma 3n tech report was located this session but absence was not confirmed. Researched 2026-10-19 (paper). Researched 2026-10-19. paper: not found: card citation points to the ai.google.dev docs page, not a report; arXiv searches for Gemma 3n find no Google report; the Gemma 4 report cites Gemma 3n only by a deepmind.google web page. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -337,7 +337,7 @@
    "usage_policy": "https://developers.google.com/health-ai-developer-foundations/prohibited-use-policy",
    "paper": "https://arxiv.org/abs/2507.05201",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: checked HAI-DEF MedGemma docs, HF card, MedGemma tech report; no system card. model_card: HF card in google org fetched 200; describes MedGemma 27B text-only (the 2025-05-20 release); HAI-DEF page now shows the MedGemma 1.5 card. usage_policy: HAI-DEF Prohibited Use Policy fetched 200; card says MedGemma is governed by HAI-DEF terms, which incorporate it. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: checked HAI-DEF MedGemma docs, HF card, MedGemma tech report; no system card. model_card: HF card in google org fetched 200; describes MedGemma 27B text-only (the 2025-05-20 release); HAI-DEF page now shows the MedGemma 1.5 card. usage_policy: HAI-DEF Prohibited Use Policy fetched 200; card says MedGemma is governed by HAI-DEF terms, which incorporate it. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -361,7 +361,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "https://arxiv.org/abs/2503.07891",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: no system card or safety report for embedding models. model_card: not found: model-card hub lists no embedding model; Gemini-Embedding-Model-Card.pdf probe 404; embeddings docs page has no model card. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). Researched 2026-10-19. system_card: not found: no system card or safety report for embedding models. model_card: not found: model-card hub lists no embedding model; Gemini-Embedding-Model-Card.pdf probe 404; embeddings docs page has no model card. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -373,7 +373,7 @@
    "usage_policy": "NOT_DISCLOSED",
    "paper": "https://www.nature.com/articles/s41586-025-09292-5",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: checked DeepMind blog, Nature paper, GitHub predictingthepast, predictingthepast.com. model_card: not found: GitHub README is code docs, no model card; not on hub. usage_policy: not found: predictingthepast.com links no terms or policy; code is Apache 2.0. paper: Nature paper Contextualizing ancient texts with generative neural networks fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: checked DeepMind blog, Nature paper, GitHub predictingthepast, predictingthepast.com. model_card: not found: GitHub README is code docs, no model card; not on hub. usage_policy: not found: predictingthepast.com links no terms or policy; code is Apache 2.0. paper: Nature paper Contextualizing ancient texts with generative neural networks fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -397,7 +397,7 @@
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: Gemma 3 model card fetched 200; includes 270M sizes and benchmarks. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases). paper: not found: Gemma 3 report (arXiv 2503.19786, only v1 from March 2025) has no 270M mention; arXiv search for Gemma 3 270M finds no Google report. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: Gemma 3 model card fetched 200; includes 270M sizes and benchmarks. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases). paper: not found: Gemma 3 report (arXiv 2503.19786, only v1 from March 2025) has no 270M mention; arXiv search for Gemma 3 270M finds no Google report. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -409,7 +409,7 @@
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "https://arxiv.org/abs/2509.20354",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: EmbeddingGemma model card fetched 200 (300M); linked from the hub. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases). paper: arXiv EmbeddingGemma: Powerful and Lightweight Text Representations fetched 200; card cites it. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: EmbeddingGemma model card fetched 200 (300M); linked from the hub. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases). paper: arXiv EmbeddingGemma: Powerful and Lightweight Text Representations fetched 200; card cites it. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -421,7 +421,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "https://arxiv.org/abs/2510.03342",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: safety is a section of the tech report; no separate safety report; Gemini-Robotics-ER-1-5-Model-Card.pdf probe 404. model_card: Tech report PDF fetched 200; Appendix A model card covers Gemini Robotics-ER 1.5; hub links it at page 30. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models); ER 1.5 is in the Gemini API per DeepMind blog. paper: arXiv Gemini Robotics 1.5 report fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: safety is a section of the tech report; no separate safety report; Gemini-Robotics-ER-1-5-Model-Card.pdf probe 404. model_card: Tech report PDF fetched 200; Appendix A model card covers Gemini Robotics-ER 1.5; hub links it at page 30. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models); ER 1.5 is in the Gemini API per DeepMind blog. paper: arXiv Gemini Robotics 1.5 report fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -433,7 +433,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: the blog's Gemini 2.5 Computer Use System Card link resolves to the model card PDF; no separate system card; card says not in scope for FSF assessment. model_card: Model card PDF fetched 200, published Oct 07, 2025; linked from hub. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: Gemini 2.5 report has no Computer Use mention; no dedicated report. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: the blog's Gemini 2.5 Computer Use System Card link resolves to the model card PDF; no separate system card; card says not in scope for FSF assessment. model_card: Model card PDF fetched 200, published Oct 07, 2025; linked from hub. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: Gemini 2.5 report has no Computer Use mention; no dedicated report. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -445,7 +445,7 @@
    "usage_policy": "NOT_DISCLOSED",
    "paper": "https://www.biorxiv.org/content/10.1101/2025.04.14.648850v2",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: checked blog.google post, bioRxiv preprint, HF card. model_card: HF card fetched 200; hosted by Yale's vandijklab org, linked from Google's announcement on blog.google (fetched 200) as the joint release (extension: co-release card not in google org). usage_policy: not found: model is CC-BY-4.0; HF card and blog link no use policy. paper: bioRxiv preprint fetched 200; Yale with Google Research and Google DeepMind authors; linked from Google's announcement. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: checked blog.google post, bioRxiv preprint, HF card. model_card: HF card fetched 200; hosted by Yale's vandijklab org, linked from Google's announcement on blog.google (fetched 200) as the joint release (extension: co-release card not in google org). usage_policy: not found: model is CC-BY-4.0; HF card and blog link no use policy. paper: bioRxiv preprint fetched 200; Yale with Google Research and Google DeepMind authors; linked from Google's announcement. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -517,7 +517,7 @@
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_other_labs.md, section google-deepmind--embeddinggemma-2. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "notes": "Researched 2026-10-19. system_card: not found on the lab's pages; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/evidence/catchup_2026-10-19_other_labs.md, section google-deepmind--embeddinggemma-2. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -529,7 +529,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_other_labs.md, section google-deepmind--gemini-4-argon. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: link fetched 200; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/evidence/catchup_2026-10-19_other_labs.md, section google-deepmind--gemini-4-argon. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -541,7 +541,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "https://arxiv.org/abs/2507.06261",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: checked the deepmind.google model-card hub, the release model card, and deepmind-media FSF report probes; Google publishes no system card, safety content sits in the model card (lab convention); gemini_2_5_pro_fsf_report.pdf probe 404. model_card: Model card PDF fetched 200, text reads Gemini 2.5 Pro Model Card, updated June 27, 2025; linked from the hub. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: Gemini 2.5 report fetched 200; covers 2.5 Pro. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: checked the deepmind.google model-card hub, the release model card, and deepmind-media FSF report probes; Google publishes no system card, safety content sits in the model card (lab convention); gemini_2_5_pro_fsf_report.pdf probe 404. model_card: Model card PDF fetched 200, text reads Gemini 2.5 Pro Model Card, updated June 27, 2025; linked from the hub. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: Gemini 2.5 report fetched 200; covers 2.5 Pro. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -553,7 +553,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemini 3 Pro FSF report (fetched 200) names only Gemini 2.5 Deep Think; deep-think FSF report and model card probes 404; Feb 2026 Deep Think blog links none. model_card: Gemini 3 Pro model card fetched 200; it says Gemini 3 Pro now features Deep Think mode and reports Deep Think safety and FSF results. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemini 3 Pro FSF report (fetched 200) names only Gemini 2.5 Deep Think; deep-think FSF report and model card probes 404; Feb 2026 Deep Think blog links none. model_card: Gemini 3 Pro model card fetched 200; it says Gemini 3 Pro now features Deep Think mode and reports Deep Think safety and FSF results. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -565,7 +565,7 @@
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "https://arxiv.org/abs/2607.02770",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: Gemma 4 model card fetched 200; lists the 26B A4B MoE. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases). paper: Gemma 4 Technical Report fetched 200; describes the 26B-A4B MoE. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. model_card: Gemma 4 model card fetched 200; lists the 26B A4B MoE. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases). paper: Gemma 4 Technical Report fetched 200; describes the 26B-A4B MoE. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -577,7 +577,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: card refers to safety figures in the release post; no safety report linked. model_card: Model card PDF fetched 200; covers Gemini Robotics-ER 1.6, published April 2026. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models); blog says ER 1.6 is in the Gemini API. paper: not found: card and blog cite no report; tech report probes 404; arXiv Gemini Robotics searches show no ER 1.6 report. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: card refers to safety figures in the release post; no safety report linked. model_card: Model card PDF fetched 200; covers Gemini Robotics-ER 1.6, published April 2026. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models); blog says ER 1.6 is in the Gemini API. paper: not found: card and blog cite no report; tech report probes 404; arXiv Gemini Robotics searches show no ER 1.6 report. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -589,7 +589,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: card defers Frontier Safety to the Gemini 3.1 Pro model card; FSF report probes for 3.5 Flash 404. model_card: Model card PDF fetched 200; linked from deepmind.google model card page. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: card defers Frontier Safety to the Gemini 3.1 Pro model card; FSF report probes for 3.5 Flash 404. model_card: Model card PDF fetched 200; linked from deepmind.google model card page. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -601,7 +601,7 @@
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "https://arxiv.org/abs/2608.00146",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases) (as for the approved Gemma 4 rows, which are also Apache 2.0). paper: arXiv DiffusionGemma Technical Report fetched 200; DiffusionGemma Team, Google DeepMind. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases) (as for the approved Gemma 4 rows, which are also Apache 2.0). paper: arXiv DiffusionGemma Technical Report fetched 200; DiffusionGemma Team, Google DeepMind. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -613,7 +613,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: card defers Frontier Safety to Gemini 3.1 Pro card; FSF report probe 404. model_card: Model card PDF fetched 200; linked from deepmind.google model card page. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: card defers Frontier Safety to Gemini 3.1 Pro card; FSF report probe 404. model_card: Model card PDF fetched 200; linked from deepmind.google model card page. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -625,7 +625,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: card defers Frontier Safety to Gemini 3.1 Pro results; FSF report probe 404. model_card: Model card PDF fetched 200; linked from deepmind.google model card page. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: card defers Frontier Safety to Gemini 3.1 Pro results; FSF report probe 404. model_card: Model card PDF fetched 200; linked from deepmind.google model card page. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -637,7 +637,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: Gemini Robotics 2: Safety Evaluations PDF fetched 200, dated 2026-07-29, evaluates ER 2; the card and blog call it the safety technical report (release safety report convention as for Gemini 3 Pro FSF report). model_card: Model card PDF fetched 200, published July 2026. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models); blog says ER 2 is in the Gemini API. paper: not found: only the safety report is published; Robotics 2 tech report probes 404; arXiv searches show no Gemini Robotics 2 report. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: Gemini Robotics 2: Safety Evaluations PDF fetched 200, dated 2026-07-29, evaluates ER 2; the card and blog call it the safety technical report (release safety report convention as for Gemini 3 Pro FSF report). model_card: Model card PDF fetched 200, published July 2026. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models); blog says ER 2 is in the Gemini API. paper: not found: only the safety report is published; Robotics 2 tech report probes 404; arXiv searches show no Gemini Robotics 2 report. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -649,7 +649,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: Gemini 3.7 Flash Frontier Safety Framework Report fetched 200, published August 2026; FSF report convention as for Gemini 3 Pro. model_card: Model card PDF fetched 200; linked from deepmind.google model card page. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Researched 2026-10-19. system_card: Gemini 3.7 Flash Frontier Safety Framework Report fetched 200, published August 2026; FSF report convention as for Gemini 3 Pro. model_card: Model card PDF fetched 200; linked from deepmind.google model card page. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -661,7 +661,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: card defers Frontier Safety to the Gemini 3.7 Flash card; gemini_3-8_flash_fsf_report.pdf probe 404. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/finish/evidence/disclosure_research_2026-10-19/google-deepmind.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: card defers Frontier Safety to the Gemini 3.7 Flash card; gemini_3-8_flash_fsf_report.pdf probe 404. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   }
  ]
