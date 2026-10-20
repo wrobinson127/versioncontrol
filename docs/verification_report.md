@@ -196,7 +196,8 @@ numbers were captured. The voice lint refused one draft that had echoed the anno
 hardened against quoted promotional vocabulary, and the re-run came back clean: three drafts,
 three lint passes.
 
-The pinned drafting model is Claude Haiku 4.5 (`claude-haiku-4-5-20251001`). Its cost is metered and
+The pinned drafting model was Claude Haiku 4.5 (`claude-haiku-4-5-20251001`) at verification. On
+2026-10-20 it moved to Claude Haiku 5.5 (`claude-haiku-5-5`). Its cost is metered and
 capped in configuration (`pipeline/config.py`); we do not publish the figures.
 
 ## Naming
