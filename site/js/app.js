@@ -310,10 +310,17 @@
 
   /* ---------- theme ---------- */
 
+  /* With no saved choice the site follows the system light or dark setting;
+     a choice made with the toggle is saved and wins. */
   function getTheme() { return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark"; }
-  function setTheme(t) {
+  function savedTheme() {
+    try { var t = localStorage.getItem("vc-theme"); return t === "light" || t === "dark" ? t : null; } catch (err) { return null; }
+  }
+  function setTheme(t, keep) {
     document.documentElement.setAttribute("data-theme", t);
-    try { localStorage.setItem("vc-theme", t); } catch (err) { /* storage blocked: the choice lasts this page view */ }
+    if (keep !== false) {
+      try { localStorage.setItem("vc-theme", t); } catch (err) { /* storage blocked: the choice lasts this page view */ }
+    }
     $$("[data-theme-toggle]").forEach(function (b) {
       b.setAttribute("aria-pressed", t === "light" ? "true" : "false");
       var l = b.querySelector(".tt-word"); if (l) { l.textContent = t === "light" ? "Light" : "Dark"; }
@@ -560,7 +567,11 @@
     wireDialog($("#help"));
     wireCompare();
     $$("[data-theme-toggle]").forEach(function (b) { b.addEventListener("click", toggleTheme); });
-    setTheme(getTheme());
+    setTheme(getTheme(), false);
+    var sys = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)");
+    if (sys && sys.addEventListener) {
+      sys.addEventListener("change", function (ev) { if (!savedTheme()) { setTheme(ev.matches ? "light" : "dark", false); } });
+    }
     $$("[data-open-palette]").forEach(function (b) { b.addEventListener("click", function () { openPalette(); }); });
     $$("[data-open-help]").forEach(function (b) { b.addEventListener("click", openHelp); });
     $$("[data-open-compare]").forEach(function (b) { b.addEventListener("click", function (ev) { ev.preventDefault(); openCompare(); }); });

@@ -23,11 +23,13 @@ NAV = (
 FONTS = ("https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@87.5,400..600"
          "&family=Mona+Sans:wdth,wght@100..125,400..700&display=swap")
 
-# Runs before paint: the stored theme (dark unless the reader chose light),
-# the js class that reveals script-only controls, and the redirect that keeps
-# old timeline links working (index.html#<entry-id> opens that entry).
-BOOT = ('<script>(function(){var d=document.documentElement;try{var t=localStorage.getItem("vc-theme");'
-        'if(t==="light"||t==="dark"){d.setAttribute("data-theme",t);}}catch(e){}d.className+=" js";})();</script>')
+# Runs before paint: the theme (the reader's saved choice; with none, the
+# system light or dark setting), the js class that reveals script-only
+# controls, and the redirect that keeps old timeline links working
+# (index.html#<entry-id> opens that entry).
+BOOT = ('<script>(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem("vc-theme");}catch(e){}'
+        'if(t!=="light"&&t!=="dark"){t=window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";}'
+        'd.setAttribute("data-theme",t);d.className+=" js";})();</script>')
 REDIRECT = ('<script>(function(){var h=location.hash.slice(1);try{h=decodeURIComponent(h);}catch(e){}'
             'if(/^[a-z0-9.-]+--[^\\s\\/?#]+$/i.test(h)){location.replace("explorer.html?id="+encodeURIComponent(h));}})();</script>')
 

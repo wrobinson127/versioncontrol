@@ -15,7 +15,7 @@
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
-<script>(function(){var d=document.documentElement;try{var t=localStorage.getItem("vc-theme");if(t==="light"||t==="dark"){d.setAttribute("data-theme",t);}}catch(e){}d.className+=" js";})();</script>
+<script>(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem("vc-theme");}catch(e){}if(t!=="light"&&t!=="dark"){t=window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";}d.setAttribute("data-theme",t);d.className+=" js";})();</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

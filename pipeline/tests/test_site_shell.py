@@ -30,6 +30,23 @@ def test_every_page_carries_the_shared_shell():
         assert f'<script src="{b}js/app.js"></script>' in html, f"{name}: the core is not loaded"
 
 
+def test_theme_follows_the_system_until_the_reader_chooses():
+    boot = site_shell.BOOT
+    assert boot.index('localStorage.getItem("vc-theme")') < boot.index("prefers-color-scheme: light")
+    assert 'if(t!=="light"&&t!=="dark")' in boot
+    app = (SITE / "js" / "app.js").read_text(encoding="utf-8")
+    assert "setTheme(getTheme(), false);" in app
+    assert "if (!savedTheme())" in app
+
+
+def test_overview_byline_sits_beside_the_update_stamp():
+    html = (SITE / "index.html").read_text(encoding="utf-8")
+    stamp = html[html.index('<div class="stamp">'):]
+    stamp = stamp[:stamp.index("</div>")]
+    assert 'id="fresh"' in stamp
+    assert 'Built by <a href="https://walker-robinson.com">Walker Robinson</a>' in stamp
+
+
 def test_navigation_reaches_every_section_and_the_footer_links():
     for name in PAGES:
         html = (SITE / name).read_text(encoding="utf-8")
