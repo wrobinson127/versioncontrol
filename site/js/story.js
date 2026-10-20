@@ -197,10 +197,11 @@
     var r = R[2], lw = narrow ? 64 : 118, hh = narrow ? 52 : 62, foot = narrow ? 46 : 36, gapB = narrow ? 7 : 18, gapR = narrow ? 5 : 8;
     var bw = (r.x1 - r.x0 - lw - gapB * 3) / 4;
     var counts = S.labs.map(function (o) { return S.E.filter(function (e) { return e.org === o && S.cells[e.id]; }).length; });
-    var avH = r.y1 - r.y0 - hh - foot, s = 16, per = 1;
+    /* a row is never shorter than its label, so two labs' names never touch */
+    var avH = r.y1 - r.y0 - hh - foot, s = 16, per = 1, minRow = narrow ? 15 : 17;
     for (; s > 3; s -= 0.25) {
       per = Math.floor(bw / s); if (per < 1) { continue; }
-      var tot = 0; counts.forEach(function (c) { tot += Math.max(1, Math.ceil(c / per)) * s; });
+      var tot = 0; counts.forEach(function (c) { tot += Math.max(minRow, Math.max(1, Math.ceil(c / per)) * s); });
       if (tot + gapR * (counts.length - 1) <= avH) { break; }
     }
     var y = r.y0 + hh, rowsGeo = [], idx = {};
@@ -209,7 +210,7 @@
       list.forEach(function (e, k) { idx[e.id] = { k: k, top: y }; });
       var h = Math.max(1, Math.ceil(list.length / per)) * s;
       rowsGeo.push({ o: o, top: y, h: h, n: list.length });
-      y += h + gapR;
+      y += Math.max(h, minRow) + gapR;
     });
     var bx = function (k) { return r.x0 + lw + k * (bw + gapB); };
     marks.forEach(function (m) {
@@ -608,7 +609,7 @@
   }
   function tipHtml(m, v) {
     var e = m.e, h = '<p class="t-h">' + esc(e.model_name) + '</p><p class="t-s">' + esc(e._orgName) + ", " + esc(e.date) + ", " + esc(CR.AVAIL_NAMES[e.availability_class] || "") + "</p>";
-    var link = '<p class="t-m">Enter or a click opens the record.</p>';
+    var link = '<p class="t-m t-open"><a href="explorer.html?id=' + encodeURIComponent(e.id) + '">Open in explorer</a>' + (touchTips ? ", or tap the mark again." : ", or press Enter or click the mark.") + "</p>";
     if (m.t === "d") { return h + '<p class="t-row">' + SLOTS[m.k][1] + ": " + CR.discMark(m.cell) + "</p>" + link; }
     if (m.t === "p") { return h + scoreRows(e, m.pair.bench) + link; }
     if (v === 3 && !S.gpqa[e.id]) { return h + '<p class="t-m">No independent GPQA Diamond score on record.</p>' + scoreRows(e, "gpqa-diamond").replace('<p class="t-m">No benchmark score on record.</p>', "") + link; }
@@ -648,6 +649,33 @@
     return focusList;
   }
   function open(m) { location.href = "explorer.html?id=" + encodeURIComponent(m.e.id); }
+  /* the tooltip as a sentence for the live region: each line ends with a
+     period, and the parts of a score line are separated by commas */
+  function liveText() {
+    return [].map.call(tip.querySelectorAll("p:not(.t-open)"), function (p) {
+      var parts = [];
+      [].forEach.call(p.childNodes, function (n) { var t = n.textContent.replace(/\s+/g, " ").trim(); if (t) { parts.push(t); } });
+      var s = parts.join(", ");
+      return /[.!?]$/.test(s) ? s : s + ".";
+    }).join(" ");
+  }
+  /* touch: the first tap on a mark shows its record, a second tap on the
+     same mark opens it, and a tap anywhere else closes the record */
+  var touchTips = false, tapOpen = false;
+  function onDown(ev) {
+    if (ev.pointerType === "mouse") { onMove(ev); return; }
+    touchTips = true;
+    if (Math.abs(P - Math.round(P)) > 0.02) { return; }
+    var gb = G.getBoundingClientRect(), m = nearest(ev.clientX - gb.left, ev.clientY - gb.top);
+    tapOpen = !!(m && m === tipMark && tip.classList.contains("on"));
+    if (m && !tapOpen) { tipMark = m; placeTip(m); schedule(); }
+    else if (!m) { hideTip(); }
+  }
+  function onClick() {
+    if (!tipMark || Math.abs(P - Math.round(P)) > 0.02) { return; }
+    if (touchTips) { if (tapOpen) { tapOpen = false; open(tipMark); } return; }
+    open(tipMark);
+  }
   function onKey(ev) {
     var list = visibleList();
     if (!list.length) { return; }
@@ -656,7 +684,7 @@
       ev.preventDefault();
       focusIdx = focusIdx < 0 ? 0 : clamp(focusIdx + step, 0, list.length - 1);
       tipMark = list[focusIdx]; placeTip(tipMark); schedule();
-      live.textContent = tip.textContent.replace("Enter or a click opens the record.", "");
+      live.textContent = liveText();
     } else if (ev.key === "Enter" && tipMark) { open(tipMark); }
     else if (ev.key === "Escape" && tipMark) { ev.stopPropagation(); hideTip(); }
   }
@@ -722,8 +750,11 @@
       if (window.gsap || document.readyState === "complete") { start(); } else { window.addEventListener("load", start, { once: true }); }
     });
     hit.addEventListener("pointermove", onMove);
-    hit.addEventListener("pointerdown", onMove);
-    hit.addEventListener("click", function () { if (tipMark && Math.abs(P - Math.round(P)) <= 0.02) { open(tipMark); } });
+    hit.addEventListener("pointerdown", onDown);
+    hit.addEventListener("click", onClick);
+    document.addEventListener("pointerdown", function (ev) {
+      if (ev.pointerType !== "mouse" && tipMark && !hit.contains(ev.target) && !tip.contains(ev.target)) { hideTip(); }
+    });
     hit.addEventListener("pointerleave", function (ev) { if (ev.pointerType === "mouse") { hideTip(); } });
     hit.addEventListener("keydown", onKey);
     hit.addEventListener("blur", hideTip);

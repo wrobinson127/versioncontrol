@@ -49,6 +49,7 @@
 
   function set(patch) {
     Object.keys(patch).forEach(function (k) { S[k] = patch[k]; });
+    if (S.from && S.to && S.from > S.to) { var t = S.from; S.from = S.to; S.to = t; CR.toast("The start date was after the end date, so the two are swapped.", 4000); }
     writeUrl();
     render();
   }
@@ -402,9 +403,11 @@
 
     host.innerHTML = '<div class="heat-grid" style="--th:' + TH + "px;--gap:" + GAP + "px;--ax:" + AX + 'px">' +
       '<div class="heat-labels">' + labs + "</div>" +
-      '<div class="heat-plot" tabindex="0" role="application" aria-roledescription="release grid" aria-label="Release weeks by lab. Arrow keys move between cells, Enter selects the cell\'s ' + B.unit + ', Shift and an arrow extends the selection, Escape clears it." aria-describedby="cad-meta">' + s + "</div>" +
+      '<div class="heat-plot" tabindex="0" role="application" aria-roledescription="release grid" aria-label="Release ' + B.unit + 's by lab. Arrow keys move between cells, Enter selects the cell\'s ' + B.unit + ', Shift and an arrow extends the selection, Escape clears it." aria-describedby="cad-meta">' + s + "</div>" +
       '<div class="heat-counts" aria-hidden="true">' + counts + "</div></div>";
-    $("#cad-meta").textContent = (B.unit === "week" ? "" : "One cell per lab per " + B.unit + ". ") + "Drag across the grid to filter every panel.";
+    /* the title names the grid's own unit: weeks on a wide screen, months where the grid shows months */
+    $("#h-cadence").textContent = "Release " + B.unit + "s by lab";
+    $("#cad-meta").textContent = "Drag across the grid to filter every panel.";
     $("#cad-legend").innerHTML = heatLegend();
     wireHeat();
     paintSelection();
@@ -697,6 +700,11 @@
     if (!list.length) { h = '<li class="empty">No entries match this view. <button type="button" class="link-btn" data-clear>Clear filters</button></li>'; }
     $("#feed-list").innerHTML = h;
     rovingFeed(null);
+    feedCue();
+  }
+  function feedCue() {
+    var fl = $("#feed-list");
+    fl.classList.toggle("more-below", fl.scrollHeight - fl.scrollTop - fl.clientHeight > 4);
   }
   /* The feed is one tab stop: the arrow keys move inside it (a roving
      tabindex), so the keyboard path from the grid to the lab panels stays
@@ -724,6 +732,8 @@
     });
     fl.addEventListener("focusin", function (ev) { var a = ev.target.closest(".fr"); if (a) { a.dispatchEvent(new MouseEvent("mouseover", { bubbles: true })); } });
     fl.addEventListener("mouseleave", hideCursor);
+    fl.addEventListener("scroll", feedCue, { passive: true });
+    window.addEventListener("resize", feedCue);
     fl.addEventListener("focusout", hideCursor);
     fl.addEventListener("click", function (ev) { if (ev.target.closest("[data-clear]")) { clearAll(); } });
     fl.addEventListener("keydown", function (ev) {
@@ -752,10 +762,13 @@
 
   function renderLabs() {
     var grid = $("#labs-grid");
-    var W = grid.clientWidth;
+    /* the content box: clientWidth includes the grid's own padding */
+    var gcs = getComputedStyle(grid);
+    var W = grid.clientWidth - parseFloat(gcs.paddingLeft) - parseFloat(gcs.paddingRight);
     if (!W) { return; }
     var cols = W > 860 ? 4 : W > 560 ? 2 : 1;
-    var cardW = Math.floor((W - (cols - 1) * 12) / cols) - 24;
+    /* a card's content width: its share of the row, less 12px padding and 1px border a side */
+    var cardW = Math.floor((W - (cols - 1) * 12) / cols) - 26;
     var Q = quarters();
     var qMax = 0, qc = {};
     CR.ORG_ORDER.forEach(function (o) {
@@ -799,7 +812,8 @@
 
       /* disclosure: the latest releases in view, oldest to newest */
       var pitch = 9, labelW = cols === 1 ? 76 : 72, cntW = cols === 1 ? 48 : 44;
-      var k = Math.max(6, Math.floor((cardW - labelW - cntW) / pitch));
+      /* k squares of 8px with 1px between take k * 9 - 1 px: every square fits whole */
+      var k = Math.max(6, Math.floor((cardW - labelW - cntW + 1) / pitch));
       var recent = view.slice(0, k).reverse();
       html += '<div class="lab-disc" role="table" aria-label="' + esc(CR.ORG_NAMES[o]) + ': disclosure for the latest ' + recent.length + ' releases in view">';
       CR.DISC_SLOTS.forEach(function (sl) {

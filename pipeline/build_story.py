@@ -639,10 +639,10 @@ MAIN = f"""<main id="main" class="story" tabindex="-1">
 <div class="live sr" id="live" aria-live="polite"></div>
 </section>
 
-<section class="nfallback visually-hidden" id="text-version" aria-label="The record in words"><p>Every view on this page, in words and tables. Every entry, with its sources, is in <a href="explorer.html">the explorer</a>.</p>{FALLBACK}</section>
+<section class="nfallback visually-hidden" id="text-version" aria-label="The record in words"><p>Every view on this page, in words and tables. Every entry, with its sources, is in <a href="explorer.html" tabindex="-1">the explorer</a>.</p>{FALLBACK}</section>
 
 <section class="sfind" id="findings" aria-labelledby="fh">
-<div class="sfind-in panel" data-ui>
+<div class="sfind-in panel">
 <div class="sfind-t"><h2 id="fh">{FIND_H}</h2>
 <p class="sfind-note">{FIND_P}</p></div>
 <figure class="fig">{_fig_disclosure()}</figure>

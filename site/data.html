@@ -75,6 +75,7 @@
 <header class="doc-head"><h1>The dataset</h1>
 
   <p class="lede">The complete record is published as files. For a spreadsheet, use the two CSV files; for every source, the gzipped JSON, one file per year, indexed by the manifest. The same files drive this site. There is no separate API, and the paths below are stable.</p></header>
+<noscript><p class="noscript">The figures beside the text are counted from the dataset with JavaScript. Without it, every number is in the <a href="data.html">dataset files</a>.</p></noscript>
 <section class="doc-sec rule" aria-labelledby="files"><div class="rule-text"><h2 id="files">Files</h2>
   <table class="file-table">
     <thead>
@@ -88,7 +89,7 @@
       <tr><td><code><a href="./data/derived/views.json.gz">derived/views.json.gz</a></code></td><td>Derived chart datasets: release cadence, benchmark trajectory series, disclosure matrix, and registry measures. The site's charts draw from this file. Comparisons between models are calculated before publishing. The site also works out counts, shares and medians for whatever view you filter to, using the rules on the methodology page.</td></tr>
       <tr><td><code><a href="./data/derived/site_meta.json">derived/site_meta.json</a></code></td><td>Record counts, date range, and the date of the last successful update.</td></tr>
     </tbody>
-  </table></div><div class="specs"><aside class="spec" id="sp-files" data-ui aria-label="Entries per year file"><p class="rn-h">Entries per year file</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside><aside class="spec" id="sp-csv" data-ui aria-label="releases.csv, the newest rows"><p class="rn-h">releases.csv, the newest rows</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
+  </table></div><div class="specs"><aside class="spec" id="sp-files" aria-label="Entries per year file"><p class="rn-h">Entries per year file</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside><aside class="spec" id="sp-csv" aria-label="releases.csv, the newest rows"><p class="rn-h">releases.csv, the newest rows</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
 <section class="doc-sec rule" aria-labelledby="fields"><div class="rule-text"><h2 id="fields">Fields</h2>
   <p>Each entry in the JSON files carries these fields; releases.csv carries those not marked JSON only.</p>
   <table class="file-table">
@@ -117,23 +118,23 @@
       <tr><td><code>correction_note</code></td><td>The old value and the evidence, where we corrected the source.</td></tr>
       <tr><td><code>organization, primary_source_url</code></td><td>CSV only: the lab's display name, and the first source that is not Epoch AI's dataset.</td></tr>
     </tbody>
-  </table></div><div class="specs"><aside class="spec" id="sp-json" data-ui aria-label="The newest entry, as published"><p class="rn-h">The newest entry, as published</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
+  </table></div><div class="specs"><aside class="spec" id="sp-json" aria-label="The newest entry, as published"><p class="rn-h">The newest entry, as published</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
 <section class="doc-sec" aria-labelledby="license"><h2 id="license">License</h2>
   <p>The published dataset (the files above) is licensed under the <a href="https://creativecommons.org/licenses/by/4.0/" rel="external">Creative Commons Attribution 4.0 International License (CC-BY 4.0)</a>.</p></section>
 <section class="doc-sec rule" aria-labelledby="attribution"><div class="rule-text"><h2 id="attribution">Required attribution for Epoch AI derived fields</h2>
   <p>Portions of the dataset are derived from two Epoch AI datasets, both used under CC-BY 4.0. If you redistribute or build on those fields, you must retain the following attributions:</p>
   <blockquote>Epoch AI, "Data on AI Models". Published online at epoch.ai. Retrieved from <a href="https://epoch.ai/data/ai-models" rel="external">https://epoch.ai/data/ai-models</a> [online resource].</blockquote>
   <blockquote>Epoch AI, "Capabilities &amp; benchmarking". Published online at epoch.ai. Retrieved from <a href="https://epoch.ai/benchmarks" rel="external">https://epoch.ai/benchmarks</a> [online resource].</blockquote>
-  <p>Release dates, lab names, parameter counts and availability come from Epoch AI's models dataset. Independent scores come from Epoch AI's benchmarking data.</p></div><div class="specs"><aside class="spec" id="sp-epoch" data-ui aria-label="What comes from Epoch AI"><p class="rn-h">What comes from Epoch AI</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
+  <p>Release dates, lab names, parameter counts and availability come from Epoch AI's models dataset. Independent scores come from Epoch AI's benchmarking data.</p></div><div class="specs"><aside class="spec" id="sp-epoch" aria-label="What comes from Epoch AI"><p class="rn-h">What comes from Epoch AI</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
 <section class="doc-sec" aria-labelledby="cite"><h2 id="cite">Cite this dataset</h2>
   <p>The record changes as releases are added and corrected, so cite the date you retrieved it.</p>
-  <blockquote class="cite-box" id="cite-text">Walker Robinson. Version Control: the release record of the AI model era. Dataset, CC BY 4.0. https://versioncontrol.walker-robinson.com. Record updated <span class="cite-updated">(loads with the dataset)</span>; accessed <span class="cite-accessed">(today)</span>.</blockquote>
+  <blockquote class="cite-box" id="cite-text">Walker Robinson. Version Control: the release record of the AI model era. Dataset, CC BY 4.0. https://versioncontrol.walker-robinson.com. Record updated <span class="cite-updated">(the date of the last update)</span>; accessed <span class="cite-accessed">(today)</span>.</blockquote>
   <div class="cite-acts"><button type="button" class="btn btn-sm" data-copy="cite-text">Copy citation</button><button type="button" class="btn btn-sm" data-copy="cite-bib">Copy BibTeX</button></div>
   <pre class="cite-bibtex" id="cite-bib">@misc{versioncontrol,
   author       = {Robinson, Walker},
   title        = {Version Control: the release record of the AI model era},
   howpublished = {\url{https://versioncontrol.walker-robinson.com}},
-  note         = {Dataset, CC BY 4.0. Record updated <span class="cite-updated">(loads with the dataset)</span>; accessed <span class="cite-accessed">(today)</span>},
+  note         = {Dataset, CC BY 4.0. Record updated <span class="cite-updated">(the date of the last update)</span>; accessed <span class="cite-accessed">(today)</span>},
   year         = {<span class="cite-year">2026</span>}
 }</pre></section>
 <section class="doc-sec" aria-labelledby="not-included"><h2 id="not-included">What the dataset does not contain</h2>

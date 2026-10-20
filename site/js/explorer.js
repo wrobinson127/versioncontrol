@@ -68,6 +68,8 @@
     if (s) { var m = /^(-?)([a-z]+)$/.exec(s); if (m && COLS.some(function (c) { return c.k === m[2]; })) { SORT.k = m[2]; SORT.dir = m[1] ? -1 : 1; } }
     var id = p.get("id") || p.get("entry");
     openId = id && D.byId[id] ? id : null;
+    missingId = id && !openId ? id : null;
+    if (F.from && F.to && F.from > F.to) { var t = F.from; F.from = F.to; F.to = t; }
     if (!openId && location.hash && D.byId[decodeURIComponent(location.hash.slice(1))]) { openId = decodeURIComponent(location.hash.slice(1)); }
   }
   function urlFor(withId) {
@@ -76,8 +78,25 @@
     if (F.lab.length) { p.set("lab", F.lab.join(",")); }
     if (!(SORT.k === "date" && SORT.dir === -1)) { p.set("sort", (SORT.dir < 0 ? "-" : "") + SORT.k); }
     if (withId && openId) { p.set("id", openId); }
+    /* an open Compare sheet keeps its place in the address */
+    var cv = CR.compareParam ? CR.compareParam() : null;
+    if (cv) { p.set("compare", cv); }
     var q = p.toString();
     return location.pathname + (q ? "?" + q : "");
+  }
+  /* ?id= naming no entry: say so in the inspector, with a way out */
+  var missingId = null;
+  function showMissing() {
+    var ins = $("#inspector");
+    ins.innerHTML = '<div class="ins-miss"><h2 id="ins-h" tabindex="-1">No entry with that id</h2>' +
+      '<p class="t-m">The record has no entry called <code>' + esc(missingId) + "</code>.</p>" +
+      '<p><a href="' + esc(urlFor(false)) + '">Clear it and show the entries</a></p></div>';
+    ins.hidden = false;
+    $("#ex-layout").classList.add("has-ins");
+    document.body.classList.add("ins-open");
+  }
+  function swapDates() {
+    if (F.from && F.to && F.from > F.to) { var t = F.from; F.from = F.to; F.to = t; $("#x-from").value = F.from; $("#x-to").value = F.to; CR.toast("The start date was after the end date, so the two are swapped.", 4000); }
   }
   function writeUrl(push) {
     var u = urlFor(true);
@@ -166,11 +185,20 @@
   /* ---------- grid ---------- */
 
   var gridW = 0;
+  var LOW = { type: 1, avail: 1, country: 1, swe: 1, mc: 1, up: 1, pa: 1, params: 1, origin: 1 };
+  /* a fade at the right edge while more columns sit beyond it */
+  function edgeCue() {
+    var sc = $("#grid-scroll"), g = sc && sc.parentNode;
+    if (g) { g.classList.toggle("more-right", sc.scrollWidth - sc.scrollLeft - sc.clientWidth > 4); }
+  }
   function buildHead() {
     var t = $("#grid");
-    var cg = "<colgroup>" + COLS.map(function (c) { return '<col style="width:' + c.w + 'px">'; }).join("") + "</colgroup>";
+    /* while the inspector is open the low-priority columns fold away, so the
+       columns that stay keep their full width and no value is cut */
+    var cg = "<colgroup>" + COLS.map(function (c) { return '<col' + (LOW[c.k] ? ' class="lo"' : "") + ' style="width:' + c.w + 'px">'; }).join("") + "</colgroup>";
     gridW = COLS.reduce(function (a, c) { return a + c.w; }, 0);
     t.style.width = gridW + "px";
+    t.style.setProperty("--gw-ins", COLS.reduce(function (a, c) { return a + (LOW[c.k] ? 0 : c.w); }, 0) + "px");
     var h1 = '<tr class="hrow">' + COLS.map(function (c, i) {
       return '<th scope="col" class="' + (i === 0 ? "stick " : "") + (c.num ? "n" : "") + '" aria-sort="none" data-k="' + c.k + '"><button type="button" class="sortb" data-k="' + c.k + '">' + esc(c.label) + '<span class="sg" aria-hidden="true"></span></button></th>';
     }).join("") + "</tr>";
@@ -318,7 +346,8 @@
   }
   function wireGrid() {
     var sc = $("#grid-scroll"), raf = 0;
-    sc.addEventListener("scroll", function () { if (!raf) { raf = requestAnimationFrame(function () { raf = 0; renderRows(false); }); } }, { passive: true });
+    sc.addEventListener("scroll", function () { edgeCue(); if (!raf) { raf = requestAnimationFrame(function () { raf = 0; renderRows(false); }); } }, { passive: true });
+    if (window.ResizeObserver) { var ro = new ResizeObserver(edgeCue); ro.observe(sc); ro.observe($("#grid")); }
     $("#grid").addEventListener("click", function (ev) {
       var s = ev.target.closest(".sortb");
       if (s) {
@@ -451,6 +480,7 @@
     if (window.innerWidth <= 720) { renderList(); } else { renderRows(true); }
     if (!keepFocus) { var hh = $("#ins-h"); if (hh) { hh.focus({ preventScroll: true }); } }
     ins.scrollTop = 0;
+    edgeCue();
   }
   function closeEntry(fromPop) {
     if (!openId) { return; }
@@ -469,6 +499,7 @@
       renderRows(true);
       var ri = rowIndex(id); if (ri >= 0) { focusRow(ri); }
     }
+    edgeCue();
   }
   function wireInspector() {
     var ins = $("#inspector");
@@ -496,8 +527,8 @@
     var t = null;
     $("#x-q").addEventListener("input", function () { var v = this.value; clearTimeout(t); t = setTimeout(function () { F.q = v.trim(); update(true); }, 140); });
     $("#x-q").addEventListener("keydown", function (ev) { if (ev.key === "Escape" && this.value) { ev.stopPropagation(); this.value = ""; F.q = ""; update(true); } if (ev.key === "ArrowDown" || ev.key === "Enter") { ev.preventDefault(); if (window.innerWidth > 720) { focusRow(0); } } });
-    $("#x-from").addEventListener("change", function () { F.from = CR.validDate(this.value) ? this.value : ""; update(true); });
-    $("#x-to").addEventListener("change", function () { F.to = CR.validDate(this.value) ? this.value : ""; update(true); });
+    $("#x-from").addEventListener("change", function () { F.from = CR.validDate(this.value) ? this.value : ""; swapDates(); update(true); });
+    $("#x-to").addEventListener("change", function () { F.to = CR.validDate(this.value) ? this.value : ""; swapDates(); update(true); });
     $("#x-clear").addEventListener("click", clearAll);
     $("#x-copy").addEventListener("click", function () { CR.copyText(location.href, "Link to this view copied"); });
     CR.wireDialog($("#fsheet"));
@@ -539,7 +570,9 @@
     wireGrid(); wireInspector(); wireToolbar();
     $("#ex-sub").textContent = D.meta.releases + " releases and " + D.meta.revisions + " revisions (updates to a model already on record) from twelve tracked labs, " + D.meta.first_date + " to " + D.meta.last_date + ". Select a row for its sources.";
     update(false);
+    edgeCue();
     document.documentElement.classList.add("ready");
+    if (missingId) { showMissing(); }
     if (openId) { var id = openId; openId = null; openEntry(id); var ri = rowIndex(id); if (ri >= 0 && window.innerWidth > 720) { var sc = $("#grid-scroll"); sc.scrollTop = Math.max(0, ri * RH - sc.clientHeight / 3); renderRows(true); } }
   }).catch(function (err) {
     console.error(err);

@@ -345,10 +345,10 @@
   function untip() { if (tipEl) { tipEl.hidden = true; } }
 
   var toastEl = null, toastT = null;
-  function toast(msg) {
+  function toast(msg, ms) {
     if (!toastEl) { toastEl = document.createElement("div"); toastEl.className = "toast"; toastEl.setAttribute("role", "status"); toastEl.setAttribute("aria-live", "polite"); document.body.appendChild(toastEl); }
     toastEl.textContent = msg; toastEl.classList.add("on");
-    clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove("on"); }, 1800);
+    clearTimeout(toastT); toastT = setTimeout(function () { toastEl.classList.remove("on"); }, ms || 1800);
   }
   function copyText(text, msg) {
     var ok = function () { toast(msg || "Link copied"); };
@@ -404,6 +404,17 @@
     d.addEventListener("close", function () { if (d._return && d._return.focus) { d._return.focus(); } });
     d.addEventListener("click", function (ev) { if (ev.target === d) { d.close(); } });
     $$("[data-close]", d).forEach(function (b) { b.addEventListener("click", function () { d.close(); }); });
+    /* Tab stays inside the open dialog: from the last control it wraps to
+       the first, and back, so focus never falls to the page behind */
+    d.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Tab") { return; }
+      var f = $$('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea, [tabindex]:not([tabindex="-1"])', d)
+        .filter(function (el) { return el.offsetParent !== null || el === document.activeElement; });
+      if (!f.length) { ev.preventDefault(); return; }
+      var first = f[0], last = f[f.length - 1], at = document.activeElement;
+      if (ev.shiftKey && (at === first || !d.contains(at))) { ev.preventDefault(); last.focus(); }
+      else if (!ev.shiftKey && (at === last || !d.contains(at))) { ev.preventDefault(); first.focus(); }
+    });
   }
 
   /* ---------- command palette ---------- */
@@ -605,8 +616,13 @@
     });
 
     renderFooterStamp();
-    var cp = (new URLSearchParams(location.search).get("compare") || "").split(",");
-    if (cp.length === 2 && ORG_NAMES[cp[0]] && ORG_NAMES[cp[1]] && cp[0] !== cp[1]) { openCompare(cp[0], cp[1]); }
+    /* ?compare= takes two different labs; anything else says so and leaves the address */
+    var raw = new URLSearchParams(location.search).get("compare");
+    if (raw !== null) {
+      var cp = raw.split(",");
+      if (cp.length === 2 && ORG_NAMES[cp[0]] && ORG_NAMES[cp[1]] && cp[0] !== cp[1]) { openCompare(cp[0], cp[1]); }
+      else { toast("Compare takes two labs, for example ?compare=openai,anthropic", 6000); writeCompareUrl(); }
+    }
   }
 
   function renderFooterStamp() {
@@ -692,7 +708,10 @@
       var labs = [cmp.a, cmp.b];
       var y = D.asOf.slice(0, 4);
       var years = ["2022", "2023", "2024", "2025", "2026"].filter(function (yy) { return yy <= y; });
-      var W = Math.max(130, Math.floor((body.clientWidth || 900) / 2) - (body.clientWidth < 600 ? 14 : 40));
+      /* each column's own width: the body less its 16px padding a side, the
+         gap and the second column's left padding, halved */
+      var bw = body.clientWidth || 900, between = bw < 600 ? 24 : 48;
+      var W = Math.max(120, Math.floor((bw - 32 - between) / 2));
       var data = labs.map(function (o) {
         var all = D.entries.filter(function (e) { return e.org === o; });
         var rel = all.filter(function (e) { return e._rel; });
