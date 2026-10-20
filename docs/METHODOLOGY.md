@@ -42,7 +42,7 @@ Entries reach the record by three paths. We used AI tools on all three.
 
 - **The nightly check.** A language model (Claude Haiku) drafts the entry's summary and pulls the lab's stated benchmark numbers from its announcement. Code checks every draft: a number with no source, or with a benchmark name that is not tied to a version, is rejected. Walker Robinson reads and approves every entry before it appears.
 - **The October 2026 catch-up.** Releases from September and October 2026 waited in the review queue while it was stalled. Their entries were drafted with AI tools from the labs' own pages. Every URL was fetched, and Walker Robinson approved each entry.
-- **The record built from Epoch AI's data** (up to its 2026-08-24 release). A script generated these entries from Epoch AI's data. No language model wrote them. Their disclosure links were researched with AI tools, every URL was fetched, and Walker Robinson approved the links row by row. The lab-reported scores on older entries were also found with AI tools from the labs' own pages; each number and its URL was checked and approved the same way.
+- **The record built from Epoch AI's data** (up to its 2026-08-24 release). A script generated these entries from Epoch AI's data. No language model wrote them. Their disclosure links were researched with AI tools, every URL was fetched, and Walker Robinson approved the links. The lab-reported scores on older entries were also found with AI tools from the labs' own pages; each number and its URL was checked and approved the same way.
 
 Each entry's `origin` field says which path it took:
 
