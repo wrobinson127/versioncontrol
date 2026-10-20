@@ -128,9 +128,9 @@
     var discHtml = '<p class="rn-s">System cards, across ' + D.releases.length + " releases, oldest first:</p>" +
       '<div class="rn-strip" aria-hidden="true">' + scStrip + '</div><ul class="rn-list">' +
       "<li>" + CR.discGlyph("disclosed", 10) + " " + num(sc.disclosed) + " link on record</li>" +
-      "<li>" + CR.discGlyph("not_disclosed", 10) + " " + num(sc.not_disclosed) + " not disclosed</li>" +
-      "<li>" + CR.discGlyph("not_researched", 10) + " " + num(sc.not_researched) + " not yet researched</li></ul>" +
-      '<p class="rn-s">The share counts only the ' + sc.researched + " researched: <b>" + num(Math.round(100 * sc.share) + "%") + "</b>. Not yet researched is never a zero.</p>";
+      "<li>" + CR.discGlyph("not_disclosed", 10) + " " + num(sc.not_disclosed) + " not disclosed (we checked)</li>" +
+      (sc.not_researched ? "<li>" + CR.discGlyph("not_researched", 10) + " " + num(sc.not_researched) + " not yet checked</li>" : "") + "</ul>" +
+      '<p class="rn-s">The share counts only the ' + sc.researched + " checked: <b>" + num(Math.round(100 * sc.share) + "%") + "</b>.</p>";
     var refusedHtml = '<p class="rn-big">' + num(m.delta_chips) + ' changes</p><p class="rn-s">against a predecessor are on record. ' + CR.plural(refused.length, "comparison was", "comparisons were") + " refused:</p><ul class=\"rn-list rn-ref\">" +
       refused.map(function (x) { return '<li><a href="' + entryHref(x.e) + '">' + esc(x.e.model_name) + '</a><span class="t-m">' + esc(x.r) + "</span></li>"; }).join("") + "</ul>";
     var countHtml = bars(years.map(function (r) { return r.year === y ? r.year + "*" : r.year; }), years.map(function (r) { return r.releases; }),

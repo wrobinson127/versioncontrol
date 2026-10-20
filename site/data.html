@@ -74,7 +74,7 @@
 <article class="doc-body">
 <header class="doc-head"><h1>The dataset</h1>
 
-  <p class="lede">The complete record is published as files. For a spreadsheet, start with the two CSV files. For the full record with every source, use the gzipped JSON, one file per year, indexed by the manifest. The same files drive this site. There is no separate API, and the paths below are stable.</p></header>
+  <p class="lede">The complete record is published as files. For a spreadsheet, use the two CSV files; for every source, the gzipped JSON, one file per year, indexed by the manifest. The same files drive this site. There is no separate API, and the paths below are stable.</p></header>
 <section class="doc-sec rule" aria-labelledby="files"><div class="rule-text"><h2 id="files">Files</h2>
   <table class="file-table">
     <thead>
@@ -85,7 +85,7 @@
       <tr><td><code><a href="./data/scores.csv">scores.csv</a></code></td><td>One row per benchmark score, with its source class, source URL, retrieval date and test settings.</td></tr>
       <tr><td><code><a href="./data/manifest.json">manifest.json</a></code></td><td>Index of entry files with per-file entry counts, ids, and SHA-256 checksums.</td></tr>
       <tr><td><code><a href="./data/derived/deltas.json.gz">derived/deltas.json.gz</a></code></td><td>Predecessor comparisons per entry: delta values or recorded refusals. The site renders this file verbatim.</td></tr>
-      <tr><td><code><a href="./data/derived/views.json.gz">derived/views.json.gz</a></code></td><td>Derived chart datasets: release cadence, benchmark trajectory series, disclosure matrix, and registry measures. The charts on the site draw from this file; the site only counts and rounds what is in it.</td></tr>
+      <tr><td><code><a href="./data/derived/views.json.gz">derived/views.json.gz</a></code></td><td>Derived chart datasets: release cadence, benchmark trajectory series, disclosure matrix, and registry measures. The site's charts draw from this file and only count and round what is in it.</td></tr>
       <tr><td><code><a href="./data/derived/site_meta.json">derived/site_meta.json</a></code></td><td>Record counts, date range, and the last successful update timestamp.</td></tr>
     </tbody>
   </table></div><div class="specs"><aside class="spec" id="sp-files" data-ui aria-label="Entries per year file"><p class="rn-h">Entries per year file</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside><aside class="spec" id="sp-csv" data-ui aria-label="releases.csv, the newest rows"><p class="rn-h">releases.csv, the newest rows</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
@@ -94,15 +94,15 @@
   <table class="file-table">
     <thead><tr><th scope="col">Field</th><th scope="col">Meaning</th></tr></thead>
     <tbody>
-      <tr><td><code>id</code></td><td>Stable identifier: organization key, two hyphens, model slug. Also the anchor of the entry's card on the timeline.</td></tr>
+      <tr><td><code>id</code></td><td>Stable identifier: organization key, two hyphens, model slug. It also opens the entry in the explorer: explorer.html?id=&lt;id&gt;.</td></tr>
       <tr><td><code>model_name, org</code></td><td>The model as the lab names it, and the organization key. A correction_note explains any name or date we corrected from the source.</td></tr>
       <tr><td><code>date</code></td><td>The release date: Epoch AI's date for entries built from its data (usually the announcement or paper date), and the lab's announcement date for entries found by the nightly check or recorded by hand. The methodology explains the exceptions.</td></tr>
-      <tr><td><code>entry_type</code></td><td>release, or revision for an update shipped under the same model name.</td></tr>
+      <tr><td><code>entry_type</code></td><td>release, or revision: an update to a model already on record, shipped under the same name.</td></tr>
       <tr><td><code>availability_class</code></td><td>open_weights, public_api, or public_service (a product people can sign up for).</td></tr>
       <tr><td><code>origin</code></td><td>How the entry reached the record: backfill-epoch (from Epoch AI's dataset), nightly-pipeline (found by nightly detection, approved by hand), or manual (recorded by hand).</td></tr>
       <tr><td><code>parameters</code></td><td>Total parameter count. NOT_DISCLOSED here means no count is on record: the lab stated none we could find, or Epoch AI's dataset has none.</td></tr>
       <tr><td><code>predecessor</code></td><td>The id of the model this one follows, where the lab or the model family makes it clear. Comparisons against the predecessor are in derived/deltas.json.gz.</td></tr>
-      <tr><td><code>system_card, model_card, usage_policy, paper</code></td><td>A link to the document, NOT_DISCLOSED (we checked the lab's pages and found none), or NOT_RESEARCHED (not yet researched). Neither absence value means zero.</td></tr>
+      <tr><td><code>system_card, model_card, usage_policy, paper</code></td><td>A link to the document, NOT_DISCLOSED (we checked the lab's pages and found none), or NOT_RESEARCHED (not yet checked). Neither means zero.</td></tr>
       <tr><td><code>benchmarks</code></td><td>Scores on GPQA Diamond and SWE-bench Verified only. Each carries its source class (LAB_REPORTED or INDEPENDENT), source URL, benchmark version, retrieval date and test settings. scores.csv has one row per score.</td></tr>
       <tr><td><code>sources</code></td><td>Every page the entry was built from, each with the date we read it.</td></tr>
       <tr><td><code>retracted</code></td><td>true when the entry should not have been on the record; the note says why. A corrected entry stays false and carries a correction_note instead.</td></tr>
@@ -114,7 +114,7 @@
   <p>Portions of the dataset are derived from two Epoch AI datasets, both used under CC-BY 4.0. If you redistribute or build on those fields, you must retain the following attributions:</p>
   <blockquote>Epoch AI, "Data on AI Models". Published online at epoch.ai. Retrieved from <a href="https://epoch.ai/data/ai-models" rel="external">https://epoch.ai/data/ai-models</a> [online resource].</blockquote>
   <blockquote>Epoch AI, "Capabilities &amp; benchmarking". Published online at epoch.ai. Retrieved from <a href="https://epoch.ai/benchmarks" rel="external">https://epoch.ai/benchmarks</a> [online resource].</blockquote>
-  <p>Release dates, lab names, parameter counts and availability come from Epoch AI's models dataset. Independent scores come from Epoch AI's benchmarking data. Both need Epoch's attribution.</p></div><div class="specs"><aside class="spec" id="sp-epoch" data-ui aria-label="What comes from Epoch AI"><p class="rn-h">What comes from Epoch AI</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
+  <p>Release dates, lab names, parameter counts and availability come from Epoch AI's models dataset. Independent scores come from Epoch AI's benchmarking data.</p></div><div class="specs"><aside class="spec" id="sp-epoch" data-ui aria-label="What comes from Epoch AI"><p class="rn-h">What comes from Epoch AI</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
 <section class="doc-sec" aria-labelledby="cite"><h2 id="cite">Cite this dataset</h2>
   <p>The record changes as releases are added and corrected, so cite the date you retrieved it.</p>
   <blockquote class="cite-box" id="cite-text">Walker Robinson. Version Control: the release record of the AI model era. Dataset, CC BY 4.0. https://versioncontrol.walker-robinson.com. Record updated <span class="cite-updated">(loads with the dataset)</span>; accessed <span class="cite-accessed">(today)</span>.</blockquote>
