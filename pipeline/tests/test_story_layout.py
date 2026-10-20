@@ -203,9 +203,12 @@ def test_every_mark_reads_its_record():
 
 def test_views_finish_forming_mid_screen():
     """A view finishes forming when its step text is in the
-    middle of the viewport, not when it reaches the top."""
+    middle of the viewport, not when it reaches the top. On a phone, a note
+    taller than the band under the pinned chart finishes its view with its
+    top just below the chart, so it never slides under it."""
     assert 'start: "top bottom",' in JS
-    assert 'end: function () { return "center " + midPct() + "%"; },' in JS
+    assert 'end: function () { return tallNote(el) ? "top " + (cardBottom() + 12) + "px" : "center " + midPct() + "%"; },' in JS
+    assert "if (!narrow) { return false; }" in JS
     assert "if (!narrow) { return 50; }" in JS
     assert '"top 46%"' not in JS and '"top 72%"' not in JS
 

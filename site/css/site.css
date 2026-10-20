@@ -808,7 +808,7 @@ th[aria-sort="descending"] .sg::after { content: "↓"; }
 .file-table th, .file-table td { text-align: left; vertical-align: top; padding: 9px 16px 9px 0; border-bottom: 1px solid var(--rule); }
 .file-table thead th { color: var(--muted); font-weight: 500; font-size: 13px; border-bottom-color: var(--border); white-space: nowrap; }
 .file-table td:first-child { white-space: nowrap; font-family: var(--mono); font-stretch: 87.5%; font-size: 13px; }
-.pg-method .file-table td:first-child { font-family: var(--font); font-stretch: 100%; font-size: 14px; white-space: normal; min-width: 7.5em; }
+.pg-method .file-table td:first-child { font-family: var(--font); font-stretch: 100%; font-size: 14px; white-space: normal; min-width: 10em; width: 10em; }
 .doc-list li { font-size: 15px; line-height: 23px; }
 .doc-list .num { color: var(--muted); }
 .rule-note { align-self: start; position: sticky; top: 72px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-panel); padding: 14px 16px; }

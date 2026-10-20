@@ -329,6 +329,7 @@
   function draw() {
     raf = 0;
     if (!reduce && Math.abs(Pt - P) > 0.0005) { P += (Pt - P) * 0.2; raf = requestAnimationFrame(draw); } else { P = Pt; }
+    G.setAttribute("data-progress", P.toFixed(3)); /* where the chart stands between views, for the browser checks */
     if (intro < 1) {
       intro = clamp((performance.now() - introStart) / 1400, 0, 1);
       if (intro < 1 && !raf) { raf = requestAnimationFrame(draw); }
@@ -703,6 +704,15 @@
     var top = (bar ? bar.offsetHeight : 0) + region, bot = window.innerHeight - (tb && getComputedStyle(tb).display !== "none" ? tb.offsetHeight : 0);
     return Math.round(100 * (top + bot) / 2 / window.innerHeight);
   }
+  function cardBottom() {
+    var bar = document.querySelector(".topbar");
+    return (bar ? bar.offsetHeight : 0) + region;
+  }
+  function tallNote(el) {
+    if (!narrow) { return false; }
+    var tb = document.querySelector(".tabbar"), tab = tb && getComputedStyle(tb).display !== "none" ? tb.offsetHeight : 0;
+    return el.offsetHeight > window.innerHeight - tab - cardBottom() - 24;
+  }
   function wireScroll() {
     var steps = [].slice.call(document.querySelectorAll(".step"));
     if (window.gsap && window.ScrollTrigger) {
@@ -715,7 +725,9 @@
              of the screen: the viewport's middle on a desktop, the middle of
              the band under the pinned chart on a phone */
           start: "top bottom",
-          end: function () { return "center " + midPct() + "%"; },
+          /* a note taller than the band under the pinned chart finishes its
+             view with its top just below the chart, never under it */
+          end: function () { return tallNote(el) ? "top " + (cardBottom() + 12) + "px" : "center " + midPct() + "%"; },
           onUpdate: function (self) { prog[k] = self.progress; setPt(); },
           onRefresh: function (self) { prog[k] = self.progress; setPt(); }
         });

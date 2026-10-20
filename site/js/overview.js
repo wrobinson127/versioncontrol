@@ -765,7 +765,7 @@
     /* the content box: clientWidth includes the grid's own padding */
     var gcs = getComputedStyle(grid);
     var W = grid.clientWidth - parseFloat(gcs.paddingLeft) - parseFloat(gcs.paddingRight);
-    if (!W) { return; }
+    if (W <= 0) { return; }
     var cols = W > 860 ? 4 : W > 560 ? 2 : 1;
     /* a card's content width: its share of the row, less 12px padding and 1px border a side */
     var cardW = Math.floor((W - (cols - 1) * 12) / cols) - 26;
