@@ -279,6 +279,42 @@
    "status": "APPROVED",
    "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section anthropic--claude-sonnet-5.5. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
    "researched": true
+  },
+  {
+   "entry_id": "anthropic--claude-opus-4.8",
+   "model_name": "Claude Opus 4.8",
+   "date": "2026-05-28",
+   "system_card": "https://www.anthropic.com/claude-opus-4-8-system-card",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://www.anthropic.com/legal/aup",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: URL fetched 200, redirects to System Card: Claude Opus 4.8 PDF (May 28, 2026) on www-cdn.anthropic.com with a valid PDF header; linked from the announcement and the system cards hub. model_card: not found: Anthropic folds the model card into the system card (approved-row ruling); no Hugging Face models under Anthropic (HF API returned an empty list). usage_policy: anthropic.com/legal/aup fetched 200 (lab-wide policy). paper: not found: announcement links only the system card; arXiv title search returns only third-party papers. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/anthropic.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "anthropic--claude-opus-5",
+   "model_name": "Claude Opus 5",
+   "date": "2026-07-24",
+   "system_card": "https://www.anthropic.com/claude-opus-5-system-card",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://www.anthropic.com/legal/aup",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: URL fetched 200, redirects to System Card: Claude Opus 5 PDF (July 24, 2026) on www-cdn.anthropic.com with a valid PDF header; linked from the announcement and the system cards hub. model_card: not found: Anthropic folds the model card into the system card (approved-row ruling); no Hugging Face models under Anthropic (HF API returned an empty list). usage_policy: anthropic.com/legal/aup fetched 200 (lab-wide policy). paper: not found: announcement links only the system card; arXiv title search returns only third-party papers. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/anthropic.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "anthropic--claude-fable-5.1",
+   "model_name": "Claude Fable 5.1",
+   "date": "2026-09-01",
+   "system_card": "",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://www.anthropic.com/legal/aup",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (model_card, usage_policy, paper). system_card unchanged (re-fetched 200, PDF titled Claude Fable 5.1 & Claude Mythos 5.1, September 1, 2026). model_card: not found: Anthropic folds the model card into the system card (approved-row ruling); no Hugging Face models under Anthropic (HF API returned an empty list). usage_policy: anthropic.com/legal/aup fetched 200 (lab-wide policy). paper: not found: announcement links only the system card; arXiv title search returns only third-party papers. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/anthropic.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
   }
  ]
 }

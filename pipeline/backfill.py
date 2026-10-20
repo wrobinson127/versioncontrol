@@ -98,6 +98,33 @@ for _flagship, _siblings in (
     for _name in _siblings:
         UPSTREAM_CORRECTIONS[("deepseek", _name)] = UPSTREAM_CORRECTIONS[_flagship]
 UPSTREAM_CORRECTIONS.update({
+    # Three Epoch dates found wrong during the 2026-10-19 disclosure
+    # research, each checked against the lab's own page or an archived copy.
+    ("mistral", "Devstral Medium"): {
+        "field": "Publication date",
+        "wrong": "2025-06-10",
+        "corrected": "2025-07-10",
+        "evidence": "Mistral's announcement (mistral.ai/news/devstral-2507) "
+                    "is dated July 10, 2025 (datePublished 2025-07-10).",
+    },
+    ("xai", "Grok 4.5"): {
+        "field": "Publication date",
+        "wrong": "2026-07-08",
+        "corrected": "2026-07-16",
+        "evidence": "xAI's announcement (x.ai/news/grok-4-5) is dated "
+                    "Jul 16, 2026 (datePublished 2026-07-16).",
+    },
+    ("moonshot", "Kimi Explorer"): {
+        "field": "Publication date",
+        "wrong": "2024-01-01",
+        "corrected": "2024-10-11",
+        "evidence": "Epoch's date is a year-only placeholder. The launch "
+                    "report Epoch cites (53ai.com, 2024-10-11, now offline; "
+                    "archived at web.archive.org/web/20260612022040) "
+                    "reports Kimi's Explorer edition going live that day.",
+    },
+})
+UPSTREAM_CORRECTIONS.update({
     # Epoch carries the same model twice on 2026-03-03, once as "Gemini 3.1
     # Flash-Lite" and once misnamed "Gemini 3.0 Flash-lite"; the misnamed
     # row became the flagship. Google never released a 3.0 Flash-Lite.

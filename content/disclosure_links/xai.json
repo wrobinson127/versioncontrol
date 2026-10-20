@@ -8,12 +8,13 @@
    "entry_id": "xai--grok-0",
    "model_name": "Grok-0",
    "date": "2023-11-04",
-   "system_card": "",
-   "model_card": "",
-   "usage_policy": "",
-   "paper": "",
-   "status": "DRAFT_FLAGGED",
-   "notes": "Not researched this pass. Grok-0 was an internal prototype mentioned only inside the Grok announcement; no standalone artifacts expected but not verified."
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Not researched this pass. Grok-0 was an internal prototype mentioned only inside the Grok announcement; no standalone artifacts expected but not verified. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: Grok-0 is the 33B prototype mentioned only in x.ai/news/grok (200); the Grok-1 Model Card page (200) covers Grok-1 and mentions Grok-0 only as a source of feedback; x.ai/safety lists no Grok-0 card. model_card: not found: closed weights; xai-org on Hugging Face lists only grok-1 and grok-2 (HF API 200); xAI model card PDFs are recorded under system_card (approved-row ruling). usage_policy: AUP fetched 200, applied per the xAI convention, though Grok-0 was never offered publicly. paper: not found: xAI publishes no technical papers; announcement links none; arXiv title search returns no xAI paper. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/xai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
   },
   {
    "entry_id": "xai--grok-1",
@@ -151,12 +152,12 @@
    "entry_id": "xai--grok-4.20",
    "model_name": "Grok 4.20",
    "date": "2026-02-17",
-   "system_card": "",
+   "system_card": "https://data.x.ai/2026-04-07-grok-4-20-model-card.pdf",
    "model_card": "NOT_DISCLOSED",
    "usage_policy": "https://x.ai/legal/acceptable-use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Release confirmed via docs.x.ai model page (fetched 200) and third party coverage; no announcement slug on the x.ai/news index. No card found on x.ai/safety and data.x.ai URL guesses 404, but the safety index is incomplete, so system card left blank pending recheck. Closed weights, xai-org HF lists only grok-1 and grok-2. AUP fetched 200. No paper.",
+   "notes": "Release confirmed via docs.x.ai model page (fetched 200) and third party coverage; no announcement slug on the x.ai/news index. No card found on x.ai/safety and data.x.ai URL guesses 404, but the safety index is incomplete, so system card left blank pending recheck. Closed weights, xai-org HF lists only grok-1 and grok-2. AUP fetched 200. No paper. Researched 2026-10-19 (system_card). system_card: Grok 4.20 System Card PDF on data.x.ai fetched 200 (application/pdf, title Grok 4.20 System Card, xAI, April 7, 2026); published about seven weeks after the row date; not on x.ai/safety and no announcement post, found by web search. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/xai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
    "researched": true
   },
   {
@@ -181,6 +182,42 @@
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
    "notes": "Researched 2026-10-19. system_card: link fetched 200; model_card: not found on the lab's pages; usage_policy: link fetched 200; paper: not found on the lab's pages. The URLs checked and the page text behind each NOT_DISCLOSED cell are in docs/finish/evidence/catchup_2026-10-19_us_labs.md, section xai--grok-4.7. Status APPROVED under decision D1 (2026-10-19); every cell is listed for Walker in docs/finish/APPROVAL_PACKET.md.",
+   "researched": true
+  },
+  {
+   "entry_id": "xai--grok-build-0.1",
+   "model_name": "Grok Build 0.1",
+   "date": "2026-05-29",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: x.ai/news/grok-build-0-1 (200) links no card; x.ai/safety lists cards for 4.7, 4.6, 4.5, 4 Fast, Code Fast 1, 4 only; docs.x.ai model page (200) links none; Grok 4.5 and 4.6 cards mention Grok Build only as the harness and product. model_card: not found: closed weights; xai-org on Hugging Face lists only grok-1 and grok-2 (HF API 200); xAI model card PDFs are recorded under system_card (approved-row ruling). usage_policy: x.ai/legal/acceptable-use-policy fetched 200 (lab-wide AUP). paper: not found: xAI publishes no technical papers; announcement links none; arXiv title search returns no xAI paper. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/xai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "xai--grok-4.5",
+   "model_name": "Grok 4.5",
+   "date": "2026-07-08",
+   "system_card": "https://media.x.ai/v1/website/4p5-5184fdf9.pdf",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Model Card: Grok 4.5 PDF fetched 200 (July 14, 2026, revision 2026-07-20), listed on x.ai/safety; recorded under system_card per xAI convention; note the news post reads Jul 16, 2026 while the row date is 2026-07-08. model_card: not found: closed weights; xai-org on Hugging Face lists only grok-1 and grok-2 (HF API 200); xAI model card PDFs are recorded under system_card (approved-row ruling). usage_policy: AUP fetched 200 and cited in the card. paper: not found: xAI publishes no technical papers; announcement links none; arXiv title search returns no xAI paper. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/xai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "xai--grok-4.6",
+   "model_name": "Grok 4.6",
+   "date": "2026-08-12",
+   "system_card": "https://media.x.ai/v1/website/card-4p6-4cd2dc57.pdf",
+   "model_card": "NOT_DISCLOSED",
+   "usage_policy": "https://x.ai/legal/acceptable-use-policy",
+   "paper": "NOT_DISCLOSED",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: Model Card: Grok 4.6 PDF fetched 200 (August 12, 2026, revision 2026-08-17), listed on x.ai/safety; matches row date. model_card: not found: closed weights; xai-org on Hugging Face lists only grok-1 and grok-2 (HF API 200); xAI model card PDFs are recorded under system_card (approved-row ruling). usage_policy: AUP fetched 200 and cited in the card. paper: not found: xAI publishes no technical papers; announcement links none; arXiv title search returns no xAI paper. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/xai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
    "researched": true
   }
  ]

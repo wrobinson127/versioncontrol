@@ -8,12 +8,13 @@
    "entry_id": "zai--chatglm3-6b",
    "model_name": "ChatGLM3-6B",
    "date": "2023-10-27",
-   "system_card": "",
-   "model_card": "",
-   "usage_policy": "",
-   "paper": "",
-   "status": "DRAFT_FLAGGED",
-   "notes": "Outside flagship scope for this pass (pre GLM-4). Not researched."
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/zai-org/chatglm3-6b",
+   "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
+   "paper": "https://arxiv.org/abs/2406.12793",
+   "status": "APPROVED",
+   "notes": "Outside flagship scope for this pass (pre GLM-4). Not researched. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). System card: not found: checked HF card, zhipuai.cn/en/news/76, arXiv; Z.ai publishes no system cards (org ruling). Model card: zai-org HF README (THUDM/chatglm3-6b redirects there), fetched 200. Usage policy: Z.ai terms of service, per the lab-wide ruling also applied to open models such as GLM-4V-9B, fetched 200 (repo also carries its own MODEL_LICENSE). Paper: ChatGLM family report 2406.12793 (GLM-130B to GLM-4 All Tools), cited by the HF card, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/zai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
   },
   {
    "entry_id": "zai--glm-4",
@@ -145,6 +146,54 @@
    "paper": "https://arxiv.org/abs/2602.15763",
    "status": "APPROVED",
    "notes": "System card: none published by Z.ai. Model card verified this session on HF, 753B, 1M context, MIT license. Paper: no dedicated GLM-5.2 report; the HF card links the GLM-5 report, verified on arxiv. Usage policy is the current Z.ai terms, verified.",
+   "researched": true
+  },
+  {
+   "entry_id": "zai--glm-4.7-flash",
+   "model_name": "GLM 4.7 Flash",
+   "date": "2026-01-19",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/zai-org/GLM-4.7-Flash",
+   "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
+   "paper": "https://arxiv.org/abs/2508.06471",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). System card: not found: checked HF card, z.ai blog, arXiv; none published (org ruling). Model card: zai-org HF README, MIT, fetched 200. Usage policy: Z.ai terms, fetched 200. Paper: no dedicated report (arXiv title search for GLM-4.7 empty); HF card links the GLM-4.5 report 2508.06471, same ruling as GLM-4.7, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/zai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "zai--glm-5.1",
+   "model_name": "GLM-5.1",
+   "date": "2026-04-07",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/zai-org/GLM-5.1",
+   "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
+   "paper": "https://arxiv.org/abs/2602.15763",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). System card: not found: checked z.ai/blog/glm-5.1 (rendered in browser), HF card, arXiv; none published (org ruling). Model card: zai-org HF README, MIT, fetched 200. Usage policy: Z.ai terms, linked from the blog, fetched 200. Paper: no dedicated report (arXiv title search empty); HF card links the GLM-5 report 2602.15763, same ruling as GLM-5.2, fetched 200. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/zai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "zai--glm-5.3",
+   "model_name": "GLM-5.3",
+   "date": "2026-08-14",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "https://huggingface.co/zai-org/GLM-5.3",
+   "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
+   "paper": "https://arxiv.org/abs/2602.15763",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). System card: not found: checked z.ai/blog/glm-5.3 (rendered; says weights were held for safety evaluation and hardening but links no safety report), HF card, arXiv; press coverage also notes no system card or safety report. Model card: zai-org HF README (license glm-5.3), fetched 200. Usage policy: Z.ai terms, linked from the blog, fetched 200. Paper: HF card asks users to cite the GLM-5 report 2602.15763, fetched 200; the blog's two arXiv links (2603.12201 IndexCache, 2607.07508 SAO) are component technique papers, not model reports. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/zai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
+   "researched": true
+  },
+  {
+   "entry_id": "zai--glm-5.3-flash",
+   "model_name": "GLM-5.3-Flash",
+   "date": "2026-08-25",
+   "system_card": "NOT_DISCLOSED",
+   "model_card": "",
+   "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
+   "paper": "https://arxiv.org/abs/2602.15763",
+   "status": "APPROVED",
+   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). Model card unchanged. System card: not found: checked HF card, z.ai blog, arXiv; none published (org ruling). Usage policy: Z.ai terms, fetched 200. Paper: HF card cites the GLM-5 report 2602.15763, fetched 200; the only arXiv title hit naming GLM-5.3-Flash (2609.15030) is a serving study, not a Z.ai model report. Evidence: docs/finish/evidence/disclosure_research_2026-10-19/zai.md. Status APPROVED under Walker's instruction of 2026-10-19; listed in the approval packet.",
    "researched": true
   }
  ]
