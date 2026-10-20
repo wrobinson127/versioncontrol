@@ -1,19 +1,21 @@
 """Generate site/story.html: the story of the record, in the site's shell.
 
 What is built here, from data/ at build time:
-  - every sentence on the page that carries a number: the five step texts,
-    the four findings, the text version ("The record in words") and the
-    source line. They are approved wording with computed figures, so they
-    must be rebuilt whenever the record changes (CI runs --check);
-  - the four finding figures, as static SVG, so the findings read without
+  - every sentence on the page that carries a number: the five step
+    headings (each states its view's point, worked out from the record),
+    the step texts, the disclosure finding, the text version and the source
+    line. They must be rebuilt whenever the record changes (CI runs --check);
+  - the disclosure figure, as static SVG, so the finding reads without
     script;
+  - the text version: every view in words and tables, visually hidden
+    (screen readers read it; a page without script shows it);
   - the page itself, in the shared shell (pipeline/site_shell.py).
 
 What is drawn in the browser (site/js/story.js): the one canvas of release
 marks that morphs through the hero and the five views as the reader
 scrolls. It reads the same published files at load and adds no sentence of
 its own beyond chart labels. Without script, or before it runs, the page is
-the hero, the five step texts, the findings and the text version.
+the hero, the five step texts, the text version and the finding.
 
     python -m pipeline.build_story            # write site/story.html
     python -m pipeline.build_story --check    # fail if it has drifted
@@ -362,12 +364,11 @@ _SKEW_PAPER = _skew("paper"); _SKEW_SC = _skew("system_card")
 
 def _skew_sentence(sk, what):
     k, n, m, N, mon = sk
-    return (f" In {_D1}, {k} of the {n} checked releases are from {mon} or later, a period that holds "
-            f"{m} of the year's {N} releases. The checked releases lean toward the newest ones, so {what} "
-            f"may move as earlier {_D1} releases are checked.")
+    return (f" In {_D1}, {k} of the {n} checked releases are from {mon} or later, a period holding "
+            f"{m} of the year's {N} releases, so {what} may move as earlier releases are checked.")
 
 
-DPAPER_NOTE = (f"In {_D0}, {byyr_pap[_D0]} of {byyr_pap_res[_D0]} researched releases had a paper on record "
+DPAPER_NOTE = (f"In {_D0}, {byyr_pap[_D0]} of {byyr_pap_res[_D0]} checked releases had a paper on record "
                f"({_paperpct(_D0)}%). In {_D1} so far, {byyr_pap[_D1]} of {byyr_pap_res[_D1]} "
                f"({_paperpct(_D1)}%). Papers can come out weeks after a release, so recent years may rise."
                + (_skew_sentence(_SKEW_PAPER, "the share") if _SKEW_PAPER else ""))
@@ -393,52 +394,157 @@ _SC_DIR = _moved(_scpct(_D0), _scpct(_D1))
 _DPAPER_T = {"fell": "Fewer arrive with a paper", "rose": "More arrive with a paper"}.get(_PAPER_DIR, "Releases with a paper")
 _DPARAM_T = {"fell": "And fewer have a parameter count on record", "rose": "And more have a parameter count on record"}.get(_PARAM_DIR, "And a parameter count on record")
 CLOSE_NOTE = (f"From {_D0} to {_D1}, the highest independent GPQA Diamond score {_moved(_cap_vals[0], _cap_vals[-1])} "
-              f"from {_cap_vals[0]} to {_cap_vals[-1]}. The share of researched releases with a paper {_PAPER_DIR} "
+              f"from {_cap_vals[0]} to {_cap_vals[-1]}. The share of checked releases with a paper {_PAPER_DIR} "
               f"from {_paperpct(_D0)}% to {_paperpct(_D1)}%, and the share with a parameter count in Epoch AI's data "
               f"{_PARAM_DIR} from {_parampct(_D0)}% to {_parampct(_D1)}%. The share with a system card "
               f"{_SC_DIR} from {_scpct(_D0)}% to {_scpct(_D1)}% ({_sc_dis[_D0]} of {_sc_res[_D0]}, then "
               f"{_sc_dis[_D1]} of {_sc_res[_D1]})."
               + (_skew_sentence(_SKEW_PAPER or _SKEW_SC, f"these {_D1} shares") if (_SKEW_PAPER or _SKEW_SC) else ""))
 _cap_dir = _moved(_cap_vals[0], _cap_vals[-1])
-if _PAPER_DIR == "fell" and _PARAM_DIR == "fell":
-    _c2 = "Fewer releases came with a paper or a parameter count on record."
-else:
-    _c2 = f"The share with a paper {_PAPER_DIR}; the share with a parameter count on record {_PARAM_DIR}."
-_c3 = "More came with a system card." if _SC_DIR == "rose" else f"The share with a system card {_SC_DIR}."
-CLOSE_SHORT = f"Independent scores {_cap_dir}. {_c2} {_c3}"
-DIV_NOTE = (f"{near} of the {len(PAIRS)} pairs sit within a single point, and the gaps run both ways. "
-            + (f"In {nword(len(SET_DIFF))} of the {nword(len(PAIRS))} pairs ({_join_and([esc(p['model']) for p in SET_DIFF])}) "
-               f"the lab and Epoch ran different reasoning settings, so those gaps include a settings difference. "
-               if SET_DIFF else "")
-            + f"These {nword(len(PAIRS))} pairs come from recent major releases, and the lab and Epoch often run "
-              f"different settings (reasoning effort, number of attempts). With so few pairs this is not a test "
-              f"of whether labs overstate. The record keeps both numbers and never averages them.")
+_LEVEL = {"low": 0, "medium": 1, "high": 2, "xhigh": 3, "max": 4}
+_lab_hi = [p for p in PAIRS if p["lab"] > p["ind"]]
+_set_higher = bool(SET_DIFF) and all(_LEVEL[p["lab_lvl"]] > _LEVEL[p["ind_lvl"]] for p in SET_DIFF)
+_SET_WORDS = "the lab ran a higher reasoning setting than Epoch" if _set_higher else "the lab and Epoch ran different reasoning settings"
+DIV_NOTE = (f"{near} of the {len(PAIRS)} pairs sit within a single point. "
+            + (f"In {nword(len(SET_DIFF))} ({_join_and([esc(p['model']) for p in SET_DIFF])}) {_SET_WORDS}, "
+               f"so those gaps include a settings difference. " if SET_DIFF else "")
+            + f"With so few pairs this is not a test of whether labs overstate. Both numbers are kept; neither is averaged.")
 PAIRS_LEAD = (f"{n_pair_models} releases were graded twice on the same benchmark: once by the releasing lab, "
               f"once by Epoch. ")
-SWE_NOTE = (f"On a second benchmark, SWE-Bench Verified (fixing real GitHub issues), the top score rose from "
-            f"{swe_lo} to {swe_hi} over the same years. Epoch measured these too.")
-_case_n = {o: sum(1 for r in _rel_t if r["org"] == o) for o in CASE_ORDER}
-_case_s = {o: sum(1 for r in _rel_t if r["org"] == o and r["entry_id"] in score_by_entry) for o in CASE_ORDER}
-WHY_FOUR = ("Four labs with long records and many independent scores: "
-            + ", ".join(f"{NMSHORT[o]} ({_case_n[o]} releases, {_case_s[o]} scored)" for o in CASE_ORDER) + ".")
-WAIT_RULE = ("Days between one release and the next, for this lab alone. \"At first\" is the median of its first "
-             "third of gaps on record; \"lately\" is the median of its last third.")
-TRAJ_TEACH = (f"The same marks rise to their GPQA Diamond score, measured by Epoch, not the lab. Of {_n_total}, "
-              f"the {n_scored} with an independent score rise; the rest have none on record.")
-
-# refused comparisons against the predecessor, from the derived file
-DELTAS = json.loads(gzip.decompress((ROOT / "data/derived/deltas.json.gz").read_bytes()))
-_names = {r["entry_id"]: r["model_name"] for r in V["disclosure_matrix"]["rows"]}
-REFUSED = sorted(((eid, it["reason"]) for eid, items in DELTAS.items() for it in items
-                  if it.get("kind") == "REFUSED_COMPARISON"), key=lambda x: x[0])
+SWE_NOTE = (f"On a second benchmark, SWE-Bench Verified (fixing real GitHub issues), Epoch's top score rose from "
+            f"{swe_lo} to {swe_hi} over the same years.")
+WAIT_RULE = ("\"At first\" is the median of a lab's first third of gaps on record; \"lately\", of its last third.")
 
 # ---------------------------------------------------------------------------
-# Markup helpers
+# Headings and step text. A heading states the view's point, worked out from
+# the record; the text under it carries only what the chart cannot: a
+# finding, a caveat that changes the reading, or a number not on the chart.
+# ---------------------------------------------------------------------------
+
+
+def _cap(s):
+    return s[:1].upper() + s[1:]
+
+
+def _growth(a, b):
+    """How a count changed, in words a reader can check against the chart."""
+    r = b / a if a else 0
+    if r >= 3.05: return "more than tripled"
+    if r >= 2.85: return "tripled"
+    if r >= 2.5: return "nearly tripled"
+    if r >= 2.05: return "more than doubled"
+    if r >= 1.9: return "doubled"
+    if r >= 1.75: return "nearly doubled"
+    if r > 1: return f"rose by {round((r - 1) * 100)}%"
+    if r == 1: return "held level"
+    return f"fell by {round((1 - r) * 100)}%"
+
+
+def _share_words(k, n):
+    f = k / n if n else 0
+    if 0.4 <= f < 0.5: return "Almost half"
+    if 0.5 <= f < 0.6: return "Just over half"
+    return f"{round(100 * f)}%"
+
+
+_n_rev = sum(y["revisions"] for y in V["cadence"]["yearly"])
+_g0, _g1 = MEDGAP[_hero_first_y], MEDGAP[_hero_last_y]
+H1 = f"Releases {_growth(_hero_first_n, _hero_last_n)} from {_hero_first_y} to {_hero_last_y}"
+STEP1 = (f"<p>Pooled across the {nword(N_LABS)} labs, the median wait between one release and the next "
+         f"{'fell' if _g1 < _g0 else 'rose' if _g1 > _g0 else 'held'} from {_g0} days in {_hero_first_y} to {_g1} in {_hero_last_y}.</p>"
+         f"<p>Revisions, updates to a model already on record, are left out of these counts: {_n_rev} so far.</p>")
+
+_sc_labs_none = [o for o in REG
+                 if not any(r["org"] == o and r["cells"]["system_card"] == "disclosed" for r in rel)
+                 and any(r["org"] == o and r["cells"]["system_card"] == "not_disclosed" for r in rel)]
+_cells_all = sum(len(r["cells"]) for r in rel if r["org"] in ro)
+_cells_nr = sum(1 for r in rel if r["org"] in ro for v in r["cells"].values() if v == "not_researched")
+H2 = (f"{_cap(nword(len(_sc_labs_none)))} of the {nword(N_LABS)} labs have no system card on any checked release"
+      if _sc_labs_none else "Every lab has a system card on record for at least one checked release")
+STEP2 = (f"<p>{_share_words(_cells_nr, _cells_all)} the document cells, {_cells_nr:,} of {_cells_all:,}, are not yet checked. "
+         "A share counts checked releases only, so it can move as we check more.</p>")
+
+_open_best = max(((score_by_entry[r["entry_id"]], r["date"], r["model_name"]) for r in _rel_t
+                  if r["entry_id"] in score_by_entry and avail_by_entry.get(r["entry_id"]) == "open_weights"), default=None)
+H3 = (f"The highest independent GPQA Diamond score {_cap_dir} from {_cap_vals[0]} in {slots[0]} "
+      f"to {_cap_vals[-1]} in {slots[-1]}")
+STEP3 = (f"<p>{SWE_NOTE}</p>"
+         + (f"<p>The highest open-weights GPQA Diamond score on record is {_open_best[0]} "
+            f"({esc(_open_best[2])}, {_open_best[1][:4]}).</p>" if _open_best else ""))
+
+H4 = (f"The lab's score is above Epoch's in all {nword(len(PAIRS))} pairs" if len(_lab_hi) == len(PAIRS)
+      else f"The lab's score is above Epoch's in {nword(len(_lab_hi))} of {nword(len(PAIRS))} pairs")
+STEP4 = (f"<p>{_cap(nword(near))} of the {nword(len(PAIRS))} are within a point."
+         + (f" In {nword(len(SET_DIFF))} ({_join_and([esc(p['model']) for p in SET_DIFF])}) {_SET_WORDS}, "
+            f"so those gaps include a settings difference." if SET_DIFF else "")
+         + f"</p><p>{_cap(nword(len(PAIRS)))} pairs from recent releases cannot test whether labs overstate.</p>")
+
+_wait = {o: (lambda v: (_med(v[:max(1, len(v) // 3)]), _med(v[-max(1, len(v) // 3):])))(_waits(o)) for o in CASE_ORDER}
+_shorter = [o for o in CASE_ORDER if _wait[o][1] < _wait[o][0]]
+H5 = (f"The wait between releases shortened at all {nword(len(CASE_ORDER))} labs with long records"
+      if len(_shorter) == len(CASE_ORDER)
+      else f"The wait between releases shortened at {_join_and([NMSHORT[o] for o in _shorter]) or 'none'} of the labs with long records")
+STEP5 = ("<p>Median days between releases, at first and lately: "
+         + ", ".join(f"{NMSHORT[o]} {_wait[o][0]} to {_wait[o][1]}" for o in CASE_ORDER)
+         + f". {WAIT_RULE}</p>"
+         "<p>ByteDance, Tencent and Baidu are not tracked, so the record cannot support a comparison between countries. "
+         "Panels follow registry order.</p>")
+
+STEPS = [(H1, STEP1), (H2, STEP2), (H3, STEP3), (H4, STEP4), (H5, STEP5)]
+
+# ---------------------------------------------------------------------------
+# The finding after the scroll: disclosure over time, which no view above
+# draws. Its figure labels its own values; the text carries the caveats.
+# ---------------------------------------------------------------------------
+
+
+def _fig_disclosure():
+    w, rowh, l, r, t = 340, 38, 112, 40, 10
+    items = [("Paper", _paperpct(_D0), _paperpct(_D1)),
+             ("Parameter count", _parampct(_D0), _parampct(_D1)),
+             ("System card", _scpct(_D0), _scpct(_D1))]
+    h = t + rowh * len(items) + 34
+    sx = lambda v: l + (w - l - r) * v / 100
+    s = ""
+    for v in (0, 50, 100):
+        s += (f'<line x1="{sx(v):.1f}" x2="{sx(v):.1f}" y1="{t}" y2="{t + rowh * len(items)}" class="f-grid"/>'
+              f'<text x="{sx(v):.1f}" y="{t + rowh * len(items) + 14}" text-anchor="middle" class="f-ax">{v}%</text>')
+    for i, (name, a, b) in enumerate(items):
+        y = t + rowh * i + rowh / 2 + 6
+        lo, hi = (a, b) if a <= b else (b, a)
+        s += (f'<text x="0" y="{y + 4:.1f}" class="f-name">{name}</text>'
+              f'<line x1="{sx(lo):.1f}" x2="{sx(hi):.1f}" y1="{y:.1f}" y2="{y:.1f}" class="f-link"/>'
+              f'<circle cx="{sx(a):.1f}" cy="{y:.1f}" r="4.5" class="f-dot-0"/>'
+              f'<circle cx="{sx(b):.1f}" cy="{y:.1f}" r="4.5" class="f-dot-1"/>'
+              f'<text x="{sx(lo) - 8:.1f}" y="{y + 4:.1f}" text-anchor="end" class="f-v">{lo}%</text>'
+              f'<text x="{sx(hi) + 8:.1f}" y="{y + 4:.1f}" class="f-v">{hi}%</text>')
+    s += (f'<circle cx="{l + 4}" cy="{h - 6}" r="4" class="f-dot-0"/><text x="{l + 12}" y="{h - 2}" class="f-ax">{_D0}</text>'
+          f'<circle cx="{l + 64}" cy="{h - 6}" r="4" class="f-dot-1"/><text x="{l + 72}" y="{h - 2}" class="f-ax">{_D1} so far</text>')
+    label = (f"Shares in {_D0} and {_D1}: paper {_paperpct(_D0)}% then {_paperpct(_D1)}% of checked releases; "
+             f"parameter count {_parampct(_D0)}% then {_parampct(_D1)}% of all releases; "
+             f"system card {_scpct(_D0)}% then {_scpct(_D1)}% of checked releases.")
+    return _svg(w, h, label, s)
+
+
+_more = {"rose": "more", "fell": "fewer"}
+FIND_H = (f"From {_D0} to {_D1}, {_more.get(_PAPER_DIR, 'as many')} releases came with a paper "
+          f"and {_more.get(_SC_DIR, 'as many')} with a system card")
+FIND_P = ("Papers can come out weeks after a release, so recent years may rise."
+          + (_skew_sentence(_SKEW_PAPER or _SKEW_SC, f"the {_D1} shares") if (_SKEW_PAPER or _SKEW_SC) else "")
+          + " Parameter counts are Epoch AI's and divide by all releases; Epoch often adds counts for recent "
+            "models late, and we have not checked the blanks against the labs' own pages.")
+
+# ---------------------------------------------------------------------------
+# The text version: every view in words and tables. It is not a visible
+# section: screen readers read it, and a page without script shows it.
 # ---------------------------------------------------------------------------
 
 
 def _nfb(h, b):
     return f'<div class="nfb"><h3>{h}</h3><p>{b}</p></div>'
+
+
+NUMC = ' class="n"'
 
 
 def _table(caption, head, rows, num_cols=None):
@@ -452,31 +558,12 @@ def _table(caption, head, rows, num_cols=None):
     return f'<table class="dt"><caption>{caption}</caption><thead><tr>{th}</tr></thead><tbody>{body}</tbody></table>'
 
 
-NUMC = ' class="n"'
-
-
-def _details(summary, inner):
-    return f'<details class="sd"><summary>{summary}</summary>{inner}</details>'
-
-
 def _svg(w, h, label, inner, cls="fig-svg"):
     return (f'<svg class="{cls}" viewBox="0 0 {w} {h}" role="img" aria-label="{esc(label)}">'
             f"{inner}</svg>")
 
 
-# ---------------------------------------------------------------------------
-# The five steps (text a reader meets beside the chart; static, so it reads
-# without script)
-# ---------------------------------------------------------------------------
-
 _yearly_rows = [[y["year"], str(y["releases"]), str(y["revisions"])] for y in V["cadence"]["yearly"]]
-STEP1 = ("<p>Each column stacks one calendar year of releases, one mark each.</p>"
-         f"<p>{yearly['2023']} releases in 2023, {yearly['2025']} in 2025. Pooled across the {nword(N_LABS)} labs, the median "
-         f"time between one release and the next was {MEDGAP['2023']} days in 2023, {MEDGAP['2024']} in 2024 and {MEDGAP['2025']} in 2025.</p>"
-         f"<p>{_PARTIAL_NOTE}</p>"
-         + _details("Year by year", "".join(f'<p class="sd-p"><b>{h}.</b> {b}</p>' for _, h, b in PULSE_NOTES)
-                    + _table("Releases and revisions per year. Revisions are counted apart.", ["Year", "Releases", "Revisions"], _yearly_rows)))
-
 _DISC_SLOTS = [("system_card", "System card"), ("model_card", "Model card"), ("usage_policy", "Usage policy"), ("paper", "Paper")]
 _lab_disc_rows = []
 for o in REG:
@@ -491,165 +578,20 @@ for o in REG:
             else: nr += 1
         row.append(f"{d} / {nd} / {nr}")
     _lab_disc_rows.append(row)
-STEP2 = ("<p>Each release splits into four cells: system card, model card, usage policy and paper. "
-         "A filled square is a link on record; an empty square, we checked and found none; a short dash, not yet researched.</p>"
-         "<p>\"Not disclosed\" is a fact about the lab. \"Not yet researched\" is work we have not done.</p>"
-         f'<p><b>{_DPAPER_T}.</b> {DPAPER_NOTE}</p>'
-         + _details("The numbers: on record / not disclosed / not yet researched",
-                    _table("Releases per lab, by document. Labs are listed in registry order.", ["Lab"] + [s[1] for s in _DISC_SLOTS], _lab_disc_rows, num_cols=())))
-
-_traj_rows = [[y, str(_tn(y)), str(_tmax(y)) if _tn(y) else "none"] for y in slots]
-STEP3 = (f"<p>{TRAJ_TEACH}</p>"
-         f"<p>The line is the highest score reached so far. A missing score is not a zero: releases with none sit below the axis.</p>"
-         f"<p>{SWE_NOTE}</p>"
-         + _details("Year by year", "".join(f'<p class="sd-p"><b>{h}.</b> {b}</p>' for _, h, b in TRAJ_NOTES)
-                    + "".join(f'<p class="sd-p"><b>{TRAJ_COPY[o][0]}.</b> {TRAJ_COPY[o][1]}</p>' for o in CASE_ORDER)))
-
 _pair_rows = [[esc(p["model"]), p["benchlabel"], str(p["lab"]), str(p["ind"]), esc(p["lab_set"]), esc(p["ind_set"])] for p in PAIRS]
-STEP4 = ("<p>Each row is one release scored twice on one benchmark: the open diamond is the lab's own number, tagged LAB; "
-         "the filled dot is Epoch's measurement, tagged IND.</p>"
-         f"<p>{PAIRS_LEAD}{DIV_NOTE}</p>"
-         + _details("The numbers, with settings as written",
-                    '<div class="sd-scroll">' + _table("Lab-reported and independent scores on the same release and benchmark.",
-                           ["Release", "Benchmark", "LAB", "IND", "Lab setting", "Epoch setting"], _pair_rows, num_cols=(2, 3)) + "</div>"))
-
-STEP5 = ("<p>Every release again, split by lab and stacked by quarter, on one time axis and one scale. "
-         "Labs are listed in registry order.</p>"
-         "<p>Because ByteDance, Tencent and Baidu are not tracked, the record cannot support a comparison between countries.</p>"
-         + _details("The wait between releases, for four labs",
-                    f'<p class="sd-p">{WHY_FOUR} {WAIT_RULE}</p>'
-                    + "".join(f'<p class="sd-p"><b>{ACCEL_COPY[o][0]}.</b> {ACCEL_COPY[o][1]}</p>' for o in CASE_ORDER)))
-
-STEPS = [
-    ("The pace, year by year", STEP1),
-    ("What each lab published", STEP2),
-    ("Benchmark scores, independently measured", STEP3),
-    ("What the lab said, beside what Epoch measured", STEP4),
-    ("Twelve labs, one time axis", STEP5),
-]
-
-# ---------------------------------------------------------------------------
-# The four findings, each with a static figure drawn from the same numbers
-# ---------------------------------------------------------------------------
-
-
-def _fig_cadence():
-    w, h, base, top = 320, 150, 118, 22
-    mx = max(yearly[y] for y in slots)
-    slot = w / len(slots); bw = slot * 0.56
-    s = ""
-    for i, y in enumerate(slots):
-        v = yearly[y]; bh = (base - top) * v / mx; x = i * slot + (slot - bw) / 2
-        part = y == _cur_y
-        s += (f'<rect x="{x:.1f}" y="{base - bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="2" class="{"f-bar-part" if part else "f-bar"}"/>'
-              f'<text x="{x + bw / 2:.1f}" y="{base - bh - 7:.1f}" text-anchor="middle" class="f-v">{v}</text>'
-              f'<text x="{x + bw / 2:.1f}" y="{base + 18}" text-anchor="middle" class="f-ax">{y + (", so far" if part else "")}</text>')
-        if y == _cur_y:
-            ly = base - (base - top) * _prev_n / mx
-            s += (f'<line x1="{x - 6:.1f}" x2="{x + bw + 6:.1f}" y1="{ly:.1f}" y2="{ly:.1f}" class="f-mark"/>')
-    s += f'<line x1="0" x2="{w}" y1="{base + 0.5}" y2="{base + 0.5}" class="f-base"/>'
-    label = ("Releases per year: " + ", ".join(f"{yearly[y]} in {y}" for y in slots)
-             + f" ({_cur_y} so far). The rule across {_cur_y} marks {_prev_n}, the count by the same date in {_prev_y}.")
-    return _svg(w, h, label, s)
-
-
-def _fig_scores():
-    w, h, l, r, t, b = 320, 150, 26, 8, 10, 126
-    d0 = date.fromisoformat(gpqa_pts[0]["date"]); d1 = date.fromisoformat(AS_OF)
-    sx = lambda d: l + (w - l - r) * (date.fromisoformat(d) - d0).days / max(1, (d1 - d0).days)
-    sy = lambda v: b - (b - t) * v / 100
-    s = ""
-    for v in (0, 50, 100):
-        s += f'<line x1="{l}" x2="{w - r}" y1="{sy(v):.1f}" y2="{sy(v):.1f}" class="{"f-base" if v == 0 else "f-grid"}"/><text x="{l - 6}" y="{sy(v) + 4:.1f}" text-anchor="end" class="f-ax">{v}</text>'
-    for y in slots:
-        if f"{y}-01-01" > gpqa_pts[0]["date"]:
-            s += f'<text x="{sx(y + "-01-01"):.1f}" y="{b + 18}" text-anchor="middle" class="f-ax">{y}</text>'
-
-    def step(pts, cls):
-        run = -1.0; d = ""
-        for p in pts:
-            if p["date"] < gpqa_pts[0]["date"]: continue
-            if p["value"] > run:
-                d += (f"M{sx(p['date']):.1f} {sy(p['value']):.1f}" if run < 0 else f"H{sx(p['date']):.1f}V{sy(p['value']):.1f}")
-                run = p["value"]
-        d += f"H{w - r}"
-        return f'<path d="{d}" class="{cls}"/>'
-    s += step(gpqa_pts, "f-ind") + step(swe_pts, "f-ind f-ind-2")
-    s += f'<text x="{w - r}" y="{sy(_cap_vals[-1]) - 6:.1f}" text-anchor="end" class="f-lab">GPQA Diamond</text>'
-    s += f'<text x="{w - r}" y="{sy(swe_hi) + 15:.1f}" text-anchor="end" class="f-lab">SWE-Bench Verified</text>'
-    label = (f"The highest independent score so far, by date: GPQA Diamond from {_cap_vals[0]} to {_cap_vals[-1]}, "
-             f"SWE-Bench Verified from {swe_lo} to {swe_hi}. Both measured by Epoch AI.")
-    return _svg(w, h, label, s)
-
-
-def _fig_pairs():
-    rowh = 22; w = 320; t = 8; h = t + rowh * len(PAIRS) + 22
-    vals = [v for p in PAIRS for v in (p["lab"], p["ind"])]
-    lo = int(min(vals) // 10 * 10); l = 128; r = 10
-    sx = lambda v: l + (w - l - r) * (v - lo) / (100 - lo)
-    s = ""
-    for v in range(lo, 101, 10):
-        s += f'<line x1="{sx(v):.1f}" x2="{sx(v):.1f}" y1="{t}" y2="{t + rowh * len(PAIRS)}" class="f-grid"/>'
-        if v in (lo, 100) or v % 20 == 0:
-            s += f'<text x="{sx(v):.1f}" y="{t + rowh * len(PAIRS) + 15}" text-anchor="middle" class="f-ax">{v}</text>'
-    for i, p in enumerate(PAIRS):
-        y = t + rowh * i + rowh / 2
-        name = p["model"] + (" (SWE)" if p["bench"] == "swe-bench-verified" else "")
-        a, bx = sx(p["ind"]), sx(p["lab"])
-        s += (f'<text x="0" y="{y + 4:.1f}" class="f-name">{esc(name)}</text>'
-              f'<line x1="{min(a, bx):.1f}" x2="{max(a, bx):.1f}" y1="{y:.1f}" y2="{y:.1f}" class="f-link"/>'
-              f'<circle cx="{a:.1f}" cy="{y:.1f}" r="4.2" class="f-dot-ind"/>'
-              f'<path d="M{bx:.1f} {y - 5:.1f}l5 5l-5 5l-5 -5Z" class="f-dot-lab"/>')
-    label = (f"{len(PAIRS)} pairs, each a release scored by its lab (LAB) and by Epoch (IND): "
-             + "; ".join(f"{p['model']}, {p['benchlabel']}: LAB {p['lab']}, IND {p['ind']}" for p in PAIRS)
-             + f". The axis starts at {lo}.")
-    return _svg(w, h, label, s)
-
-
-def _fig_disclosure():
-    w, rowh, l, r, t = 320, 30, 104, 34, 6
-    items = [("Paper", _paperpct(_D0), _paperpct(_D1)),
-             ("Parameter count", _parampct(_D0), _parampct(_D1)),
-             ("System card", _scpct(_D0), _scpct(_D1))]
-    h = t + rowh * len(items) + 30
-    sx = lambda v: l + (w - l - r) * v / 100
-    s = ""
-    for v in (0, 50, 100):
-        s += (f'<line x1="{sx(v):.1f}" x2="{sx(v):.1f}" y1="{t}" y2="{t + rowh * len(items)}" class="f-grid"/>'
-              f'<text x="{sx(v):.1f}" y="{t + rowh * len(items) + 14}" text-anchor="middle" class="f-ax">{v}%</text>')
-    for i, (name, a, b) in enumerate(items):
-        y = t + rowh * i + rowh / 2
-        s += (f'<text x="0" y="{y + 4:.1f}" class="f-name">{name}</text>'
-              f'<line x1="{sx(min(a, b)):.1f}" x2="{sx(max(a, b)):.1f}" y1="{y:.1f}" y2="{y:.1f}" class="f-link"/>'
-              f'<circle cx="{sx(a):.1f}" cy="{y:.1f}" r="4.2" class="f-dot-0"/>'
-              f'<circle cx="{sx(b):.1f}" cy="{y:.1f}" r="4.2" class="f-dot-1"/>')
-    s += (f'<circle cx="{l + 4}" cy="{h - 6}" r="4" class="f-dot-0"/><text x="{l + 12}" y="{h - 2}" class="f-ax">{_D0}</text>'
-          f'<circle cx="{l + 64}" cy="{h - 6}" r="4" class="f-dot-1"/><text x="{l + 72}" y="{h - 2}" class="f-ax">{_D1} so far</text>')
-    label = (f"Shares in {_D0} and {_D1}: paper {_paperpct(_D0)}% then {_paperpct(_D1)}% of researched releases; "
-             f"parameter count {_parampct(_D0)}% then {_parampct(_D1)}% of all releases; "
-             f"system card {_scpct(_D0)}% then {_scpct(_D1)}% of researched releases.")
-    return _svg(w, h, label, s)
-
-
-FINDINGS = [
-    ("Cadence", f"{yearly['2023']} releases in 2023, {yearly['2025']} in 2025. Pooled across the {nword(N_LABS)} labs, the median time between one release and the next was {MEDGAP['2023']} days in 2023, {MEDGAP['2024']} in 2024 and {MEDGAP['2025']} in 2025.", _fig_cadence()),
-    ("Independent scores", f"The highest independent GPQA Diamond score went from {_cap_vals[0]} to {_cap_vals[-1]}; SWE-Bench Verified from {swe_lo} to {swe_hi}. Every figure measured by Epoch.", _fig_scores()),
-    ("Lab beside independent", f"{n_pair_models} releases were graded both ways, giving {len(PAIRS)} pairs; {near} fall within a single point. That is too few pairs, run at different settings, to test whether labs overstate. Both numbers are kept, neither is averaged.", _fig_pairs()),
-    ("Disclosure", f"With a paper on record: {byyr_pap[_D0]} of {byyr_pap_res[_D0]} researched releases in {_D0} ({_paperpct(_D0)}%), {byyr_pap[_D1]} of {byyr_pap_res[_D1]} in {_D1} so far ({_paperpct(_D1)}%). With a parameter count in Epoch AI's data: {_parampct(_D0)}%, then {_parampct(_D1)}%. With a system card: {_sc_dis[_D0]} of {_sc_res[_D0]} ({_scpct(_D0)}%), then {_sc_dis[_D1]} of {_sc_res[_D1]} ({_scpct(_D1)}%)." + (_skew_sentence(_SKEW_PAPER or _SKEW_SC, f"the {_D1} shares") if (_SKEW_PAPER or _SKEW_SC) else ""), _fig_disclosure()),
-]
-
-# ---------------------------------------------------------------------------
-# The text version: every view in words (also what a reader without script
-# or a screen reader gets in full)
-# ---------------------------------------------------------------------------
 
 FALLBACK = ("".join(_nfb(h, b) for (_, h, b) in PULSE_NOTES)
+            + _table("Releases and revisions per year. Revisions are counted apart.", ["Year", "Releases", "Revisions"], _yearly_rows)
             + "".join(_nfb(f"{ACCEL_COPY[o][0]}: the wait between releases", ACCEL_COPY[o][1]) for o in CASE_ORDER)
+            + _table("Releases per lab, by document: on record / not disclosed / not yet checked. Labs in registry order.",
+                     ["Lab"] + [s[1] for s in _DISC_SLOTS], _lab_disc_rows, num_cols=())
             + "".join(_nfb(h, b) for (_, h, b) in TRAJ_NOTES)
             + "".join(_nfb(f"{TRAJ_COPY[o][0]}: the independent climb", TRAJ_COPY[o][1]) for o in CASE_ORDER)
             + _nfb("A second benchmark", SWE_NOTE)
             + "".join(_nfb(f"{SWE_CLIMB_COPY[o][0]}: on SWE-Bench", SWE_CLIMB_COPY[o][1]) for o in SWE_CASE_ORDER)
             + _nfb("What the lab said, beside what Epoch measured", PAIRS_LEAD + DIV_NOTE)
+            + _table("Lab-reported and independent scores on the same release and benchmark, with settings as written.",
+                     ["Release", "Benchmark", "LAB", "IND", "Lab setting", "Epoch setting"], _pair_rows, num_cols=(2, 3))
             + _nfb(_DPAPER_T, DPAPER_NOTE) + _nfb(_DPARAM_T, DPARAM_NOTE)
             + _nfb(f"What changed, {_D0} to {_D1}", CLOSE_NOTE))
 
@@ -660,12 +602,6 @@ FALLBACK = ("".join(_nfb(h, b) for (_, h, b) in PULSE_NOTES)
 _steps_html = "".join(
     f'<article class="step" data-step="{i}" aria-labelledby="s{i}h"><h2 id="s{i}h">{t}</h2><div class="sb">{b}</div></article>\n'
     for i, (t, b) in enumerate(STEPS, 1))
-_find_html = "".join(
-    f'<article class="find panel" data-ui><h3>{t}</h3><p>{p}</p><figure class="fig">{fig}</figure></article>\n'
-    for t, p, fig in FINDINGS)
-_refused_html = "".join(
-    f'<li><a href="explorer.html?id={esc(eid)}">{esc(_names.get(eid, eid))}</a> <span class="t-m">{esc(reason)}</span></li>'
-    for eid, reason in REFUSED)
 
 MAIN = f"""<main id="main" class="story" tabindex="-1">
 <section class="scrolly" aria-labelledby="hed">
@@ -681,31 +617,27 @@ MAIN = f"""<main id="main" class="story" tabindex="-1">
 <header class="hero-step" data-step="0">
 <div class="hero-text" id="hero-text">
 <h1 class="hero-head" id="hed">A public registry of AI model releases.</h1>
-<p class="hero-count">From {_hero_first_n} in {_hero_first_y} to {_hero_last_n} in {_hero_last_y}.</p>
-<p class="hero-dek"><b>{SCOPE_T}.</b> One mark = one model release, placed by lab (down the side) and by date (across). The record opens at ChatGPT's launch: {tiles["releases_recorded"]} releases in all, ChatGPT included.</p>
-<p class="hero-act"><a class="btn btn-primary" href="#findings">Skip to the findings</a><a class="btn" href="#text-version">Read it as text</a></p>
+<p class="hero-count">From ChatGPT to {AS_OF}: {_n_total} releases from {nword(N_LABS)} tracked labs, one mark each.</p>
+<p class="hero-act"><a class="btn btn-primary" href="#findings">Skip the charts</a></p>
 </div>
 </header>
 {_steps_html}</div>
 <div class="live sr" id="live" aria-live="polite"></div>
 </section>
 
+<section class="nfallback visually-hidden" id="text-version" aria-label="The record in words"><p>Every view on this page, in words and tables. Every entry, with its sources, is in <a href="explorer.html">the explorer</a>.</p>{FALLBACK}</section>
+
 <section class="sfind" id="findings" aria-labelledby="fh">
-<header class="sfind-h"><h2 id="fh">What the record shows, in four findings</h2>
-<p class="sfind-lead">{CLOSE_SHORT}</p>
-<p class="sfind-note">{CLOSE_NOTE}</p></header>
-<div class="find-grid">
-{_find_html}</div>
-<div class="panel refusals-p"><h3>Refused comparisons</h3><p class="t-m">A change against the previous model appears only when both scores are on the same benchmark, the same version of it, and from the same kind of source. {len(REFUSED)} comparisons are refused on the record:</p><ul class="refusals">{_refused_html}</ul></div>
+<div class="sfind-in panel" data-ui>
+<div class="sfind-t"><h2 id="fh">{FIND_H}</h2>
+<p class="sfind-note">{FIND_P}</p></div>
+<figure class="fig">{_fig_disclosure()}</figure>
+</div>
 </section>
 
-<details class="textver" id="text-version" open>
-<summary><span class="tv-h">The record in words</span><span class="t-m">Every view above, as text</span></summary>
-<section class="nfallback" aria-label="The record in words"><p>A text version of each view above. For every entry as a filterable list with its sources, see <a href="explorer.html">the explorer</a>.</p>{FALLBACK}</section>
-</details>
-
 <section class="sclose" aria-labelledby="ch">
-<p class="endstance"><b>The record is public.</b> Each night it checks its sources and drafts new entries, and a person approves each one before it appears. Every number shows where it came from, or it is left out.</p>
+<p class="endstance"><b>The record is public.</b> Each night it checks its sources and drafts new entries; a person approves each one before it appears. Every number shows where it came from, or it is left out.</p>
+<div class="spec-grid sclose-specs"><aside class="spec" id="sp-newest" data-ui aria-label="Newest on record"><p class="rn-h">Newest on record</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside><aside class="spec" id="sp-record" data-ui aria-label="The record today"><p class="rn-h">The record today</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div>
 <h2 class="readmore-h" id="ch">The full record, its rules and who keeps it</h2>
 <div class="enddoors">
 <a class="enddoor" href="explorer.html"><b>Explorer</b><span>every entry, filterable</span></a>
@@ -713,7 +645,7 @@ MAIN = f"""<main id="main" class="story" tabindex="-1">
 <a class="enddoor" href="about.html"><b>About</b><span>what this is, and who keeps it</span></a>
 <a class="enddoor" href="data.html"><b>Data</b><span>download the dataset, CC-BY 4.0</span></a>
 </div>
-<p class="protonote">Parameter counts come from Epoch AI's data, and a few are Epoch's own estimates, which the record does not yet mark. Data current as of {AS_OF}.</p>
+<p class="protonote">A few parameter counts are Epoch AI's own estimates, which the record does not yet mark. Data current as of {AS_OF}.</p>
 </section>
 </main>
 """
@@ -723,9 +655,9 @@ GSAP = ('<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.mi
 
 HTML = site_shell.page(
     "story.html", "Version Control: the story of the record",
-    f"{SCOPE_T}: the pace of releases, what each lab published, independent scores, and the lab's number beside Epoch's, in five views and four findings.",
-    "pg-story", MAIN, ("app.js", "story.js"), extra_head=GSAP, skip="Skip to the findings")
-HTML = HTML.replace('<a class="skip" href="#main">Skip to the findings</a>', '<a class="skip" href="#findings">Skip to the findings</a>', 1)
+    f"{SCOPE_T}: the pace of releases, what each lab published, independent scores, and the lab's number beside Epoch's.",
+    "pg-story", MAIN, ("app.js", "story.js"), extra_head=GSAP, skip="Skip the charts")
+HTML = HTML.replace('<a class="skip" href="#main">Skip the charts</a>', '<a class="skip" href="#findings">Skip the charts</a>', 1)
 _STATS = f"marks={_n_total} scored={n_scored} pairs={len(PAIRS)}"
 
 

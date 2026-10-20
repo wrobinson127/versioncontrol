@@ -1,7 +1,10 @@
 /* The story: one persistent canvas of release marks that morphs as the
    reader scrolls, from one row per lab (the hero) through five views:
    releases by year, what each lab published, independent scores, the lab's
-   number beside Epoch's, and twelve labs on one time axis.
+   number beside Epoch's, and twelve labs on one time axis. Each view
+   finishes forming as its step text reaches the middle of the screen, and
+   each settled view can be explored: hover, tap or the arrow keys read a
+   mark's record, and a click or Enter opens it in the explorer.
 
    CSS sticky holds the graphic; GSAP ScrollTrigger reports each step's
    scroll progress (when it is missing, an IntersectionObserver steps between
@@ -86,14 +89,9 @@
     var years = D.views.cadence.yearly.map(function (y) { return y.year; });
     var pairs = CR.pairs(D).filter(function (p) { return p.e._rel; });
     pairs.forEach(function (p) { p.labSet = CR.labSetting(p.lab.configuration); p.indSet = CR.indSetting(p.ind.configuration); });
-    var refused = [];
-    Object.keys(D.deltas).forEach(function (id) {
-      (D.deltas[id] || []).forEach(function (it) { if (it.kind === "REFUSED_COMPARISON" && D.byId[id]) { refused.push({ e: D.byId[id], reason: it.reason }); } });
-    });
-    refused.sort(function (a, b) { return a.e.date < b.e.date ? -1 : 1; });
     return { D: D, E: E, cells: cells, labs: labs, gpqa: gpqa, gpqaPts: gpqaPts, asOf: asOf, curY: curY, prevY: prevY, prevCut: prevCut,
       curN: curN, prevN: prevN, bw: { n: wk[bw], monday: wkMon[bw] }, years: years, yearly: D.views.cadence.yearly, pairs: pairs,
-      refused: refused, dm: D.views.disclosure_matrix, medGap: D.views.tiles.median_gap_days_this_year };
+      dm: D.views.disclosure_matrix, medGap: D.views.tiles.median_gap_days_this_year };
   }
 
   /* ======================= marks ======================= */
@@ -196,7 +194,7 @@
 
   /* view 2: each release splits into four document cells, lab by lab */
   function layV2() {
-    var r = R[2], lw = narrow ? 64 : 118, hh = narrow ? 52 : 62, foot = narrow ? 28 : 36, gapB = narrow ? 7 : 18, gapR = narrow ? 5 : 8;
+    var r = R[2], lw = narrow ? 64 : 118, hh = narrow ? 52 : 62, foot = narrow ? 46 : 36, gapB = narrow ? 7 : 18, gapR = narrow ? 5 : 8;
     var bw = (r.x1 - r.x0 - lw - gapB * 3) / 4;
     var counts = S.labs.map(function (o) { return S.E.filter(function (e) { return e.org === o && S.cells[e.id]; }).length; });
     var avH = r.y1 - r.y0 - hh - foot, s = 16, per = 1;
@@ -246,13 +244,13 @@
   function layV4() {
     var r = R[4], n = S.pairs.length, vals = [];
     S.pairs.forEach(function (p) { vals.push(p.lab.value, p.ind.value); });
-    var lo = Math.floor((Math.min.apply(null, vals) - (narrow ? 14 : 3)) / 5) * 5, hi = 100;
-    var lw = narrow ? 0 : Math.min(220, (r.x1 - r.x0) * 0.3);
-    var px0 = r.x0 + lw + (narrow ? 4 : 10), px1 = r.x1 - (narrow ? 8 : 24);
+    var lo = Math.floor((Math.min.apply(null, vals) - (narrow ? 14 : 6)) / 5) * 5, hi = 100;
+    var lw = narrow ? 0 : Math.min(220, (r.x1 - r.x0) * 0.26);
+    var px0 = r.x0 + lw + (narrow ? 6 : 24), px1 = r.x1 - (narrow ? 64 : 24);
     var xs = function (v) { return px0 + (v - lo) / (hi - lo) * (px1 - px0); };
-    var top = r.y0 + (narrow ? 26 : 40), foot = narrow ? 64 : 80;
-    var rowH = Math.min(narrow ? 64 : 80, (r.y1 - foot - top) / Math.max(1, n)), rad = narrow ? 5 : 6.5;
-    var rowsGeo = S.pairs.map(function (p, j) { return { y: top + rowH * (j + 0.62), p: p }; });
+    var top = r.y0 + (narrow ? 44 : 64), foot = narrow ? 8 : 24;
+    var rowH = Math.min(narrow ? 62 : 92, (r.y1 - foot - top) / Math.max(1, n)), rad = narrow ? 5 : 6.5;
+    var rowsGeo = S.pairs.map(function (p, j) { return { y: top + rowH * (j + (narrow ? 0.56 : 0.42)), p: p }; });
     marks.forEach(function (m) {
       if (m.t !== "p") { return; }
       var g = rowsGeo[m.j];
@@ -460,13 +458,25 @@
       var c = counts[sl[0]], res = c.disclosed + c.not_disclosed, x = g.bx(k);
       s += T(x, r.y0 + 16, narrow ? { "System card": "Sys. card", "Model card": "Mod. card", "Usage policy": "Usage pol." }[sl[1]] || sl[1] : sl[1], "hd-t");
       if (narrow) { s += T(x, r.y0 + 32, CR.pct(c.disclosed, res) + "%", "hd-s") + T(x, r.y0 + 46, "of " + res, "hd-s"); }
-      else { s += T(x, r.y0 + 34, c.disclosed + " of " + res + " researched", "hd-s") + T(x, r.y0 + 50, "(" + CR.pct(c.disclosed, res) + "%)", "hd-s"); }
+      else { s += T(x, r.y0 + 34, c.disclosed + " of " + res + " checked", "hd-s") + T(x, r.y0 + 50, "(" + CR.pct(c.disclosed, res) + "%)", "hd-s"); }
     });
     g.rows.forEach(function (rw) {
       s += T(r.x0 + g.lw - (narrow ? 6 : 12), rw.top + Math.min(rw.h, g.s) / 2 + 4, narrow ? SHORT[rw.o] : CR.ORG_NAMES[rw.o], "row-l", "end");
     });
-    s += T(narrow ? r.x0 : r.x0 + g.lw, Math.min(r.y1 + 6, g.bottom + 14), "Releases only; shares divide by researched releases.", "ax-t");
+    /* the three states, decoded beside the marks they name */
+    var x0 = narrow ? r.x0 : r.x0 + g.lw, lx = x0, ly = g.bottom + 14;
+    [["disclosed", CR.DISC_WORDS.disclosed], ["not_disclosed", CR.DISC_WORDS.not_disclosed], ["not_researched", CR.DISC_WORDS.not_researched]].forEach(function (it) {
+      var wd = 14 + measure(it[1], FONT_B);
+      if (lx > x0 && lx + wd > r.x1) { lx = x0; ly += 17; }
+      s += '<g class="lg" transform="translate(' + lx.toFixed(1) + "," + (ly - 9).toFixed(1) + ')">' + legendGlyph(it[0]) + "</g>" + T(lx + 14, ly, it[1], "ax-t");
+      lx += wd + (narrow ? 12 : 20);
+    });
     return s;
+  }
+  function legendGlyph(state) {
+    if (state === "disclosed") { return '<rect x="0" y="0" width="9" height="9" rx="1.5" class="lg-dy"/>'; }
+    if (state === "not_disclosed") { return '<rect x="0.6" y="0.6" width="7.8" height="7.8" rx="1.5" class="lg-dn"/>'; }
+    return '<line x1="1.5" x2="7.5" y1="4.5" y2="4.5" class="lg-dr"/>';
   }
   function ov3() {
     var r = R[3], g = geo[3], s = "";
@@ -498,36 +508,40 @@
     return s;
   }
   function ov4() {
-    var r = R[4], g = geo[4], s = "";
+    var r = R[4], g = geo[4], s = "", n = S.pairs.length;
+    /* the decode: shape and tag carry provenance, the colour repeats it */
+    var lx = narrow ? r.x0 : g.px0, ly = g.top - (narrow ? 34 : 46);
+    [["lab", narrow ? "LAB: the lab" : "LAB: reported by the lab"], ["ind", narrow ? "IND: Epoch" : "IND: measured by Epoch AI"]].forEach(function (it) {
+      s += '<g class="lg" transform="translate(' + (lx + 5).toFixed(1) + "," + (ly - 4).toFixed(1) + ')">' +
+        (it[0] === "ind" ? '<circle r="5" class="lg-ind"/>' : '<path d="M0 -5.5L5.5 0L0 5.5L-5.5 0Z" class="lg-lab"/>') + "</g>" + T(lx + 15, ly, it[1], "ax-t");
+      lx += 15 + measure(it[1], FONT_B) + (narrow ? 12 : 22);
+    });
+    s += T(lx, ly, narrow ? "gap: lab minus Epoch" : "Gap: the lab's number minus Epoch's", "ax-t");
     for (var v = g.lo; v <= g.hi; v += 5) {
       var x = g.xs(v);
-      s += L(x, g.top - 10, x, g.top + g.rowH * S.pairs.length, "ax-g");
-      if (v % 10 === 0 || !narrow) { s += T(x, g.top - 16, String(v), "ax-t", "middle"); }
+      s += L(x, g.top - 8, x, g.top + g.rowH * n, "ax-g");
+      if (v % 10 === 0 || !narrow) { s += T(x, g.top - 14, String(v), "ax-t", "middle"); }
     }
-    if (!narrow) { s += T(r.x0, g.top - 34, "Score, 0 to 100, axis cut at " + g.lo, "ax-t"); }
+    if (!narrow) { s += T(r.x0 + g.lw, g.top - 14, "Score, axis cut at " + g.lo, "ax-t", "end"); }
     g.rows.forEach(function (rw) {
       var p = rw.p, xi = g.xs(p.ind.value), xl = g.xs(p.lab.value), bn = CR.BENCH[p.bench];
-      s += '<g class="call">' + L(Math.min(xi, xl), rw.y, Math.max(xi, xl), rw.y, "dumb");
-      if (narrow) { s += T(r.x0, rw.y - 14, p.e.model_name + ", " + bn, "c-h"); }
-      else { s += T(r.x0 + g.lw - 4, rw.y - 3, p.e.model_name, "c-h", "end") + T(r.x0 + g.lw - 4, rw.y + 13, bn, "c-b", "end"); }
+      var a = Math.min(xi, xl), b = Math.max(xi, xl), gap = Math.round((p.lab.value - p.ind.value) * 10) / 10;
+      var gapT = (gap > 0 ? "+" : gap < 0 ? "−" : "") + Math.abs(gap).toFixed(1);
+      s += '<g class="call">' + L(a, rw.y, b, rw.y, "dumb");
+      if (narrow) { s += T(r.x0, rw.y - 15, p.e.model_name + ", " + bn, "c-h"); }
+      else { s += T(r.x0 + g.lw, rw.y - 3, p.e.model_name, "c-h", "end") + T(r.x0 + g.lw, rw.y + 13, bn, "c-b", "end"); }
       var labLow = p.lab.value < p.ind.value;
       var loT = labLow ? "LAB " + p.lab.value : "IND " + p.ind.value, hiT = labLow ? "IND " + p.ind.value : "LAB " + p.lab.value;
-      if (Math.abs(xi - xl) < 4) { hiT = "LAB " + p.lab.value + ", IND " + p.ind.value; loT = ""; }
-      if (loT) { s += T(Math.min(xi, xl) - 11, rw.y + 4, loT, "c-b", "end"); }
-      s += T(Math.max(xi, xl) + 11, rw.y + 4, hiT, "c-b");
-      s += T(narrow ? r.x0 : g.px0, rw.y + (narrow ? 19 : 22), "Lab: " + p.labSet.words + ". Epoch: " + p.indSet.words + ".", "ax-t") + "</g>";
+      if (b - a < 4) { hiT = "LAB " + p.lab.value + ", IND " + p.ind.value; loT = ""; }
+      if (loT) { s += T(a - 11, rw.y + 4, loT, "c-b", "end"); }
+      s += T(b + 11, rw.y + 4, hiT, "c-b");
+      /* the gap sits over its line; a line too short to carry it gets it after the values */
+      if (narrow) { s += T(r.x1, rw.y - 15, gapT, "c-gap", "end"); }
+      else if (b - a >= 40) { s += T((a + b) / 2, rw.y - 8, gapT, "c-gap", "middle"); }
+      else { s += T(b + 11 + measure(hiT, FONT_B) + 8, rw.y + 4, "gap " + gapT, "c-gap"); }
+      var differ = p.labSet.lvl && p.indSet.lvl && p.labSet.lvl !== p.indSet.lvl;
+      s += T(narrow ? r.x0 : g.px0, rw.y + (narrow ? 20 : 25), "Lab: " + p.labSet.words + " / Epoch: " + p.indSet.words + (differ ? " (settings differ)" : ""), differ ? "ax-t ax-em" : "ax-t") + "</g>";
     });
-    if (S.refused.length) {
-      var fy = g.top + g.rowH * S.pairs.length + (narrow ? 22 : 30);
-      var reasons = S.refused.map(function (x) { return x.reason; }).filter(function (v, i, a) { return a.indexOf(v) === i; });
-      s += T(r.x0, fy, "Refused comparisons against the previous model: " + S.refused.length, "c-h");
-      var line = S.refused.map(function (x) { return x.e.model_name; }).join(", ") + ". Reason on record: " + reasons.join("; ") + ".";
-      var words = line.split(" "), cur = "", yy = fy + 17;
-      words.forEach(function (w) {
-        if (measure(cur + " " + w, FONT_B) > r.x1 - r.x0 && cur) { s += T(r.x0, yy, cur, "c-b"); yy += 16; cur = w; } else { cur = cur ? cur + " " + w : w; }
-      });
-      if (cur) { s += T(r.x0, yy, cur, "c-b"); }
-    }
     return s;
   }
   function ov5() {
@@ -578,22 +592,26 @@
   }
 
   /* ======================= tooltips and keyboard ======================= */
+  /* every mark reads its record: name, lab, date, then the value the view
+     draws, then each score on record with its LAB or IND tag and setting */
+  function scoreRows(e, first) {
+    var rows = [], benches = Object.keys(e._score || {}).sort(function (a, b) { return a === first ? -1 : b === first ? 1 : a < b ? -1 : 1; });
+    benches.forEach(function (bk) {
+      [["LAB_REPORTED", CR.labSetting], ["INDEPENDENT", CR.indSetting]].forEach(function (c) {
+        var sc = e._score[bk][c[0]]; if (!sc) { return; }
+        rows.push('<p class="t-row">' + esc(CR.BENCH[bk] || bk) + ' <b class="num">' + esc(sc.value) + "</b> " + CR.provTag(c[0]) +
+          ' <span class="t-m">' + (c[0] === "LAB_REPORTED" ? "lab" : "Epoch") + " setting: " + esc(c[1](sc.configuration).words) + "</span></p>");
+      });
+    });
+    return rows.length ? rows.join("") : '<p class="t-m">No benchmark score on record.</p>';
+  }
   function tipHtml(m, v) {
-    var e = m.e, h = '<p class="t-h">' + esc(e.model_name) + '</p><p class="t-s">' + esc(e._orgName) + ", " + esc(e.date) + "</p>";
+    var e = m.e, h = '<p class="t-h">' + esc(e.model_name) + '</p><p class="t-s">' + esc(e._orgName) + ", " + esc(e.date) + ", " + esc(CR.AVAIL_NAMES[e.availability_class] || "") + "</p>";
     var link = '<p class="t-m">Enter or a click opens the record.</p>';
     if (m.t === "d") { return h + '<p class="t-row">' + SLOTS[m.k][1] + ": " + CR.discMark(m.cell) + "</p>" + link; }
-    if (m.t === "p") {
-      var p = m.pair;
-      return h + '<p class="t-row">' + CR.BENCH[p.bench] + "</p>" +
-        '<p class="t-row"><b class="num">' + esc(p.lab.value) + "</b> " + CR.provTag("LAB_REPORTED") + " lab setting: " + esc(p.labSet.words) + "</p>" +
-        '<p class="t-row"><b class="num">' + esc(p.ind.value) + "</b> " + CR.provTag("INDEPENDENT") + " Epoch setting: " + esc(p.indSet.words) + "</p>" + link;
-    }
-    if (v === 3) {
-      var sc = S.gpqa[e.id];
-      return h + (sc ? '<p class="t-row">GPQA Diamond <b class="num">' + esc(sc.value) + "</b> " + CR.provTag("INDEPENDENT") + '</p><p class="t-m">Tested as ' + esc(sc.configuration || "not stated") + "</p>"
-        : '<p class="t-m">No independent GPQA Diamond score on record.</p>') + link;
-    }
-    return h + '<p class="t-m">' + esc(CR.AVAIL_NAMES[e.availability_class] || "") + "</p>" + link;
+    if (m.t === "p") { return h + scoreRows(e, m.pair.bench) + link; }
+    if (v === 3 && !S.gpqa[e.id]) { return h + '<p class="t-m">No independent GPQA Diamond score on record.</p>' + scoreRows(e, "gpqa-diamond").replace('<p class="t-m">No benchmark score on record.</p>', "") + link; }
+    return h + scoreRows(e, "gpqa-diamond") + link;
   }
   function placeTip(m) {
     tip.innerHTML = tipHtml(m, shownV);
@@ -650,6 +668,12 @@
     if (reduce) { P = Pt; }
     schedule();
   }
+  function midPct() {
+    if (!narrow) { return 50; }
+    var bar = document.querySelector(".topbar"), tb = document.querySelector(".tabbar");
+    var top = (bar ? bar.offsetHeight : 0) + region, bot = window.innerHeight - (tb && getComputedStyle(tb).display !== "none" ? tb.offsetHeight : 0);
+    return Math.round(100 * (top + bot) / 2 / window.innerHeight);
+  }
   function wireScroll() {
     var steps = [].slice.call(document.querySelectorAll(".step"));
     if (window.gsap && window.ScrollTrigger) {
@@ -658,8 +682,11 @@
         var k = +el.getAttribute("data-step");
         window.ScrollTrigger.create({
           trigger: el,
-          start: function () { return narrow ? "top 99%" : "top 92%"; },
-          end: function () { return narrow ? "top 72%" : "top 46%"; },
+          /* the view finishes forming as the step's text reaches the middle
+             of the screen: the viewport's middle on a desktop, the middle of
+             the band under the pinned chart on a phone */
+          start: "top bottom",
+          end: function () { return "center " + midPct() + "%"; },
           onUpdate: function (self) { prog[k] = self.progress; setPt(); },
           onRefresh: function (self) { prog[k] = self.progress; setPt(); }
         });
@@ -667,24 +694,33 @@
     } else if ("IntersectionObserver" in window) {
       /* without the library: finished views, one per step */
       var io = new IntersectionObserver(function () {
-        steps.forEach(function (el) { prog[+el.getAttribute("data-step")] = el.getBoundingClientRect().top < window.innerHeight * 0.7 ? 1 : 0; });
+        steps.forEach(function (el) { var b = el.getBoundingClientRect(); prog[+el.getAttribute("data-step")] = (b.top + b.bottom) / 2 < window.innerHeight * midPct() / 100 ? 1 : 0; });
         setPt();
-      }, { threshold: [0, 0.25, 0.5, 0.75, 1], rootMargin: "0px 0px -30% 0px" });
+      }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
       steps.forEach(function (el) { io.observe(el); });
     }
   }
 
   /* ======================= boot ======================= */
   document.documentElement.classList.add("story-js");
-  var tv = document.getElementById("text-version");
-  if (tv) {
-    tv.open = false;
-    var openTv = function () { if (location.hash === "#text-version") { tv.open = true; } };
-    window.addEventListener("hashchange", openTv); openTv();
-    [].forEach.call(document.querySelectorAll('a[href="#text-version"]'), function (a) { a.addEventListener("click", function () { tv.open = true; }); });
+  /* the close: the newest entries and the record's own counts, live */
+  function closeSpecimens(D) {
+    var nw = document.querySelector("#sp-newest .rn-b"), rc = document.querySelector("#sp-record .rn-b"), m = D.meta;
+    if (nw) {
+      nw.innerHTML = '<ul class="rn-list rn-ref">' + D.entries.slice(0, 5).map(function (e) {
+        return '<li><a href="explorer.html?id=' + encodeURIComponent(e.id) + '">' + esc(e.model_name) + "</a>" + (e._rel ? "" : CR.revisionOf(e, D)) +
+          '<span class="t-m">' + esc(e._orgName) + ", " + esc(e.date) + "</span></li>";
+      }).join("") + "</ul>";
+    }
+    if (rc) {
+      rc.innerHTML = "<dl><div><dt>Entries</dt><dd>" + m.entry_count + " (" + m.releases + " releases, " + m.revisions + " revisions)</dd></div>" +
+        "<div><dt>First and newest entry</dt><dd>" + esc(m.first_date) + " to " + esc(m.last_date) + "</dd></div>" +
+        "<div><dt>Last successful update</dt><dd>" + esc(m.last_successful_update) + "</dd></div></dl>";
+    }
   }
   CR.load().then(function (D) {
     CR.addRecordToPalette(D);
+    closeSpecimens(D);
     S = derive(D);
     readColors();
     buildMarks();

@@ -2,7 +2,10 @@
 
 At 1440, 768 and 390: no page scrolls sideways and no page throws an error.
 On the story at 390 and 768: no chart label renders below 11px, and each
-note rests below the sticky chart card instead of sliding under it.
+note rests below the sticky chart card instead of sliding under it. On the
+story at 1440 and 390: each view finishes forming when its step text is in
+the middle of the screen (and, at 1440, is still forming when the text is
+low), and every settled view reads a mark's record from the keyboard.
 
 usage: python tools/check_pages.py .   (needs playwright + chromium)
 """
@@ -66,6 +69,39 @@ with sync_playwright() as p:
                     });
                     return m; }""")
                 check(f"story labels >= 11px @{w}", smallest >= 11, f"{smallest:.1f}px")
+            if page == "story.html" and w in (1440, 390):
+                # each view has finished forming, its labels shown, when its
+                # step text sits in the middle of the screen (on a phone, the
+                # middle of the band under the pinned chart), and a settled
+                # view reads a mark's record from the keyboard
+                for k in range(1, 6):
+                    if w == 1440:
+                        # and not before: with the text low on the screen the marks are still moving
+                        pg.evaluate("""(k) => { const b = document.querySelector('.step[data-step="' + k + '"]').getBoundingClientRect();
+                            window.scrollTo(0, window.scrollY + (b.top + b.bottom) / 2 - innerHeight * 0.8); }""", k)
+                        pg.wait_for_timeout(1600)
+                        early = pg.evaluate("(() => { const g = document.querySelector('#ov .ovg.on'); return g ? +g.getAttribute('data-v') : -1; })()")
+                        check(f"story view {k} still forming with its text low on the screen @{w}", early != k, f"view shown: {early}")
+                    pg.evaluate("""(k) => {
+                        const el = document.querySelector('.step[data-step="' + k + '"]'), b = el.getBoundingClientRect();
+                        const g = document.getElementById('graphic'), narrow = g.getBoundingClientRect().width < 900;
+                        const bar = document.querySelector('.topbar').offsetHeight, tb = document.querySelector('.tabbar');
+                        const tab = getComputedStyle(tb).display !== 'none' ? tb.offsetHeight : 0;
+                        const mid = narrow ? (bar + Math.round(g.getBoundingClientRect().height * 0.56) + innerHeight - tab) / 2 : innerHeight / 2;
+                        window.scrollTo(0, window.scrollY + (b.top + b.bottom) / 2 - mid); }""", k)
+                    pg.wait_for_timeout(1600)
+                    shown = pg.evaluate("(() => { const g = document.querySelector('#ov .ovg.on'); return g ? +g.getAttribute('data-v') : -1; })()")
+                    check(f"story view {k} settled with its text mid-screen @{w}", shown == k, f"view shown: {shown}")
+                    # the pointer reaches the chart: nothing in the step column lies over it
+                    over = pg.evaluate("""(() => { const h = document.getElementById('hit').getBoundingClientRect();
+                        const el = document.elementFromPoint(h.left + h.width * 0.75, h.top + h.height * 0.5); return el ? el.id || el.className : ''; })()""")
+                    check(f"story view {k} takes the pointer @{w}", over == "hit", over)
+                    pg.focus("#hit")
+                    pg.keyboard.press("ArrowRight")
+                    pg.wait_for_timeout(150)
+                    tip = pg.evaluate("(() => { const t = document.getElementById('tip'); return t.classList.contains('on') ? t.textContent : ''; })()")
+                    check(f"story view {k} reads a mark's record from the keyboard @{w}", "opens the record" in tip, tip[:60])
+                    pg.keyboard.press("Escape")
             pg.close()
     b.close()
 srv.shutdown()
