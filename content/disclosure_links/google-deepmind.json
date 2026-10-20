@@ -597,11 +597,11 @@
    "model_name": "DiffusionGemma 26B-A4B",
    "date": "2026-06-10",
    "system_card": "NOT_DISCLOSED",
-   "model_card": "",
+   "model_card": "https://huggingface.co/google/diffusiongemma-26B-A4B-it",
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "https://arxiv.org/abs/2608.00146",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases) (as for the approved Gemma 4 rows, which are also Apache 2.0). paper: arXiv DiffusionGemma Technical Report fetched 200; DiffusionGemma Team, Google DeepMind. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: Gemma releases ship a model card and tech report, no system card (lab convention); checked ai.google.dev Gemma docs and the HF org. usage_policy: Gemma Prohibited Use Policy fetched 200 (lab convention for Gemma releases) (as for the approved Gemma 4 rows, which are also Apache 2.0). paper: arXiv DiffusionGemma Technical Report fetched 200; DiffusionGemma Team, Google DeepMind. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. model_card: the entry's existing HF card link, unchanged. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -657,11 +657,11 @@
    "model_name": "Gemini 3.8 Flash",
    "date": "2026-09-02",
    "system_card": "NOT_DISCLOSED",
-   "model_card": "",
+   "model_card": "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash",
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: card defers Frontier Safety to the Gemini 3.7 Flash card; gemini_3-8_flash_fsf_report.pdf probe 404. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). Researched 2026-10-19. system_card: not found: card defers Frontier Safety to the Gemini 3.7 Flash card; gemini_3-8_flash_fsf_report.pdf probe 404. usage_policy: Generative AI Prohibited Use Policy fetched 200; Gemini API Additional Terms (fetched 200) incorporate it (lab convention for Gemini API models). paper: not found: no Gemini 3 series tech report; arXiv title search for Gemini 3 returns only third-party papers, model card cites no report (lab convention for Gemini 3.x). Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. model_card: the entry's existing Gemini API docs link, unchanged. Approved by Walker Robinson, 2026-10.",
    "researched": true
   }
  ]

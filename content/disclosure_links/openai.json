@@ -275,9 +275,9 @@
    "system_card": "https://cdn.openai.com/gpt-5-system-card.pdf",
    "model_card": "NOT_DISCLOSED",
    "usage_policy": "https://openai.com/policies/usage-policies/",
-   "paper": "NOT_DISCLOSED",
+   "paper": "https://arxiv.org/abs/2601.03267",
    "status": "APPROVED",
-   "notes": "GPT-5 system card PDF fetched 200 this session. No standalone model card or technical report; the system card is the release document. Usage policy page fetched 200.",
+   "notes": "GPT-5 system card PDF fetched 200 this session. No standalone model card or technical report; the system card is the release document. Usage policy page fetched 200. paper: changed on 2026-10-19 from NOT_DISCLOSED to arXiv 2601.03267 (OpenAI GPT-5 System Card, fetched 200), for consistency with the o1 and GPT-4o rows, where an arXiv-posted system card counts as the paper.",
    "researched": true
   },
   {
@@ -313,7 +313,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "https://arxiv.org/abs/2601.03267",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: GPT-5 system card PDF fetched 200; it names gpt-5-thinking-pro (successor to o3 Pro) and evaluates it on biology. paper: arXiv 2601.03267 OpenAI GPT-5 System Card fetched 200 (v1 19 Dec 2025, OpenAI authors), recorded under the o1/GPT-4o ruling that an arXiv system card counts as a paper; conflicts with the approved GPT-5 row, which has paper NOT_DISCLOSED. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: GPT-5 system card PDF fetched 200; it names gpt-5-thinking-pro (successor to o3 Pro) and evaluates it on biology. paper: arXiv 2601.03267 OpenAI GPT-5 System Card fetched 200 (v1 19 Dec 2025, OpenAI authors), recorded under the o1/GPT-4o ruling that an arXiv system card counts as a paper; the GPT-5 row records the same paper. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -479,7 +479,7 @@
    "system_card": "https://cdn.openai.com/papers/gpt-4-system-card.pdf",
    "model_card": "NOT_DISCLOSED",
    "usage_policy": "https://openai.com/policies/usage-policies/",
-   "paper": "",
+   "paper": "https://arxiv.org/abs/2303.08774",
    "status": "APPROVED",
    "notes": "Researched 2026-10-19 (system_card, model_card, usage_policy). system_card: GPT-4 System Card PDF fetched 200, linked from openai.com/index/gpt-4-research/. model_card: not found: checked announcement, Deployment Safety Hub sitemap, no HF repo; OpenAI issues system cards, not model cards, for proprietary models (approved-row ruling). usage_policy: openai.com/policies/usage-policies/ fetched 200 (lab-wide policy, per approved OpenAI rows). paper unchanged. Evidence: docs/evidence/disclosure_research_2026-10-19/openai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
@@ -572,7 +572,7 @@
    "entry_id": "openai--gpt-6-astra",
    "model_name": "GPT-6 Astra",
    "date": "2026-09-03",
-   "system_card": "",
+   "system_card": "https://deploymentsafety.openai.com/gpt-6-astra",
    "model_card": "NOT_DISCLOSED",
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",

@@ -308,7 +308,7 @@
    "entry_id": "anthropic--claude-fable-5.1",
    "model_name": "Claude Fable 5.1",
    "date": "2026-09-01",
-   "system_card": "",
+   "system_card": "https://www.anthropic.com/claude-fable-5-1-mythos-5-1-system-card",
    "model_card": "NOT_DISCLOSED",
    "usage_policy": "https://www.anthropic.com/legal/aup",
    "paper": "NOT_DISCLOSED",

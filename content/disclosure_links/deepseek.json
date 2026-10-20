@@ -309,11 +309,11 @@
    "model_name": "DeepSeek-V4.1-Flash",
    "date": "2026-09-10",
    "system_card": "NOT_DISCLOSED",
-   "model_card": "",
+   "model_card": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
    "usage_policy": "https://cdn.deepseek.com/policies/en-US/deepseek-terms-of-use.html",
    "paper": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/main/DeepSeek_V41_Tech_Report.pdf",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). paper: HF-hosted DeepSeek_V41_Tech_Report.pdf, linked from the card as Technical Report, fetched 200 (same paper URL as the approved V4.1-Flash-1017 row). system_card: not found: checked the HF card, the GitHub repo and the api-docs news list; DeepSeek ships no system or safety card for any release (approved-row convention). usage_policy: lab-wide DeepSeek Terms of Use, fetched 200 (approved-row convention). Evidence: docs/evidence/disclosure_research_2026-10-19/deepseek.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). paper: HF-hosted DeepSeek_V41_Tech_Report.pdf, linked from the card as Technical Report, fetched 200 (same paper URL as the approved V4.1-Flash-1017 row). system_card: not found: checked the HF card, the GitHub repo and the api-docs news list; DeepSeek ships no system or safety card for any release (approved-row convention). usage_policy: lab-wide DeepSeek Terms of Use, fetched 200 (approved-row convention). Evidence: docs/evidence/disclosure_research_2026-10-19/deepseek.md. model_card: the entry's existing HF card link, unchanged. Approved by Walker Robinson, 2026-10.",
    "researched": true
   }
  ]

@@ -189,11 +189,11 @@
    "model_name": "North Micro Vision Instruct",
    "date": "2026-08-10",
    "system_card": "NOT_DISCLOSED",
-   "model_card": "",
+   "model_card": "https://huggingface.co/CohereLabs/North-Micro-Vision-Instruct",
    "usage_policy": "https://docs.cohere.com/docs/usage-policy",
-   "paper": "",
+   "paper": "https://huggingface.co/blog/CohereLabs/meet-north-micro-vision-instruct",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, usage_policy). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention) Evidence: docs/evidence/disclosure_research_2026-10-19/cohere.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Researched 2026-10-19 (system_card, usage_policy). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention) Evidence: docs/evidence/disclosure_research_2026-10-19/cohere.md. model_card and paper: the entry's existing values, unchanged. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -201,11 +201,11 @@
    "model_name": "Tiny Aya",
    "date": "2026-09-02",
    "system_card": "NOT_DISCLOSED",
-   "model_card": "",
+   "model_card": "https://huggingface.co/CohereLabs/tiny-aya-en-thinker",
    "usage_policy": "https://docs.cohere.com/docs/usage-policy",
    "paper": "https://arxiv.org/abs/2609.10445",
    "status": "APPROVED",
-   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); paper: arXiv 2609.10445 (Cohere Labs authors) fetched 200; the abstract builds Tiny Aya L2-Thinker, and the en-thinker HF card tags and cites it. The earlier Tiny Aya report 2603.11510 covers the February 2026 base, global and regional release Evidence: docs/evidence/disclosure_research_2026-10-19/cohere.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Researched 2026-10-19 (system_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); paper: arXiv 2609.10445 (Cohere Labs authors) fetched 200; the abstract builds Tiny Aya L2-Thinker, and the en-thinker HF card tags and cites it. The earlier Tiny Aya report 2603.11510 covers the February 2026 base, global and regional release Evidence: docs/evidence/disclosure_research_2026-10-19/cohere.md. model_card: the entry's existing HF card link, unchanged. Approved by Walker Robinson, 2026-10.",
    "researched": true
   }
  ]

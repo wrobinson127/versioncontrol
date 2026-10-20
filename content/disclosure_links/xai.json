@@ -140,12 +140,12 @@
    "entry_id": "xai--grok-4.1-fast",
    "model_name": "Grok 4.1 Fast",
    "date": "2025-11-19",
-   "system_card": "",
+   "system_card": "NOT_RESEARCHED",
    "model_card": "NOT_DISCLOSED",
    "usage_policy": "https://x.ai/legal/acceptable-use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Announcement at x.ai/news/grok-4-1-fast fetched 200 but links no card; likely data.x.ai URL patterns returned 404 and x.ai/safety does not list one. Absence not certain since the 4.1 card is also missing from that index, so system card left blank pending recheck. No HF repo. AUP fetched 200. No paper.",
+   "notes": "Announcement at x.ai/news/grok-4-1-fast fetched 200 but links no card; likely data.x.ai URL patterns returned 404 and x.ai/safety does not list one. Absence not certain since the 4.1 card is also missing from that index, so the system card is left NOT_RESEARCHED pending a recheck. No HF repo. AUP fetched 200. No paper.",
    "researched": true
   },
   {
@@ -164,12 +164,12 @@
    "entry_id": "xai--grok-4.3-beta",
    "model_name": "Grok 4.3 Beta",
    "date": "2026-04-17",
-   "system_card": "",
+   "system_card": "NOT_RESEARCHED",
    "model_card": "NOT_DISCLOSED",
    "usage_policy": "https://x.ai/legal/acceptable-use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Beta release confirmed via press coverage; no x.ai/news post found this session. Early access product still in beta; the x.ai/safety card index lists a Grok 4.5 card but nothing for 4.3, so system card left blank pending a post GA recheck. Closed weights, no HF repo. AUP fetched 200. No paper.",
+   "notes": "Beta release confirmed via press coverage; no x.ai/news post found this session. Early access product still in beta; the x.ai/safety card index lists a Grok 4.5 card but nothing for 4.3, so the system card is left NOT_RESEARCHED pending a recheck after general availability. Closed weights, no HF repo. AUP fetched 200. No paper.",
    "researched": true
   },
   {

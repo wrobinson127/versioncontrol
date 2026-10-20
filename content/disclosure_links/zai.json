@@ -189,7 +189,7 @@
    "model_name": "GLM-5.3-Flash",
    "date": "2026-08-25",
    "system_card": "NOT_DISCLOSED",
-   "model_card": "",
+   "model_card": "https://huggingface.co/zai-org/GLM-5.3-Flash",
    "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
    "paper": "https://arxiv.org/abs/2602.15763",
    "status": "APPROVED",
