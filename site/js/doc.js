@@ -258,7 +258,7 @@
   function redHtml(D) {
     var n = D.entries.filter(function (e) { return e._retracted; }).length;
     return '<p class="rn-big">' + num(n) + " of " + D.entries.length + '</p><p class="rn-s">entries are retracted. A retracted entry is marked <span class="tag-retracted">retracted</span> wherever it appears.</p>' +
-      '<p class="rn-s" style="margin-top:10px">Red on this site means only that.</p>';
+      '<p class="rn-s" style="margin-top:10px">Red marks a correction or a retraction, and nothing else.</p>';
   }
 
   function firstRead(e) {
@@ -278,7 +278,7 @@
   function originHtml(origins) {
     return bars(["Epoch AI data", "Nightly", "By hand"], [origins["backfill-epoch"], origins["nightly-pipeline"], origins.manual],
       "Entries by origin: " + origins["backfill-epoch"] + " from Epoch AI data, " + origins["nightly-pipeline"] + " found by nightly detection, " + origins.manual + " recorded by hand.") +
-      '<p class="rn-s">Every entry added since launch was approved by a person.</p>';
+      '<p class="rn-s">Every entry added after the initial build from Epoch AI\'s data was approved by a person.</p>';
   }
 
   function newestHtml(D) {

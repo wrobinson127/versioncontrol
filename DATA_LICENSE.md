@@ -1,6 +1,6 @@
 # Data License
 
-The published Version Control dataset (the gzipped JSON aggregates under `data/`) is licensed under the Creative Commons Attribution 4.0 International License (CC-BY 4.0).
+The published Version Control dataset (the published JSON and CSV files: the gzipped JSON under `data/`, `releases.csv` and `scores.csv`) is licensed under the Creative Commons Attribution 4.0 International License (CC-BY 4.0).
 
 Full license text: https://creativecommons.org/licenses/by/4.0/
 
@@ -24,6 +24,6 @@ OpenRouter's catalog is not in the dataset, and the site does not display its pr
 
 ## Attribution for this dataset
 
-If you use the Version Control dataset, please attribute:
+If you use the Version Control dataset, please cite it with the date you retrieved it:
 
-> Version Control, "The release record of the AI model era". Walker Robinson. versioncontrol.walker-robinson.com
+> Walker Robinson. Version Control: the release record of the AI model era. Dataset, CC BY 4.0. https://versioncontrol.walker-robinson.com. Record updated (date); accessed (date).

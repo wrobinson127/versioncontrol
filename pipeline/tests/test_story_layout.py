@@ -141,7 +141,7 @@ def test_text_version_holds_every_view_in_words():
     # labs' climbs, a second benchmark, the pairs, two disclosure notes, the close
     assert len([t for t in titles if re.match(r"\d{4} &#183; \d+ (releases|so far)$", t)]) == 4
     assert len([t for t in titles if t.endswith("the wait between releases")]) == 4
-    assert len([t for t in titles if t.endswith("the independent climb")]) == 4
+    assert len([t for t in titles if t.endswith(": independent GPQA Diamond scores")]) == 4
     assert "A second benchmark" in titles
     assert "What the lab said, beside what Epoch measured" in titles
     assert any(t.startswith("What changed, ") for t in titles)

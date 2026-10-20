@@ -387,7 +387,7 @@
       "<div><dt>Country</dt><dd>" + esc(e._country) + "</dd></div>" +
       "<div><dt>Origin</dt><dd>" + esc(CR.ORIGIN_NAMES[e.origin] || e.origin) + "</dd></div>" +
       "<div><dt>Predecessor</dt><dd>" + (pred ? '<button type="button" class="link-btn" data-open="' + esc(pred.id) + '">' + esc(pred.model_name) + "</button>" : '<span class="t-m">none on record</span>') + "</dd></div>" +
-      (e.license_note ? "<div><dt>Licence</dt><dd>" + esc(e.license_note) + "</dd></div>" : "") + "</dl>";
+      (e.license_note ? "<div><dt>License</dt><dd>" + esc(e.license_note) + "</dd></div>" : "") + "</dl>";
 
     /* scores */
     h += '<h3 class="ins-h3">Scores</h3>';
@@ -400,7 +400,7 @@
         var p = s.provenance || {};
         h += '<div class="ib-row"><span class="ib-v num">' + s.value + "</span>" + CR.provTag(cls, p.source_url, p.retrieval_date) +
           '<span class="ib-src">' + (cls === "INDEPENDENT" ? "Epoch AI" : "the lab") + ", retrieved <span class=\"num\">" + esc(p.retrieval_date) + "</span>. Version: " + esc(p.benchmark_version || "") + ".</span>" +
-          '<p class="ib-cfg"><span>Settings</span> ' + (s.configuration ? esc(s.configuration) : "not stated") + "</p></div>";
+          '<p class="ib-cfg"><span>' + (cls === "INDEPENDENT" ? "Model tested" : "Settings") + '</span> ' + (s.configuration ? esc(s.configuration) : "not stated") + "</p></div>";
       });
       e._deltas.forEach(function (d) {
         if (d.kind !== "delta" || d.benchmark !== b) { return; }
@@ -429,7 +429,7 @@
     h += '<h3 class="ins-h3">Sources</h3><ul class="ins-src">';
     (e.sources || []).forEach(function (s) {
       h += '<li><a href="' + esc(s.url) + '" rel="external noopener" target="_blank">' + esc(CR.SOURCE_KIND_NAMES[s.kind] || s.kind.replace(/_/g, " ")) + '</a> <span class="t-m">' + esc(host(s.url)) +
-        '</span><span class="src-meta">Retrieved <span class="num">' + esc(s.retrieval_date) + "</span>. " + (s.archived_url ? archLink(s.archived_url) : (s.kind === "epoch_csv" ? '<span class="t-m">a dataset, not archived</span>' : '<span class="t-m">no archived copy yet</span>')) + "</span></li>";
+        '</span><span class="src-meta">Retrieved <span class="num">' + esc(s.retrieval_date) + "</span>. " + (s.archived_url ? archLink(s.archived_url) : (s.kind === "epoch_csv" ? '<span class="t-m">a dataset; no archived copy</span>' : '<span class="t-m">no archived copy yet</span>')) + "</span></li>";
     });
     h += "</ul>";
     h += '<p class="ins-foot">Entry id <code class="num">' + esc(e.id) + '</code>. See something wrong? <a href="https://github.com/wrobinson127/versioncontrol/issues/new">Report an error</a>.</p>';

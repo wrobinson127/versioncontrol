@@ -60,14 +60,14 @@ The record holds {meta['entry_count']} entries ({meta['releases']} releases and 
 
 - Each benchmark score carries its source class: LAB_REPORTED (the lab's own figure) or INDEPENDENT (measured by Epoch AI). Do not mix the two when comparing.
 - NOT_DISCLOSED means we checked the lab's pages and found no such document. NOT_RESEARCHED means we have not researched it yet. Neither means zero.
-- A change against a predecessor is published only when both scores share the benchmark, its version, and the source class. Otherwise the comparison is refused.
+- A change against a predecessor is published only when both scores share the benchmark, its version, and the source class. Otherwise the entry says no change is shown, and why.
 - Parameter counts come from Epoch AI's data and are not checked against the labs' pages. parameters_basis marks counts reported by others (third_party); the site leaves those out of its parameter findings.
 
 ## Pages
 
 - {SITE}/ : the overview: release cadence by lab, the newest entries, disclosure and independent scores
 - {SITE}/explorer.html : every entry, searchable and filterable, each with its sources, archived copies and score provenance; one entry at {SITE}/explorer.html?id=<entry-id>
-- {SITE}/story.html : the record told in five views and four findings, with a full text version
+- {SITE}/story.html : the record told in five views and one finding, with a full text version
 - {SITE}/methodology.html : the rules, the scope, and the known limits
 - {SITE}/data.html : download, field notes, license and citation
 - {SITE}/changes.html : every correction, retraction and addition, dated
@@ -83,7 +83,7 @@ The two CSV files are the easiest way in. The full record is gzipped JSON, one f
 {file_lines}
 - {SITE}/data/derived/site_meta.json
 
-Cite as: Walker Robinson, Version Control, {SITE}, accessed on the date you retrieved it. Release data derives from Epoch AI, "Data on AI Models"; independent scores from Epoch AI, "Capabilities & benchmarking".
+Cite as: Walker Robinson. Version Control: the release record of the AI model era. Dataset, CC BY 4.0. {SITE}. Record updated {meta['last_successful_update']}; accessed (the date you retrieved it). Release data derives from Epoch AI, "Data on AI Models"; independent scores from Epoch AI, "Capabilities & benchmarking".
 """
 
 

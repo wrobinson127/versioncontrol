@@ -1,4 +1,4 @@
-/* The overview console. Every panel reads one shared selection (a date
+/* The overview. Every panel reads one shared selection (a date
    range, labs, a country) and redraws from the record when it changes:
    brush the release grid and the measures, the feed, the lab panels, the
    scores, the pairs, the disclosure squares and the availability bars all
@@ -875,92 +875,20 @@
     grid.addEventListener("mouseleave", function () { $$(".hl.hover").forEach(function (x) { x.classList.remove("hover"); }); });
   }
 
-  /* ---------- findings ---------- */
+  /* ---------- finding ---------- */
 
-  /* How a count changed, in words a reader can check (the story's rule). */
-  function growth(a, b) {
-    var r = a ? b / a : 0;
-    if (r >= 3.05) { return "more than tripled"; }
-    if (r >= 2.85) { return "tripled"; }
-    if (r >= 2.5) { return "nearly tripled"; }
-    if (r >= 2.05) { return "more than doubled"; }
-    if (r >= 1.9) { return "doubled"; }
-    if (r >= 1.75) { return "nearly doubled"; }
-    if (r > 1) { return "rose by " + Math.round((r - 1) * 100) + "%"; }
-    return r === 1 ? "held level" : "fell by " + Math.round((1 - r) * 100) + "%";
-  }
-  /* Each finding's title states its point; the text under it adds only what
-     the panels do not print. */
+  /* The one finding no panel draws: how the wait between releases changed
+     at the two labs with the longest records. Its title states its point. */
   function findings() {
-    var F = [];
-    var rel = D.releases;
-    var yearly = {}; D.views.cadence.yearly.forEach(function (y) { yearly[y.year] = y.releases; });
-    var y = D.asOf.slice(0, 4), full = Object.keys(yearly).filter(function (k) { return k !== "2022" && k < y; }).sort();
-    var y0 = full[0], y1 = full[full.length - 1];
-    F.push({
-      t: "Releases " + growth(yearly[y0], yearly[y1]) + " from " + y0 + " to " + y1,
-      p: full.map(function (k) { return '<span class="num">' + yearly[k] + "</span> in " + k; }).join(", ") + ".",
-      a: "Select " + y, run: function () { set({ from: y + "-01-01", to: null }); scrollTo("#p-cadence"); }
-    });
-
-    var fl = {}, waitLabs = ["openai", "anthropic"];
+    var rel = D.releases, fl = {}, waitLabs = ["openai", "anthropic"];
     waitLabs.forEach(function (o) { fl[o] = CR.firstLately(rel.filter(function (e) { return e.org === o; })); });
     var shorter = waitLabs.filter(function (o) { return fl[o] && fl[o].lately < fl[o].first; });
-    F.push({
+    return [{
       t: shorter.length === 2 ? "The wait between releases shortened at OpenAI and Anthropic" : "The wait between releases at OpenAI and Anthropic",
-      p: "Median days between releases, at first and lately: OpenAI <span class=\"num\">" + fl.openai.first + "</span> to <span class=\"num\">" + fl.openai.lately +
+      p: "Median days between releases, at first and lately (the median of a lab's first third of gaps on record, and of its last third): OpenAI <span class=\"num\">" + fl.openai.first + "</span> to <span class=\"num\">" + fl.openai.lately +
         "</span>, Anthropic <span class=\"num\">" + fl.anthropic.first + "</span> to <span class=\"num\">" + fl.anthropic.lately + "</span>.",
       a: "Compare the two", run: function () { CR.openCompare("openai", "anthropic"); }
-    });
-
-    var ind = D.views.trajectory.series.filter(function (s) { return s.benchmark === "gpqa-diamond" && s.source_class === "INDEPENDENT"; })[0].points;
-    var maxBy = {}, run = 0;
-    ind.slice().sort(function (a, b) { return a.date < b.date ? -1 : 1; }).forEach(function (p) { if (CR.ORG_NAMES[p.org]) { run = Math.max(run, p.value); maxBy[p.date.slice(0, 4)] = run; } });
-    var ys = Object.keys(maxBy).sort(), m0 = Math.round(maxBy[ys[0]]), m1 = Math.round(maxBy[ys[ys.length - 1]]);
-    F.push({
-      t: "The highest independent GPQA Diamond score " + (m1 > m0 ? "rose" : m1 < m0 ? "fell" : "held") + " from " + m0 + " in " + ys[0] + " to " + m1 + " in " + ys[ys.length - 1],
-      p: "Every independent score is Epoch AI's measurement.",
-      a: "Show the scores", run: function () { set({ bench: "gpqa-diamond" }); scrollTo("#p-scores"); }
-    });
-
-    var p0 = CR.discCounts(rel.filter(function (e) { return e._year === "2023"; }), "paper");
-    var p1 = CR.discCounts(rel.filter(function (e) { return e._year === y; }), "paper");
-    var s0 = CR.discCounts(rel.filter(function (e) { return e._year === "2023"; }), "system_card");
-    var s1 = CR.discCounts(rel.filter(function (e) { return e._year === y; }), "system_card");
-    var more = function (a, b) { return b.share > a.share ? "more" : b.share < a.share ? "fewer" : "as many"; };
-    F.push({
-      t: "Since 2023, " + more(p0, p1) + " checked releases come with a paper, " + more(s0, s1) + " with a system card",
-      p: "Papers can come out weeks after a release, so recent years may rise." + skewSentence("paper", "the " + y + " shares"),
-      a: "Show disclosure", run: function () { scrollTo("#p-disc"); }
-    });
-
-    var P = CR.pairs(D);
-    var within = P.filter(function (p) { return Math.abs(p.lab.value - p.ind.value) <= 1; }).length;
-    var up = P.filter(function (p) { return p.lab.value > p.ind.value; }).length;
-    var diff = P.filter(function (p) { var a = CR.labSetting(p.lab.configuration), b = CR.indSetting(p.ind.configuration); return a.lvl && b.lvl && a.lvl !== b.lvl; });
-    F.push({
-      t: "The lab's score is above Epoch's in " + (up === P.length ? "all " + CR.nword(P.length) : CR.nword(up) + " of " + CR.nword(P.length)) + " pairs",
-      p: within + " of the " + P.length + " are within a point." +
-        (diff.length ? " In " + CR.nword(diff.length) + " the lab and Epoch ran different reasoning settings." : "") + " So few pairs cannot test whether labs overstate.",
-      a: "Show the pairs", run: function () { scrollTo("#p-pairs"); }
-    });
-    return F;
-  }
-  /* The story's caveat when the checked releases of the latest year lean
-     toward its newest months. */
-  function skewSentence(slot, what) {
-    var y = D.asOf.slice(0, 4);
-    var ys = D.releases.filter(function (e) { return e._year === y; }).map(function (e) { return e.date; }).sort();
-    if (!ys.length) { return ""; }
-    var lm = +ys[ys.length - 1].slice(5, 7), cm = Math.max(1, lm - 1);
-    var cut = y + "-" + (cm < 10 ? "0" : "") + cm + "-01";
-    var res = D.releases.filter(function (e) { return e._year === y && e._disc[slot] !== "not_researched"; }).map(function (e) { return e.date; });
-    if (!res.length) { return ""; }
-    var k = res.filter(function (d) { return d >= cut; }).length, m = ys.filter(function (d) { return d >= cut; }).length;
-    /* only when a material part of the year is unchecked and the checked part leans new */
-    if (!(res.length < 0.9 * ys.length && k / res.length - m / ys.length >= 0.1)) { return ""; }
-    var MON = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    return " In " + y + ", " + k + " of the " + res.length + " checked releases are from " + MON[cm - 1] + " or later, a period holding " + m + " of the year's " + ys.length + " releases, so " + what + " may move as earlier releases are checked.";
+    }];
   }
   var FINDINGS = [];
   function renderFindings() {
@@ -1326,7 +1254,7 @@
         { title: "Clear filters", meta: filtered() ? "Now: " + viewWords() : "No filter is set", hint: "Esc", run: clearAll },
         { title: "Switch the scores benchmark", meta: "GPQA Diamond or SWE-Bench Verified", hint: "b", run: function () { set({ bench: S.bench === "gpqa-diamond" ? "swe-bench-verified" : "gpqa-diamond" }); scrollTo("#p-scores"); } }
       ];
-      PRESETS.forEach(function (p) { if (p.k !== "all") { a.push({ title: "Select " + p.label, meta: "Set the console's date range", run: function () { set({ from: p.from, to: p.to }); } }); } });
+      PRESETS.forEach(function (p) { if (p.k !== "all") { a.push({ title: "Select " + p.label, meta: "Set the overview's date range", run: function () { set({ from: p.from, to: p.to }); } }); } });
       a.forEach(function (x, i) { x.group = "Actions"; x.rank = 20 + i; });
       return a;
     });

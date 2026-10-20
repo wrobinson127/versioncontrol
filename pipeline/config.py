@@ -152,7 +152,7 @@ REGISTRY = {
     },
     "amazon": {
         "country": "United States",
-        "display": "Amazon (Nova)",
+        "display": "Amazon",
         "lab_domains": ["aws.amazon.com", "amazon.science", "nova.amazon.com",
                         "aboutamazon.com"],
         "epoch_names": ["Amazon", "Amazon Web Services (AWS)"],

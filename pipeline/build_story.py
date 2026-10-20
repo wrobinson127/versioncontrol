@@ -44,7 +44,7 @@ REG = ["openai", "anthropic", "google-deepmind", "meta", "xai", "mistral",
        "deepseek", "alibaba-qwen", "moonshot", "zai", "cohere", "amazon"]
 NM = {"openai": "OpenAI", "anthropic": "Anthropic", "google-deepmind": "Google DeepMind",
       "meta": "Meta", "xai": "xAI", "mistral": "Mistral", "deepseek": "DeepSeek",
-      "alibaba-qwen": "Alibaba (Qwen)", "moonshot": "Moonshot AI", "zai": "Z.ai",
+      "alibaba-qwen": "Alibaba (Qwen)", "moonshot": "Moonshot AI", "zai": "Z.ai (Zhipu)",
       "cohere": "Cohere", "amazon": "Amazon"}
 ro = {o: i for i, o in enumerate(REG)}
 # releases only: the disclosure matrix holds one row per release
@@ -139,12 +139,15 @@ SET_DIFF = [p for p in PAIRS if p["lab_lvl"] and p["ind_lvl"] and p["lab_lvl"] !
 # says when we computed, not when Epoch's rows were read.
 RD_MODELS = max(_epoch_models_rd) if _epoch_models_rd else None
 RD_BENCH = max(_epoch_bench_rd) if _epoch_bench_rd else None
+# Each date says what it is: when Epoch's rows were read, and when the
+# record was last updated.
 if RD_MODELS and RD_MODELS == RD_BENCH:
-    SOURCE_LINE = (f"Releases: Epoch AI, Data on AI models &#183; independent scores: "
-                   f"Epoch AI, Capabilities &amp; benchmarking &#183; both retrieved <span class=\"nw\">{RD_MODELS}</span>")
+    SOURCE_LINE = (f"Releases and independent scores retrieved from Epoch AI (Data on AI models; Capabilities &amp; benchmarking) "
+                   f"on <span class=\"nw\">{RD_MODELS}</span>; record updated <span class=\"nw\">{AS_OF}</span>")
 else:
-    SOURCE_LINE = (f"Releases: Epoch AI, Data on AI models, retrieved <span class=\"nw\">{RD_MODELS}</span> &#183; "
-                   f"independent scores: Epoch AI, Capabilities &amp; benchmarking, retrieved <span class=\"nw\">{RD_BENCH}</span>")
+    SOURCE_LINE = (f"Releases retrieved from Epoch AI, Data on AI models, on <span class=\"nw\">{RD_MODELS}</span>; "
+                   f"independent scores from Epoch AI, Capabilities &amp; benchmarking, on <span class=\"nw\">{RD_BENCH}</span>; "
+                   f"record updated <span class=\"nw\">{AS_OF}</span>")
 
 NUMWORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven",
             8: "eight", 9: "nine", 10: "ten", 11: "eleven", 12: "twelve", 13: "thirteen",
@@ -195,7 +198,8 @@ near = sum(1 for g in gaps if abs(g) <= 1)
 
 # ---- the four labs with long records: waits and climbs ----
 CASE_ORDER = ["openai", "anthropic", "google-deepmind", "alibaba-qwen"]
-NMSHORT = {"openai": "OpenAI", "anthropic": "Anthropic", "google-deepmind": "Google DeepMind", "alibaba-qwen": "Qwen"}
+# the story names labs as every other page does
+NMSHORT = {o: NM[o] for o in CASE_ORDER}
 _byorg = defaultdict(list)
 for r in _rel_t:
     _byorg[r["org"]].append(r["date"])
@@ -477,7 +481,7 @@ STEP2 = (f"<p>Model cards: {_mc0[0]} of {_mc0[1]} checked releases in {_D0} ({_m
 
 _open_best = max(((score_by_entry[r["entry_id"]], r["date"], r["model_name"]) for r in _rel_t
                   if r["entry_id"] in score_by_entry and avail_by_entry.get(r["entry_id"]) == "open_weights"), default=None)
-H3 = (f"The highest independent GPQA Diamond score {_cap_dir} from {_cap_vals[0]} in {slots[0]} "
+H3 = (f"The highest independent score on GPQA Diamond (graduate-level science questions) {_cap_dir} from {_cap_vals[0]} in {slots[0]} "
       f"to {_cap_vals[-1]} in {slots[-1]}")
 STEP3 = (f"<p>{SWE_NOTE}</p>"
          + (f"<p>The highest open-weights GPQA Diamond score on record is {_open_best[0]} "
@@ -498,8 +502,7 @@ H5 = (f"The wait between releases shortened at all {nword(len(CASE_ORDER))} labs
 STEP5 = ("<p>Median days between releases, at first and lately: "
          + ", ".join(f"{NMSHORT[o]} {_wait[o][0]} to {_wait[o][1]}" for o in CASE_ORDER)
          + f". {WAIT_RULE}</p>"
-         "<p>ByteDance, Tencent and Baidu are not tracked, so the record cannot support a comparison between countries. "
-         "Panels follow registry order.</p>")
+         "<p>ByteDance, Tencent and Baidu are not tracked, so the record cannot support a comparison between countries.</p>")
 
 STEPS = [(H1, STEP1), (H2, STEP2), (H3, STEP3), (H4, STEP4), (H5, STEP5)]
 
@@ -594,10 +597,10 @@ _pair_rows = [[esc(p["model"]), p["benchlabel"], str(p["lab"]), str(p["ind"]), e
 FALLBACK = ("".join(_nfb(h, b) for (_, h, b) in PULSE_NOTES)
             + _table("Releases and revisions per year. Revisions are counted apart.", ["Year", "Releases", "Revisions"], _yearly_rows)
             + "".join(_nfb(f"{ACCEL_COPY[o][0]}: the wait between releases", ACCEL_COPY[o][1]) for o in CASE_ORDER)
-            + _table("Releases per lab, by document: on record / not disclosed / not yet checked. Labs in registry order.",
+            + _table("Releases per lab, by document: on record / not disclosed / not yet checked.",
                      ["Lab"] + [s[1] for s in _DISC_SLOTS], _lab_disc_rows, num_cols=())
             + "".join(_nfb(h, b) for (_, h, b) in TRAJ_NOTES)
-            + "".join(_nfb(f"{TRAJ_COPY[o][0]}: the independent climb", TRAJ_COPY[o][1]) for o in CASE_ORDER)
+            + "".join(_nfb(f"{TRAJ_COPY[o][0]}: independent GPQA Diamond scores", TRAJ_COPY[o][1]) for o in CASE_ORDER)
             + _nfb("A second benchmark", SWE_NOTE)
             + "".join(_nfb(f"{SWE_CLIMB_COPY[o][0]}: on SWE-Bench", SWE_CLIMB_COPY[o][1]) for o in SWE_CASE_ORDER)
             + _nfb("What the lab said, beside what Epoch measured", PAIRS_LEAD + DIV_NOTE)
@@ -655,7 +658,7 @@ MAIN = f"""<main id="main" class="story" tabindex="-1">
 <a class="enddoor" href="about.html"><b>About</b><span>what this is, and who keeps it</span></a>
 <a class="enddoor" href="data.html"><b>Data</b><span>download the dataset, CC-BY 4.0</span></a>
 </div>
-<p class="protonote">Parameter counts reported by others are left out of the parameter figures. Data current as of {AS_OF}.</p>
+<p class="protonote">Parameter counts reported by others are left out of the parameter figures. Record updated {AS_OF}.</p>
 </section>
 </main>
 """

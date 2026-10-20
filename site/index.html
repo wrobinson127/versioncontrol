@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Version Control: the release record of the AI model era</title>
-<meta name="description" content="A public registry of AI model releases: what shipped, what changed against the predecessor, what the lab disclosed, and where every number comes from.">
+<meta name="description" content="A public registry of AI model releases: what shipped, what changed against the lab's previous model, what the lab disclosed, and where each score came from.">
 <meta name="color-scheme" content="dark light">
 <link rel="canonical" href="https://versioncontrol.walker-robinson.com/">
 <meta property="og:title" content="Version Control: the release record of the AI model era">
-<meta property="og:description" content="A public registry of AI model releases: what shipped, what changed against the predecessor, what the lab disclosed, and where every number comes from.">
+<meta property="og:description" content="A public registry of AI model releases: what shipped, what changed against the lab's previous model, what the lab disclosed, and where each score came from.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://versioncontrol.walker-robinson.com/">
 <meta property="og:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
@@ -29,7 +29,7 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 </head>
 <body class="pg-overview">
-<a class="skip" href="#main">Skip to the console</a>
+<a class="skip" href="#main">Skip to the overview</a>
 <header class="topbar">
   <a class="brand" href="index.html" aria-label="Version Control, overview"><svg class="mark" viewBox="0 0 18 18" width="18" height="18" aria-hidden="true"><rect x="1" y="1" width="4" height="4" rx="1" class="m0"/><rect x="7" y="1" width="4" height="4" rx="1" class="m2"/><rect x="13" y="1" width="4" height="4" rx="1" class="m0"/><rect x="1" y="7" width="4" height="4" rx="1" class="m1"/><rect x="7" y="7" width="4" height="4" rx="1" class="m3"/><rect x="13" y="7" width="4" height="4" rx="1" class="m2"/><rect x="1" y="13" width="4" height="4" rx="1" class="m0"/><rect x="7" y="13" width="4" height="4" rx="1" class="m1"/><rect x="13" y="13" width="4" height="4" rx="1" class="m4"/></svg><span class="brand-name">Version Control</span></a>
   <nav class="topnav" aria-label="Sections">
@@ -47,7 +47,7 @@
   </div>
 </header>
 <main id="main" class="canvas" tabindex="-1">
-  <noscript><p class="noscript">The console needs JavaScript. Without it, every entry is in the <a href="data.html">dataset files</a>, and <a href="story.html">the story</a> reads in full.</p></noscript>
+  <noscript><p class="noscript">The overview needs JavaScript. Without it, every entry is in the <a href="data.html">dataset files</a>, and <a href="story.html">the story</a> reads in full.</p></noscript>
   <div class="titlerow">
     <div class="title-text">
       <h1>AI model release record</h1>
@@ -59,7 +59,7 @@
     </div>
   </div>
 
-  <div class="filterbar" role="group" aria-label="Filters for the whole console">
+  <div class="filterbar" role="group" aria-label="Filters for the whole overview">
     <div class="seg" role="radiogroup" aria-label="Date range" id="presets"></div>
     <button type="button" class="btn more-f" id="more-filters" aria-expanded="false">More filters</button>
     <div class="range-in">
@@ -114,8 +114,8 @@
   <div class="row row-b">
     <section class="panel" id="p-labs" aria-labelledby="h-labs">
     <header class="ph">
-    <h2 id="h-labs">Twelve labs, one scale</h2>
-    <p class="pmeta">Select a lab to filter the console.</p>
+    <h2 id="h-labs">Releases by lab</h2>
+    <p class="pmeta">Select a lab to filter the overview. Scores are on GPQA Diamond (graduate-level science questions).</p>
     <div class="ptools">
     <span class="legend" id="labs-legend" aria-hidden="true"></span>
     <button type="button" class="pcollapse" aria-expanded="true" aria-controls="labs-grid"><span class="sr">Collapse the lab panels</span></button>
@@ -125,9 +125,9 @@
     </section>
     <aside class="panel findings" id="p-findings" aria-labelledby="h-findings">
     <header class="ph">
-    <h2 id="h-findings">Findings</h2>
+    <h2 id="h-findings">Finding</h2>
     <p class="pmeta">Computed from the record at each load.</p>
-    <div class="ptools"><button type="button" class="pcollapse" aria-expanded="true" aria-controls="findings-list"><span class="sr">Collapse the findings</span></button></div>
+    <div class="ptools"><button type="button" class="pcollapse" aria-expanded="true" aria-controls="findings-list"><span class="sr">Collapse the finding</span></button></div>
     </header>
     <ol class="findings-list pbody" id="findings-list"></ol>
     </aside>
@@ -155,7 +155,7 @@
     </section>
     <aside class="panel" id="p-pairs" aria-labelledby="h-pairs">
     <header class="ph">
-    <h2 id="h-pairs">Lab beside independent</h2>
+    <h2 id="h-pairs">Lab score and Epoch score</h2>
     <p class="pmeta">The same release and benchmark, scored by the lab and by Epoch AI.</p>
     <div class="ptools"><button type="button" class="pcollapse" aria-expanded="true" aria-controls="pairs-body"><span class="sr">Collapse the pairs</span></button></div>
     </header>

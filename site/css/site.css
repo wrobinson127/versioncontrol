@@ -362,7 +362,7 @@ svg .s-v { fill: var(--ind-text); font: 600 11px var(--mono); font-stretch: 87.5
 .lab-none { color: var(--faint); font-size: 12px; font-style: italic; height: 44px; display: flex; align-items: center; }
 
 /* ---------- findings ---------- */
-.findings-list { display: flex; flex-direction: column; justify-content: space-between; flex: 1; padding-top: 0; }
+.findings-list { display: flex; flex-direction: column; justify-content: flex-start; gap: 14px; padding-top: 0; }
 .fd { padding: 12px 0 14px; border-top: 1px solid var(--rule); }
 .fd:first-child { border-top: 0; padding-top: 2px; }
 .fd h3 { font-size: 14px; line-height: 20px; font-weight: 650; margin-bottom: 4px; }

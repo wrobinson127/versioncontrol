@@ -81,16 +81,16 @@
       <tr><th scope="col">File</th><th scope="col">Contents</th></tr>
     </thead>
     <tbody id="file-rows">
-      <tr><td><code><a href="./data/releases.csv">releases.csv</a></code></td><td>One row per entry: dates, lab, availability, the four disclosure items, parameters, predecessor, and the primary source. Absence is written as a word (NOT_DISCLOSED or NOT_RESEARCHED), never left blank.</td></tr>
+      <tr><td><code><a href="./data/releases.csv">releases.csv</a></code></td><td>One row per entry: dates, lab, availability, the four disclosure items, parameters and their basis, predecessor, and the primary source. In the four disclosure columns, absence is written as a word (NOT_DISCLOSED or NOT_RESEARCHED), never left blank.</td></tr>
       <tr><td><code><a href="./data/scores.csv">scores.csv</a></code></td><td>One row per benchmark score, with its source class, source URL, retrieval date and test settings.</td></tr>
       <tr><td><code><a href="./data/manifest.json">manifest.json</a></code></td><td>Index of entry files with per-file entry counts, ids, and SHA-256 checksums.</td></tr>
       <tr><td><code><a href="./data/derived/deltas.json.gz">derived/deltas.json.gz</a></code></td><td>Predecessor comparisons per entry: a change, or the reason no change is shown. The site renders this file verbatim.</td></tr>
-      <tr><td><code><a href="./data/derived/views.json.gz">derived/views.json.gz</a></code></td><td>Derived chart datasets: release cadence, benchmark trajectory series, disclosure matrix, and registry measures. The site's charts draw from this file and only count and round what is in it.</td></tr>
-      <tr><td><code><a href="./data/derived/site_meta.json">derived/site_meta.json</a></code></td><td>Record counts, date range, and the last successful update timestamp.</td></tr>
+      <tr><td><code><a href="./data/derived/views.json.gz">derived/views.json.gz</a></code></td><td>Derived chart datasets: release cadence, benchmark trajectory series, disclosure matrix, and registry measures. The site's charts draw from this file. Comparisons between models are calculated before publishing. The site also works out counts, shares and medians for whatever view you filter to, using the rules on the methodology page.</td></tr>
+      <tr><td><code><a href="./data/derived/site_meta.json">derived/site_meta.json</a></code></td><td>Record counts, date range, and the date of the last successful update.</td></tr>
     </tbody>
   </table></div><div class="specs"><aside class="spec" id="sp-files" data-ui aria-label="Entries per year file"><p class="rn-h">Entries per year file</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside><aside class="spec" id="sp-csv" data-ui aria-label="releases.csv, the newest rows"><p class="rn-h">releases.csv, the newest rows</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
 <section class="doc-sec rule" aria-labelledby="fields"><div class="rule-text"><h2 id="fields">Fields</h2>
-  <p>Each entry in the JSON files, and each row of releases.csv, carries these fields.</p>
+  <p>Each entry in the JSON files carries these fields; releases.csv carries those not marked JSON only.</p>
   <table class="file-table">
     <thead><tr><th scope="col">Field</th><th scope="col">Meaning</th></tr></thead>
     <tbody>
@@ -103,11 +103,19 @@
       <tr><td><code>parameters</code></td><td>Total parameter count. NOT_DISCLOSED here means Epoch AI's dataset has no count; we have not checked the labs' pages. parameters_basis says whether a count is the lab's own or reported by others.</td></tr>
       <tr><td><code>parameters_basis</code></td><td>lab (the lab's own count), third_party (a count Epoch AI records from a report by others: a rumor, a leak, an estimate, a newsletter, another party's paper or a post on X), or NOT_DISCLOSED when there is no count. Third-party counts are left out of every parameter finding.</td></tr>
       <tr><td><code>parameters_note</code></td><td>JSON only, on third_party counts: Epoch AI's note on where the count came from.</td></tr>
+      <tr><td><code>summary</code></td><td>A short account of the release, written to what the sources support, with lab claims attributed to the lab.</td></tr>
+      <tr><td><code>variants</code></td><td>JSON only: other sizes or versions announced with the release and recorded under it.</td></tr>
+      <tr><td><code>license_note</code></td><td>JSON only: the license or access terms as Epoch AI records them, or null.</td></tr>
+      <tr><td><code>epoch_row_name</code></td><td>JSON only: Epoch AI's row name, where the entry's name differs from it.</td></tr>
       <tr><td><code>predecessor</code></td><td>The id of the model this one follows, where the lab or the model family makes it clear. Comparisons against the predecessor are in derived/deltas.json.gz.</td></tr>
       <tr><td><code>system_card, model_card, usage_policy, paper</code></td><td>A link to the document, NOT_DISCLOSED (we checked the lab's pages and found none), or NOT_RESEARCHED (not yet checked). Neither means zero.</td></tr>
-      <tr><td><code>benchmarks</code></td><td>Scores on GPQA Diamond and SWE-bench Verified only. Each carries its source class (LAB_REPORTED or INDEPENDENT), source URL, benchmark version, retrieval date and test settings. scores.csv has one row per score.</td></tr>
-      <tr><td><code>sources</code></td><td>Every page the entry was built from, each with the date we read it.</td></tr>
+      <tr><td><code>disclosure_archived</code></td><td>JSON only: for each disclosure link, a dated archive.org copy of the same page.</td></tr>
+      <tr><td><code>benchmarks</code></td><td>Scores on GPQA Diamond and SWE-bench Verified only. Each carries its source class (LAB_REPORTED or INDEPENDENT), source URL, benchmark version, retrieval date and test settings (configuration), and an archived_url where one exists. scores.csv has one row per score.</td></tr>
+      <tr><td><code>unpinned_claims</code></td><td>JSON only: benchmark figures the lab stated without a benchmark version, kept as written and never published as scores.</td></tr>
+      <tr><td><code>sources</code></td><td>Every page the entry was built from, each with its kind, the date we read it, and an archived_url (a dated archive.org copy) where one exists.</td></tr>
       <tr><td><code>retracted</code></td><td>true when the entry should not have been on the record; the note says why. A corrected entry stays false and carries a correction_note instead.</td></tr>
+      <tr><td><code>correction_note</code></td><td>The old value and the evidence, where we corrected the source.</td></tr>
+      <tr><td><code>organization, primary_source_url</code></td><td>CSV only: the lab's display name, and the first source that is not Epoch AI's dataset.</td></tr>
     </tbody>
   </table></div><div class="specs"><aside class="spec" id="sp-json" data-ui aria-label="The newest entry, as published"><p class="rn-h">The newest entry, as published</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
 <section class="doc-sec" aria-labelledby="license"><h2 id="license">License</h2>
@@ -131,7 +139,7 @@
 <section class="doc-sec" aria-labelledby="not-included"><h2 id="not-included">What the dataset does not contain</h2>
   <p>OpenRouter's catalog is not in the dataset, and the site does not show its prices or context lengths. Prices quoted in an entry's summary are the lab's own figures. Artificial Analysis data is not in the dataset either: we use it only for an internal check of which models we might be missing.</p></section>
 <section class="doc-sec" aria-labelledby="cost"><h2 id="cost">Cost of operation</h2>
-  <p>The registry runs on static hosting and scheduled jobs at zero infrastructure cost, plus a small metered LLM cost for the nightly drafting step.</p></section>
+  <p>The registry runs on static hosting and scheduled jobs at zero infrastructure cost, plus a small metered cost for the nightly drafting step, capped at $2 a month.</p></section>
 </article>
 </div>
 </main>

@@ -116,11 +116,23 @@ def test_not_yet_checked_shows_only_where_the_view_holds_one():
 def test_the_lean_caveat_needs_a_material_lean():
     """The caveat that checked releases lean toward the newest ones is said
     only when a material part of the year is unchecked; the merged record
-    no longer supports it, so the story does not say it."""
+    no longer supports it, so the story does not say it. The overview's
+    disclosure finding, which carried the same caveat, is cut, so the
+    overview carries no copy of it at all."""
     src = (ROOT / "pipeline" / "build_story.py").read_text(encoding="utf-8")
     assert "material = len(res) < 0.9 * len(ys) and k / len(res) - m / len(ys) >= 0.1" in src
-    assert "res.length < 0.9 * ys.length && k / res.length - m / ys.length >= 0.1" in JS["overview.js"]
+    assert "a period holding" not in JS["overview.js"] and "skewSentence" not in JS["overview.js"]
     assert "a period holding" not in PAGES["story.html"]
+
+
+def test_overview_keeps_only_the_finding_no_panel_draws():
+    ov = JS["overview.js"]
+    assert ov.count("t: shorter.length === 2") == 1
+    assert "(the median of a lab's first third of gaps on record, and of its last third)" in ov
+    for cut in ("The highest independent GPQA Diamond score ", "checked releases come with a paper",
+                "The lab's score is above Epoch's in ", '"Select " + y'):
+        assert cut not in ov, cut
+    assert '<h2 id="h-findings">Finding</h2>' in PAGES["index.html"]
 
 
 def test_refusals_appear_only_in_the_explorer_inspector():

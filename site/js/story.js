@@ -505,7 +505,7 @@
       s += '<g class="call">' + T(Math.min(g.tx(top.date) - 10, r.x1 - measure(lab, FONT_H)), g.ys(top.value) - (narrow ? 12 : 18), lab, "c-h") + "</g>";
     }
     var nUn = S.E.length - S.E.filter(function (e) { return S.gpqa[e.id]; }).length;
-    s += T(g.lx, r.y1 + (narrow ? 12 : 18), narrow ? nUn + " with no score sit below the axis. Not a zero." : nUn + " releases with no independent score, shown below the axis. Not a zero.", "ax-t");
+    s += T(g.lx, r.y1 + (narrow ? 12 : 18), nUn + " releases with no independent score sit below the axis.", "ax-t");
     return s;
   }
   function ov4() {

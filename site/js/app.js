@@ -16,7 +16,7 @@
     "openai": "OpenAI", "anthropic": "Anthropic", "google-deepmind": "Google DeepMind",
     "meta": "Meta", "xai": "xAI", "mistral": "Mistral", "deepseek": "DeepSeek",
     "alibaba-qwen": "Alibaba (Qwen)", "moonshot": "Moonshot AI", "zai": "Z.ai (Zhipu)",
-    "cohere": "Cohere", "amazon": "Amazon (Nova)"
+    "cohere": "Cohere", "amazon": "Amazon"
   };
 
   /* Country of the parent company's headquarters. Context for a filter only:
@@ -50,7 +50,7 @@
   var DISC_TITLES = {
     disclosed: "The document exists. We do not grade what it says.",
     not_disclosed: "We checked the lab's own sites and found nothing.",
-    not_researched: "A gap in our record, not a statement about the lab."
+    not_researched: "We have not looked yet."
   };
   var PROV_TITLES = {
     LAB_REPORTED: "LAB: reported by the releasing lab.",
@@ -525,7 +525,7 @@
   /* The sections, in navigation order. One list feeds the palette, the
      go-to shortcuts and the "you are here" marks. */
   var SECTIONS = [
-    { file: "index.html", title: "Overview", meta: "The console: cadence, labs, scores, disclosure", key: "o" },
+    { file: "index.html", title: "Overview", meta: "The overview: cadence, labs, scores, disclosure", key: "o" },
     { file: "story.html", title: "Story", meta: "The record in five views, with a text version", key: "s" },
     { file: "explorer.html", title: "Explorer", meta: "Every entry, searchable and filterable", key: "e" },
     { file: "methodology.html", title: "Methodology", meta: "The rules every number follows", key: "m" },
@@ -556,7 +556,7 @@
         '<button type="button" class="btn btn-sm" id="cmp-swap" aria-label="Swap the two labs">Swap</button>' +
         '<label class="sel"><span class="sr">Second lab</span><select id="cmp-b" aria-label="Second lab"></select></label></div>' +
         '<button type="button" class="btn btn-sm" data-close>Close</button></div>' +
-      '<p class="cmp-note">Two records side by side, on the same scales. A comparison of what is on record, not a ranking.</p>' +
+      '<p class="cmp-note">Two records side by side, on the same scales.</p>' +
       '<div class="cmp-body" id="cmp-body"></div>' +
     "</dialog>";
 
