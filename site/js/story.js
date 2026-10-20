@@ -465,7 +465,8 @@
     });
     /* the three states, decoded beside the marks they name */
     var x0 = narrow ? r.x0 : r.x0 + g.lw, lx = x0, ly = g.bottom + 14;
-    [["disclosed", CR.DISC_WORDS.disclosed], ["not_disclosed", CR.DISC_WORDS.not_disclosed], ["not_researched", CR.DISC_WORDS.not_researched]].forEach(function (it) {
+    var nr = marks.some(function (m) { return m.t === "d" && m.cell === "not_researched"; });
+    [["disclosed", CR.DISC_WORDS.disclosed], ["not_disclosed", CR.DISC_WORDS.not_disclosed]].concat(nr ? [["not_researched", CR.DISC_WORDS.not_researched]] : []).forEach(function (it) {
       var wd = 14 + measure(it[1], FONT_B);
       if (lx > x0 && lx + wd > r.x1) { lx = x0; ly += 17; }
       s += '<g class="lg" transform="translate(' + lx.toFixed(1) + "," + (ly - 9).toFixed(1) + ')">' + legendGlyph(it[0]) + "</g>" + T(lx + 14, ly, it[1], "ax-t");

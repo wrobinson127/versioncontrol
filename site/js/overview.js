@@ -267,7 +267,7 @@
     var label3 = f ? "Checked releases in view with a system card" : "Checked releases with a system card";
     if (!f) { console.assert(Math.abs(sc.share - D.views.tiles.share_with_system_card) < 0.001, "system card share matches the derived tile"); }
     kpi("k3", label3, sc.researched ? '<span class="num">' + Math.round(100 * sc.share) + '</span><span class="unit">%</span>' : '<span class="num dash">-</span>',
-      sc.researched ? '<span class="num">' + sc.disclosed + "</span> of " + sc.researched + " checked; " + sc.not_researched + " not yet checked."
+      sc.researched ? '<span class="num">' + sc.disclosed + "</span> of " + sc.researched + " checked" + (sc.not_researched ? "; " + sc.not_researched + " not yet checked." : ".")
         : "None of the " + CR.plural(sc.not_researched, "release") + " in view has been checked for a system card.",
       pts.length > 1 ? sparkLine(pts, pts[0].x, pts[pts.length - 1].x, 100, w, sh) : "");
 
@@ -806,7 +806,7 @@
         recent.forEach(function (e) {
           html += '<span class="ld-c" data-id="' + esc(e.id) + '" data-slot="' + sl[0] + '">' + CR.discGlyph(e._disc[sl[0]], 8) + "</span>";
         });
-        html += '<span class="sr">' + c.disclosed + " with a link, " + c.not_disclosed + " not disclosed, " + c.not_researched + " not yet checked</span></span>" +
+        html += '<span class="sr">' + c.disclosed + " with a link, " + c.not_disclosed + " not disclosed" + (c.not_researched ? ", " + c.not_researched + " not yet checked" : "") + "</span></span>" +
           '<span class="ld-n" role="cell">' + (c.researched ? '<span class="num">' + c.disclosed + "</span>/" + c.researched : '<span class="nr-w">none checked</span>') + "</span></div>";
       });
       html += "</div>";
@@ -845,10 +845,12 @@
     });
     grid.style.setProperty("--cols", cols);
     grid.innerHTML = html;
-    $("#labs-legend").innerHTML = discLegend() + '<span class="lg-item">' + CR.provGlyph("INDEPENDENT", 9) + " IND</span>";
+    $("#labs-legend").innerHTML = discLegend(D.releases.filter(inView)) + '<span class="lg-item">' + CR.provGlyph("INDEPENDENT", 9) + " IND</span>";
   }
-  function discLegend() {
-    return ["disclosed", "not_disclosed", "not_researched"].map(function (s) { return '<span class="lg-item">' + CR.discGlyph(s, 9) + " " + CR.DISC_WORDS[s] + "</span>"; }).join("");
+  /* "not yet checked" appears only when the releases in view hold one */
+  function discLegend(list) {
+    var nr = list.some(function (e) { return CR.DISC_SLOTS.some(function (sl) { return e._disc[sl[0]] === "not_researched"; }); });
+    return ["disclosed", "not_disclosed"].concat(nr ? ["not_researched"] : []).map(function (s) { return '<span class="lg-item">' + CR.discGlyph(s, 9) + " " + CR.DISC_WORDS[s] + "</span>"; }).join("");
   }
   function wireLabs() {
     var grid = $("#labs-grid");
@@ -953,7 +955,8 @@
     var res = D.releases.filter(function (e) { return e._year === y && e._disc[slot] !== "not_researched"; }).map(function (e) { return e.date; });
     if (!res.length) { return ""; }
     var k = res.filter(function (d) { return d >= cut; }).length, m = ys.filter(function (d) { return d >= cut; }).length;
-    if (!(k / res.length > m / ys.length)) { return ""; }
+    /* only when a material part of the year is unchecked and the checked part leans new */
+    if (!(res.length < 0.9 * ys.length && k / res.length - m / ys.length >= 0.1)) { return ""; }
     var MON = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     return " In " + y + ", " + k + " of the " + res.length + " checked releases are from " + MON[cm - 1] + " or later, a period holding " + m + " of the year's " + ys.length + " releases, so " + what + " may move as earlier releases are checked.";
   }
@@ -1160,7 +1163,7 @@
         var list = byYear[yy].slice().sort(function (a, b) { return order[a._disc[sl[0]]] - order[b._disc[sl[0]]] || a._day - b._day; });
         var c = CR.discCounts(list, sl[0]);
         var hh = rowsMax * pitch;
-        var lab = sl[1] + ", " + yy + ": " + c.disclosed + " with a link on record, " + c.not_disclosed + " not disclosed, " + c.not_researched + " not yet checked.";
+        var lab = sl[1] + ", " + yy + ": " + c.disclosed + " with a link on record, " + c.not_disclosed + " not disclosed" + (c.not_researched ? ", " + c.not_researched + " not yet checked" : "") + ".";
         var s = svgOpen(perRow * pitch, Math.max(pitch, Math.ceil(list.length / perRow) * pitch), "wf", lab);
         list.forEach(function (e, i) {
           var cx = (i % perRow) * pitch, cy = Math.floor(i / perRow) * pitch, st = e._disc[sl[0]];
@@ -1171,14 +1174,14 @@
         s += "</svg>";
         h += '<div class="wf-cell" data-slot="' + sl[0] + '">' + (mobile ? '<p class="wf-mh">' + sl[1] + "</p>" : "") + '<div class="wf-sq" style="min-height:' + hh + 'px">' + s + "</div>" +
           '<p class="wf-n">' + (c.researched ? '<b class="num">' + Math.round(100 * c.share) + "%</b> <span>" + c.disclosed + " of " + c.researched + "</span>" : '<span class="nr-w">none checked</span>') + "</p>" +
-          '<p class="wf-nr">' + (list.length ? c.not_researched + " not yet checked" : "no releases in view") + "</p></div>";
+          '<p class="wf-nr">' + (list.length ? (c.not_researched ? c.not_researched + " not yet checked" : "") : "no releases in view") + "</p></div>";
       });
     });
     h += "</div>";
     var n22 = D.releases.filter(function (e) { return e._year === "2022" && inView(e); }).length;
     if (n22) { h += '<p class="pr-note">The record\'s first ' + CR.plural(n22, "release") + ', from 2022, ' + (n22 === 1 ? "is" : "are") + ' in the table view.</p>'; }
     host.innerHTML = h;
-    $("#disc-legend").innerHTML = discLegend();
+    $("#disc-legend").innerHTML = discLegend(D.releases.filter(function (e) { return e._year >= "2023" && inView(e); }));
   }
   function wireDisc() {
     var host = $("#waffles");

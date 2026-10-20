@@ -272,7 +272,7 @@
       return;
     }
     var legend = '<li class="m-legend" aria-hidden="true"><span>Squares: system card, model card, usage policy, paper.</span>' +
-      ["disclosed", "not_disclosed", "not_researched"].map(function (s) { return '<span class="lg-item">' + CR.discGlyph(s, 9) + " " + CR.DISC_WORDS[s] + "</span>"; }).join("") + "</li>";
+      ["disclosed", "not_disclosed"].concat(rows.some(function (e) { return CR.DISC_SLOTS.some(function (sl) { return e._disc[sl[0]] === "not_researched"; }); }) ? ["not_researched"] : []).map(function (s) { return '<span class="lg-item">' + CR.discGlyph(s, 9) + " " + CR.DISC_WORDS[s] + "</span>"; }).join("") + "</li>";
     ml.innerHTML = legend + rows.map(function (e, i) {
       var s = e._score["gpqa-diamond"] || e._score["swe-bench-verified"];
       var sb = e._score["gpqa-diamond"] ? "GPQA" : "SWE";

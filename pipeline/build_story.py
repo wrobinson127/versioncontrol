@@ -346,8 +346,10 @@ _MONTHS = ["January", "February", "March", "April", "May", "June", "July", "Augu
 
 
 def _skew(art):
-    """When the checked rows of the latest year lean toward its newest months,
-    the share leans on them, and the copy says so."""
+    """When a material part of the latest year is still unchecked and the
+    checked rows lean toward its newest months, the share leans on them, and
+    the copy says so. With (almost) every release checked there is no lean
+    to report, so the sentence drops out on its own."""
     ys = sorted(r["date"] for r in V["disclosure_matrix"]["rows"] if r["org"] in ro and r["date"][:4] == _D1)
     if not ys: return None
     lm = int(ys[-1][5:7]); cm = max(1, lm - 1)
@@ -356,7 +358,8 @@ def _skew(art):
            if r["org"] in ro and r["date"][:4] == _D1 and r["cells"].get(art, "not_researched") != "not_researched"]
     if not res: return None
     k = sum(1 for d in res if d >= cut); m = sum(1 for d in ys if d >= cut)
-    return (k, len(res), m, len(ys), _MONTHS[cm - 1]) if k / len(res) > m / len(ys) else None
+    material = len(res) < 0.9 * len(ys) and k / len(res) - m / len(ys) >= 0.1
+    return (k, len(res), m, len(ys), _MONTHS[cm - 1]) if material else None
 
 
 _SKEW_PAPER = _skew("paper"); _SKEW_SC = _skew("system_card")
@@ -440,13 +443,6 @@ def _growth(a, b):
     return f"fell by {round((1 - r) * 100)}%"
 
 
-def _share_words(k, n):
-    f = k / n if n else 0
-    if 0.4 <= f < 0.5: return "Almost half"
-    if 0.5 <= f < 0.6: return "Just over half"
-    return f"{round(100 * f)}%"
-
-
 _n_rev = sum(y["revisions"] for y in V["cadence"]["yearly"])
 _g0, _g1 = MEDGAP[_hero_first_y], MEDGAP[_hero_last_y]
 H1 = f"Releases {_growth(_hero_first_n, _hero_last_n)} from {_hero_first_y} to {_hero_last_y}"
@@ -457,12 +453,21 @@ STEP1 = (f"<p>Pooled across the {nword(N_LABS)} labs, the median wait between on
 _sc_labs_none = [o for o in REG
                  if not any(r["org"] == o and r["cells"]["system_card"] == "disclosed" for r in rel)
                  and any(r["org"] == o and r["cells"]["system_card"] == "not_disclosed" for r in rel)]
-_cells_all = sum(len(r["cells"]) for r in rel if r["org"] in ro)
-_cells_nr = sum(1 for r in rel if r["org"] in ro for v in r["cells"].values() if v == "not_researched")
+
+
+def _doc_share(art, y):
+    """Releases of year y with the document on record, of those checked."""
+    rows = [r for r in rel if r["org"] in ro and r["date"][:4] == y and r["cells"].get(art, "not_researched") != "not_researched"]
+    k = sum(1 for r in rows if r["cells"][art] == "disclosed")
+    return k, len(rows), (round(100 * k / len(rows)) if rows else 0)
+
+
+_mc0, _mc1 = _doc_share("model_card", _D0), _doc_share("model_card", _D1)
+_up0, _up1 = _doc_share("usage_policy", _D0), _doc_share("usage_policy", _D1)
 H2 = (f"{_cap(nword(len(_sc_labs_none)))} of the {nword(N_LABS)} labs have no system card on any checked release"
       if _sc_labs_none else "Every lab has a system card on record for at least one checked release")
-STEP2 = (f"<p>{_share_words(_cells_nr, _cells_all)} the document cells, {_cells_nr:,} of {_cells_all:,}, are not yet checked. "
-         "A share counts checked releases only, so it can move as we check more.</p>")
+STEP2 = (f"<p>Model cards: {_mc0[0]} of {_mc0[1]} checked releases in {_D0} ({_mc0[2]}%), {_mc1[0]} of {_mc1[1]} in {_D1} so far ({_mc1[2]}%). "
+         f"Usage policies: {_up0[0]} of {_up0[1]} ({_up0[2]}%), then {_up1[0]} of {_up1[1]} ({_up1[2]}%).</p>")
 
 _open_best = max(((score_by_entry[r["entry_id"]], r["date"], r["model_name"]) for r in _rel_t
                   if r["entry_id"] in score_by_entry and avail_by_entry.get(r["entry_id"]) == "open_weights"), default=None)

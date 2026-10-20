@@ -725,7 +725,7 @@
           var c = discCounts(d.rel, sl[0]);
           var strip = d.rel.slice().reverse().map(function (e) { return discGlyph(e._disc[sl[0]], 7); }).join("");
           h += "<div><dt>" + sl[1] + "</dt><dd>" + (c.researched ? '<b class="num">' + Math.round(100 * c.share) + "%</b> " + c.disclosed + " of " + c.researched : '<span class="nr-w">none checked</span>') +
-            ' <span class="t-m">' + c.not_researched + ' not yet checked</span><span class="cmp-strip" aria-hidden="true">' + strip + "</span></dd></div>";
+            (c.not_researched ? ' <span class="t-m">' + c.not_researched + ' not yet checked</span>' : "") + '<span class="cmp-strip" aria-hidden="true">' + strip + "</span></dd></div>";
         });
         h += "</dl><h4>Independent GPQA Diamond</h4>";
         var sh = 92;
