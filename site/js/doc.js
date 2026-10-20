@@ -226,7 +226,7 @@
     var rows = D.entries.slice(0, 6);
     return '<div class="spec-tbl"><table class="dt"><thead><tr><th scope="col">model_name</th><th scope="col">date</th><th scope="col">paper</th></tr></thead><tbody>' +
       rows.map(function (e) { return '<tr><th scope="row" class="ell"><a href="' + entryHref(e) + '" title="' + esc(e.id) + '">' + esc(e.model_name) + "</a></th><td>" + num(e.date) + "</td><td>" + esc(word((e.disclosure_links || {}).paper)) + "</td></tr>"; }).join("") +
-      '</tbody></table></div><p class="rn-s">Three of its columns. Absence is a word, never a blank.</p>';
+      '</tbody></table></div><p class="rn-s">Three of releases.csv\'s columns are shown here; in the disclosure columns, absence is written as NOT_DISCLOSED or NOT_RESEARCHED, never left blank.</p>';
   }
 
   function jsonHtml(D) {

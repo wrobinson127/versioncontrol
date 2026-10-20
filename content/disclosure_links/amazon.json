@@ -61,7 +61,7 @@
    "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
    "paper": "https://www.amazon.science/publications/the-amazon-nova-family-of-models-technical-report-and-model-card",
    "status": "APPROVED",
-   "notes": "System card is the AWS AI Service Card for Nova Micro, Lite, Pro, and Premier, verified this session with full responsible AI content. Model card is the Nova user guide overview with the Pro spec table, verified. Usage policy is the AWS Responsible AI Policy, verified. Paper is the Nova family technical report and model card on Amazon Science, verified.",
+   "notes": "System card is the AWS AI Service Card for Nova Micro, Lite, Pro, and Premier, verified in July 2026 with full responsible AI content. Model card is the Nova user guide overview with the Pro spec table, verified. Usage policy is the AWS Responsible AI Policy, verified. Paper is the Nova family technical report and model card on Amazon Science, verified.",
    "researched": true
   },
   {
@@ -73,7 +73,7 @@
    "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
    "paper": "https://www.amazon.science/publications/the-amazon-nova-family-of-models-technical-report-and-model-card",
    "status": "APPROVED",
-   "notes": "System card is the shared Nova service card, verified this session; it explicitly covers Premier as of April 30, 2025 and includes the frontier safety evaluations run on Premier. Model card is the Nova user guide with Premier specs, verified. Usage policy is the AWS Responsible AI Policy, verified. Paper is the Nova family technical report; the publication page notes a Premier addendum from April 2025, verified.",
+   "notes": "System card is the shared Nova service card, verified in July 2026; it explicitly covers Premier as of April 30, 2025 and includes the frontier safety evaluations run on Premier. Model card is the Nova user guide with Premier specs, verified. Usage policy is the AWS Responsible AI Policy, verified. Paper is the Nova family technical report; the publication page notes a Premier addendum from April 2025, verified.",
    "researched": true
   },
   {
@@ -85,7 +85,7 @@
    "usage_policy": "https://aws.amazon.com/ai/responsible-ai/policy/",
    "paper": "https://www.amazon.science/publications/amazon-nova-2-multimodal-reasoning-and-generation-models",
    "status": "APPROVED",
-   "notes": "System card is the Nova 2 Lite AI Service Card dated December 2, 2025, verified this session; a Nova 2 Sonic card is also listed on the AWS responsible AI resources page, no card found for Nova 2 Pro or Omni. Model card is the Nova 2 user guide overview listing Nova 2 Lite, Sonic, and Multimodal Embeddings, verified. Usage policy is the AWS Responsible AI Policy, verified. Paper is the Nova 2 technical report on Amazon Science, published December 2, 2025, verified.",
+   "notes": "System card is the Nova 2 Lite AI Service Card dated December 2, 2025, verified in July 2026; a Nova 2 Sonic card is also listed on the AWS responsible AI resources page, no card found for Nova 2 Pro or Omni. Model card is the Nova 2 user guide overview listing Nova 2 Lite, Sonic, and Multimodal Embeddings, verified. Usage policy is the AWS Responsible AI Policy, verified. Paper is the Nova 2 technical report on Amazon Science, published December 2, 2025, verified.",
    "researched": true
   }
  ]

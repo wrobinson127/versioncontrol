@@ -70,7 +70,7 @@
         "google-deepmind--funsearch",
         "google-deepmind--gemini-nano-1"
       ],
-      "sha256": "467b4432586f61cc0fe29a56f5999300c57fc310e9f21df56ac5689cfdc182b2"
+      "sha256": "e199b11ebb3b6095b31a7a885e666d4deba8b2784f78b81af896fac75e1d5900"
     },
     "data/entries/2024.json.gz": {
       "count": 95,
@@ -171,7 +171,7 @@
         "deepseek--deepseek-v3",
         "alibaba-qwen--qvq"
       ],
-      "sha256": "bc0ac914cae50bf08158a316070aeef199a7488ad806c533656f9879d19e4607"
+      "sha256": "2b7462ff42ba5cd22cdd82ec82eb357fd7f6cba7dc5fe33c320913dd92f3e99c"
     },
     "data/entries/2025.json.gz": {
       "count": 127,
@@ -304,7 +304,7 @@
         "openai--gpt-5.2-codex",
         "zai--glm-4.7"
       ],
-      "sha256": "cde8f7ab4aa57432d7ada9d6b359103e9a7289475149b1a32bb7e008691b70fa"
+      "sha256": "07fc51f6a9e567785b2136b3e6e517feb72a3bc1000a8f507e63891eb77b3842"
     },
     "data/entries/2026.json.gz": {
       "count": 96,

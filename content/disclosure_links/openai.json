@@ -49,7 +49,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "System card PDF fetched 200 on cdn.openai.com this session. Usage policy page fetched 200, title Usage policies. OpenAI publishes system cards, not standalone model cards, for proprietary models. No technical report for GPT-4V; the system card is the release document.",
+   "notes": "System card PDF fetched 200 on cdn.openai.com in July 2026. Usage policy page fetched 200, title Usage policies. OpenAI publishes system cards, not standalone model cards, for proprietary models. No technical report for GPT-4V; the system card is the release document.",
    "researched": true
   },
   {
@@ -85,7 +85,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "https://arxiv.org/abs/2410.21276",
    "status": "APPROVED",
-   "notes": "System card PDF fetched 200 this session. arXiv abstract fetched 200, title GPT-4o System Card. Usage policy page fetched 200. No standalone model card for GPT-4o.",
+   "notes": "System card PDF fetched 200 in July 2026. arXiv abstract fetched 200, title GPT-4o System Card. Usage policy page fetched 200. No standalone model card for GPT-4o.",
    "researched": true
   },
   {
@@ -97,7 +97,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Launch post fetched this session; it points to the forthcoming GPT-4o system card and Preparedness scorecard, no standalone GPT-4o mini card exists. No model card or technical report. Usage policy page fetched 200.",
+   "notes": "Launch post fetched in July 2026; it points to the forthcoming GPT-4o system card and Preparedness scorecard, no standalone GPT-4o mini card exists. No model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -109,7 +109,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "September 2024 OpenAI o1 system card PDF fetched 200 this session; it covers o1-preview and o1-mini. No standalone model card. The arXiv o1 system card was posted in December 2024 with the full o1 release and is recorded on the o1 row. Usage policy page fetched 200.",
+   "notes": "September 2024 OpenAI o1 system card PDF fetched 200 in July 2026; it covers o1-preview and o1-mini. No standalone model card. The arXiv o1 system card was posted in December 2024 with the full o1 release and is recorded on the o1 row. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -121,7 +121,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "September 2024 OpenAI o1 system card PDF fetched 200 this session; it covers o1-preview and o1-mini. No standalone model card. No technical report at launch; reasoning approach was described in a blog post. Usage policy page fetched 200.",
+   "notes": "September 2024 OpenAI o1 system card PDF fetched 200 in July 2026; it covers o1-preview and o1-mini. No standalone model card. No technical report at launch; reasoning approach was described in a blog post. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -133,7 +133,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "https://arxiv.org/abs/2412.16720",
    "status": "APPROVED",
-   "notes": "December 2024 o1 system card PDF fetched 200 this session. arXiv abstract fetched 200, title OpenAI o1 System Card. No standalone model card. Usage policy page fetched 200.",
+   "notes": "December 2024 o1 system card PDF fetched 200 in July 2026. arXiv abstract fetched 200, title OpenAI o1 System Card. No standalone model card. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -145,7 +145,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "o3 and o4-mini system card PDF fetched 200 this session. Row date is the December 2024 preview announcement; the system card was published at general availability in April 2025. No standalone model card or technical report. Usage policy page fetched 200.",
+   "notes": "o3 and o4-mini system card PDF fetched 200 in July 2026. Row date is the December 2024 preview announcement; the system card was published at general availability in April 2025. No standalone model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -169,7 +169,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "o3-mini system card February 10 revision PDF fetched 200 this session; the original launch filename o3-mini-system-card.pdf now returns 404. No standalone model card or technical report. Usage policy page fetched 200.",
+   "notes": "o3-mini system card February 10 revision PDF fetched 200 in July 2026; the original launch filename o3-mini-system-card.pdf now returns 404. No standalone model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -181,7 +181,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "GPT-4.5 system card PDF fetched 200 this session. No standalone model card or technical report; the system card is the release document. Usage policy page fetched 200.",
+   "notes": "GPT-4.5 system card PDF fetched 200 in July 2026. No standalone model card or technical report; the system card is the release document. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -217,7 +217,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "o3 and o4-mini system card PDF fetched 200 this session; it covers o4-mini. No standalone model card or technical report. Usage policy page fetched 200.",
+   "notes": "o3 and o4-mini system card PDF fetched 200 in July 2026; it covers o4-mini. No standalone model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -265,7 +265,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "https://arxiv.org/abs/2508.10925",
    "status": "APPROVED",
-   "notes": "gpt-oss model card PDF fetched 200 this session. arXiv abstract fetched 200, title gpt-oss-120b and gpt-oss-20b Model Card. OpenAI issued a model card for this open weight release rather than a separate system card; safety evaluations are contained in the model card. Usage policy page fetched 200.",
+   "notes": "gpt-oss model card PDF fetched 200 in July 2026. arXiv abstract fetched 200, title gpt-oss-120b and gpt-oss-20b Model Card. OpenAI issued a model card for this open weight release rather than a separate system card; safety evaluations are contained in the model card. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -277,7 +277,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "https://arxiv.org/abs/2601.03267",
    "status": "APPROVED",
-   "notes": "GPT-5 system card PDF fetched 200 this session. No standalone model card or technical report; the system card is the release document. Usage policy page fetched 200. paper: changed on 2026-10-19 from NOT_DISCLOSED to arXiv 2601.03267 (OpenAI GPT-5 System Card, fetched 200), for consistency with the o1 and GPT-4o rows, where an arXiv-posted system card counts as the paper.",
+   "notes": "GPT-5 system card PDF fetched 200 in July 2026. No standalone model card or technical report; the system card is the release document. Usage policy page fetched 200. paper: changed on 2026-10-19 from NOT_DISCLOSED to arXiv 2601.03267 (OpenAI GPT-5 System Card, fetched 200), for consistency with the o1 and GPT-4o rows, where an arXiv-posted system card counts as the paper.",
    "researched": true
   },
   {
@@ -294,7 +294,7 @@
   },
   {
    "entry_id": "openai--gpt-5-codex",
-   "model_name": "GPT‑5-Codex",
+   "model_name": "GPTâ€‘5-Codex",
    "date": "2025-09-15",
    "system_card": "https://cdn.openai.com/pdf/97cc5669-7a25-4e63-b15f-5fd5bdc4d149/gpt-5-codex-system-card.pdf",
    "model_card": "NOT_DISCLOSED",
@@ -325,7 +325,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "No dedicated system card. The Deployment Safety Hub sitemap fetched 200 this session lists no GPT-5.1-Codex card; the GPT-5.1 addendum PDF fetched this session covers Instant and Thinking only and the GPT-5.1-Codex-Max card does not mention GPT-5.1-Codex. No standalone model card or technical report. Usage policy page fetched 200.",
+   "notes": "No dedicated system card. The Deployment Safety Hub sitemap fetched 200 in July 2026 lists no GPT-5.1-Codex card; the GPT-5.1 addendum PDF fetched in July 2026 covers Instant and Thinking only and the GPT-5.1-Codex-Max card does not mention GPT-5.1-Codex. No standalone model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -337,7 +337,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "No dedicated system card. The Deployment Safety Hub sitemap fetched 200 this session lists no GPT-5.1-Codex-mini card; the GPT-5.1 addendum PDF fetched this session covers Instant and Thinking only and the GPT-5.1-Codex-Max card does not mention Codex-mini. No standalone model card or technical report. Usage policy page fetched 200.",
+   "notes": "No dedicated system card. The Deployment Safety Hub sitemap fetched 200 in July 2026 lists no GPT-5.1-Codex-mini card; the GPT-5.1 addendum PDF fetched in July 2026 covers Instant and Thinking only and the GPT-5.1-Codex-Max card does not mention Codex-mini. No standalone model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -349,7 +349,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "GPT-5.1 Instant and Thinking system card addendum PDF fetched 200 this session; it supplements the GPT-5 system card. No standalone model card or technical report. Usage policy page fetched 200.",
+   "notes": "GPT-5.1 Instant and Thinking system card addendum PDF fetched 200 in July 2026; it supplements the GPT-5 system card. No standalone model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -361,7 +361,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "GPT-5.1-Codex-Max System Card PDF fetched 200 this session; title page reads November 18, 2025, one day before the row date. No standalone model card or technical report. Usage policy page fetched 200.",
+   "notes": "GPT-5.1-Codex-Max System Card PDF fetched 200 in July 2026; title page reads November 18, 2025, one day before the row date. No standalone model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -373,7 +373,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Update to GPT-5 System Card: GPT-5.2 PDF fetched 200 this session; it is the safety document for the GPT-5.2 family that shipped with Pro on this date, but it reports evaluations for gpt-5.2-instant and gpt-5.2-thinking and does not name GPT-5.2 Pro anywhere in the PDF. No standalone model card or technical report. Usage policy page fetched 200.",
+   "notes": "Update to GPT-5 System Card: GPT-5.2 PDF fetched 200 in July 2026; it is the safety document for the GPT-5.2 family that shipped with Pro on this date, but it reports evaluations for gpt-5.2-instant and gpt-5.2-thinking and does not name GPT-5.2 Pro anywhere in the PDF. No standalone model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -385,7 +385,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Addendum to GPT-5.2 System Card: GPT-5.2-Codex PDF fetched 200 this session; title page reads December 18, 2025, matching the row date. No standalone model card or technical report. Usage policy page fetched 200.",
+   "notes": "Addendum to GPT-5.2 System Card: GPT-5.2-Codex PDF fetched 200 in July 2026; title page reads December 18, 2025, matching the row date. No standalone model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -397,7 +397,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "GPT-5.3-Codex System Card PDF fetched 200 this session; title page reads February 5, 2026, matching the row date. No standalone model card or technical report. Usage policy page fetched 200.",
+   "notes": "GPT-5.3-Codex System Card PDF fetched 200 in July 2026; title page reads February 5, 2026, matching the row date. No standalone model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -409,7 +409,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "GPT-5.4 Thinking System Card PDF fetched 200 this session; title page reads March 5, 2026, matching the row date. OpenAI now publishes system cards on its Deployment Safety Hub rather than cdn.openai.com. No standalone model card or technical report. Usage policy page fetched 200.",
+   "notes": "GPT-5.4 Thinking System Card PDF fetched 200 in July 2026; title page reads March 5, 2026, matching the row date. OpenAI now publishes system cards on its Deployment Safety Hub rather than cdn.openai.com. No standalone model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -421,7 +421,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "GPT-5.4 Thinking System Card PDF fetched 200 this session; it covers GPT-5.4 mini in an appendix, and the mini and nano launch post fetched this session links that appendix as the safety reference. No dedicated mini card, standalone model card, or technical report. Usage policy page fetched 200.",
+   "notes": "GPT-5.4 Thinking System Card PDF fetched 200 in July 2026; it covers GPT-5.4 mini in an appendix, and the mini and nano launch post fetched in July 2026 links that appendix as the safety reference. No dedicated mini card, standalone model card, or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -433,7 +433,7 @@
    "usage_policy": "https://openai.com/policies/usage-policies/",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "GPT-5.5 System Card PDF fetched 200 this session on the Deployment Safety Hub; title page reads April 23, 2026, matching the row date, and the card also names GPT-5.5 Pro. No standalone model card or technical report. Usage policy page fetched 200.",
+   "notes": "GPT-5.5 System Card PDF fetched 200 in July 2026 on the Deployment Safety Hub; title page reads April 23, 2026, matching the row date, and the card also names GPT-5.5 Pro. No standalone model card or technical report. Usage policy page fetched 200.",
    "researched": true
   },
   {

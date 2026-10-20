@@ -14,7 +14,7 @@
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
    "researched": true,
-   "notes": "Original Command was a proprietary API model with no CohereLabs HF card, no paper, and no system card; the docs page for it now only records its deprecation on 2025-09-15, and the docs responsible-use model card has been repurposed for Command R and R+. Usage policy fetched HTTP 200 this session."
+   "notes": "Original Command was a proprietary API model with no CohereLabs HF card, no paper, and no system card; the docs page for it now only records its deprecation on 2025-09-15, and the docs responsible-use model card has been repurposed for Command R and R+. Usage policy fetched HTTP 200 in July 2026."
   },
   {
    "entry_id": "cohere--cohere-embed",
@@ -25,7 +25,7 @@
    "usage_policy": "https://docs.cohere.com/docs/usage-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass; embedding model outside the top-priority set. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: CohereLabs HF README for embed-english-v3.0 fetched 200 (repo created 2023-11-02, launch day, with MTEB results and usage notes). JUDGMENT CALL: the repo holds only the tokenizer, no weights; a multilingual twin is at CohereLabs/Cohere-embed-multilingual-v3.0; paper: not found: checked arXiv title, abstract and Cohere author searches, the announcement post and the HF README Evidence: docs/evidence/disclosure_research_2026-10-19/cohere.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Not researched in July 2026; embedding model outside the top-priority set. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: CohereLabs HF README for embed-english-v3.0 fetched 200 (repo created 2023-11-02, launch day, with MTEB results and usage notes). JUDGMENT CALL: the repo holds only the tokenizer, no weights; a multilingual twin is at CohereLabs/Cohere-embed-multilingual-v3.0; paper: not found: checked arXiv title, abstract and Cohere author searches, the announcement post and the HF README Evidence: docs/evidence/disclosure_research_2026-10-19/cohere.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -37,7 +37,7 @@
    "usage_policy": "https://docs.cohere.com/docs/usage-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass; lightweight variant of Command, which is covered above. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: not found: no CohereLabs HF repo; the docs page 'Cohere's Command and Command Light' is a deprecated product listing, and its 'Command model card' link now resolves to the R/R+ responsible-use page (same ruling as approved cohere--cohere-command); paper: not found: checked arXiv search, the Bedrock announcement post and the docs Evidence: docs/evidence/disclosure_research_2026-10-19/cohere.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Not researched in July 2026; lightweight variant of Command, which is covered above. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: not found: no CohereLabs HF repo; the docs page 'Cohere's Command and Command Light' is a deprecated product listing, and its 'Command model card' link now resolves to the R/R+ responsible-use page (same ruling as approved cohere--cohere-command); paper: not found: checked arXiv search, the Bedrock announcement post and the docs Evidence: docs/evidence/disclosure_research_2026-10-19/cohere.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -50,7 +50,7 @@
    "paper": "https://arxiv.org/abs/2402.07827",
    "status": "APPROVED",
    "researched": true,
-   "notes": "No standalone system card; the Aya paper and HF card carry the release documentation. Official CohereLabs aya-101 card and the Aya Model arxiv abstract both fetched HTTP 200 this session."
+   "notes": "No standalone system card; the Aya paper and HF card carry the release documentation. Official CohereLabs aya-101 card and the Aya Model arxiv abstract both fetched HTTP 200 in July 2026."
   },
   {
    "entry_id": "cohere--command-r",
@@ -62,7 +62,7 @@
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
    "researched": true,
-   "notes": "No dedicated paper for Command R. The docs responsible-use page, titled Command R and Command R+ Model Card, is the closest system-card style artifact and includes BOLD safety evaluations; recorded here under system_card. Docs page and official CohereLabs HF card both fetched HTTP 200 this session."
+   "notes": "No dedicated paper for Command R. The docs responsible-use page, titled Command R and Command R+ Model Card, is the closest system-card style artifact and includes BOLD safety evaluations; recorded here under system_card. Docs page and official CohereLabs HF card both fetched HTTP 200 in July 2026."
   },
   {
    "entry_id": "cohere--command-r-plus",
@@ -74,7 +74,7 @@
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
    "researched": true,
-   "notes": "No dedicated paper for Command R+. The docs responsible-use page covers both R and R+ with BOLD safety evaluations and is recorded under system_card. Docs page and official CohereLabs HF card both fetched HTTP 200 this session."
+   "notes": "No dedicated paper for Command R+. The docs responsible-use page covers both R and R+ with BOLD safety evaluations and is recorded under system_card. Docs page and official CohereLabs HF card both fetched HTTP 200 in July 2026."
   },
   {
    "entry_id": "cohere--aya-expanse-32b",
@@ -86,7 +86,7 @@
    "paper": "https://arxiv.org/abs/2412.04261",
    "status": "APPROVED",
    "researched": true,
-   "notes": "No standalone system card; release documented via HF card and the Aya Expanse arxiv report. Official CohereLabs HF card and arxiv abstract both fetched HTTP 200 this session."
+   "notes": "No standalone system card; release documented via HF card and the Aya Expanse arxiv report. Official CohereLabs HF card and arxiv abstract both fetched HTTP 200 in July 2026."
   },
   {
    "entry_id": "cohere--aya-vision-32b",
@@ -98,7 +98,7 @@
    "paper": "https://arxiv.org/abs/2505.08751",
    "status": "APPROVED",
    "researched": true,
-   "notes": "No standalone system card. Official CohereLabs HF card and the Aya Vision arxiv abstract both fetched HTTP 200 this session; note the paper posted May 2025, after the March model release."
+   "notes": "No standalone system card. Official CohereLabs HF card and the Aya Vision arxiv abstract both fetched HTTP 200 in July 2026; note the paper posted May 2025, after the March model release."
   },
   {
    "entry_id": "cohere--cohere-command-a",
@@ -110,7 +110,7 @@
    "paper": "https://arxiv.org/abs/2504.00698",
    "status": "APPROVED",
    "researched": true,
-   "notes": "No standalone system card; evaluations are carried in the tech report. Official CohereLabs HF card and the Command A tech report arxiv abstract both fetched HTTP 200 this session."
+   "notes": "No standalone system card; evaluations are carried in the tech report. Official CohereLabs HF card and the Command A tech report arxiv abstract both fetched HTTP 200 in July 2026."
   },
   {
    "entry_id": "cohere--cohere-embed-4",
@@ -121,7 +121,7 @@
    "usage_policy": "https://docs.cohere.com/docs/usage-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass; embedding model outside the top-priority set. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: not found: no CohereLabs HF repo (only v3.0 embed repos) and the blog links none; the docs embed page is a product listing (Embed 5 ruling); paper: not found: checked arXiv title, abstract and Cohere author searches and the announcement post Evidence: docs/evidence/disclosure_research_2026-10-19/cohere.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Not researched in July 2026; embedding model outside the top-priority set. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: not found: no CohereLabs HF repo (only v3.0 embed repos) and the blog links none; the docs embed page is a product listing (Embed 5 ruling); paper: not found: checked arXiv title, abstract and Cohere author searches and the announcement post Evidence: docs/evidence/disclosure_research_2026-10-19/cohere.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -134,7 +134,7 @@
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
    "researched": true,
-   "notes": "No system card and no arxiv paper located for this release; documentation is the launch blog and the HF card. Official CohereLabs HF card fetched HTTP 200 this session."
+   "notes": "No system card and no arxiv paper located for this release; documentation is the launch blog and the HF card. Official CohereLabs HF card fetched HTTP 200 in July 2026."
   },
   {
    "entry_id": "cohere--cohere-command-a-reasoning",
@@ -146,7 +146,7 @@
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
    "researched": true,
-   "notes": "No system card and no arxiv paper located for this release; documentation is the launch blog and the HF card. Official CohereLabs HF card fetched HTTP 200 this session."
+   "notes": "No system card and no arxiv paper located for this release; documentation is the launch blog and the HF card. Official CohereLabs HF card fetched HTTP 200 in July 2026."
   },
   {
    "entry_id": "cohere--north-mini-code",
@@ -157,7 +157,7 @@
    "usage_policy": "https://docs.cohere.com/docs/usage-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass; candidate for the next research cycle. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: CohereLabs HF North-Mini-Code-1.0 fetched 200, linked from the launch blog; paper: not found on arXiv (title, abstract and author searches); the HF community blog introducing-north-mini-code is a technical write-up, but the approved Command A Vision row rules that an HF launch blog is not a paper Evidence: docs/evidence/disclosure_research_2026-10-19/cohere.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Not researched in July 2026; candidate for the next research cycle. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: checked the announcement, docs.cohere.com, the HF card and cohere.com/research; the docs responsible-use page covers only Command R and R+ (approved convention); usage_policy: lab-wide policy https://docs.cohere.com/docs/usage-policy fetched 200 (approved convention); model_card: CohereLabs HF North-Mini-Code-1.0 fetched 200, linked from the launch blog; paper: not found on arXiv (title, abstract and author searches); the HF community blog introducing-north-mini-code is a technical write-up, but the approved Command A Vision row rules that an HF launch blog is not a paper Evidence: docs/evidence/disclosure_research_2026-10-19/cohere.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {

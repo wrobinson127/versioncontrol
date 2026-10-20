@@ -169,14 +169,16 @@ def test_every_pair_shows_both_settings():
 
 
 def test_the_pairs_step_states_the_finding():
-    """The pairs step states how many pairs, how many within a point, which pairs
-    differ in settings, and that so few pairs cannot test overstatement."""
+    """The pairs step states how many pairs, which pairs differ in settings,
+    and that so few pairs cannot test overstatement. The 'within a point'
+    restatement of chart counts was removed; this test fails if it comes back."""
     body = [b for n, _, _, b in _steps() if n == "4"][0]
     title = [t for n, _, t, _ in _steps() if n == "4"][0]
     n = _record_pairs()
     words = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight"}
     assert re.search(r"(of|all) " + words.get(n, str(n)) + " pairs", title), title
-    assert "within a point" in body and "cannot test whether labs overstate" in body
+    assert "within a point" not in body, "'within a point' restatement was removed and must stay out"
+    assert "cannot test whether labs overstate" in body
     assert "settings" in body
 
 

@@ -110,7 +110,7 @@ with sync_playwright() as p:
             pg.wait_for_timeout(500)
             sw = pg.evaluate("document.documentElement.scrollWidth")
             check(f"{page} no sideways scroll @{w}", sw <= w, f"{sw}px")
-            if w == 768:
+            if w in (390, 768):
                 crushed = pg.evaluate(CRUSH)
                 check(f"{page} no text crushed sideways @{w}", not crushed, crushed[:3])
             if page == "story.html" and w in (390, 768):

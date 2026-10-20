@@ -13,7 +13,7 @@
    "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass; artifacts unverified. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Kimi Explorer is a search and reasoning mode of the Kimi chat product (press dates launch 11 Oct 2024; the entry date 2024-01-01 looks wrong). System card: not found: checked moonshotai.github.io, Kimi blog, arXiv. Model card: not found: no repo in the moonshotai HF org (API listing of all 19 repos checked), no platform docs page. Paper: not found: arXiv search for Kimi Explorer returned nothing. Usage policy: Kimi terms of service, which govern the Kimi product (same ruling as API-only Kimi k1.5), fetched 200. Source 53ai.com URL now 404. Evidence: docs/evidence/disclosure_research_2026-10-19/moonshot.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Not researched in July 2026; artifacts unverified. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). Kimi Explorer is a search and reasoning mode of the Kimi chat product (press dates launch 11 Oct 2024; the entry date 2024-01-01 looks wrong). System card: not found: checked moonshotai.github.io, Kimi blog, arXiv. Model card: not found: no repo in the moonshotai HF org (API listing of all 19 repos checked), no platform docs page. Paper: not found: arXiv search for Kimi Explorer returned nothing. Usage policy: Kimi terms of service, which govern the Kimi product (same ruling as API-only Kimi k1.5), fetched 200. Source 53ai.com URL now 404. Evidence: docs/evidence/disclosure_research_2026-10-19/moonshot.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -25,7 +25,7 @@
    "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
    "paper": "https://arxiv.org/abs/2501.12599",
    "status": "APPROVED",
-   "notes": "Paper verified this session: arxiv 2501.12599, Kimi k1.5: Scaling Reinforcement Learning with LLMs, Kimi Team (versionless URL substituted for the prior v1 link). Moonshot publishes no system or safety cards. Weights never released; moonshotai HF org listing checked this session, no k1.5 repo. Kimi terms of service fetched 200.",
+   "notes": "Paper verified in July 2026: arxiv 2501.12599, Kimi k1.5: Scaling Reinforcement Learning with LLMs, Kimi Team (versionless URL substituted for the prior v1 link). Moonshot publishes no system or safety cards. Weights never released; moonshotai HF org listing checked in July 2026, no k1.5 repo. Kimi terms of service fetched 200.",
    "researched": true
   },
   {
@@ -37,7 +37,7 @@
    "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
    "paper": "https://arxiv.org/abs/2509.23045",
    "status": "APPROVED",
-   "notes": "Not researched this pass; artifacts unverified. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). System card: not found: checked moonshotai.github.io/Kimi-Dev, HF card, GitHub MoonshotAI/Kimi-Dev; none, consistent with Moonshot practice. Model card: moonshotai HF README, MIT, fetched 200. Paper: arXiv 2509.23045 Kimi-Dev: Agentless Training as Skill Prior for SWE-Agents, comments link GitHub MoonshotAI/Kimi-Dev, fetched 200 (HF card still says tech report coming soon). Usage policy: Kimi terms, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/moonshot.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Not researched in July 2026; artifacts unverified. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). System card: not found: checked moonshotai.github.io/Kimi-Dev, HF card, GitHub MoonshotAI/Kimi-Dev; none, consistent with Moonshot practice. Model card: moonshotai HF README, MIT, fetched 200. Paper: arXiv 2509.23045 Kimi-Dev: Agentless Training as Skill Prior for SWE-Agents, comments link GitHub MoonshotAI/Kimi-Dev, fetched 200 (HF card still says tech report coming soon). Usage policy: Kimi terms, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/moonshot.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -49,7 +49,7 @@
    "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
    "paper": "https://arxiv.org/abs/2507.20534",
    "status": "APPROVED",
-   "notes": "HF card fetched 200: official moonshotai repo, 1T parameter MoE, Modified MIT License. Paper verified this session: arxiv 2507.20534, Kimi K2: Open Agentic Intelligence, Kimi Team. Moonshot publishes no separate system or safety cards; disclosure is HF card plus tech report. Kimi terms fetched 200.",
+   "notes": "HF card fetched 200: official moonshotai repo, 1T parameter MoE, Modified MIT License. Paper verified in July 2026: arxiv 2507.20534, Kimi K2: Open Agentic Intelligence, Kimi Team. Moonshot publishes no separate system or safety cards; disclosure is HF card plus tech report. Kimi terms fetched 200.",
    "researched": true
   },
   {
@@ -61,7 +61,7 @@
    "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
    "paper": "https://arxiv.org/abs/2510.26692",
    "status": "APPROVED",
-   "notes": "Not researched this pass; artifacts unverified. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). System card: not found: checked HF cards, GitHub MoonshotAI/Kimi-Linear, arXiv; none, consistent with Moonshot practice. Model card: moonshotai HF README for the Instruct release (a Base repo also exists), fetched 200. Paper: arXiv 2510.26692 Kimi Linear, Kimi Team, linked from the HF card, fetched 200 (same report as the GitHub tech_report.pdf source; arXiv abs used per convention). Usage policy: Kimi terms, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/moonshot.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Not researched in July 2026; artifacts unverified. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). System card: not found: checked HF cards, GitHub MoonshotAI/Kimi-Linear, arXiv; none, consistent with Moonshot practice. Model card: moonshotai HF README for the Instruct release (a Base repo also exists), fetched 200. Paper: arXiv 2510.26692 Kimi Linear, Kimi Team, linked from the HF card, fetched 200 (same report as the GitHub tech_report.pdf source; arXiv abs used per convention). Usage policy: Kimi terms, fetched 200. Evidence: docs/evidence/disclosure_research_2026-10-19/moonshot.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -73,7 +73,7 @@
    "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "HF card fetched 200: official moonshotai repo, reasoning variant with native INT4 and 256K context. No separate technical report for the Thinking release; web search this session surfaces only the K2 base report (arxiv 2507.20534) and blog material. No system card, consistent with Moonshot practice. Kimi terms fetched 200.",
+   "notes": "HF card fetched 200: official moonshotai repo, reasoning variant with native INT4 and 256K context. No separate technical report for the Thinking release; web search in July 2026 surfaces only the K2 base report (arxiv 2507.20534) and blog material. No system card, consistent with Moonshot practice. Kimi terms fetched 200.",
    "researched": true
   },
   {
@@ -85,7 +85,7 @@
    "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
    "paper": "https://arxiv.org/abs/2602.02276",
    "status": "APPROVED",
-   "notes": "HF card fetched 200: official moonshotai repo, native multimodal agentic model, Modified MIT License. Paper verified this session: arxiv 2602.02276, Kimi K2.5: Visual Agentic Intelligence, Kimi Team, submitted 2026-02-02. No system card, consistent with Moonshot practice. Kimi terms fetched 200.",
+   "notes": "HF card fetched 200: official moonshotai repo, native multimodal agentic model, Modified MIT License. Paper verified in July 2026: arxiv 2602.02276, Kimi K2.5: Visual Agentic Intelligence, Kimi Team, submitted 2026-02-02. No system card, consistent with Moonshot practice. Kimi terms fetched 200.",
    "researched": true
   },
   {
@@ -97,7 +97,7 @@
    "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "HF card fetched 200: official moonshotai repo, open weight multimodal agentic model, Modified MIT License. No K2.6 specific technical report found; web search this session returns only the K2 and K2.5 papers. No system card, consistent with Moonshot practice. Kimi terms fetched 200.",
+   "notes": "HF card fetched 200: official moonshotai repo, open weight multimodal agentic model, Modified MIT License. No K2.6 specific technical report found; web search in July 2026 returns only the K2 and K2.5 papers. No system card, consistent with Moonshot practice. Kimi terms fetched 200.",
    "researched": true
   },
   {
@@ -109,7 +109,7 @@
    "usage_policy": "https://www.kimi.com/user/agreement/modelUse",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "HF card fetched 200: official moonshotai repo, coding focused agentic model built on K2.6, Modified MIT License. Release disclosed via HF card and blog only; no arxiv or tech report PDF found in web search this session. No system card, consistent with Moonshot practice. Kimi terms fetched 200.",
+   "notes": "HF card fetched 200: official moonshotai repo, coding focused agentic model built on K2.6, Modified MIT License. Release disclosed via HF card and blog only; no arxiv or tech report PDF found in web search in July 2026. No system card, consistent with Moonshot practice. Kimi terms fetched 200.",
    "researched": true
   },
   {

@@ -25,7 +25,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "https://arxiv.org/abs/2305.10403",
    "status": "APPROVED",
-   "notes": "Paper verified on arXiv (title PaLM 2 Technical Report, HTTP 200). Model card is Appendix D.10 of the tech report PDF, confirmed by extracting the PDF text this session. No separate system card was published for PaLM 2; safety analysis sits in the report. Usage policy is Google's Generative AI Prohibited Use Policy, page fetched 200 with matching title.",
+   "notes": "Paper verified on arXiv (title PaLM 2 Technical Report, HTTP 200). Model card is Appendix D.10 of the tech report PDF, confirmed by extracting the PDF text in July 2026. No separate system card was published for PaLM 2; safety analysis sits in the report. Usage policy is Google's Generative AI Prohibited Use Policy, page fetched 200 with matching title.",
    "researched": true
   },
   {
@@ -121,7 +121,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "https://arxiv.org/abs/2403.05530",
    "status": "APPROVED",
-   "notes": "Paper verified on arXiv (Gemini 1.5, 200). Model card is Appendix 12.1 (Table 45) of the Gemini 1.5 report PDF, fetched 200 and confirmed by extracting the PDF text this session. No standalone system card was published; Google releases card content inside tech report updates. Usage policy page fetched 200.",
+   "notes": "Paper verified on arXiv (Gemini 1.5, 200). Model card is Appendix 12.1 (Table 45) of the Gemini 1.5 report PDF, fetched 200 and confirmed by extracting the PDF text in July 2026. No standalone system card was published; Google releases card content inside tech report updates. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -217,7 +217,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Model card PDF fetched 200 (application/pdf) from the official deepmind-media Model-Cards bucket. Google published no Gemini 2.0 technical report; the release was announced by blog and the next report is the Gemini 2.5 one, confirmed by web search this session. No standalone system card; safety content sits in the model card. Usage policy page fetched 200.",
+   "notes": "Model card PDF fetched 200 (application/pdf) from the official deepmind-media Model-Cards bucket. Google published no Gemini 2.0 technical report; the release was announced by blog and the next report is the Gemini 2.5 one, confirmed by web search in July 2026. No standalone system card; safety content sits in the model card. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -325,7 +325,7 @@
    "usage_policy": "https://ai.google.dev/gemma/prohibited_use_policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Model card page fetched 200 with title Gemma 3n model card. No system card for Gemma releases. Gemma Prohibited Use Policy fetched 200. Paper left blank: no dedicated Gemma 3n tech report was located this session but absence was not confirmed. Researched 2026-10-19 (paper). Researched 2026-10-19. paper: not found: card citation points to the ai.google.dev docs page, not a report; arXiv searches for Gemma 3n find no Google report; the Gemma 4 report cites Gemma 3n only by a deepmind.google web page. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Model card page fetched 200 with title Gemma 3n model card. No system card for Gemma releases. Gemma Prohibited Use Policy fetched 200. Paper left blank: no dedicated Gemma 3n tech report was located in July 2026 but absence was not confirmed. Researched 2026-10-19 (paper). Researched 2026-10-19. paper: not found: card citation points to the ai.google.dev docs page, not a report; arXiv searches for Gemma 3n find no Google report; the Gemma 4 report cites Gemma 3n only by a deepmind.google web page. Evidence: docs/evidence/disclosure_research_2026-10-19/google-deepmind.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -457,7 +457,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Model card PDF fetched 200 (application/pdf). System card cell holds the Gemini 3 Pro Frontier Safety Framework report PDF, fetched 200; Google does not use the system card label and this is the release safety report. No tech report or arXiv paper for Gemini 3 Pro, confirmed by web search this session; disclosure is via model card, model evaluation report, and FSF report. Usage policy page fetched 200.",
+   "notes": "Model card PDF fetched 200 (application/pdf). System card cell holds the Gemini 3 Pro Frontier Safety Framework report PDF, fetched 200; Google does not use the system card label and this is the release safety report. No tech report or arXiv paper for Gemini 3 Pro, confirmed by web search in July 2026; disclosure is via model card, model evaluation report, and FSF report. Usage policy page fetched 200.",
    "researched": true
   },
   {
@@ -469,7 +469,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Model card PDF fetched 200 (application/pdf) from the deepmind-media Model-Cards bucket; first page reads Gemini 3.1 Pro Model Card, February 2026, confirmed by extracting the PDF text this session. No standalone FSF or safety report for 3.1 Pro: the model card carries the FSF results table as of February 2026 and defers detail to the Gemini 3 Pro FSF report, and probes for a gemini_3_1_pro_fsf_report.pdf returned 404. No tech report or arXiv paper, confirmed by web search this session; disclosure is via model card. Usage policy page fetched 200 with title Generative AI Prohibited Use Policy.",
+   "notes": "Model card PDF fetched 200 (application/pdf) from the deepmind-media Model-Cards bucket; first page reads Gemini 3.1 Pro Model Card, February 2026, confirmed by extracting the PDF text in July 2026. No standalone FSF or safety report for 3.1 Pro: the model card carries the FSF results table as of February 2026 and defers detail to the Gemini 3 Pro FSF report, and probes for a gemini_3_1_pro_fsf_report.pdf returned 404. No tech report or arXiv paper, confirmed by web search in July 2026; disclosure is via model card. Usage policy page fetched 200 with title Generative AI Prohibited Use Policy.",
    "researched": true
   },
   {
@@ -481,7 +481,7 @@
    "usage_policy": "https://policies.google.com/terms/generative-ai/use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Naming flag: the model launched 2026-03-03 is branded Gemini 3.1 Flash-Lite by Google; press coverage dated 2026-03-03 confirms the preview launch, and no Gemini 3.0 or plain Gemini 3 Flash-Lite card exists in the bucket (variant probes returned 404). Linked card matches the row date. Model card PDF fetched 200 (application/pdf); extracted text reads Gemini 3.1 Flash-Lite Model Card. No standalone system or safety report: the card's Frontier Safety Assessment relies on the Gemini 3.1 Pro evaluation. No tech report or arXiv paper for Gemini 3 series releases, confirmed by web search this session. Usage policy page fetched 200.",
+   "notes": "Naming flag: the model launched 2026-03-03 is branded Gemini 3.1 Flash-Lite by Google; press coverage dated 2026-03-03 confirms the preview launch, and no Gemini 3.0 or plain Gemini 3 Flash-Lite card exists in the bucket (variant probes returned 404). Linked card matches the row date. Model card PDF fetched 200 (application/pdf); extracted text reads Gemini 3.1 Flash-Lite Model Card. No standalone system or safety report: the card's Frontier Safety Assessment relies on the Gemini 3.1 Pro evaluation. No tech report or arXiv paper for Gemini 3 series releases, confirmed by web search in July 2026. Usage policy page fetched 200.",
    "researched": true
   },
   {

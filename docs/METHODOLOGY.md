@@ -20,13 +20,13 @@ Parameter counts work differently. They come from Epoch AI's data, and we have n
 
 Comparisons between models are calculated before publishing. The site also works out counts, shares and medians for whatever view you filter to, using the rules on this page.
 
-**4. Benchmark versions are fixed.** Every benchmark label carries its version: **GPQA Diamond** (graduate-level science questions), never "GPQA"; **SWE-Bench Verified**, never "SWE-Bench". A revised benchmark is a different test. We never draw a line, a delta, or a chart across two versions. Where a lab published its evaluation settings, they appear under the score as written. A lab-stated number whose benchmark name lacks the version is held back as an unpinned claim and never published as a number.
+**4. Benchmark versions are fixed.** Every benchmark label carries its version: **GPQA Diamond** (graduate-level science questions), never "GPQA"; **SWE-bench Verified**, never "SWE-bench". A revised benchmark is a different test. We never draw a line, a delta, or a chart across two versions. Where a lab published its evaluation settings, they appear under the score as written. A lab-stated number whose benchmark name lacks the version is held back as an unpinned claim and never published as a number.
 
 ## Scope
 
 We track twelve labs: OpenAI, Anthropic, Google DeepMind, Meta, xAI, Mistral, DeepSeek, Alibaba (Qwen), Moonshot AI, Z.ai (Zhipu), Cohere, and Amazon. The record starts on 2022-11-30, the day ChatGPT launched.
 
-The list can grow. A lab is added when it ships a model that Epoch AI counts as notable, or that holds a top spot on major leaderboards over time. Every change to the list is logged with a date and a reason in `content/registry_log.md`, and the log is never edited. Disclosure links waiting for approval show as "under review".
+The list can grow. A lab is added when it ships a model that Epoch AI counts as notable, or that holds a top spot on major leaderboards over time. Every change to the list is logged with a date and a reason in `content/registry_log.md`, and the log is never edited.
 
 The twelve labs were chosen in July 2026 for their record up to then, and the same list is applied back to 2022. Labs not chosen in July 2026 include Inflection, AI21 Labs, Aleph Alpha, Stability AI and 01.AI. Some large producers are not tracked yet: ByteDance, Tencent, Baidu, MiniMax, StepFun, Microsoft, NVIDIA and IBM. Growth in release counts partly reflects that choice. Because ByteDance, Tencent and Baidu are not tracked, the record cannot support a comparison between countries.
 
@@ -63,7 +63,7 @@ Each entry records how it reached the record, in a field called `origin`:
 We record two benchmarks. Each has a stable, versioned definition maintained by the people who built it, and each is measured independently on an ongoing basis. We do not define them; we fix the version and record the measurements.
 
 - **GPQA Diamond**: the expert-validated "diamond" subset of GPQA, a graduate-level science benchmark from Rein et al. (2023), built to stay hard even with web access.
-- **SWE-Bench Verified**: a human-validated subset of SWE-bench (Jimenez et al., 2023), a software-engineering benchmark drawn from real GitHub issues. OpenAI screened the Verified subset in 2024 for tasks that are solvable and well specified.
+- **SWE-bench Verified**: a human-validated subset of SWE-bench (Jimenez et al., 2023), a software-engineering benchmark drawn from real GitHub issues. OpenAI screened the Verified subset in 2024 for tasks that are solvable and well specified.
 
 Scores are percentages from 0 to 100, recorded as the source published them.
 
@@ -82,7 +82,6 @@ Every headline number is computed from the published files by a stated rule. Not
 - **Open-weights share**: releases with open weights in a calendar year, divided by all releases that year. Availability is on record for every release.
 - **Releases with a paper link, or a system card link**: the number of releases with a link on record for that item.
 - **Percentages**: a percentage of releases with a paper, system card, model card or usage policy on record divides by the releases we have checked for that item, never by all releases. A release we have not checked is not in the denominator. A parameter-count percentage divides by all releases, because those counts come from Epoch AI's data. Each percentage states its denominator.
-- **Under review**: a column shows "under review" when we have found links but have not yet approved them onto the record. That is our backlog. It never shows as a zero or a percentage.
 
 ## Sources
 

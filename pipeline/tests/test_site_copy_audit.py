@@ -8,10 +8,12 @@ appears, the two kinds of absence read "not disclosed (we checked)" and
 "not yet checked", the explorer explains a missing change in one line, the
 prehistory note is gone, and every required disclosure survives the cuts.
 """
+import gzip
+import json
 import pathlib
 import re
 
-from pipeline import lint_voice
+from pipeline import config, lint_voice, store
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 SITE = ROOT / "site"
@@ -156,3 +158,33 @@ def test_the_story_close_carries_no_filler():
     story = PAGES["story.html"]
     assert "sclose-specs" not in story and 'id="sp-newest"' not in story and 'id="sp-record"' not in story
     assert "closeSpecimens" not in JS["story.js"]
+
+
+def test_entry_summaries_use_current_registry_display_names():
+    """config.REGISTRY display names must match what backfill-epoch summaries say.
+
+    backfill.build_summary names the lab from config.REGISTRY[org]["display"].
+    If the display name is changed without regenerating the record, the
+    committed summaries use the old name and the explorer inspector shows it.
+    Only backfill-epoch entries are checked: nightly-pipeline and manual entries
+    have hand-written summaries that may use shorter forms (e.g., "Google"
+    instead of "Google DeepMind") and are not generated from the display name.
+    This test fails on that drift so CI catches it without a full rebuild.
+    """
+    entries = store.read_entries(root=str(ROOT))
+    mismatches = []
+    for e in entries:
+        if e.get("origin") != "backfill-epoch":
+            continue
+        org = e.get("org")
+        summary = e.get("summary", "")
+        if not org or not summary:
+            continue
+        display = config.REGISTRY.get(org, {}).get("display", "")
+        if not display:
+            continue
+        if not summary.startswith(display + " ") and not summary.startswith(display + "'"):
+            first_word_end = summary.find(" ")
+            first_segment = summary[:first_word_end + 20] if first_word_end > 0 else summary[:40]
+            mismatches.append(f"{e['id']}: summary starts {first_segment!r}, expected display {display!r}")
+    assert not mismatches, "Entry summaries use stale display names:\n" + "\n".join(mismatches[:10])

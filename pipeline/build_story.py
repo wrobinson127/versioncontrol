@@ -61,7 +61,7 @@ paper_state = {r["entry_id"]: r["cells"]["paper"] for r in V["disclosure_matrix"
 paper_by_entry = {k: v == "disclosed" for k, v in paper_state.items()}
 paper_researched = {k: v != "not_researched" for k, v in paper_state.items()}
 yearly = {y["year"]: y["releases"] for y in V["cadence"]["yearly"]}
-BENCH_LABEL = {"gpqa-diamond": "GPQA Diamond", "swe-bench-verified": "SWE-Bench Verified"}
+BENCH_LABEL = {"gpqa-diamond": "GPQA Diamond", "swe-bench-verified": "SWE-bench Verified"}
 
 # ---- the entries: parameter counts, availability, provenance dates, pairs ----
 param_by_entry = {}
@@ -190,6 +190,8 @@ for y in slots:
     _cap_vals.append(round(_cap_run)); _cap_by_y[y] = _cap_run
 
 swe_lo, swe_hi = round(swe_pts[0]["value"]), round(max(p["value"] for p in swe_pts))
+swe_lo_yr = swe_pts[0]["date"][:4]
+swe_hi_yr = max(swe_pts, key=lambda p: p["value"])["date"][:4]
 n_swe = len(swe_pts)
 n_scored = sum(1 for r in _rel_t if r["entry_id"] in score_by_entry)
 _n_total = len(_rel_t)
@@ -255,8 +257,8 @@ SWE_CASE_ORDER = [o for o in ["openai", "anthropic", "google-deepmind"] if len(s
 def _swe_copy(o):
     vals = swe_org_vals[o]; first = round(vals[0][1]); last = round(vals[-1][1]); n = len(vals)
     if n >= 3:
-        return f"On SWE-Bench Verified, {NMSHORT[o]}'s independent score moves from {first} to {last} across {n} releases on record."
-    return f"On SWE-Bench Verified, {NMSHORT[o]} has two independent scores on record, months apart: {first}, then {last}."
+        return f"On SWE-bench Verified, {NMSHORT[o]}'s independent score moves from {first} to {last} across {n} releases on record."
+    return f"On SWE-bench Verified, {NMSHORT[o]} has two independent scores on record, months apart: {first}, then {last}."
 
 
 SWE_CLIMB_COPY = {o: (NMSHORT[o], _swe_copy(o)) for o in SWE_CASE_ORDER}
@@ -424,8 +426,8 @@ DIV_NOTE = (f"{near} of the {len(PAIRS)} pairs sit within a single point. "
             + f"With so few pairs this is not a test of whether labs overstate. Both numbers are kept; neither is averaged.")
 PAIRS_LEAD = (f"{n_pair_models} releases were graded twice on the same benchmark: once by the releasing lab, "
               f"once by Epoch. ")
-SWE_NOTE = (f"On a second benchmark, SWE-Bench Verified (fixing real GitHub issues), Epoch's top score rose from "
-            f"{swe_lo} to {swe_hi} over the same years.")
+SWE_NOTE = (f"On a second benchmark, SWE-bench Verified (fixing real GitHub issues), Epoch's top score rose from "
+            f"{swe_lo} in {swe_lo_yr} to {swe_hi} in {swe_hi_yr}.")
 WAIT_RULE = ("\"At first\" is the median of a lab's first third of gaps on record; \"lately\", of its last third.")
 
 # ---------------------------------------------------------------------------
@@ -489,17 +491,17 @@ STEP3 = (f"<p>{SWE_NOTE}</p>"
 
 H4 = (f"The lab's score is above Epoch's in all {nword(len(PAIRS))} pairs" if len(_lab_hi) == len(PAIRS)
       else f"The lab's score is above Epoch's in {nword(len(_lab_hi))} of {nword(len(PAIRS))} pairs")
-STEP4 = (f"<p>{_cap(nword(near))} of the {nword(len(PAIRS))} are within a point."
-         + (f" In {nword(len(SET_DIFF))} ({_join_and([esc(p['model']) for p in SET_DIFF])}) {_SET_WORDS}, "
-            f"so those gaps include a settings difference." if SET_DIFF else "")
-         + f"</p><p>{_cap(nword(len(PAIRS)))} pairs from recent releases cannot test whether labs overstate.</p>")
+STEP4 = ((f"<p>In {nword(len(SET_DIFF))} ({_join_and([esc(p['model']) for p in SET_DIFF])}) {_SET_WORDS}, "
+          f"so those gaps include a settings difference.</p>" if SET_DIFF else "")
+         + f"<p>{_cap(nword(len(PAIRS)))} pairs from recent releases cannot test whether labs overstate.</p>")
 
-_wait = {o: (lambda v: (_med(v[:max(1, len(v) // 3)]), _med(v[-max(1, len(v) // 3):])))(_waits(o)) for o in CASE_ORDER}
-_shorter = [o for o in CASE_ORDER if _wait[o][1] < _wait[o][0]]
-H5 = (f"The wait between releases shortened at all {nword(len(CASE_ORDER))} labs with long records"
-      if len(_shorter) == len(CASE_ORDER)
-      else f"The wait between releases shortened at {_join_and([NMSHORT[o] for o in _shorter]) or 'none'} of the labs with long records")
-STEP5 = ("<p>Median days between releases, at first and lately: "
+_wait_all = {o: (lambda v: (_med(v[:max(1, len(v) // 3)]), _med(v[-max(1, len(v) // 3):]))
+                 if v else (None, None))(_waits(o)) for o in REG}
+_shorter_all = [o for o in REG if _wait_all[o][0] is not None and _wait_all[o][1] is not None
+                and _wait_all[o][1] < _wait_all[o][0]]
+_wait = {o: _wait_all[o] for o in CASE_ORDER}
+H5 = f"The wait between releases shortened at {nword(len(_shorter_all))} of the {nword(N_LABS)} labs"
+STEP5 = ("<p>For example, median days between releases at first and lately: "
          + ", ".join(f"{NMSHORT[o]} {_wait[o][0]} to {_wait[o][1]}" for o in CASE_ORDER)
          + f". {WAIT_RULE}</p>"
          "<p>ByteDance, Tencent and Baidu are not tracked, so the record cannot support a comparison between countries.</p>")
@@ -602,7 +604,7 @@ FALLBACK = ("".join(_nfb(h, b) for (_, h, b) in PULSE_NOTES)
             + "".join(_nfb(h, b) for (_, h, b) in TRAJ_NOTES)
             + "".join(_nfb(f"{TRAJ_COPY[o][0]}: independent GPQA Diamond scores", TRAJ_COPY[o][1]) for o in CASE_ORDER)
             + _nfb("A second benchmark", SWE_NOTE)
-            + "".join(_nfb(f"{SWE_CLIMB_COPY[o][0]}: on SWE-Bench", SWE_CLIMB_COPY[o][1]) for o in SWE_CASE_ORDER)
+            + "".join(_nfb(f"{SWE_CLIMB_COPY[o][0]}: on SWE-bench Verified", SWE_CLIMB_COPY[o][1]) for o in SWE_CASE_ORDER)
             + _nfb("What the lab said, beside what Epoch measured", PAIRS_LEAD + DIV_NOTE)
             + _table("Lab-reported and independent scores on the same release and benchmark, with settings as written.",
                      ["Release", "Benchmark", "LAB", "IND", "Lab setting", "Epoch setting"], _pair_rows, num_cols=(2, 3))
@@ -650,7 +652,6 @@ MAIN = f"""<main id="main" class="story" tabindex="-1">
 </section>
 
 <section class="sclose" aria-labelledby="ch">
-<p class="endstance"><b>The record is public.</b> Each night it checks its sources and drafts new entries; a person approves each one before it appears. Every number shows where it came from, or it is left out.</p>
 <h2 class="readmore-h" id="ch">The full record, its rules and who keeps it</h2>
 <div class="enddoors">
 <a class="enddoor" href="explorer.html"><b>Explorer</b><span>every entry, filterable</span></a>

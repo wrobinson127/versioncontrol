@@ -13,7 +13,7 @@
    "usage_policy": "https://x.ai/legal/acceptable-use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Not researched this pass. Grok-0 was an internal prototype mentioned only inside the Grok announcement; no standalone artifacts expected but not verified. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: Grok-0 is the 33B prototype mentioned only in x.ai/news/grok (200); the Grok-1 Model Card page (200) covers Grok-1 and mentions Grok-0 only as a source of feedback; x.ai/safety lists no Grok-0 card. model_card: not found: closed weights; xai-org on Hugging Face lists only grok-1 and grok-2 (HF API 200); xAI model card PDFs are recorded under system_card (approved-row ruling). usage_policy: AUP fetched 200, applied per the xAI convention, though Grok-0 was never offered publicly. paper: not found: xAI publishes no technical papers; announcement links none; arXiv title search returns no xAI paper. Evidence: docs/evidence/disclosure_research_2026-10-19/xai.md. Approved by Walker Robinson, 2026-10.",
+   "notes": "Not researched in July 2026. Grok-0 was an internal prototype mentioned only inside the Grok announcement; no standalone artifacts expected but not verified. Researched 2026-10-19 (system_card, model_card, usage_policy, paper). system_card: not found: Grok-0 is the 33B prototype mentioned only in x.ai/news/grok (200); the Grok-1 Model Card page (200) covers Grok-1 and mentions Grok-0 only as a source of feedback; x.ai/safety lists no Grok-0 card. model_card: not found: closed weights; xai-org on Hugging Face lists only grok-1 and grok-2 (HF API 200); xAI model card PDFs are recorded under system_card (approved-row ruling). usage_policy: AUP fetched 200, applied per the xAI convention, though Grok-0 was never offered publicly. paper: not found: xAI publishes no technical papers; announcement links none; arXiv title search returns no xAI paper. Evidence: docs/evidence/disclosure_research_2026-10-19/xai.md. Approved by Walker Robinson, 2026-10.",
    "researched": true
   },
   {
@@ -37,7 +37,7 @@
    "usage_policy": "https://x.ai/legal/acceptable-use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Announcement at x.ai/news/grok-1.5 fetched 200; it links no model card, system card, or paper. Weights never released; xai-org on HF lists only grok-1 and grok-2 (org page checked this session). AUP fetched 200.",
+   "notes": "Announcement at x.ai/news/grok-1.5 fetched 200; it links no model card, system card, or paper. Weights never released; xai-org on HF lists only grok-1 and grok-2 (org page checked in July 2026). AUP fetched 200.",
    "researched": true
   },
   {
@@ -85,7 +85,7 @@
    "usage_policy": "https://x.ai/legal/acceptable-use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Mini variant announced inside the Grok 3 post; no separate x.ai/news/grok-3-mini page (404 this session) and no artifacts of its own. Same disclosure posture as Grok 3: no card, no HF repo, no paper. AUP fetched 200.",
+   "notes": "Mini variant announced inside the Grok 3 post; no separate x.ai/news/grok-3-mini page (404 in July 2026) and no artifacts of its own. Same disclosure posture as Grok 3: no card, no HF repo, no paper. AUP fetched 200.",
    "researched": true
   },
   {
@@ -169,7 +169,7 @@
    "usage_policy": "https://x.ai/legal/acceptable-use-policy",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "Beta release confirmed via press coverage; no x.ai/news post found this session. Early access product still in beta; the x.ai/safety card index lists a Grok 4.5 card but nothing for 4.3, so the system card is left NOT_RESEARCHED pending a recheck after general availability. Closed weights, no HF repo. AUP fetched 200. No paper.",
+   "notes": "Beta release confirmed via press coverage; no x.ai/news post found in July 2026. Early access product still in beta; the x.ai/safety card index lists a Grok 4.5 card but nothing for 4.3, so the system card is left NOT_RESEARCHED pending a recheck after general availability. Closed weights, no HF repo. AUP fetched 200. No paper.",
    "researched": true
   },
   {

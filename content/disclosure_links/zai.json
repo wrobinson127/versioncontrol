@@ -25,7 +25,7 @@
    "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
    "paper": "https://arxiv.org/abs/2406.12793",
    "status": "APPROVED",
-   "notes": "System card: Z.ai publishes no system cards, only HF model cards and arxiv reports. Model card: flagship GLM-4 was API only; HF cards exist only for later open 9B variants. Usage policy is the current Z.ai terms of service with acceptable use restrictions, verified this session. Paper is the ChatGLM to GLM-4 family report, verified on arxiv.",
+   "notes": "System card: Z.ai publishes no system cards, only HF model cards and arxiv reports. Model card: flagship GLM-4 was API only; HF cards exist only for later open 9B variants. Usage policy is the current Z.ai terms of service with acceptable use restrictions, verified in July 2026. Paper is the ChatGLM to GLM-4 family report, verified on arxiv.",
    "researched": true
   },
   {
@@ -37,7 +37,7 @@
    "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
    "paper": "https://arxiv.org/abs/2406.12793",
    "status": "APPROVED",
-   "notes": "System card: none published by Z.ai. Model card: GLM-4-0520 served via API only, no HF repo for this snapshot. Usage policy is the current Z.ai terms, verified this session. Paper is the GLM-4 family report, verified on arxiv; it covers the GLM-4 generation including this refresh.",
+   "notes": "System card: none published by Z.ai. Model card: GLM-4-0520 served via API only, no HF repo for this snapshot. Usage policy is the current Z.ai terms, verified in July 2026. Paper is the GLM-4 family report, verified on arxiv; it covers the GLM-4 generation including this refresh.",
    "researched": true
   },
   {
@@ -49,7 +49,7 @@
    "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
    "paper": "https://arxiv.org/abs/2406.12793",
    "status": "APPROVED",
-   "notes": "System card: none published by Z.ai. Model card verified this session on the zai-org HF page, describes the 9B multimodal model, specs, and usage. Usage policy is the current Z.ai terms, verified. Paper is the GLM-4 family report, verified on arxiv; no dedicated GLM-4V paper.",
+   "notes": "System card: none published by Z.ai. Model card verified in July 2026 on the zai-org HF page, describes the 9B multimodal model, specs, and usage. Usage policy is the current Z.ai terms, verified. Paper is the GLM-4 family report, verified on arxiv; no dedicated GLM-4V paper.",
    "researched": true
   },
   {
@@ -61,7 +61,7 @@
    "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "System card: none published by Z.ai. Model card: GLM-4-Plus is an API only model with no HF repo under zai-org. Paper: no technical report was released for GLM-4-Plus. Usage policy is the current Z.ai terms, verified this session.",
+   "notes": "System card: none published by Z.ai. Model card: GLM-4-Plus is an API only model with no HF repo under zai-org. Paper: no technical report was released for GLM-4-Plus. Usage policy is the current Z.ai terms, verified in July 2026.",
    "researched": true
   },
   {
@@ -73,7 +73,7 @@
    "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
    "paper": "NOT_DISCLOSED",
    "status": "APPROVED",
-   "notes": "System card: none published by Z.ai. Model card verified this session on HF, covers the 32B model and its Z1 variants with benchmarks and deployment guidance. Paper: the HF card cites no dedicated technical report for the 0414 series. Usage policy is the current Z.ai terms, verified.",
+   "notes": "System card: none published by Z.ai. Model card verified in July 2026 on HF, covers the 32B model and its Z1 variants with benchmarks and deployment guidance. Paper: the HF card cites no dedicated technical report for the 0414 series. Usage policy is the current Z.ai terms, verified.",
    "researched": true
   },
   {
@@ -85,7 +85,7 @@
    "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
    "paper": "https://arxiv.org/abs/2508.06471",
    "status": "APPROVED",
-   "notes": "System card: none published by Z.ai. Model card verified this session on HF, MIT license, 355B MoE, cites the arxiv report. Paper verified on arxiv, GLM-4.5 ARC foundation models report. Usage policy is the current Z.ai terms, verified.",
+   "notes": "System card: none published by Z.ai. Model card verified in July 2026 on HF, MIT license, 355B MoE, cites the arxiv report. Paper verified on arxiv, GLM-4.5 ARC foundation models report. Usage policy is the current Z.ai terms, verified.",
    "researched": true
   },
   {
@@ -97,7 +97,7 @@
    "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
    "paper": "https://arxiv.org/abs/2507.01006",
    "status": "APPROVED",
-   "notes": "System card: none published by Z.ai. Model card verified this session on HF and it links the paper. Paper verified on arxiv, GLM-4.1V-Thinking and GLM-4.5V multimodal reasoning report. Usage policy is the current Z.ai terms, verified.",
+   "notes": "System card: none published by Z.ai. Model card verified in July 2026 on HF and it links the paper. Paper verified on arxiv, GLM-4.1V-Thinking and GLM-4.5V multimodal reasoning report. Usage policy is the current Z.ai terms, verified.",
    "researched": true
   },
   {
@@ -109,7 +109,7 @@
    "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
    "paper": "https://arxiv.org/abs/2508.06471",
    "status": "APPROVED",
-   "notes": "System card: none published by Z.ai. Model card verified this session on HF, 357B, 200K context, MIT license. Paper: no dedicated GLM-4.6 report; the HF card cites the GLM-4.5 family report, verified on arxiv. Usage policy is the current Z.ai terms, verified.",
+   "notes": "System card: none published by Z.ai. Model card verified in July 2026 on HF, 357B, 200K context, MIT license. Paper: no dedicated GLM-4.6 report; the HF card cites the GLM-4.5 family report, verified on arxiv. Usage policy is the current Z.ai terms, verified.",
    "researched": true
   },
   {
@@ -121,7 +121,7 @@
    "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
    "paper": "https://arxiv.org/abs/2508.06471",
    "status": "APPROVED",
-   "notes": "System card: none published by Z.ai. Model card verified this session on HF, 358B, interleaved thinking, MIT license. Paper: no dedicated GLM-4.7 report; the HF card cites the GLM-4.5 family report, verified on arxiv. Usage policy is the current Z.ai terms, verified.",
+   "notes": "System card: none published by Z.ai. Model card verified in July 2026 on HF, 358B, interleaved thinking, MIT license. Paper: no dedicated GLM-4.7 report; the HF card cites the GLM-4.5 family report, verified on arxiv. Usage policy is the current Z.ai terms, verified.",
    "researched": true
   },
   {
@@ -133,7 +133,7 @@
    "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
    "paper": "https://arxiv.org/abs/2602.15763",
    "status": "APPROVED",
-   "notes": "System card: none published by Z.ai. Model card verified this session on HF, 744B total 40B active, MIT license, links the paper. Paper verified on arxiv, GLM-5 from vibe coding to agentic engineering. Swapped prior pdf link for the abs page. Usage policy is the current Z.ai terms, verified.",
+   "notes": "System card: none published by Z.ai. Model card verified in July 2026 on HF, 744B total 40B active, MIT license, links the paper. Paper verified on arxiv, GLM-5 from vibe coding to agentic engineering. Swapped prior pdf link for the abs page. Usage policy is the current Z.ai terms, verified.",
    "researched": true
   },
   {
@@ -145,7 +145,7 @@
    "usage_policy": "https://chat.z.ai/legal-agreement/terms-of-service",
    "paper": "https://arxiv.org/abs/2602.15763",
    "status": "APPROVED",
-   "notes": "System card: none published by Z.ai. Model card verified this session on HF, 753B, 1M context, MIT license. Paper: no dedicated GLM-5.2 report; the HF card links the GLM-5 report, verified on arxiv. Usage policy is the current Z.ai terms, verified.",
+   "notes": "System card: none published by Z.ai. Model card verified in July 2026 on HF, 753B, 1M context, MIT license. Paper: no dedicated GLM-5.2 report; the HF card links the GLM-5 report, verified on arxiv. Usage policy is the current Z.ai terms, verified.",
    "researched": true
   },
   {

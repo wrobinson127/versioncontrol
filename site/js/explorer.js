@@ -37,7 +37,7 @@
       { k: "country", label: "Country", w: 132, sort: function (e) { return e._country; }, f: { type: "select", key: "country", aria: "Filter by the country of the lab's parent company", o: [["", "All"]].concat(countries.map(function (c) { return [c, c]; })) } },
       { k: "gpqa", label: "GPQA Diamond", w: 216, num: true, sort: function (e) { return scoreSort(e, "gpqa-diamond"); }, f: { type: "select", key: "gpqa", aria: "Filter by GPQA Diamond score", o: SCORE_OPTS } },
       { k: "swe", label: "SWE-Bench Verified", w: 216, num: true, sort: function (e) { return scoreSort(e, "swe-bench-verified"); }, f: { type: "select", key: "swe", aria: "Filter by SWE-Bench Verified score", o: SCORE_OPTS } },
-      { k: "sc", label: "System card", w: 152, disc: "system_card", sort: function (e) { return discSort(e, "system_card"); }, f: { type: "select", key: "sc", aria: "Filter by system card", o: DISC_OPTS } },
+      { k: "sc", label: "System card", w: 228, disc: "system_card", sort: function (e) { return discSort(e, "system_card"); }, f: { type: "select", key: "sc", aria: "Filter by system card", o: DISC_OPTS } },
       { k: "mc", label: "Model card", w: 152, disc: "model_card", sort: function (e) { return discSort(e, "model_card"); }, f: { type: "select", key: "mc", aria: "Filter by model card", o: DISC_OPTS } },
       { k: "up", label: "Usage policy", w: 152, disc: "usage_policy", sort: function (e) { return discSort(e, "usage_policy"); }, f: { type: "select", key: "up", aria: "Filter by usage policy", o: DISC_OPTS } },
       { k: "pa", label: "Paper", w: 152, disc: "paper", sort: function (e) { return discSort(e, "paper"); }, f: { type: "select", key: "pa", aria: "Filter by paper", o: DISC_OPTS } },
@@ -458,7 +458,7 @@
     h += '<h3 class="ins-h3">Sources</h3><ul class="ins-src">';
     (e.sources || []).forEach(function (s) {
       h += '<li><a href="' + esc(s.url) + '" rel="external noopener" target="_blank">' + esc(CR.SOURCE_KIND_NAMES[s.kind] || s.kind.replace(/_/g, " ")) + '</a> <span class="t-m">' + esc(host(s.url)) +
-        '</span><span class="src-meta">Retrieved <span class="num">' + esc(s.retrieval_date) + "</span>. " + (s.archived_url ? archLink(s.archived_url) : (s.kind === "epoch_csv" ? '<span class="t-m">a dataset; no archived copy</span>' : '<span class="t-m">no archived copy yet</span>')) + "</span></li>";
+        '</span><span class="src-meta">Retrieved <span class="num">' + esc(s.retrieval_date) + "</span>. " + (s.archived_url ? archLink(s.archived_url) : (s.kind === "epoch_csv" ? '<span class="t-m">A dataset; no archived copy</span>' : '<span class="t-m">No archived copy yet</span>')) + "</span></li>";
     });
     h += "</ul>";
     h += '<p class="ins-foot">Entry id <code class="num">' + esc(e.id) + '</code>. See something wrong? <a href="https://github.com/wrobinson127/versioncontrol/issues/new">Report an error</a>.</p>';
