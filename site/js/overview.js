@@ -1106,7 +1106,7 @@
         s += "</svg>";
         h += '<div class="wf-cell" data-slot="' + sl[0] + '">' + (mobile ? '<p class="wf-mh">' + sl[1] + "</p>" : "") + '<div class="wf-sq" style="min-height:' + hh + 'px">' + s + "</div>" +
           '<p class="wf-n">' + (c.researched ? '<b class="num">' + Math.round(100 * c.share) + "%</b> <span>" + c.disclosed + " of " + c.researched + "</span>" : '<span class="nr-w">none checked</span>') + "</p>" +
-          '<p class="wf-nr">' + (list.length ? (c.not_researched ? c.not_researched + " not yet checked" : "") : "no releases in view") + "</p></div>";
+          '<p class="wf-nr">' + (list.length ? (c.not_researched ? '<span class="wf-long">' + c.not_researched + ' not yet checked</span><span class="wf-short">' + c.not_researched + " unchecked</span>" : "") : "no releases in view") + "</p></div>";
       });
     });
     h += "</div>";

@@ -108,7 +108,10 @@ def test_not_yet_checked_shows_only_where_the_view_holds_one():
     in view contain one; no page carries a paragraph explaining it."""
     assert 'var nr = marks.some(function (m) { return m.t === "d" && m.cell === "not_researched"; });' in JS["story.js"]
     assert "function discLegend(list)" in JS["overview.js"] and 'concat(nr ? ["not_researched"] : [])' in JS["overview.js"]
-    assert 'c.not_researched ? c.not_researched + " not yet checked" : ""' in JS["overview.js"]
+    # the label renders only when a cell is unchecked; narrow cells use a
+    # short form instead of clipping the long one
+    assert "(c.not_researched ? '<span class=\"wf-long\">' + c.not_researched + ' not yet checked</span>" in JS["overview.js"]
+    assert ' unchecked</span>" : "")' in JS["overview.js"]
     assert '["disclosed", "not_disclosed"].concat(rows.some(' in JS["explorer.js"]
     assert '(sc.not_researched ? "<li>"' in JS["doc.js"]
     for name, s in _visible_strings():

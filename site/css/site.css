@@ -426,6 +426,9 @@ svg .num-t { fill: var(--text); }
 .wf-n { margin-top: 6px; font-size: 12.5px; color: var(--muted); white-space: nowrap; }
 .wf-n b { color: var(--text); font-weight: 500; font-size: 13px; margin-right: 4px; }
 .wf-nr { color: var(--faint); font-size: 12px; white-space: nowrap; }
+.wf-nr .wf-short { display: none; }
+/* narrow cells get the short form instead of clipped text */
+@media (max-width: 720px) { .wf-nr .wf-long { display: none; } .wf-nr .wf-short { display: inline; } }
 .wf-mh { font-size: 12.5px; font-weight: 600; margin-bottom: 4px; }
 
 /* ---------- availability ---------- */
@@ -579,7 +582,7 @@ svg .cmp-over { fill: var(--accent-text); }
   .wf-grid { grid-template-columns: repeat(var(--wf-cols), minmax(0, 1fr)); gap: 10px 8px; }
   .wf-n { white-space: normal; font-size: 11.5px; line-height: 15px; }
   .wf-nr { font-size: 11.5px; }
-  .wf-cell { overflow: hidden; }
+
   .wf-n b { display: block; }
   .tabbar {
     display: grid; grid-template-columns: repeat(6, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
