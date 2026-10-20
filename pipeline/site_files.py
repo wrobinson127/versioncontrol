@@ -83,7 +83,7 @@ The two CSV files are the easiest way in. The full record is gzipped JSON, one f
 {file_lines}
 - {SITE}/data/derived/site_meta.json
 
-Cite as: Walker Robinson. Version Control: the release record of the AI model era. Dataset, CC BY 4.0. {SITE}. Record updated {meta['last_successful_update']}; accessed (the date you retrieved it). Release data derives from Epoch AI, "Data on AI Models"; independent scores from Epoch AI, "Capabilities & benchmarking".
+Cite as: Walker Robinson. Version Control: a public record of AI model releases. Dataset, CC BY 4.0. {SITE}. Record updated {meta['last_successful_update']}; accessed (the date you retrieved it). Release data derives from Epoch AI, "Data on AI Models"; independent scores from Epoch AI, "Capabilities & benchmarking".
 """
 
 

@@ -20,7 +20,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Dataset",
-  "name": "Version Control: the release record of the AI model era",
+  "name": "Version Control: a public record of AI model releases",
   "description": "A public record of AI model releases from twelve tracked labs since 2022-11-30: release date, availability, disclosure documents (system card, model card, usage policy, paper), and GPQA Diamond and SWE-bench Verified scores, each with its source class, source URL and retrieval date.",
   "url": "https://versioncontrol.walker-robinson.com/data.html",
   "license": "https://creativecommons.org/licenses/by/4.0/",
@@ -101,7 +101,7 @@
       <tr><td><code>entry_type</code></td><td>release, or revision: an update to a model already on record, shipped under the same name.</td></tr>
       <tr><td><code>availability_class</code></td><td>open_weights, public_api, or public_service (a product people can sign up for).</td></tr>
       <tr><td><code>origin</code></td><td>How the entry reached the record: backfill-epoch (from Epoch AI's dataset), nightly-pipeline (found by nightly detection, approved by hand), or manual (recorded by hand).</td></tr>
-      <tr><td><code>parameters</code></td><td>Total parameter count. NOT_DISCLOSED here means Epoch AI's dataset has no count; we have not checked the labs' pages. parameters_basis says whether a count is the lab's own or reported by others.</td></tr>
+      <tr><td><code>parameters</code></td><td>Total parameter count. NOT_DISCLOSED here means no count is on record: for entries built from Epoch AI's data, Epoch has none and we have not checked the labs' pages; for entries added since, the lab's own pages state none. parameters_basis says whether a count is the lab's own or reported by others.</td></tr>
       <tr><td><code>parameters_basis</code></td><td>lab (the lab's own count), third_party (a count Epoch AI records from a report by others: a rumor, a leak, an estimate, a newsletter, another party's paper or a post on X), or NOT_DISCLOSED when there is no count. Third-party counts are left out of every parameter finding.</td></tr>
       <tr><td><code>parameters_note</code></td><td>JSON only, on third_party counts: Epoch AI's note on where the count came from.</td></tr>
       <tr><td><code>summary</code></td><td>A short account of the release, written to what the sources support, with lab claims attributed to the lab.</td></tr>
@@ -128,11 +128,11 @@
   <p>Release dates, lab names, parameter counts and availability come from Epoch AI's models dataset. Independent scores come from Epoch AI's benchmarking data.</p></div><div class="specs"><aside class="spec" id="sp-epoch" aria-label="What comes from Epoch AI"><p class="rn-h">What comes from Epoch AI</p><div class="rn-b"><span class="sk sk-line" style="width:80%"></span></div></aside></div></section>
 <section class="doc-sec" aria-labelledby="cite"><h2 id="cite">Cite this dataset</h2>
   <p>The record changes as releases are added and corrected, so cite the date you retrieved it.</p>
-  <blockquote class="cite-box" id="cite-text">Walker Robinson. Version Control: the release record of the AI model era. Dataset, CC BY 4.0. https://versioncontrol.walker-robinson.com. Record updated <span class="cite-updated">(the date of the last update)</span>; accessed <span class="cite-accessed">(today)</span>.</blockquote>
+  <blockquote class="cite-box" id="cite-text">Walker Robinson. Version Control: a public record of AI model releases. Dataset, CC BY 4.0. https://versioncontrol.walker-robinson.com. Record updated <span class="cite-updated">(the date of the last update)</span>; accessed <span class="cite-accessed">(today)</span>.</blockquote>
   <div class="cite-acts"><button type="button" class="btn btn-sm" data-copy="cite-text">Copy citation</button><button type="button" class="btn btn-sm" data-copy="cite-bib">Copy BibTeX</button></div>
   <pre class="cite-bibtex" id="cite-bib">@misc{versioncontrol,
   author       = {Robinson, Walker},
-  title        = {Version Control: the release record of the AI model era},
+  title        = {Version Control: a public record of AI model releases},
   howpublished = {\url{https://versioncontrol.walker-robinson.com}},
   note         = {Dataset, CC BY 4.0. Record updated <span class="cite-updated">(the date of the last update)</span>; accessed <span class="cite-accessed">(today)</span>},
   year         = {<span class="cite-year">2026</span>}

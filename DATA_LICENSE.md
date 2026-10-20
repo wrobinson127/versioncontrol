@@ -26,4 +26,4 @@ OpenRouter's catalog is not in the dataset, and the site does not display its pr
 
 If you use the Version Control dataset, please cite it with the date you retrieved it:
 
-> Walker Robinson. Version Control: the release record of the AI model era. Dataset, CC BY 4.0. https://versioncontrol.walker-robinson.com. Record updated (date); accessed (date).
+> Walker Robinson. Version Control: a public record of AI model releases. Dataset, CC BY 4.0. https://versioncontrol.walker-robinson.com. Record updated (date); accessed (date).
