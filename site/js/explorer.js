@@ -17,7 +17,10 @@
 
   var DISC_KEY = { sc: "system_card", mc: "model_card", up: "usage_policy", pa: "paper" };
   var SCORE_OPTS = [["", "Any"], ["any", "Has a score"], ["INDEPENDENT", "IND score"], ["LAB_REPORTED", "LAB score"], ["none", "No score"]];
-  var DISC_OPTS = [["", "Any"], ["disclosed", "Link on record"], ["not_disclosed", "Not disclosed"], ["not_researched", "Not yet researched"]];
+  /* where a change against the predecessor would appear but the scores do
+     not match, one line says why no change is shown */
+  var NO_CHANGE = "No change shown: the predecessor's score is from a different source or test version.";
+  var DISC_OPTS = [["", "Any"], ["disclosed", "Link on record"], ["not_disclosed", "Not disclosed (we checked)"], ["not_researched", "Not yet checked"]];
 
   function opts(list) { return list.map(function (o) { return '<option value="' + esc(o[0]) + '">' + esc(o[1]) + "</option>"; }).join(""); }
 
@@ -29,7 +32,7 @@
       { k: "model", label: "Model", w: 268, sort: function (e) { return e.model_name.toLowerCase(); }, f: { type: "text", key: "model", ph: "Filter names", aria: "Filter by model name" } },
       { k: "lab", label: "Lab", w: 156, sort: function (e) { return e._orgName.toLowerCase(); }, f: { type: "select", key: "lab", aria: "Filter by lab", o: [["", "All labs"]].concat(CR.ORG_ORDER.map(function (o) { return [o, CR.ORG_NAMES[o]]; })) } },
       { k: "date", label: "Date", w: 112, num: true, sort: function (e) { return e.date; }, f: { type: "select", key: "year", aria: "Filter by year", o: [["", "All years"]].concat(years) } },
-      { k: "type", label: "Type", w: 104, sort: function (e) { return e.entry_type; }, f: { type: "select", key: "type", aria: "Filter by entry type", o: [["", "All"], ["release", "Release"], ["revision", "Revision"]] } },
+      { k: "type", label: "Type", w: 104, sort: function (e) { return e.entry_type; }, f: { type: "select", key: "type", aria: "Filter by entry type. A revision is an update to a model already on record.", title: CR.REVISION_GLOSS, o: [["", "All"], ["release", "Release"], ["revision", "Revision (an update to a model already on record)"]] } },
       { k: "avail", label: "Availability", w: 136, sort: function (e) { return e.availability_class; }, f: { type: "select", key: "avail", aria: "Filter by availability", o: [["", "All"], ["open_weights", "Open weights"], ["public_api", "Public API"], ["public_service", "Public service"]] } },
       { k: "country", label: "Country", w: 132, sort: function (e) { return e._country; }, f: { type: "select", key: "country", aria: "Filter by the country of the lab's parent company", o: [["", "All"]].concat(countries.map(function (c) { return [c, c]; })) } },
       { k: "gpqa", label: "GPQA Diamond", w: 216, num: true, sort: function (e) { return scoreSort(e, "gpqa-diamond"); }, f: { type: "select", key: "gpqa", aria: "Filter by GPQA Diamond score", o: SCORE_OPTS } },
@@ -135,7 +138,7 @@
     var firstB = e._score["gpqa-diamond"] ? "gpqa-diamond" : "swe-bench-verified";
     if (b === firstB) {
       e._deltas.forEach(function (d) {
-        if (d.kind === "REFUSED_COMPARISON") { out += '<span class="rf" title="No comparable measurement against the predecessor: ' + esc(d.reason) + '.">refused</span>'; }
+        if (d.kind === "REFUSED_COMPARISON") { out += '<span class="rf" title="' + esc(NO_CHANGE) + '">no change shown</span>'; }
       });
     }
     return out || '<span class="na" aria-label="no score">-</span>';
@@ -148,7 +151,7 @@
     switch (c.k) {
       case "lab": return esc(e._orgName);
       case "date": return '<span class="num">' + e.date + "</span>";
-      case "type": return e.entry_type === "revision" ? '<span class="tag">revision</span>' : '<span class="t-m">release</span>';
+      case "type": return e.entry_type === "revision" ? '<span class="tag" title="' + esc(CR.REVISION_GLOSS) + '">revision</span>' : '<span class="t-m">release</span>';
       case "avail": return esc(CR.AVAIL_NAMES[e.availability_class] || e.availability_class);
       case "country": return esc(e._country);
       case "gpqa": return scoreCell(e, "gpqa-diamond");
@@ -185,7 +188,7 @@
       if (c.f.type === "text") {
         wrap.innerHTML = lab + '<input type="text" data-f="' + c.f.key + '" placeholder="' + esc(c.f.ph) + '" aria-label="' + esc(c.f.aria) + '" autocomplete="off" spellcheck="false">';
       } else {
-        wrap.innerHTML = lab + '<select data-f="' + c.f.key + '" aria-label="' + esc(c.f.aria) + '">' + opts(c.f.o) + "</select>";
+        wrap.innerHTML = lab + '<select data-f="' + c.f.key + '" aria-label="' + esc(c.f.aria) + '"' + (c.f.title ? ' title="' + esc(c.f.title) + '"' : "") + ">" + opts(c.f.o) + "</select>";
       }
       CTRL[c.f.key] = wrap;
     });
@@ -275,9 +278,10 @@
       var sb = e._score["gpqa-diamond"] ? "GPQA" : "SWE";
       var sc = s ? '<span class="m-sc">' + sb + " " + (s.INDEPENDENT ? provChip("INDEPENDENT", s.INDEPENDENT.value) : "") + (s.LAB_REPORTED ? provChip("LAB_REPORTED", s.LAB_REPORTED.value) : "") + "</span>" : "";
       return '<li><button type="button" class="mrow' + (e.id === openId ? " is-sel" : "") + '" data-i="' + i + '">' +
-        '<span class="m-name">' + esc(e.model_name) + (e.entry_type === "revision" ? ' <span class="tag">revision</span>' : "") + (e._retracted ? ' <span class="tag-retracted">retracted</span>' : "") + "</span>" +
+        '<span class="m-name">' + esc(e.model_name) + (e._retracted ? ' <span class="tag-retracted">retracted</span>' : "") + "</span>" +
         '<span class="m-date num">' + e.date + "</span>" +
-        '<span class="m-meta">' + esc(e._orgName) + ", " + esc(CR.AVAIL_NAMES[e.availability_class]) + "</span>" +
+        '<span class="m-meta">' + esc(e._orgName) + ", " + esc(CR.AVAIL_NAMES[e.availability_class]) +
+          (e.entry_type === "revision" && D.byId[e.predecessor] ? '<span class="m-rev" title="' + esc(CR.REVISION_GLOSS) + '">revision of ' + esc(D.byId[e.predecessor].model_name) + "</span>" : "") + "</span>" +
         '<span class="m-disc" aria-label="System card, model card, usage policy, paper: ' + CR.DISC_SLOTS.map(function (sl) { return CR.DISC_WORDS[e._disc[sl[0]]]; }).join(", ") + '">' + CR.DISC_SLOTS.map(function (sl) { return CR.discGlyph(e._disc[sl[0]], 9); }).join("") + "</span>" +
         sc + "</button></li>";
     }).join("");
@@ -368,7 +372,7 @@
       '<button type="button" class="btn btn-sm btn-icon ins-x" data-close-ins aria-label="Close the inspector (Escape)">×</button></div></div>';
     h += '<div class="ins-body">';
     if (outside) { h += '<p class="ins-out">This entry is outside the current filters. <button type="button" class="link-btn" data-clear>Clear filters</button></p>'; }
-    h += '<p class="ins-kicker">' + esc(e._orgName) + ", " + '<span class="num">' + e.date + "</span>" + (e.entry_type === "revision" ? ', <span class="tag">revision</span>' : "") + "</p>";
+    h += '<p class="ins-kicker">' + esc(e._orgName) + ", " + '<span class="num">' + e.date + "</span>" + (e.entry_type === "revision" ? "," + CR.revisionOf(e, D) : "") + "</p>";
     h += '<h2 id="ins-h" tabindex="-1">' + esc(e.model_name) + "</h2>";
     if (e._retracted) { h += '<p class="ins-retracted"><b>Retracted.</b> ' + esc(e.retraction_note || "This entry should not have been on the record.") + "</p>"; }
     if (e.variants && e.variants.length) { h += '<p class="ins-var">Variants: ' + e.variants.map(esc).join(", ") + "</p>"; }
@@ -405,7 +409,7 @@
       h += "</div>";
     });
     e._deltas.forEach(function (d) {
-      if (d.kind === "REFUSED_COMPARISON") { h += '<p class="ib-refused"><b>No comparable measurement against the predecessor.</b> Reason on record: ' + esc(d.reason) + ". A change is shown only when both scores share a benchmark, its version and the kind of source.</p>"; }
+      if (d.kind === "REFUSED_COMPARISON") { h += '<p class="ib-refused">' + esc(NO_CHANGE) + "</p>"; }
     });
 
     /* disclosure */
@@ -532,7 +536,7 @@
     buildControls();
     placeControls();
     wireGrid(); wireInspector(); wireToolbar();
-    $("#ex-sub").textContent = "Every entry in the record: " + D.meta.releases + " releases and " + D.meta.revisions + " revisions from twelve tracked labs, " + D.meta.first_date + " to " + D.meta.last_date + ". Filter any column; select a row for its sources.";
+    $("#ex-sub").textContent = D.meta.releases + " releases and " + D.meta.revisions + " revisions (updates to a model already on record) from twelve tracked labs, " + D.meta.first_date + " to " + D.meta.last_date + ". Select a row for its sources.";
     update(false);
     document.documentElement.classList.add("ready");
     if (openId) { var id = openId; openId = null; openEntry(id); var ri = rowIndex(id); if (ri >= 0 && window.innerWidth > 720) { var sc = $("#grid-scroll"); sc.scrollTop = Math.max(0, ri * RH - sc.clientHeight / 3); renderRows(true); } }
