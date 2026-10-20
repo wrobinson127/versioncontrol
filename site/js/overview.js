@@ -243,12 +243,14 @@
     } else {
       var gv = CR.median(CR.pooledGaps(rel));
       /* the same rule as the published series, applied to the releases in view */
-      var sorted = D.releases.filter(function (e) { return labIn(e.org); }).map(function (e) { return e._day; }).sort(function (a, b) { return a - b; });
+      var sorted = D.releases.filter(function (e) { return labIn(e.org); }).sort(function (a, b) { return a._day - b._day; });
       var roll = [];
       for (var i = 1; i < sorted.length; i++) {
         var gaps = [];
-        for (var j = i; j >= 1 && sorted[i] - sorted[j] <= 365; j--) { gaps.push(sorted[j] - sorted[j - 1]); }
-        if (gaps.length) { roll.push({ x: sorted[i], y: CR.median(gaps) }); }
+        for (var j = i; j >= 1 && sorted[i]._day - sorted[j]._day <= 365; j--) {
+          if (sorted[j]._year === sorted[j - 1]._year) { gaps.push(sorted[j]._day - sorted[j - 1]._day); }
+        }
+        if (gaps.length) { roll.push({ x: sorted[i]._day, y: CR.median(gaps) }); }
       }
       var fromD = S.from ? CR.dayNum(S.from) : null, toD = S.to ? CR.dayNum(S.to) : null;
       kpi("k2", "Median days between releases in view", gv == null ? '<span class="num dash">-</span>' : '<span class="num">' + days(gv) + '</span><span class="unit">days</span>',

@@ -64,14 +64,19 @@ def build_cadence(entries: list) -> dict:
         m["releases" if e["entry_type"] == "release" else "revisions"] += 1
 
     # Median gap between consecutive releases over a trailing 365-day
-    # window, evaluated at each release date (the Beat 2 counter).
+    # window, evaluated at each release date (the Beat 2 counter). A pooled
+    # gap counts only between two releases in the same calendar year, the
+    # rule the per-year medians use too.
     dates = [_date(e["date"]) for e in releases]
     median_gap = []
     for i, d in enumerate(dates):
         window = [x for x in dates[:i + 1] if (d - x).days <= 365]
         if len(window) < 3:
             continue
-        gaps = [(b - a).days for a, b in zip(window, window[1:])]
+        gaps = [(b - a).days for a, b in zip(window, window[1:])
+                if a.year == b.year]
+        if not gaps:
+            continue
         median_gap.append({"date": d.isoformat(),
                            "days": round(statistics.median(gaps), 1)})
     yearly = {}

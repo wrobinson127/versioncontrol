@@ -54,8 +54,9 @@ Each entry's `origin` field says which path it took:
 
 Every headline number is computed from the published files by a stated rule. Nothing is smoothed or modeled.
 
-- **Median gap between releases** (in the published views file): the median number of days between one release and the next, across all twelve labs, over the 365 days before each release. Because it pools twelve labs, it drops to a few days once the record is well populated. Releases on the same day count as a gap of zero, and the window runs across year boundaries. The story's per-lab gaps count a lab's same-day releases once.
-- **Median gap this year** (the tile on the home page): the same gap, limited to releases in the current calendar year.
+- **Gap rule**: when releases from all twelve labs are pooled, a gap counts only between two releases in the same calendar year.
+- **Median gap between releases** (in the published views file): the median number of days between one release and the next, across all twelve labs, over the 365 days before each release. Because it pools twelve labs, it drops to a few days once the record is well populated. Releases on the same day count as a gap of zero. The window runs across year boundaries, but the gap from one year's last release to the next year's first is left out. The story's per-lab gaps count a lab's same-day releases once and do run across years.
+- **Median gap this year** (the tile on the home page): the same gap, limited to releases in the current calendar year. The story's median for each year uses the same rule.
 - **Releases per year and per month**: raw counts by date. Revisions are left out.
 - **Newest release on record**: the date of the newest release, shown with the date of our last update.
 - **Percentages**: a share of releases with a paper, system card, model card or usage policy divides by the releases we have researched for that item. A parameter-count share divides by all releases. Each percentage states its denominator.

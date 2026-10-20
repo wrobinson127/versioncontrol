@@ -253,11 +253,12 @@
     c.share = c.researched ? c.disclosed / c.researched : null;
     return c;
   }
-  /* pooled gaps: consecutive releases in date order, same-day = 0 */
+  /* pooled gaps: consecutive releases in date order, same-day = 0. A gap
+     counts only between two releases in the same calendar year. */
   function pooledGaps(list) {
-    var d = list.filter(function (e) { return e._rel; }).map(function (e) { return e._day; }).sort(function (a, b) { return a - b; });
+    var d = list.filter(function (e) { return e._rel; }).sort(function (a, b) { return a._day - b._day; });
     var g = [];
-    for (var i = 1; i < d.length; i++) { g.push(d[i] - d[i - 1]); }
+    for (var i = 1; i < d.length; i++) { if (d[i]._year === d[i - 1]._year) { g.push(d[i]._day - d[i - 1]._day); } }
     return g;
   }
   /* a lab's own gaps count same-day releases once (the story's rule) */

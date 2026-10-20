@@ -271,9 +271,12 @@ for r in _rel_t:
     _labs_by_y[r["date"][:4]].add(r["org"])
     _first_y.setdefault(r["org"], r["date"][:4])
 _dates_all = sorted(r["date"] for r in _rel_t)
+# A pooled gap counts only between two releases in the same calendar year
+# (the overview's rule): the gap across a year boundary is dropped.
 _gaps_by_y = defaultdict(list)
 for _a, _b in zip(_dates_all, _dates_all[1:]):
-    _gaps_by_y[_b[:4]].append((date.fromisoformat(_b) - date.fromisoformat(_a)).days)
+    if _a[:4] == _b[:4]:
+        _gaps_by_y[_b[:4]].append((date.fromisoformat(_b) - date.fromisoformat(_a)).days)
 
 
 def _median(v):
