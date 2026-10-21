@@ -313,20 +313,26 @@ PROVENANCE_CLASSES = ("LAB_REPORTED", "INDEPENDENT")
 # LLM budget (invariant 7; §10 arithmetic in docs/verification_report.md)
 # --------------------------------------------------------------------------
 
-LLM_MODEL_ID = "claude-haiku-4-5-20251001"   # pinned snapshot, verified 2026-07-16
-LLM_PRICE_INPUT_PER_MTOK = 1.00              # USD, verified 2026-07-16
-LLM_PRICE_OUTPUT_PER_MTOK = 5.00             # USD, verified 2026-07-16
-# 1024 truncated 11 of 52 drafts on the 2026-08-24 production run: dense
-# extraction JSON runs about 2.8 characters per token, so a long benchmark
-# table hit the ceiling mid-string and the draft was thrown away as malformed.
-# Measured output on that run averaged 398 tokens, so 2048 is headroom rather
-# than a new normal.
-LLM_MAX_OUTPUT_TOKENS = 2048
-# Measured 2026-08-24: 50 calls, $0.2486, about $0.005 each, so a full 300-call
-# month costs roughly $1.50. A worst case where every call fills the raised
-# output ceiling would cost about $0.014 each, which the spend cap below stops
-# at $2.00 well before the call cap is reached. The spend cap is the real gate;
-# the call cap is a second, coarser one.
+LLM_MODEL_ID = "claude-haiku-5-5"            # pinned snapshot, verified 2026-10-20
+# Prompts stay far under 100,000 tokens, so the lower price tier always
+# applies. Haiku 4.5 was $1.00 / $5.00.
+LLM_PRICE_INPUT_PER_MTOK = 0.10              # USD, verified 2026-10-20
+LLM_PRICE_OUTPUT_PER_MTOK = 0.50             # USD, verified 2026-10-20
+# Haiku 5.5 thinks before it answers, and thinking tokens count against
+# max_tokens. Low effort keeps that short on a plain extraction task.
+LLM_EFFORT = "low"
+# 1024 truncated 11 of 52 drafts on the 2026-08-24 production run (Haiku
+# 4.5): dense extraction JSON runs about 2.8 characters per token, so a long
+# benchmark table hit the ceiling mid-string and the draft was thrown away as
+# malformed. Measured output on that run averaged 398 tokens. Haiku 5.5's
+# tokenizer counts the same text as about 30% more tokens and its thinking
+# shares the ceiling, so 4096 keeps the same headroom.
+LLM_MAX_OUTPUT_TOKENS = 4096
+# Measured on Haiku 4.5: about $0.005 a call, so a full 300-call month cost
+# roughly $1.50. At Haiku 5.5 prices a worst-case call (the budgeted input
+# plus the full output ceiling) costs under $0.004, so the spend cap below is
+# out of reach at the call cap. The call cap is now the binding gate; the
+# spend cap stays as a backstop if prices change.
 LLM_MONTHLY_CALL_CAP = 300
 LLM_MONTHLY_SPEND_CAP_USD = 2.00             # D8 hard cap; skip-with-FLAG at cap
 LLM_SPEND_LEDGER_PATH = "data/derived/llm_ledger.json"

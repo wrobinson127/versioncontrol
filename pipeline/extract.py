@@ -134,6 +134,8 @@ def call_extraction_detailed(announcement_html: str, client=None):
         model=config.LLM_MODEL_ID,
         max_tokens=config.LLM_MAX_OUTPUT_TOKENS,
         messages=[{"role": "user", "content": build_prompt(announcement_html)}],
+        # The pinned SDK predates output_config, so it rides in extra_body.
+        extra_body={"output_config": {"effort": config.LLM_EFFORT}},
     )
     text = next((b.text for b in response.content
                  if getattr(b, "type", "") == "text"), "")
@@ -163,6 +165,9 @@ def extract_candidate(candidate: dict, announcement_html: str, run_date: str,
     if not raw.strip():
         return None, (f"model returned no text output "
                       f"(stop_reason={stop_reason}); no draft written")
+    if stop_reason == "refusal":
+        return None, ("model declined the request (stop_reason=refusal); "
+                      "no draft written")
     if stop_reason == "max_tokens":
         return None, (f"output hit the {config.LLM_MAX_OUTPUT_TOKENS}-token "
                       f"ceiling and was cut off mid-JSON; no draft written")

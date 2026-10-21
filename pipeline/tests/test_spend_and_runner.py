@@ -6,6 +6,9 @@ import os
 from pipeline import config, extract, spend
 
 RUN_DATE = "2026-07-16"
+# Input tokens that cost exactly the monthly spend cap at the pinned price.
+CAP_INPUT_TOKENS = round(config.LLM_MONTHLY_SPEND_CAP_USD * 1_000_000
+                         / config.LLM_PRICE_INPUT_PER_MTOK)
 
 
 def test_ledger_accumulates_and_caps(tmp_path):
@@ -13,8 +16,9 @@ def test_ledger_accumulates_and_caps(tmp_path):
     assert spend.can_spend(RUN_DATE, root=root)
     month = spend.record_call(RUN_DATE, 4000, 400, root=root)
     assert month["calls"] == 1
-    # $0.004 + $0.002 per the verified pricing arithmetic
-    assert abs(month["usd"] - 0.006) < 1e-9
+    expected = (4000 * config.LLM_PRICE_INPUT_PER_MTOK
+                + 400 * config.LLM_PRICE_OUTPUT_PER_MTOK) / 1_000_000
+    assert abs(month["usd"] - round(expected, 6)) < 1e-9
     for _ in range(config.LLM_MONTHLY_CALL_CAP - 1):
         spend.record_call(RUN_DATE, 4000, 400, root=root)
     assert not spend.can_spend(RUN_DATE, root=root)
@@ -25,7 +29,7 @@ def test_ledger_accumulates_and_caps(tmp_path):
 
 def test_usd_cap_binds_independently_of_call_count(tmp_path):
     root = str(tmp_path)
-    spend.record_call(RUN_DATE, 1_500_000, 100_000, root=root)  # $2.00
+    spend.record_call(RUN_DATE, CAP_INPUT_TOKENS, 0, root=root)  # $2.00
     assert not spend.can_spend(RUN_DATE, root=root)
 
 
@@ -168,7 +172,7 @@ def test_extract_candidate_malformed_output_rejected(tmp_path):
 
 def test_extract_candidate_skips_at_cap(tmp_path):
     root = str(tmp_path)
-    spend.record_call(RUN_DATE, 1_500_000, 100_000, root=root)  # hits $2 cap
+    spend.record_call(RUN_DATE, CAP_INPUT_TOKENS, 0, root=root)  # hits $2 cap
     draft, note = extract.extract_candidate(
         CANDIDATE, HTML, RUN_DATE, client=_StubClient(GOOD_OUTPUT), root=root)
     assert draft is None

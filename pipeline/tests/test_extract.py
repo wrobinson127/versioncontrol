@@ -161,6 +161,26 @@ def test_truncated_output_reports_the_ceiling(tmp_path):
     assert "ceiling" in note and str(config.LLM_MAX_OUTPUT_TOKENS) in note
 
 
+def test_request_sets_effort_and_no_sampling_params(tmp_path):
+    """Haiku 5.5 rejects temperature, top_p and top_k, and its thinking shares
+    max_tokens, so the call sends an effort level and nothing else extra."""
+    client = _FakeClient('{"model_name": "GPT-6"}', "end_turn")
+    extract.call_extraction("<html>x</html>", client=client)
+    assert client.kwargs["model"] == config.LLM_MODEL_ID
+    assert client.kwargs["extra_body"] == {
+        "output_config": {"effort": config.LLM_EFFORT}}
+    assert not {"temperature", "top_p", "top_k"} & set(client.kwargs)
+
+
+def test_refusal_reports_itself(tmp_path):
+    client = _FakeClient("I can't help with that.", "refusal")
+    draft, note = extract.extract_candidate(
+        _candidate(), "<html>x</html>", "2026-10-20",
+        client=client, root=str(tmp_path))
+    assert draft is None
+    assert "refusal" in note
+
+
 def test_empty_output_reports_itself(tmp_path):
     client = _FakeClient("", "end_turn")
     draft, note = extract.extract_candidate(
