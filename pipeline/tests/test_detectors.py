@@ -693,3 +693,54 @@ def test_url_normalization():
         pending.normalize_url("http://x.ai/news/a#top")
     assert pending.normalize_url("https://openrouter.ai/a/b:batch") != \
         pending.normalize_url("https://openrouter.ai/a/b")
+
+
+# Three Meta candidates queued on 2026-10-20 were all models already on the
+# record, seen again as Hugging Face variants. Entries are trimmed to the
+# fields correlation reads.
+_MUSE_ENTRIES = [
+    {"id": "meta--muse-spark-open", "org": "meta",
+     "model_name": "Muse Spark Open",
+     "sources": [{"url": "https://research.meta.ai/blog/muse-spark-open"}],
+     "disclosure_links": {
+         "model_card": "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B",
+         "paper": "NOT_DISCLOSED"}},
+    {"id": "meta--muse-glimmer", "org": "meta", "model_name": "Muse Glimmer",
+     "sources": [{"url": "https://research.meta.ai/blog/introducing-muse-glimmer-open-agentic-model"}],
+     "disclosure_links": {
+         "model_card": "https://huggingface.co/meta-models/Muse-Glimmer-30B"}},
+]
+
+
+def _meta_hf(name):
+    return _sig("hf_orgs", "meta", name,
+                f"https://huggingface.co/meta-models/{name}", "2026-10-20")
+
+
+@pytest.mark.parametrize("repo", [
+    "Muse-Spark-Open-816B-A42B",        # active-parameter tag, not a version
+    "Muse-Spark-Open-816B-A42B-NVFP4",  # quantization
+    "Muse-Glimmer-30B-assistant",       # speculative-decoding drafter
+])
+def test_variants_of_on_record_models_are_not_queued(repo):
+    assert correlate.correlate([_meta_hf(repo)], _MUSE_ENTRIES, set()) == []
+
+
+def test_a_url_an_entry_already_cites_is_suppressed_and_reported():
+    """Even when the name alone would not match, a page an entry already
+    cites is that entry."""
+    on_record = []
+    sig = _sig("hf_orgs", "meta", "Muse Spark Open Preview",
+               "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B/",
+               "2026-10-20")
+    cands = correlate.correlate([sig], _MUSE_ENTRIES, set(),
+                                on_record=on_record)
+    assert cands == []
+    assert on_record == [("meta--muse-spark-open-preview",
+                          ["meta--muse-spark-open"])]
+
+
+def test_a_genuinely_new_meta_repo_is_still_queued():
+    cands = correlate.correlate([_meta_hf("Muse-Glimmer-2-30B")], _MUSE_ENTRIES,
+                                set())
+    assert [c["id"] for c in cands] == ["meta--muse-glimmer-2"]

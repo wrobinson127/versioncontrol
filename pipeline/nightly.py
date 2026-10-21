@@ -247,9 +247,11 @@ def main():
     reaped = reap_published_candidates(entries, args.root)
     pending_ids = pending.existing_pending_ids(args.root)
     suppressed = []
+    on_record = []
     candidates = correlate.correlate(signals, entries, pending_ids,
                                      rejected_urls=pending.rejected_urls(args.root),
-                                     suppressed=suppressed)
+                                     suppressed=suppressed,
+                                     on_record=on_record)
 
     fatal = []
     llm_notes = extract_drafts(candidates, now_date, args.root, fatal=fatal)
@@ -264,6 +266,9 @@ def main():
     for cand_id, by in suppressed:
         flags.append(f"suppressed {cand_id}: every URL it was detected on "
                      f"belongs to rejected {', '.join(by)}")
+    for cand_id, by in on_record:
+        flags.append(f"suppressed {cand_id}: every URL it was detected on "
+                     f"is already cited by {', '.join(by)}")
 
     pending.write_candidates(candidates, now_date, root=args.root)
 
