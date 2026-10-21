@@ -13,8 +13,11 @@ from .pending import normalize_url
 
 _SIBLING_RE = re.compile(config.SIBLING_SUFFIX_RE)
 # HF repos and API slugs decorate with sizes and formats that the base name
-# strips for clustering: "Kimi-K2.5-FP8" and "Kimi-K2.5" are one event.
-_SIZE_RE = re.compile(r"-(\d+(?:\.\d+)?[bm])(?=$|-)", re.IGNORECASE)
+# strips for clustering: "Kimi-K2.5-FP8" and "Kimi-K2.5" are one event. A
+# mixture-of-experts repo also carries its active parameters ("A42B" in
+# Muse-Spark-Open-816B-A42B), which is a size, not a version.
+_SIZE_RE = re.compile(r"-(\d+(?:\.\d+)?[bm]|a\d+(?:\.\d+)?b)(?=$|-)",
+                      re.IGNORECASE)
 
 
 def base_slug(model_hint: str) -> str:
@@ -39,6 +42,19 @@ def known_slugs(entries: list) -> dict:
         for v in e.get("variants", []):
             org.add(base_slug(v))
     return known
+
+
+def record_urls(entries: list) -> dict:
+    """Normalized URL -> on-record entry ids, from every source and every
+    disclosure link. A page already cited by an entry is that entry's page."""
+    urls = {}
+    for e in entries:
+        cited = [s.get("url") for s in e.get("sources") or []]
+        cited += list((e.get("disclosure_links") or {}).values())
+        for u in cited:
+            if isinstance(u, str) and u.startswith("http"):
+                urls.setdefault(normalize_url(u), set()).add(e["id"])
+    return urls
 
 
 def is_known(org: str, slug: str, known: dict) -> bool:
@@ -97,7 +113,8 @@ def choose_announcement_url(org: str, cluster: list):
 
 
 def correlate(signals: list, entries: list, pending_ids: set,
-              rejected_urls: dict = None, suppressed: list = None) -> list:
+              rejected_urls: dict = None, suppressed: list = None,
+              on_record: list = None) -> list:
     """Group signals into candidate events, drop known ones, score the rest.
 
     rejected_urls maps a normalized URL to the rejected candidate id it came
@@ -106,12 +123,19 @@ def correlate(signals: list, entries: list, pending_ids: set,
     and is dropped; each drop is appended to `suppressed` as (id, rejected
     ids) for the morning report, so suppression is never silent.
 
+    A cluster whose every signal URL is already cited by an entry (a source
+    or a disclosure link) is that entry seen again under another name, and is
+    dropped the same way; each drop is appended to `on_record` as (id, entry
+    ids). Muse-Spark-Open-816B-A42B was queued on 2026-10-20 although it was
+    already the model card of meta--muse-spark-open.
+
     Returns candidates sorted by confidence then org/slug, each:
       {id, org, base_slug, model_hints, signals, announcement_url,
        date_hint, confidence, detectors}
     """
     rejected_urls = rejected_urls or {}
     known = known_slugs(entries)
+    cited = record_urls(entries)
     clusters = {}
     for s in signals:
         key = (s["org"], base_slug(s["model_hint"]))
@@ -152,6 +176,11 @@ def correlate(signals: list, entries: list, pending_ids: set,
             if suppressed is not None:
                 suppressed.append(
                     (cand_id, sorted({rejected_urls[u] for u in urls})))
+            continue
+        if urls and urls <= set(cited):
+            if on_record is not None:
+                on_record.append(
+                    (cand_id, sorted(set().union(*(cited[u] for u in urls)))))
             continue
         detectors = sorted({s["detector"] for s in cluster})
         url = choose_announcement_url(org, cluster)

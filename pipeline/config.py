@@ -284,9 +284,13 @@ OPENROUTER_MODELS_URL = "https://openrouter.ai/api/v1/models"
 
 # Sibling-repo clustering: suffixes stripped to find the release base name.
 # Validated against zai-org GLM history (Phase 0 gate 3).
+# Formats, quantizations and companion repos of one release. "assistant" and
+# "drafter" are speculative-decoding helpers shipped beside the main weights
+# (Muse-Glimmer-30B-assistant, 2026-10-20).
 SIBLING_SUFFIX_RE = (
     r"-(FP8|fp8|INT[48]|int[48]|AWQ|awq|GPTQ|gptq|GGUF|gguf|w4a16|bf16"
-    r"|4bit|8bit|Base|base|Instruct|it|hf)$"
+    r"|4bit|8bit|Base|base|Instruct|it|hf"
+    r"|nvfp4|mxfp4|fp4|mlx|pte|executorch|assistant|drafter)$"
 )
 
 # --------------------------------------------------------------------------
