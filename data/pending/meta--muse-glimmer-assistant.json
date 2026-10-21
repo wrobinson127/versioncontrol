@@ -1,0 +1,26 @@
+{
+  "announcement_url": "https://huggingface.co/meta-models/Muse-Glimmer-30B-assistant",
+  "confidence": 1,
+  "date_hint": "2026-10-20",
+  "detected_on": "2026-10-20",
+  "detectors": [
+    "hf_orgs"
+  ],
+  "draft_entry": null,
+  "id": "meta--muse-glimmer-assistant",
+  "model_hints": [
+    "Muse-Glimmer-30B-assistant"
+  ],
+  "org": "meta",
+  "signals": [
+    {
+      "date_hint": "2026-10-20",
+      "detector": "hf_orgs",
+      "model_hint": "Muse-Glimmer-30B-assistant",
+      "org": "meta",
+      "title": "meta-models/Muse-Glimmer-30B-assistant",
+      "url": "https://huggingface.co/meta-models/Muse-Glimmer-30B-assistant"
+    }
+  ],
+  "status": "pending-review"
+}
