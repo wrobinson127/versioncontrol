@@ -6,6 +6,7 @@
   "detectors": [
     "hf_orgs"
   ],
+  "draft_attempts": 1,
   "draft_entry": null,
   "id": "meta--muse-glimmer-assistant",
   "model_hints": [
