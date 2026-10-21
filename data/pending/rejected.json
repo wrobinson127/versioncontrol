@@ -673,5 +673,29 @@
     "urls": [
       "https://openrouter.ai/z-ai/glm-5.3-prime"
     ]
+  },
+  {
+    "id": "meta--muse-spark-open-a42b",
+    "reason": "Duplicate of meta--muse-spark-open (2026-10-15): same Hugging Face repo, which is already that entry's model card.",
+    "rejected_on": "2026-10-21",
+    "urls": [
+      "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B"
+    ]
+  },
+  {
+    "id": "meta--muse-spark-open-a42b-nvfp4",
+    "reason": "NVFP4 quantization of the Muse Spark Open weights; same basis as meta--muse-spark-open. Precedent zai--glm-5.3-prime.",
+    "rejected_on": "2026-10-21",
+    "urls": [
+      "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B-NVFP4"
+    ]
+  },
+  {
+    "id": "meta--muse-glimmer-assistant",
+    "reason": "DFlash speculative-decoding drafter that ships with Muse Glimmer 30B; its model card says so. Not a separate model release. Muse Glimmer is on record as meta--muse-glimmer (2026-08-10).",
+    "rejected_on": "2026-10-21",
+    "urls": [
+      "https://huggingface.co/meta-models/Muse-Glimmer-30B-assistant"
+    ]
   }
 ]
