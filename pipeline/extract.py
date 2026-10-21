@@ -115,13 +115,14 @@ def call_extraction(announcement_html: str, client=None):
     The client parameter exists for tests; production passes None and the
     SDK resolves ANTHROPIC_API_KEY from the environment.
     """
-    text, tokens_in, tokens_out, _ = call_extraction_detailed(
+    text, tokens_in, tokens_out, _, _ = call_extraction_detailed(
         announcement_html, client)
     return (text, tokens_in, tokens_out)
 
 
 def call_extraction_detailed(announcement_html: str, client=None):
-    """As call_extraction, but also returns the API stop_reason.
+    """As call_extraction, but also returns the API stop_reason and whether
+    the response carried a thinking block.
 
     The reason matters for diagnosis: output cut off at the token ceiling
     arrives as unparseable JSON, and reporting that as a generic parse error
@@ -139,10 +140,12 @@ def call_extraction_detailed(announcement_html: str, client=None):
     )
     text = next((b.text for b in response.content
                  if getattr(b, "type", "") == "text"), "")
+    thought = any(getattr(b, "type", "") == "thinking"
+                  for b in response.content)
     # The prompt demands a bare JSON object; tolerate a fenced block.
     text = re.sub(r"^```(?:json)?\s*|\s*```$", "", text.strip())
     return (text, response.usage.input_tokens, response.usage.output_tokens,
-            getattr(response, "stop_reason", None))
+            getattr(response, "stop_reason", None), thought)
 
 
 def extract_candidate(candidate: dict, announcement_html: str, run_date: str,
@@ -157,20 +160,25 @@ def extract_candidate(candidate: dict, announcement_html: str, run_date: str,
     from . import lint_voice, spend
     if not spend.can_spend(run_date, root=root):
         return None, spend.cap_flag(run_date, root=root)
-    raw, tokens_in, tokens_out, stop_reason = call_extraction_detailed(
+    raw, tokens_in, tokens_out, stop_reason, thought = call_extraction_detailed(
         announcement_html, client)
     spend.record_call(run_date, tokens_in, tokens_out, root=root)
     # Name the two failure shapes that are not the model's fault before the
     # parser turns them into a misleading syntax complaint.
-    if not raw.strip():
-        return None, (f"model returned no text output "
-                      f"(stop_reason={stop_reason}); no draft written")
     if stop_reason == "refusal":
         return None, ("model declined the request (stop_reason=refusal); "
                       "no draft written")
     if stop_reason == "max_tokens":
+        # Thinking and text share the ceiling, so say which one spent it.
+        used_by = ("thinking used it before any text"
+                   if not raw.strip() else
+                   f"text reached {len(raw)} characters"
+                   + (" after a thinking block" if thought else ""))
         return None, (f"output hit the {config.LLM_MAX_OUTPUT_TOKENS}-token "
-                      f"ceiling and was cut off mid-JSON; no draft written")
+                      f"ceiling ({used_by}) and was cut off; no draft written")
+    if not raw.strip():
+        return None, (f"model returned no text output "
+                      f"(stop_reason={stop_reason}); no draft written")
     try:
         draft = parse_extraction(raw, candidate["announcement_url"],
                                  retrieval_date=run_date,

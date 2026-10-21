@@ -326,12 +326,13 @@ LLM_EFFORT = "low"
 # benchmark table hit the ceiling mid-string and the draft was thrown away as
 # malformed. Measured output on that run averaged 398 tokens. Haiku 5.5's
 # tokenizer counts the same text as about 30% more tokens and its thinking
-# shares the ceiling, so 4096 keeps the same headroom.
-LLM_MAX_OUTPUT_TOKENS = 4096
+# shares the ceiling. 4096 still cut off the first live Haiku 5.5 draft on
+# 2026-10-21 (a Hugging Face model card), so the ceiling is 8192.
+LLM_MAX_OUTPUT_TOKENS = 8192
 # Measured on Haiku 4.5: about $0.005 a call, so a full 300-call month cost
 # roughly $1.50. At Haiku 5.5 prices a worst-case call (the budgeted input
-# plus the full output ceiling) costs under $0.004, so the spend cap below is
-# out of reach at the call cap. The call cap is now the binding gate; the
+# plus the full output ceiling) costs under $0.006, so 300 such calls stay
+# under the spend cap below. The call cap is now the binding gate; the
 # spend cap stays as a backstop if prices change.
 LLM_MONTHLY_CALL_CAP = 300
 LLM_MONTHLY_SPEND_CAP_USD = 2.00             # D8 hard cap; skip-with-FLAG at cap
