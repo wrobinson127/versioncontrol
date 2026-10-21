@@ -1,0 +1,45 @@
+{
+  "announcement_url": "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B-NVFP4",
+  "confidence": 1,
+  "date_hint": "2026-10-15",
+  "detected_on": "2026-10-20",
+  "detectors": [
+    "hf_orgs"
+  ],
+  "draft_entry": {
+    "availability_class": "open_weights",
+    "benchmarks": [],
+    "date": "2026-10-15",
+    "disclosure_links": {
+      "model_card": "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B-NVFP4",
+      "paper": "NOT_DISCLOSED",
+      "system_card": "NOT_DISCLOSED",
+      "usage_policy": "NOT_DISCLOSED"
+    },
+    "extraction": {
+      "model": "claude-haiku-4-5-20251001",
+      "retrieval_date": "2026-10-20",
+      "source_url": "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B-NVFP4"
+    },
+    "model_name": "Muse Spark Open",
+    "organization": "Meta Inc.",
+    "summary": "Meta Inc. released Muse Spark Open, an 816B total parameter open weights multimodal model with 42B active parameters and 1M token context length. The model supports text, image, video, and audio input with text output. It is available as open weights under the Muse Model License and can be deployed via standard inference frameworks.",
+    "unpinned_claims": []
+  },
+  "id": "meta--muse-spark-open-a42b-nvfp4",
+  "model_hints": [
+    "Muse-Spark-Open-816B-A42B-NVFP4"
+  ],
+  "org": "meta",
+  "signals": [
+    {
+      "date_hint": "2026-10-15",
+      "detector": "hf_orgs",
+      "model_hint": "Muse-Spark-Open-816B-A42B-NVFP4",
+      "org": "meta",
+      "title": "meta-models/Muse-Spark-Open-816B-A42B-NVFP4",
+      "url": "https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B-NVFP4"
+    }
+  ],
+  "status": "pending-review"
+}
