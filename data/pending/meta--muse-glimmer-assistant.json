@@ -6,8 +6,158 @@
   "detectors": [
     "hf_orgs"
   ],
-  "draft_attempts": 1,
-  "draft_entry": null,
+  "draft_attempts": 2,
+  "draft_entry": {
+    "availability_class": "open_weights",
+    "benchmarks": [
+      {
+        "benchmark": "swe-bench-verified",
+        "benchmark_name": "SWE-Bench Verified",
+        "benchmark_version": "verified",
+        "provenance": {
+          "benchmark_name": "SWE-Bench Verified",
+          "benchmark_version": "verified",
+          "retrieval_date": "2026-10-21",
+          "source_class": "LAB_REPORTED",
+          "source_url": "https://huggingface.co/meta-models/Muse-Glimmer-30B-assistant"
+        },
+        "value": "76.0"
+      }
+    ],
+    "date": null,
+    "disclosure_links": {
+      "model_card": "NOT_DISCLOSED",
+      "paper": "NOT_DISCLOSED",
+      "system_card": "NOT_DISCLOSED",
+      "usage_policy": "NOT_DISCLOSED"
+    },
+    "extraction": {
+      "model": "claude-haiku-5-5",
+      "retrieval_date": "2026-10-21",
+      "source_url": "https://huggingface.co/meta-models/Muse-Glimmer-30B-assistant"
+    },
+    "model_name": "Muse Glimmer-30B",
+    "organization": "Meta Inc.",
+    "summary": "Meta Inc. released Muse Glimmer-30B, a 30-billion-parameter causal language model with a perception encoder, under the Apache 2.0 license for commercial and research use, designed to run locally on consumer hardware. Meta reports benchmark results compared with Gemma4-31B and Qwen3.6-27B, covering agentic, coding, multimodal, security, and chemical and biological risk evaluations. Meta also reports a DFlash drafter for speculative decoding. The announcement gives the release date only as August 2026.",
+    "unpinned_claims": [
+      {
+        "benchmark_as_stated": "MCP Atlas (Public)",
+        "value": "75.5"
+      },
+      {
+        "benchmark_as_stated": "DeepSearch QA",
+        "value": "74.6"
+      },
+      {
+        "benchmark_as_stated": "𝛕3-Banking",
+        "value": "23.5"
+      },
+      {
+        "benchmark_as_stated": "WildClawBench",
+        "value": "47.6"
+      },
+      {
+        "benchmark_as_stated": "GDPVal-AA v2",
+        "value": "953"
+      },
+      {
+        "benchmark_as_stated": "Gaia2",
+        "value": "43.3"
+      },
+      {
+        "benchmark_as_stated": "SkillsBench (with skills)",
+        "value": "44.3"
+      },
+      {
+        "benchmark_as_stated": "OSWorld-Verified",
+        "value": "65.9"
+      },
+      {
+        "benchmark_as_stated": "SWE-Bench Pro",
+        "value": "51.2"
+      },
+      {
+        "benchmark_as_stated": "TerminalBench 2.1 (with terminus2)",
+        "value": "51.7"
+      },
+      {
+        "benchmark_as_stated": "SciCode",
+        "value": "43.6"
+      },
+      {
+        "benchmark_as_stated": "Charxiv Reasoning",
+        "value": "78.8"
+      },
+      {
+        "benchmark_as_stated": "ScreenSpot Pro",
+        "value": "75.4"
+      },
+      {
+        "benchmark_as_stated": "OmniDocBench v1.5",
+        "value": "75.8"
+      },
+      {
+        "benchmark_as_stated": "MMMU Pro",
+        "value": "74"
+      },
+      {
+        "benchmark_as_stated": "CI Memories",
+        "value": "Violation (↓): 26.4 Coverage: 64.8"
+      },
+      {
+        "benchmark_as_stated": "Siren AgentDojo",
+        "value": "Attack Success Rate (↓): 28.4 Utility: 94.2"
+      },
+      {
+        "benchmark_as_stated": "IFBench",
+        "value": "77.0"
+      },
+      {
+        "benchmark_as_stated": "AIME 2026",
+        "value": "94.7"
+      },
+      {
+        "benchmark_as_stated": "GPQA Diamond (AA)",
+        "value": "83.5"
+      },
+      {
+        "benchmark_as_stated": "HLE Text (AA)",
+        "value": "22.0"
+      },
+      {
+        "benchmark_as_stated": "AA-LCR",
+        "value": "80.0"
+      },
+      {
+        "benchmark_as_stated": "Beam128K",
+        "value": "65.1"
+      },
+      {
+        "benchmark_as_stated": "MBCT",
+        "value": "41.5%"
+      },
+      {
+        "benchmark_as_stated": "HPCT",
+        "value": "52.3%"
+      },
+      {
+        "benchmark_as_stated": "VCT",
+        "value": "37.0%"
+      },
+      {
+        "benchmark_as_stated": "WMDP (Bio)",
+        "value": "86.5%"
+      },
+      {
+        "benchmark_as_stated": "WMDP (Chem)",
+        "value": "75.2%"
+      },
+      {
+        "benchmark_as_stated": "Lab Bench (ProtocolQA)",
+        "value": "80.2%"
+      }
+    ]
+  },
   "id": "meta--muse-glimmer-assistant",
   "model_hints": [
     "Muse-Glimmer-30B-assistant"
