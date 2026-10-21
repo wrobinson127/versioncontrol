@@ -129,15 +129,18 @@ def test_benchmark_alias_matching_is_exact_about_versions():
 # --- truncation and empty output are named, not passed off as bad JSON -----
 
 class _FakeResponse:
-    def __init__(self, text, stop_reason):
+    def __init__(self, text, stop_reason, thinking=False):
         self.content = [type("B", (), {"type": "text", "text": text})()]
+        if thinking:
+            self.content.insert(0, type("T", (), {"type": "thinking",
+                                                   "thinking": ""})())
         self.usage = type("U", (), {"input_tokens": 100, "output_tokens": 50})()
         self.stop_reason = stop_reason
 
 
 class _FakeClient:
-    def __init__(self, text, stop_reason):
-        self._r = _FakeResponse(text, stop_reason)
+    def __init__(self, text, stop_reason, thinking=False):
+        self._r = _FakeResponse(text, stop_reason, thinking)
         self.messages = self
 
     def create(self, **kwargs):
@@ -170,6 +173,25 @@ def test_request_sets_effort_and_no_sampling_params(tmp_path):
     assert client.kwargs["extra_body"] == {
         "output_config": {"effort": config.LLM_EFFORT}}
     assert not {"temperature", "top_p", "top_k"} & set(client.kwargs)
+
+
+def test_ceiling_note_blames_thinking_when_no_text_arrived(tmp_path):
+    client = _FakeClient("", "max_tokens", thinking=True)
+    draft, note = extract.extract_candidate(
+        _candidate(), "<html>x</html>", "2026-10-21",
+        client=client, root=str(tmp_path))
+    assert draft is None
+    assert "thinking used it before any text" in note
+
+
+def test_ceiling_note_counts_text_after_thinking(tmp_path):
+    client = _FakeClient('{"model_name": "GPT-6", "summ', "max_tokens",
+                         thinking=True)
+    draft, note = extract.extract_candidate(
+        _candidate(), "<html>x</html>", "2026-10-21",
+        client=client, root=str(tmp_path))
+    assert draft is None
+    assert "text reached 29 characters after a thinking block" in note
 
 
 def test_refusal_reports_itself(tmp_path):
