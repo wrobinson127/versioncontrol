@@ -42,6 +42,17 @@ import site_dist  # noqa: E402
 
 repo = sys.argv[1]
 dist = site_dist.build(repo, "dist_pages")
+
+# What the front door must show, read straight from the record, so a page
+# that stops following the data (a frozen count, a stale "newest") fails.
+sys.path.insert(0, repo)
+import datetime  # noqa: E402
+from pipeline import store  # noqa: E402
+_rel = [e for e in store.read_entries(root=repo) if e.get("entry_type") == "release"]
+_newest = max(e["date"] for e in _rel)
+EXPECT_COUNT = len(_rel)
+EXPECT_NEWEST_DATE = datetime.date.fromisoformat(_newest).strftime("%-d %b %Y" if os.name != "nt" else "%#d %b %Y")
+EXPECT_NEWEST_NAMES = {e["model_name"] for e in _rel if e["date"] == _newest}
 srv, url = site_dist.serve(dist)
 
 PAGES = sorted(f for f in os.listdir(dist) if f.endswith(".html"))
@@ -159,6 +170,11 @@ with sync_playwright() as p:
                     [...document.querySelectorAll('.hm-t:not(.gone) .hm-tn')].map(t => t.textContent), document.querySelectorAll('.hm-t').length]""")
                 check(f"home counts, months and findings load from the record @{w}",
                       got[0].replace(",", "").isdigit() and got[1] > 12 and got[3] >= 2 and len(got[2]) == got[3] and all(any(c.isdigit() for c in t) for t in got[2]), got)
+                last = pg.evaluate("document.getElementById('hm-last').textContent")
+                check(f"home count and newest release match the record @{w}",
+                      got[0].replace(",", "") == str(EXPECT_COUNT) and EXPECT_NEWEST_DATE in last
+                      and any(n in last for n in EXPECT_NEWEST_NAMES),
+                      [got[0], last, EXPECT_COUNT, EXPECT_NEWEST_DATE])
                 pg.focus("#hm-plot")
                 pg.keyboard.press("ArrowLeft")
                 pg.wait_for_timeout(100)
