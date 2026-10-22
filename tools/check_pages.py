@@ -8,6 +8,9 @@ console error, failed request or 4xx/5xx response; and, at 768, no text
 crushed sideways (a visible text block narrower than 120px holding more
 than three words).
 
+On the home page, at every width: the release count, the months and the
+three findings load from the record, and a month reads from the keyboard.
+
 On the story:
   - at 390 and 768, no chart label renders below 11px;
   - at 1440, 768 and 390, each view finishes forming when its step text is
@@ -151,6 +154,16 @@ with sync_playwright() as p:
                     tip = pg.evaluate("(() => { const t = document.getElementById('tip'); return t.classList.contains('on') ? t.textContent : ''; })()")
                     check(f"story view {k} reads a mark's record from the keyboard @{w}", "Open in explorer" in tip, tip[:60])
                     pg.keyboard.press("Escape")
+            if page == "index.html":
+                got = pg.evaluate("""() => [document.getElementById('hm-n').textContent, document.querySelectorAll('#hm-bars .hm-m').length,
+                    [...document.querySelectorAll('.hm-t:not(.gone) .hm-tn')].map(t => t.textContent)]""")
+                check(f"home counts, months and findings load from the record @{w}",
+                      got[0].replace(",", "").isdigit() and got[1] > 12 and len(got[2]) == 3 and all(any(c.isdigit() for c in t) for t in got[2]), got)
+                pg.focus("#hm-plot")
+                pg.keyboard.press("ArrowLeft")
+                pg.wait_for_timeout(100)
+                read = pg.evaluate("document.getElementById('hm-read').textContent")
+                check(f"home reads a month's count from the keyboard @{w}", "release" in read, read)
             check(f"{page} no errors or failed requests @{w}", not errs, errs[:2])
             pg.close()
 

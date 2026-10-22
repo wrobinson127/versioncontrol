@@ -1115,3 +1115,104 @@ code, pre, kbd, samp { font-family: var(--mono); font-stretch: 87.5%; }
 }
 .spec .dt .ell { max-width: 104px; overflow: hidden; text-overflow: ellipsis; }
 .spec .dt th, .spec .dt td { font-size: 13px; }
+
+/* ================= home ================= */
+/* The front door: one sentence, the count of releases, the months drawn as a
+   pulse (amber, the release colour), two ways in, three findings. */
+.home { max-width: 1280px; padding-top: 0; padding-bottom: 72px; }
+.hm-hero {
+  min-height: calc(100dvh - 52px); display: flex; flex-direction: column; justify-content: center;
+  gap: 36px; padding: 40px 0 48px;
+}
+.hm-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px 56px; }
+.hm-intro { max-width: 34em; }
+.home h1 { font-size: clamp(30px, 3.1vw, 44px); line-height: 1.1; font-weight: 650; font-stretch: 112%; letter-spacing: -0.02em; }
+.hm-what { margin-top: 16px; font-size: 18px; line-height: 28px; color: var(--muted); max-width: 40ch; }
+.hm-total { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
+.hm-n { display: block; font-size: clamp(84px, 12.5vw, 196px); line-height: 0.82; font-weight: 420; letter-spacing: -0.015em; color: var(--text); min-height: 0.82em; }
+.hm-n .sk { width: 2.2em; height: 0.7em; vertical-align: bottom; }
+.hm-nl { margin-top: 14px; font-size: 15px; color: var(--muted); }
+
+.hm-pulse { position: relative; }
+.hm-ends { display: flex; justify-content: space-between; gap: 16px; min-height: 22px; margin-bottom: 10px; font-size: 13px; line-height: 18px; color: var(--muted); transition: opacity 0.15s; }
+.hm-end { max-width: 48%; }
+.hm-end b { color: var(--text); font-weight: 600; }
+.hm-end-r { text-align: right; }
+.hm-plot { position: relative; height: 168px; outline: none; border-radius: 3px; }
+.hm-plot:focus-visible { outline: 2px solid var(--focus); outline-offset: 6px; }
+.hm-bars { position: absolute; inset: 0; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); align-items: end; border-bottom: 1px solid var(--control); }
+.hm-m { position: relative; height: 100%; display: flex; align-items: flex-end; justify-content: center; cursor: default; }
+.hm-b {
+  width: 42%; min-width: 2px; max-width: 9px; height: calc(var(--h) * 100%); min-height: 2px;
+  background: var(--accent); border-radius: 2px 2px 0 0; transform-origin: 50% 100%;
+}
+.hm-m.part .hm-b { background: transparent; box-shadow: inset 0 0 0 1.5px var(--accent); }
+.hm-m.now::before {
+  content: ""; position: absolute; left: 50%; bottom: calc(var(--h) * 100% + 6px); width: 9px; height: 9px; margin-left: -4.5px;
+  border: 1.5px solid var(--text); border-radius: 50%;
+}
+.hm-pulse.reading .hm-b { opacity: 0.38; }
+.hm-pulse.reading .hm-m.on .hm-b { opacity: 1; }
+.hm-pulse.reading .hm-ends { opacity: 0; }
+.hm-read {
+  position: absolute; top: -34px; left: 0; white-space: nowrap; pointer-events: none;
+  font-size: 13px; line-height: 18px; padding: 3px 8px; border-radius: 4px; background: var(--pop); color: var(--text);
+  box-shadow: 0 0 0 1px var(--border); opacity: 0;
+}
+.hm-read b { font-family: var(--mono); font-stretch: 87.5%; font-weight: 500; margin-left: 6px; }
+.hm-pulse.reading .hm-read { opacity: 1; }
+.hm-years { position: relative; height: 18px; margin-top: 8px; transition: opacity 0.15s; }
+.hm-years span { position: absolute; top: 0; font-family: var(--mono); font-stretch: 87.5%; font-size: 11px; line-height: 16px; color: var(--muted); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hm-bars.draw .hm-b { animation: hm-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; animation-delay: calc(var(--i) * 16ms); }
+  .hm-bars.draw .hm-m.now::before { animation: hm-fade 0.4s ease-out backwards; animation-delay: calc(var(--i) * 16ms + 0.5s); }
+}
+@keyframes hm-rise { from { transform: scaleY(0); } }
+@keyframes hm-fade { from { opacity: 0; } }
+
+.hm-paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.hm-path {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; padding: 0 22px;
+  background: var(--text); color: var(--ground); border-radius: var(--r-panel); text-decoration: none;
+  font-size: 19px; font-weight: 600; font-stretch: 108%; letter-spacing: -0.005em; transition: background 0.15s;
+}
+.hm-path:hover { background: var(--muted); }
+.hm-path:focus-visible { outline-offset: 3px; }
+.hm-arr { flex: none; transition: transform 0.2s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.hm-arr path { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.hm-path:hover .hm-arr { transform: translateX(4px); }
+
+.hm-takes { padding-top: 56px; border-top: 1px solid var(--border); }
+.hm-tl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 56px; }
+.hm-t { display: flex; flex-direction: column; gap: 12px; }
+.hm-tn { font-size: clamp(44px, 4.4vw, 64px); line-height: 1; font-weight: 420; color: var(--text); letter-spacing: -0.01em; }
+.hm-tn .sk { width: 2.4em; height: 0.8em; }
+.hm-tw { font-size: 16px; line-height: 24px; color: var(--muted); max-width: 31ch; }
+.hm-of { font-family: var(--font); font-stretch: 100%; font-size: 0.42em; color: var(--muted); white-space: pre; letter-spacing: 0; vertical-align: 0.12em; }
+.hm-end i { font-style: normal; white-space: nowrap; }
+.hm-t.gone { display: none; }
+
+@media (max-width: 900px) {
+  .hm-top { grid-template-columns: minmax(0, 1fr); }
+  .hm-total { align-items: flex-start; text-align: left; }
+  .hm-tl { gap: 28px 32px; }
+}
+@media (max-width: 720px) {
+  .hm-hero { min-height: calc(100dvh - 48px - 58px - env(safe-area-inset-bottom)); gap: 26px; padding: 20px 0 28px; }
+  .home h1 { font-size: 28px; }
+  .hm-what { font-size: 16px; line-height: 24px; margin-top: 12px; }
+  .hm-n { font-size: 92px; }
+  .hm-nl { margin-top: 10px; font-size: 14px; }
+  .hm-plot { height: 112px; }
+  .hm-ends { font-size: 12px; line-height: 16px; }
+  .hm-paths { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .hm-path { min-height: 56px; font-size: 17px; padding: 0 18px; }
+  .hm-takes { padding-top: 36px; }
+  .hm-tl { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .hm-tn { font-size: 44px; }
+}
+@media (forced-colors: active) {
+  .hm-b { background: CanvasText; }
+  .hm-path { border: 1px solid CanvasText; }
+}
