@@ -156,9 +156,9 @@ with sync_playwright() as p:
                     pg.keyboard.press("Escape")
             if page == "index.html":
                 got = pg.evaluate("""() => [document.getElementById('hm-n').textContent, document.querySelectorAll('#hm-bars .hm-m').length,
-                    [...document.querySelectorAll('.hm-t:not(.gone) .hm-tn')].map(t => t.textContent)]""")
+                    [...document.querySelectorAll('.hm-t:not(.gone) .hm-tn')].map(t => t.textContent), document.querySelectorAll('.hm-t').length]""")
                 check(f"home counts, months and findings load from the record @{w}",
-                      got[0].replace(",", "").isdigit() and got[1] > 12 and len(got[2]) == 3 and all(any(c.isdigit() for c in t) for t in got[2]), got)
+                      got[0].replace(",", "").isdigit() and got[1] > 12 and got[3] >= 2 and len(got[2]) == got[3] and all(any(c.isdigit() for c in t) for t in got[2]), got)
                 pg.focus("#hm-plot")
                 pg.keyboard.press("ArrowLeft")
                 pg.wait_for_timeout(100)

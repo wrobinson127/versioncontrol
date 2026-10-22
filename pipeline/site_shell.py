@@ -18,6 +18,7 @@ NAV = (
     ("explorer.html", "Explorer", "Explorer"),
     ("methodology.html", "Methodology", "Method"),
     ("data.html", "Data", "Data"),
+    ("about.html", "About", "About"),
 )
 
 FONTS = ("https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@87.5,400..600"
@@ -55,6 +56,7 @@ GLYPHS = {
     "explorer.html": '<rect x="2" y="3" width="14" height="12" rx="1.5"/><path d="M2 7.5h14M2 11.5h14M6.5 3v12"/>',
     "methodology.html": '<rect x="3.5" y="2" width="11" height="14" rx="1.5"/><path d="M6.5 6h5M6.5 9h5M6.5 12h3"/>',
     "data.html": '<path d="M9 2.5v8.5M5.5 7.5L9 11l3.5-3.5"/><path d="M2.5 12v3.5h13V12"/>',
+    "about.html": '<circle cx="9" cy="9" r="6.5"/><path d="M9 8.2v4.3M9 5.6v.1"/>',
     "search": '<circle cx="8" cy="8" r="5"/><path d="M11.8 11.8l4 4"/>',
 }
 

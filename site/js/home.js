@@ -100,32 +100,28 @@
     });
     plot.addEventListener("blur", function () { show(-1); });
 
-    /* ---------- three findings ---------- */
-    /* the monthly pace over the last twelve complete months against 2023 */
-    var recent = 0, recentN = 0, y23 = 0, y23N = 0;
-    months.forEach(function (m, i) {
-      if (m.k.slice(0, 4) === "2023") { y23 += m.n; y23N++; }
-      var back = months.length - 1 - i;
-      if (back >= 1 && back <= 12) { recent += m.n; recentN++; }
-    });
-    var lastFull = months[months.length - 2], firstFull = months[months.length - 13];
-    if (y23N === 12 && recentN === 12 && y23 && firstFull.k > "2023-12") {
-      setTake("t-pace", CR.fmtNum(recent / y23) + "×", null,
-        monthName(firstFull.k) + " to " + monthName(lastFull.k) + ": " + recent + " releases. 2023: " + y23 + " releases.");
-    } else { setTake("t-pace", null); }
-
+    /* ---------- findings ---------- */
     /* shares divide by checked releases only */
     var sc = CR.discCounts(rel, "system_card");
     console.assert(Math.abs(sc.share - D.views.tiles.share_with_system_card) < 0.005, "system card share matches the derived tile");
     if (sc.researched) {
-      setTake("t-card", Math.round(100 * sc.share) + "%", "of the " + sc.researched + " releases we checked came with a system card",
+      setTake("t-card", Math.round(100 * sc.share) + "%", null,
         sc.disclosed + " of " + sc.researched + " checked releases.");
     } else { setTake("t-card", null); }
 
-    /* the lab's score and Epoch's score on the same entry and benchmark */
-    var P = CR.pairs(D), above = P.filter(function (p) { return p.lab.value > p.ind.value; }).length;
+    /* the lab's score and Epoch's score on the same entry and benchmark; a
+       gap where the lab ran a higher reasoning setting is named, as the story
+       names it, so the line cannot read as "labs inflate scores" */
+    var LEVEL = { low: 0, medium: 1, high: 2, xhigh: 3, max: 4 };
+    var P = CR.pairs(D), aboveP = P.filter(function (p) { return p.lab.value > p.ind.value; });
+    var higher = aboveP.filter(function (p) {
+      var l = CR.labSetting(p.lab.configuration).lvl, i = CR.indSetting(p.ind.configuration).lvl;
+      return l !== null && i !== null && LEVEL[l] > LEVEL[i];
+    }).length;
     if (P.length) {
-      setTake("t-pair", above + '<span class="hm-of"> of </span>' + P.length, "times a lab's own score sat above the independent result on the same test",
+      setTake("t-pair", aboveP.length + '<span class="hm-of"> of </span>' + P.length,
+        "times a lab's own score beat the independent score" +
+          (higher ? "; in " + higher + " the lab used a higher setting" : ""),
         P.map(function (p) { return p.e.model_name + ", " + CR.BENCH[p.bench] + ": lab " + p.lab.value + ", independent " + p.ind.value; }).join(". ") + ".");
     } else { setTake("t-pair", null); }
   }).catch(function (err) {
