@@ -244,9 +244,19 @@ h1 { font-size: 22px; line-height: 28px; font-weight: 650; font-stretch: 112%; l
 .ph h2 { grid-area: t; font-size: 15px; line-height: 22px; font-weight: 650; font-stretch: 108%; letter-spacing: -0.005em; }
 .ph h2:focus { outline: none; }
 .pmeta { grid-area: m; color: var(--muted); font-size: 12.5px; line-height: 18px; max-width: 72ch; }
+.pmeta:empty { display: none; }
 .ptools { grid-area: tools; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
 .pbody { padding: 0 var(--pad) var(--pad); min-width: 0; }
-.pcollapse { display: none; }
+/* every secondary panel folds; a folded panel shows its title and the fold control only */
+.pcollapse {
+  display: inline-flex; width: 32px; height: 32px; border: 1px solid var(--control); border-radius: var(--r-ctl); background: var(--surface);
+  align-items: center; justify-content: center; cursor: pointer;
+}
+.pcollapse::before { content: ""; width: 7px; height: 7px; border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: translateY(2px) rotate(-135deg); }
+.pcollapse[aria-expanded="false"]::before { transform: translateY(-2px) rotate(45deg); }
+.row > .panel:has(> .ph .pcollapse[aria-expanded="false"]) { align-self: start; }
+.ph:has(.pcollapse[aria-expanded="false"]) { grid-template-areas: "t tools"; align-items: center; }
+.ph:has(.pcollapse[aria-expanded="false"]) .ptools > :not(.pcollapse), .ph:has(.pcollapse[aria-expanded="false"]) .pmeta { display: none; }
 .legend { display: inline-flex; flex-wrap: wrap; gap: 6px 14px; color: var(--muted); font-size: 12px; line-height: 16px; }
 .legend-row { display: flex; margin-bottom: 8px; }
 .lg-item { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
@@ -314,6 +324,7 @@ svg .rv { fill: var(--cell0); stroke: var(--accent); stroke-width: 1; }
 
 /* ---------- feed ---------- */
 .feed { contain: size; }
+.feed:has(> .ph .pcollapse[aria-expanded="false"]) { contain: none; }
 .feed .ph { flex: none; }
 .feed-list { flex: 1 1 0; min-height: 0; overflow-y: auto; padding: 0 8px 8px; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: var(--control) transparent; }
 .fr {
@@ -568,12 +579,6 @@ svg .cmp-over { fill: var(--accent-text); }
   .k-s { font-size: 12px; }
   .ph { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "t t" "m m" "tools tools"; row-gap: 6px; padding: 12px 14px 8px; }
   .ptools .legend { display: none; }
-  .pcollapse {
-    display: inline-flex; width: 32px; height: 32px; border: 1px solid var(--control); border-radius: var(--r-ctl); background: var(--surface);
-    align-items: center; justify-content: center;
-  }
-  .pcollapse::before { content: ""; width: 7px; height: 7px; border-right: 1.5px solid var(--muted); border-bottom: 1.5px solid var(--muted); transform: translateY(-2px) rotate(45deg); }
-  .pcollapse[aria-expanded="false"]::before { transform: translateY(2px) rotate(-135deg); }
   .pbody { padding: 0 14px 14px; }
   .heat-grid { grid-template-columns: 92px minmax(0, 1fr) 30px; }
   .hl { font-size: 12px; }

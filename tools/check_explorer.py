@@ -7,7 +7,9 @@ against the new page at 1440, 768 and 390:
       and once applied every row shown belongs to the chosen lab;
   F2  a link to an entry hidden by the current filters still reveals it, the
       inspector says in words that it is outside the filters, and an old
-      timeline link (index.html#<entry-id>) opens the same entry;
+      timeline link (index.html#<entry-id>) opens the same entry, and an
+      overview link from before the overview moved to overview.html
+      (/?labs=...&from=...) opens the overview with its filters;
   F3  a date range set in the inputs (as ISO dates, so the check does not
       depend on the browser's locale) holds, in the inputs and in the
       address, and survives a reload;
@@ -87,6 +89,11 @@ with sync_playwright() as p:
         pg.goto(url + f"index.html#{HIDDEN}", wait_until="networkidle"); ready(pg)
         r = pg.evaluate("[location.pathname.split('/').pop(), new URLSearchParams(location.search).get('id'), (document.getElementById('ins-h') || {}).textContent]")
         check(f"F2 old timeline link opens the entry @{w}", r == ["explorer.html", HIDDEN, "GPT-5.5"], r)
+        # the overview moved to overview.html; a filtered overview link shared before the move still opens it
+        pg.goto(url + "?labs=openai&from=2025-01-01", wait_until="networkidle"); ready(pg)
+        r = pg.evaluate("[location.pathname.split('/').pop(), location.search]")
+        check(f"F2 old overview link opens the overview with its filters @{w}",
+              r[0] == "overview.html" and "labs=openai" in r[1] and "from=2025-01-01" in r[1], r)
 
         # F5: fits at every width, rows and sheet inside the viewport
         pg.goto(url + "explorer.html", wait_until="networkidle"); ready(pg)

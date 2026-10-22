@@ -20,6 +20,7 @@ SITE = "https://versioncontrol.walker-robinson.com"
 # last record update is a safe upper bound for.
 PAGES = (
     ("/", "record"),
+    ("/overview.html", "record"),
     ("/explorer.html", "record"),
     ("/story.html", "record"),
     ("/data.html", "record"),
@@ -65,7 +66,8 @@ The record holds {meta['entry_count']} entries ({meta['releases']} releases and 
 
 ## Pages
 
-- {SITE}/ : the overview: release cadence by lab, the newest entries, disclosure and independent scores
+- {SITE}/ : the home page, with links to the story and the overview
+- {SITE}/overview.html : the overview: release cadence by lab, the newest entries, disclosure and independent scores
 - {SITE}/explorer.html : every entry, searchable and filterable, each with its sources, archived copies and score provenance; one entry at {SITE}/explorer.html?id=<entry-id>
 - {SITE}/story.html : the record told in five views and one finding, with a full text version
 - {SITE}/methodology.html : the rules, the scope, and the known limits
