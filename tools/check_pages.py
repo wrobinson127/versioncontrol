@@ -23,12 +23,19 @@ On the story:
     leaving the page, a tap elsewhere closes it, and a second tap on the
     same mark opens the entry in the explorer.
 
+On the front door (index.html), at 1440, 768 and 390: the field draws one
+dot per release on record; the three numbers are filled from the record
+(no placeholder left, each holds a figure); both paths sit whole on the
+first screen; and the field reads a dot's model name and date from the
+pointer and from the keyboard.
+
 The theme: with no saved choice a page follows the system light or dark
 setting; a saved choice wins over it.
 
 usage: python tools/check_pages.py .   (needs playwright + chromium)
 """
 import os
+import re
 import sys
 import urllib.request
 
@@ -113,6 +120,27 @@ with sync_playwright() as p:
             if w in (390, 768):
                 crushed = pg.evaluate(CRUSH)
                 check(f"{page} no text crushed sideways @{w}", not crushed, crushed[:3])
+            if page == "index.html":
+                pg.wait_for_function("document.getElementById('field').hasAttribute('data-drawn')", timeout=15000)
+                drawn, rel = pg.evaluate("""() => CR.load().then(D => [+document.getElementById('field').getAttribute('data-drawn'), D.releases.length])""")
+                check(f"home field draws one dot per release @{w}", drawn == rel and rel > 0, f"{drawn} dots, {rel} releases")
+                takes = pg.evaluate("""() => [...document.querySelectorAll('.tk li:not([hidden])')].map(li => [li.querySelector('.sk') ? 'placeholder' : '', li.querySelector('.tk-n').textContent, li.querySelector('.tk-l').textContent])""")
+                check(f"home shows three numbers counted from the record @{w}",
+                      len(takes) == 3 and all(not t[0] and any(c.isdigit() for c in t[1]) and t[2].strip() for t in takes), takes)
+                fold = pg.evaluate("""() => { const tb = document.querySelector('.tabbar'), tab = getComputedStyle(tb).display !== 'none' ? tb.offsetHeight : 0;
+                    return [...document.querySelectorAll('.h-path')].map(a => { const r = a.getBoundingClientRect(); return [a.textContent, r.top >= 0 && r.bottom <= innerHeight - tab]; }); }""")
+                check(f"home: both paths sit whole on the first screen @{w}", len(fold) == 2 and all(f[1] for f in fold), fold)
+                found = pg.evaluate("""() => { const hit = document.getElementById('fhit'), tip = document.getElementById('ftip'), r = hit.getBoundingClientRect();
+                    for (let y = r.top + 2; y < r.bottom - 2; y += 3) for (let x = r.left + 2; x < r.right - 2; x += 3) {
+                      hit.dispatchEvent(new PointerEvent('pointermove', { bubbles: true, clientX: x, clientY: y, pointerType: 'mouse' }));
+                      if (tip.classList.contains('on')) { const t = tip.textContent; hit.dispatchEvent(new PointerEvent('pointerleave', { pointerType: 'mouse' })); return t; }
+                    } return ''; }""")
+                check(f"home field reads a dot's name and date from the pointer @{w}", bool(re.search(r"\d{4}$", found)), found)
+                pg.focus("#fhit")
+                pg.keyboard.press("ArrowRight")
+                said = pg.evaluate("document.getElementById('flive').textContent")
+                check(f"home field reads a dot's name and date from the keyboard @{w}", bool(re.search(r"\d{4}\. 1 of \d+\.$", said)), said)
+                pg.keyboard.press("Escape")
             if page == "story.html" and w in (390, 768):
                 smallest = pg.evaluate("""() => {
                     let m = 99;
