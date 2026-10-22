@@ -8,6 +8,11 @@ console error, failed request or 4xx/5xx response; and, at 768, no text
 crushed sideways (a visible text block narrower than 120px holding more
 than three words).
 
+On the front door (index.html), at every width: the entry card has its
+four disclosure slots and at least one provenance-tagged score, the three
+findings are counted, no skeleton is left, and both paths sit on the first
+screen.
+
 On the story:
   - at 390 and 768, no chart label renders below 11px;
   - at 1440, 768 and 390, each view finishes forming when its step text is
@@ -113,6 +118,12 @@ with sync_playwright() as p:
             if w in (390, 768):
                 crushed = pg.evaluate(CRUSH)
                 check(f"{page} no text crushed sideways @{w}", not crushed, crushed[:3])
+            if page == "index.html":
+                got = pg.evaluate("""() => [document.querySelectorAll('#card .sd').length, document.querySelectorAll('#card .sc-bench .prov').length,
+                    document.querySelectorAll('#facts .lf-n').length, !!document.querySelector('#card .sk'),
+                    document.querySelector('.lp-paths').getBoundingClientRect().bottom <= innerHeight]""")
+                check(f"index card shows four disclosure slots, a tagged score and three findings, both paths on the first screen @{w}",
+                      got[0] == 4 and got[1] >= 1 and got[2] == 3 and not got[3] and got[4], got)
             if page == "story.html" and w in (390, 768):
                 smallest = pg.evaluate("""() => {
                     let m = 99;

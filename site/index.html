@@ -29,7 +29,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 </head>
-<body class="pg-doc pg-home">
+<body class="pg-home">
 <a class="skip" href="#main">Skip to the content</a>
 <header class="topbar">
   <a class="brand" href="index.html" aria-label="Version Control, home"><svg class="mark" viewBox="0 0 18 18" width="18" height="18" aria-hidden="true"><rect x="1" y="1" width="4" height="4" rx="1" class="m0"/><rect x="7" y="1" width="4" height="4" rx="1" class="m2"/><rect x="13" y="1" width="4" height="4" rx="1" class="m0"/><rect x="1" y="7" width="4" height="4" rx="1" class="m1"/><rect x="7" y="7" width="4" height="4" rx="1" class="m3"/><rect x="13" y="7" width="4" height="4" rx="1" class="m2"/><rect x="1" y="13" width="4" height="4" rx="1" class="m0"/><rect x="7" y="13" width="4" height="4" rx="1" class="m1"/><rect x="13" y="13" width="4" height="4" rx="1" class="m4"/></svg><span class="brand-name">Version Control</span></a>
@@ -47,14 +47,37 @@
     <button type="button" class="btn btn-icon btn-help" data-open-help aria-label="Keyboard shortcuts" aria-haspopup="dialog">?</button>
   </div>
 </header>
-<main id="main" class="canvas doc" tabindex="-1">
-<div class="doc-grid">
-<div class="toc toc-empty" aria-hidden="true"></div>
-<article class="doc-body"><header class="doc-head"><h1>Version Control</h1>
-  <p class="lede">The release record of the model era.</p>
-  <p><a href="story.html">Read the story</a> &middot; <a href="overview.html">Explore the record</a></p></header>
-</article>
-</div>
+<main id="main" class="lp" tabindex="-1">
+<section class="lp-hero" aria-labelledby="lp-h">
+  <div class="lp-row">
+    <div class="lp-intro">
+      <h1 id="lp-h">The release record of the model era.</h1>
+      <p class="lp-lede">Every new AI model from twelve major labs since ChatGPT: what each lab disclosed, and where every number came from.</p>
+      <p class="lp-paths">
+        <a class="lp-path" href="story.html"><svg class="lp-g" viewBox="0 0 18 18" aria-hidden="true"><rect x="2" y="10" width="3.5" height="6" rx="1"/><rect x="7.25" y="6" width="3.5" height="10" rx="1" class="f"/><rect x="12.5" y="2" width="3.5" height="14" rx="1"/></svg>Read the story</a>
+        <a class="lp-path" href="overview.html"><svg class="lp-g" viewBox="0 0 18 18" aria-hidden="true"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="10" y="2" width="6" height="6" rx="1" class="f"/><rect x="2" y="10" width="6" height="6" rx="1" class="f"/><rect x="10" y="10" width="6" height="6" rx="1"/></svg>Explore the record</a>
+      </p>
+    </div>
+    <figure class="lp-spec js-only" id="spec">
+      <div class="lp-stack" id="stack" aria-hidden="true"><div class="lp-tab"></div><div class="lp-tab"></div><div class="lp-tab"></div></div>
+      <article class="lp-card" id="card" aria-busy="true">
+        <p class="sc-date"><span class="sk" style="width:112px;height:18px"></span></p>
+        <p class="sc-lab"><span class="sk" style="width:120px"></span></p>
+        <h2 class="sc-model"><span class="sk" style="width:62%;height:32px"></span></h2>
+        <ul class="sc-disc"><li><span class="sk" style="width:84px"></span></li><li><span class="sk" style="width:84px"></span></li><li><span class="sk" style="width:84px"></span></li><li><span class="sk" style="width:84px"></span></li></ul>
+        <ul class="sc-bench"><li><span class="sk" style="width:150px;height:44px"></span></li></ul>
+      </article>
+    </figure>
+  </div>
+  <div class="lp-strip js-only" id="strip"><span class="sk" style="width:100%;height:30px"></span></div>
+</section>
+<section class="lp-facts js-only" aria-label="Three findings from the record">
+  <ol id="facts">
+    <li><span class="sk" style="width:120px;height:36px"></span><span class="sk" style="width:60%"></span></li>
+    <li><span class="sk" style="width:120px;height:36px"></span><span class="sk" style="width:55%"></span></li>
+    <li><span class="sk" style="width:120px;height:36px"></span><span class="sk" style="width:65%"></span></li>
+  </ol>
+</section>
 </main>
 <footer class="foot">
   <div class="foot-in">
@@ -78,6 +101,6 @@
   <button type="button" data-open-palette><svg class="tb-g" viewBox="0 0 18 18" aria-hidden="true"><circle cx="8" cy="8" r="5"/><path d="M11.8 11.8l4 4"/></svg>Search</button>
 </nav>
 <script src="js/app.js"></script>
-<script src="js/doc.js"></script>
+<script src="js/landing.js"></script>
 </body>
 </html>
