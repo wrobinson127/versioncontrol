@@ -4,13 +4,13 @@
       "sha256": "3a8df9ae94e23e14003ca212c5aefe1be45edc5e708e2da2f6b71656e1962525"
     },
     "data/derived/site_meta.json": {
-      "sha256": "17b33ad329cc0cb689b2c78fb42a13360911abf85f745eb4fa40f126733f7a0b"
+      "sha256": "6b6f5be67311d7fdde00a35d0e337b3de980b25ada9bd779ade037e5401c0def"
     },
     "data/derived/views.json.gz": {
-      "sha256": "4dea1dda853cba129cd5ab2320856a7848eaf073a298ff9a91448aee80479d62"
+      "sha256": "ddb483e5672213e4c5cab6f8525f9c585d260166e688d3e7195ba2ce5034ddf0"
     }
   },
-  "entry_count": 366,
+  "entry_count": 367,
   "files": {
     "data/entries/2022.json.gz": {
       "count": 2,
@@ -307,7 +307,7 @@
       "sha256": "07fc51f6a9e567785b2136b3e6e517feb72a3bc1000a8f507e63891eb77b3842"
     },
     "data/entries/2026.json.gz": {
-      "count": 96,
+      "count": 97,
       "ids": [
         "zai--glm-4.7-flash",
         "alibaba-qwen--qwen3-max-thinking",
@@ -404,9 +404,10 @@
         "meta--muse-wonder-full",
         "google-deepmind--gemini-4-argon",
         "meta--muse-spark-open",
-        "deepseek--deepseek-v4.1-flash-1017"
+        "deepseek--deepseek-v4.1-flash-1017",
+        "cohere--rerank-5"
       ],
-      "sha256": "37d04acee8374abac04a696126d46bb560004d6a5c105e6e324c39fb9297d643"
+      "sha256": "092616b046af20599df63411bb76d6e8a04d57799a3609272aa054010b8783d2"
     }
   },
   "schema_version": 1
