@@ -956,6 +956,11 @@
     "checked": "2026-10-19",
     "via": "existing"
   },
+  "https://cohere.com/blog/rerank-5": {
+    "archived_url": "https://web.archive.org/web/20261022115307/https://cohere.com/blog/rerank-5",
+    "checked": "2026-10-22",
+    "via": "existing"
+  },
   "https://cohere.com/models/command": {
     "archived_url": "https://web.archive.org/web/20240402140448/https://cohere.com/models/command",
     "checked": "2026-10-19",
@@ -1166,6 +1171,11 @@
   "https://docs.cohere.com/docs/cohere-embed": {
     "archived_url": "https://web.archive.org/web/20261018004844/https://docs.cohere.com/docs/cohere-embed",
     "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://docs.cohere.com/docs/rerank": {
+    "archived_url": "https://web.archive.org/web/20261010185321/https://docs.cohere.com/docs/rerank",
+    "checked": "2026-10-22",
     "via": "existing"
   },
   "https://docs.cohere.com/docs/responsible-use": {
