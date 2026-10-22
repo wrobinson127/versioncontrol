@@ -17,6 +17,7 @@
 <meta name="twitter:image" content="https://versioncontrol.walker-robinson.com/assets/og.png">
 <script>(function(){var d=document.documentElement,t=null;try{t=localStorage.getItem("vc-theme");}catch(e){}if(t!=="light"&&t!=="dark"){t=window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";}d.setAttribute("data-theme",t);d.className+=" js";})();</script>
 <script>(function(){var h=location.hash.slice(1);try{h=decodeURIComponent(h);}catch(e){}if(/^[a-z0-9.-]+--[^\s\/?#]+$/i.test(h)){location.replace("explorer.html?id="+encodeURIComponent(h));}})();</script>
+<script>(function(){var q=new URLSearchParams(location.search);if(["from","to","labs","country","bench"].some(function(k){return q.has(k);})){location.replace("overview.html"+location.search+location.hash);}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@87.5,400..600&amp;family=Mona+Sans:wdth,wght@100..125,400..700&amp;display=swap">
@@ -28,170 +29,56 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 </head>
-<body class="pg-overview">
-<a class="skip" href="#main">Skip to the overview</a>
+<body class="pg-home">
+<a class="skip" href="#main">Skip to the content</a>
 <header class="topbar">
-  <a class="brand" href="index.html" aria-label="Version Control, overview"><svg class="mark" viewBox="0 0 18 18" width="18" height="18" aria-hidden="true"><rect x="1" y="1" width="4" height="4" rx="1" class="m0"/><rect x="7" y="1" width="4" height="4" rx="1" class="m2"/><rect x="13" y="1" width="4" height="4" rx="1" class="m0"/><rect x="1" y="7" width="4" height="4" rx="1" class="m1"/><rect x="7" y="7" width="4" height="4" rx="1" class="m3"/><rect x="13" y="7" width="4" height="4" rx="1" class="m2"/><rect x="1" y="13" width="4" height="4" rx="1" class="m0"/><rect x="7" y="13" width="4" height="4" rx="1" class="m1"/><rect x="13" y="13" width="4" height="4" rx="1" class="m4"/></svg><span class="brand-name">Version Control</span></a>
+  <a class="brand" href="index.html" aria-label="Version Control, home"><svg class="mark" viewBox="0 0 18 18" width="18" height="18" aria-hidden="true"><rect x="1" y="1" width="4" height="4" rx="1" class="m0"/><rect x="7" y="1" width="4" height="4" rx="1" class="m2"/><rect x="13" y="1" width="4" height="4" rx="1" class="m0"/><rect x="1" y="7" width="4" height="4" rx="1" class="m1"/><rect x="7" y="7" width="4" height="4" rx="1" class="m3"/><rect x="13" y="7" width="4" height="4" rx="1" class="m2"/><rect x="1" y="13" width="4" height="4" rx="1" class="m0"/><rect x="7" y="13" width="4" height="4" rx="1" class="m1"/><rect x="13" y="13" width="4" height="4" rx="1" class="m4"/></svg><span class="brand-name">Version Control</span></a>
   <nav class="topnav" aria-label="Sections">
-    <a href="index.html" aria-current="page">Overview</a>
+    <a href="overview.html">Overview</a>
     <a href="story.html">Story</a>
     <a href="explorer.html">Explorer</a>
     <a href="methodology.html">Methodology</a>
     <a href="data.html">Data</a>
+    <a href="about.html">About</a>
   </nav>
   <div class="topact">
     <button type="button" class="search-btn" data-open-palette aria-label="Search models, labs and views (Ctrl K)"><span>Search models, labs, views</span><kbd><span class="kmod">Ctrl</span> K</kbd></button>
-    <a class="btn btn-cmp" href="index.html?compare=openai,anthropic" data-open-compare aria-haspopup="dialog">Compare <kbd>c</kbd></a>
+    <a class="btn btn-cmp" href="overview.html?compare=openai,anthropic" data-open-compare aria-haspopup="dialog">Compare <kbd>c</kbd></a>
     <button type="button" class="btn btn-theme" data-theme-toggle aria-pressed="false"><span class="sr">Theme: </span><span class="tt-word">Dark</span></button>
     <button type="button" class="btn btn-icon btn-help" data-open-help aria-label="Keyboard shortcuts" aria-haspopup="dialog">?</button>
   </div>
 </header>
-<main id="main" class="canvas" tabindex="-1">
-  <noscript><p class="noscript">The overview needs JavaScript. Without it, every entry is in the <a href="data.html">dataset files</a>, and <a href="story.html">the story</a> reads in full.</p></noscript>
-  <div class="titlerow">
-    <div class="title-text">
-      <h1>AI model release record</h1>
-      <p class="subline" id="scope-line">Every release from twelve tracked labs since ChatGPT launched on 2022-11-30.</p>
+<main id="main" class="canvas home" tabindex="-1">
+<section class="hm-hero" aria-labelledby="hm-h">
+  <div class="hm-top">
+    <div class="hm-intro">
+      <h1 id="hm-h">The release record of the model era.</h1>
+      <p class="hm-what">Every new AI model from twelve major labs since ChatGPT, with what each lab disclosed and where every number came from.</p>
     </div>
-    <div class="stamp">
-      <p class="fresh" id="fresh"><span class="sk sk-line" style="width:180px"></span></p>
-      <p class="byline">Built by <a href="https://walker-robinson.com">Walker Robinson</a></p>
-    </div>
+    <p class="hm-total"><span class="hm-n num" id="hm-n"><span class="sk"></span></span><span class="hm-nl">releases on record</span></p>
   </div>
-
-  <div class="filterbar" role="group" aria-label="Filters for the whole overview">
-    <div class="seg" role="radiogroup" aria-label="Date range" id="presets"></div>
-    <button type="button" class="btn more-f" id="more-filters" aria-expanded="false">More filters</button>
-    <div class="range-in">
-      <label for="f-from">From</label><input type="date" id="f-from" min="2022-11-30">
-      <label for="f-to">to</label><input type="date" id="f-to" min="2022-11-30">
+  <figure class="hm-pulse" id="hm-pulse">
+    <div class="hm-ends" aria-hidden="true"><span class="hm-end" id="hm-first"></span><span class="hm-end hm-end-r" id="hm-last"></span></div>
+    <div class="hm-plot" id="hm-plot" tabindex="0" aria-describedby="hm-read" aria-label="Releases per month. Arrow keys read each month.">
+      <div class="hm-bars" id="hm-bars"></div>
+      <p class="hm-read" id="hm-read" aria-live="polite"></p>
     </div>
-    <label class="sel"><span class="sr">Country of the lab's parent company</span>
-      <select id="f-country" aria-label="Country of the lab's parent company"><option value="">All countries</option></select>
-    </label>
-    <div class="labchips" id="labchips" aria-live="polite"></div>
-    <div class="fb-end">
-      <button type="button" class="btn btn-quiet" id="clear-all" hidden>Clear filters <kbd>Esc</kbd></button>
-      <a class="btn btn-primary" id="to-explorer" href="explorer.html">Open in explorer</a>
-    </div>
-  </div>
-
-  <section class="kpis" aria-label="Headline measures">
-    <div class="kpi" id="k1"><p class="k-l">Releases this year</p><p class="k-v"><span class="sk sk-v"></span></p><p class="k-s">&nbsp;</p><div class="k-spark"></div></div>
-    <div class="kpi" id="k2"><p class="k-l">Median days between releases</p><p class="k-v"><span class="sk sk-v"></span></p><p class="k-s">&nbsp;</p><div class="k-spark"></div></div>
-    <div class="kpi" id="k3"><p class="k-l">Checked releases with a system card</p><p class="k-v"><span class="sk sk-v"></span></p><p class="k-s">&nbsp;</p><div class="k-spark"></div></div>
-    <div class="kpi" id="k4"><p class="k-l">Open-weights share of releases</p><p class="k-v"><span class="sk sk-v"></span></p><p class="k-s">&nbsp;</p><div class="k-spark"></div></div>
-  </section>
-
-  <div class="row row-a">
-    <section class="panel" id="p-cadence" aria-labelledby="h-cadence">
-    <header class="ph">
-    <h2 id="h-cadence">Release weeks by lab</h2>
-    <p class="pmeta" id="cad-meta">Drag across the grid to filter every panel.</p>
-    <div class="ptools">
-    <span class="legend" id="cad-legend" aria-hidden="true"></span>
-    <button type="button" class="btn btn-sm tbl-toggle" aria-pressed="false" aria-controls="cad-table">Table</button>
-    <button type="button" class="pcollapse" aria-expanded="true" aria-controls="cad-body"><span class="sr">Collapse release weeks</span></button>
-    </div>
-    </header>
-    <div class="pbody" id="cad-body">
-    <div class="heat" id="heat">
-    <div class="heat-sk"><span class="sk" style="height:100%;width:100%"></span></div>
-    </div>
-    <div class="tbl-wrap" id="cad-table" hidden></div>
-    </div>
-    </section>
-    <aside class="panel feed" id="p-feed" aria-labelledby="h-feed">
-    <header class="ph">
-    <h2 id="h-feed">Newest on record</h2>
-    <p class="pmeta" id="feed-meta">&nbsp;</p>
-    <div class="ptools"><button type="button" class="pcollapse" aria-expanded="true" aria-controls="feed-list"><span class="sr">Collapse the release feed</span></button></div>
-    </header>
-    <ol class="feed-list pbody" id="feed-list" aria-describedby="feed-meta" aria-label="Newest entries, a scrolling list"></ol>
-    </aside>
-  </div>
-
-  <div class="row row-b">
-    <section class="panel" id="p-labs" aria-labelledby="h-labs">
-    <header class="ph">
-    <h2 id="h-labs">Releases by lab</h2>
-    <p class="pmeta">Select a lab to filter the overview. Scores are on GPQA Diamond (graduate-level science questions).</p>
-    <div class="ptools">
-    <span class="legend" id="labs-legend" aria-hidden="true"></span>
-    <button type="button" class="pcollapse" aria-expanded="true" aria-controls="labs-grid"><span class="sr">Collapse the lab panels</span></button>
-    </div>
-    </header>
-    <div class="labs pbody" id="labs-grid"></div>
-    </section>
-    <aside class="panel findings" id="p-findings" aria-labelledby="h-findings">
-    <header class="ph">
-    <h2 id="h-findings">Finding</h2>
-    <p class="pmeta">Computed from the record at each load.</p>
-    <div class="ptools"><button type="button" class="pcollapse" aria-expanded="true" aria-controls="findings-list"><span class="sr">Collapse the finding</span></button></div>
-    </header>
-    <ol class="findings-list pbody" id="findings-list"></ol>
-    </aside>
-  </div>
-
-  <div class="row row-c">
-    <section class="panel" id="p-scores" aria-labelledby="h-scores">
-    <header class="ph">
-    <h2 id="h-scores">Scores over time</h2>
-    <p class="pmeta" id="scores-meta">A vertical line joins the lab's score and Epoch's for one release.</p>
-    <div class="ptools">
-    <div class="seg seg-sm" role="radiogroup" aria-label="Benchmark" id="bench-seg">
-    <button type="button" role="radio" aria-checked="true" data-b="gpqa-diamond">GPQA Diamond</button>
-    <button type="button" role="radio" aria-checked="false" data-b="swe-bench-verified">SWE-Bench Verified</button>
-    </div>
-    <button type="button" class="btn btn-sm tbl-toggle" aria-pressed="false" aria-controls="scores-table">Table</button>
-    <button type="button" class="pcollapse" aria-expanded="true" aria-controls="scores-body"><span class="sr">Collapse scores</span></button>
-    </div>
-    </header>
-    <div class="pbody" id="scores-body">
-    <p class="legend legend-row" id="scores-legend"></p>
-    <div class="chart" id="scores-chart"></div>
-    <div class="tbl-wrap" id="scores-table" hidden></div>
-    </div>
-    </section>
-    <aside class="panel" id="p-pairs" aria-labelledby="h-pairs">
-    <header class="ph">
-    <h2 id="h-pairs">Lab score and Epoch score</h2>
-    <p class="pmeta">The same release and benchmark, scored by the lab and by Epoch AI.</p>
-    <div class="ptools"><button type="button" class="pcollapse" aria-expanded="true" aria-controls="pairs-body"><span class="sr">Collapse the pairs</span></button></div>
-    </header>
-    <div class="pbody" id="pairs-body"></div>
-    </aside>
-  </div>
-
-  <div class="row row-d">
-    <section class="panel" id="p-disc" aria-labelledby="h-disc">
-    <header class="ph">
-    <h2 id="h-disc">What labs publish, by year</h2>
-    <p class="pmeta">Shares count checked releases only.</p>
-    <div class="ptools">
-    <span class="legend" id="disc-legend" aria-hidden="true"></span>
-    <button type="button" class="btn btn-sm tbl-toggle" aria-pressed="false" aria-controls="disc-table">Table</button>
-    <button type="button" class="pcollapse" aria-expanded="true" aria-controls="disc-body"><span class="sr">Collapse disclosure</span></button>
-    </div>
-    </header>
-    <div class="pbody" id="disc-body">
-    <div class="waffles" id="waffles"></div>
-    <div class="tbl-wrap" id="disc-table" hidden></div>
-    </div>
-    </section>
-    <div class="col">
-      <aside class="panel" id="p-access" aria-labelledby="h-access">
-      <header class="ph">
-      <h2 id="h-access">How releases ship</h2>
-      <p class="pmeta">Availability by year, from Epoch AI's "Model accessibility" field.</p>
-      <div class="ptools"><button type="button" class="pcollapse" aria-expanded="true" aria-controls="access-body"><span class="sr">Collapse availability</span></button></div>
-      </header>
-      <div class="pbody" id="access-body"></div>
-      </aside>
-    </div>
-  </div>
+    <div class="hm-years" id="hm-years" aria-hidden="true"></div>
+    <figcaption class="sr" id="hm-cap">Releases per month on the record.</figcaption>
+  </figure>
+  <noscript><p class="noscript">The counts on this page are read from the dataset with JavaScript. Without it, every number is in the <a href="data.html">dataset files</a>.</p></noscript>
+  <nav class="hm-paths" aria-label="Start here">
+    <a class="hm-path" href="story.html"><span>Read the story</span><svg class="hm-arr" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2.5 8h10.5M9 3.5L13.5 8 9 12.5"/></svg></a>
+    <a class="hm-path" href="overview.html"><span>Explore the record</span><svg class="hm-arr" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M2.5 8h10.5M9 3.5L13.5 8 9 12.5"/></svg></a>
+  </nav>
+</section>
+<section class="hm-takes" aria-label="Findings from the record">
+  <ul class="hm-tl">
+    <li class="hm-t" id="t-card"><span class="hm-tn num"><span class="sk"></span></span><span class="hm-tw">of checked releases came with a system card, the lab's safety report</span></li>
+    <li class="hm-t" id="t-pair"><span class="hm-tn num"><span class="sk"></span></span><span class="hm-tw">times a lab's own score beat the independent score</span></li>
+  </ul>
+</section>
 </main>
-
 <footer class="foot">
   <div class="foot-in">
     <p class="foot-what"><b>Version Control.</b> Maintained by <a href="https://walker-robinson.com">Walker Robinson</a>. Dataset licensed CC-BY 4.0 with Epoch AI attribution.</p>
@@ -206,14 +93,15 @@
   </div>
 </footer>
 <nav class="tabbar" aria-label="Sections, phone">
-  <a href="index.html" aria-current="page"><svg class="tb-g" viewBox="0 0 18 18" aria-hidden="true"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="10" y="2" width="6" height="6" rx="1" class="f"/><rect x="2" y="10" width="6" height="6" rx="1" class="f"/><rect x="10" y="10" width="6" height="6" rx="1"/></svg>Overview</a>
+  <a href="overview.html"><svg class="tb-g" viewBox="0 0 18 18" aria-hidden="true"><rect x="2" y="2" width="6" height="6" rx="1"/><rect x="10" y="2" width="6" height="6" rx="1" class="f"/><rect x="2" y="10" width="6" height="6" rx="1" class="f"/><rect x="10" y="10" width="6" height="6" rx="1"/></svg>Overview</a>
   <a href="story.html"><svg class="tb-g" viewBox="0 0 18 18" aria-hidden="true"><rect x="2" y="10" width="3.5" height="6" rx="1"/><rect x="7.25" y="6" width="3.5" height="10" rx="1" class="f"/><rect x="12.5" y="2" width="3.5" height="14" rx="1"/></svg>Story</a>
   <a href="explorer.html"><svg class="tb-g" viewBox="0 0 18 18" aria-hidden="true"><rect x="2" y="3" width="14" height="12" rx="1.5"/><path d="M2 7.5h14M2 11.5h14M6.5 3v12"/></svg>Explorer</a>
   <a href="methodology.html"><svg class="tb-g" viewBox="0 0 18 18" aria-hidden="true"><rect x="3.5" y="2" width="11" height="14" rx="1.5"/><path d="M6.5 6h5M6.5 9h5M6.5 12h3"/></svg>Method</a>
   <a href="data.html"><svg class="tb-g" viewBox="0 0 18 18" aria-hidden="true"><path d="M9 2.5v8.5M5.5 7.5L9 11l3.5-3.5"/><path d="M2.5 12v3.5h13V12"/></svg>Data</a>
+  <a href="about.html"><svg class="tb-g" viewBox="0 0 18 18" aria-hidden="true"><circle cx="9" cy="9" r="6.5"/><path d="M9 8.2v4.3M9 5.6v.1"/></svg>About</a>
   <button type="button" data-open-palette><svg class="tb-g" viewBox="0 0 18 18" aria-hidden="true"><circle cx="8" cy="8" r="5"/><path d="M11.8 11.8l4 4"/></svg>Search</button>
 </nav>
 <script src="js/app.js"></script>
-<script src="js/overview.js"></script>
+<script src="js/home.js"></script>
 </body>
 </html>

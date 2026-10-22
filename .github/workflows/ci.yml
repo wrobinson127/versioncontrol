@@ -32,3 +32,22 @@ jobs:
         # Every figure on the story page is read from data/ at build time, so
         # a refreshed capture silently falsifies it unless a rebuild is forced.
         run: python -m pipeline.build_story --check
+
+  browser:
+    # The pages read their figures from data/ when they load, so a page can
+    # go stale or break without any Python test noticing. These checks build
+    # the site exactly as pages.yml does and load every page in Chromium at
+    # 1440, 768 and 390; the front door's count and newest release must match
+    # the record.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt playwright==1.61.0
+      - run: python -m playwright install --with-deps chromium
+      - name: Page checks
+        run: python tools/check_pages.py "$GITHUB_WORKSPACE"
+      - name: Explorer checks
+        run: python tools/check_explorer.py "$GITHUB_WORKSPACE"

@@ -654,12 +654,12 @@ MAIN = f"""<main id="main" class="story" tabindex="-1">
 <section class="sclose" aria-labelledby="ch">
 <h2 class="readmore-h" id="ch">The full record, its rules and who keeps it</h2>
 <div class="enddoors">
-<a class="enddoor" href="explorer.html"><b>Explorer</b><span>every entry, filterable</span></a>
-<a class="enddoor" href="methodology.html"><b>Methodology</b><span>the rules every number follows</span></a>
-<a class="enddoor" href="about.html"><b>About</b><span>what this is, and who keeps it</span></a>
-<a class="enddoor" href="data.html"><b>Data</b><span>download the dataset, CC-BY 4.0</span></a>
+<a class="enddoor" href="explorer.html"><b>Explorer</b></a>
+<a class="enddoor" href="methodology.html"><b>Methodology</b></a>
+<a class="enddoor" href="about.html"><b>About</b></a>
+<a class="enddoor" href="data.html"><b>Data</b></a>
 </div>
-<p class="protonote">Parameter counts reported by others are left out of the parameter figures. Record updated {AS_OF}.</p>
+<p class="protonote">Record updated {AS_OF}.</p>
 </section>
 </main>
 """
