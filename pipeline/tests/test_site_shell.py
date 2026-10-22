@@ -16,7 +16,7 @@ def _base(name):
 
 def test_the_pages_are_the_ones_the_site_ships():
     assert PAGES == ["404.html", "about.html", "changes.html", "data.html", "explorer.html",
-                     "index.html", "methodology.html", "story.html"]
+                     "index.html", "methodology.html", "overview.html", "story.html"]
 
 
 def test_every_page_carries_the_shared_shell():
@@ -40,7 +40,7 @@ def test_theme_follows_the_system_until_the_reader_chooses():
 
 
 def test_overview_byline_sits_beside_the_update_stamp():
-    html = (SITE / "index.html").read_text(encoding="utf-8")
+    html = (SITE / "overview.html").read_text(encoding="utf-8")
     stamp = html[html.index('<div class="stamp">'):]
     stamp = stamp[:stamp.index("</div>")]
     assert 'id="fresh"' in stamp
@@ -63,3 +63,14 @@ def test_old_timeline_links_open_the_entry():
     index = (SITE / "index.html").read_text(encoding="utf-8")
     assert site_shell.REDIRECT in index
     assert 'location.replace("explorer.html?id="' in site_shell.REDIRECT
+
+
+def test_old_overview_links_open_the_overview():
+    """The overview moved from / to overview.html; a filtered link shared
+    before the move (/?labs=...&from=...) still opens it, filters intact."""
+    index = (SITE / "index.html").read_text(encoding="utf-8")
+    assert site_shell.HOME_REDIRECT in index
+    assert 'location.replace("overview.html"+location.search+location.hash)' in site_shell.HOME_REDIRECT
+    ov = (SITE / "js" / "overview.js").read_text(encoding="utf-8")
+    for k in ("from", "to", "labs", "country", "bench"):
+        assert f'"{k}"' in site_shell.HOME_REDIRECT and f'p.get("{k}")' in ov, k

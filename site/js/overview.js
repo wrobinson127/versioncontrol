@@ -407,7 +407,7 @@
       '<div class="heat-counts" aria-hidden="true">' + counts + "</div></div>";
     /* the title names the grid's own unit: weeks on a wide screen, months where the grid shows months */
     $("#h-cadence").textContent = "Release " + B.unit + "s by lab";
-    $("#cad-meta").textContent = "Drag across the grid to filter every panel.";
+    $("#cad-meta").textContent = "";
     $("#cad-legend").innerHTML = heatLegend();
     wireHeat();
     paintSelection();
@@ -657,7 +657,7 @@
     var to = CR.dateOf(Math.min(H.bins[b].b, D.asOfDay));
     if (from <= D.meta.first_date && to >= D.asOf) { set({ from: null, to: null }); return; }
     set({ from: from === D.meta.first_date ? null : from, to: to === D.asOf ? null : to });
-    $("#cad-meta").textContent = "Selected " + from + " to " + to + ". Escape or Clear filters returns to the whole record.";
+    $("#cad-meta").textContent = "Selected " + from + " to " + to + ".";
   }
 
   function renderHeatTable() {
@@ -680,7 +680,7 @@
   function renderFeed() {
     var list = D.entries.filter(inView);
     $("#h-feed").textContent = filtered() ? "In view, newest first" : "Newest on record";
-    $("#feed-meta").textContent = filtered() ? CR.plural(list.length, "entry", "entries") + " match. Hover a row to find it in the grid." : "Releases and revisions. Hover a row to find it in the grid.";
+    $("#feed-meta").textContent = filtered() ? CR.plural(list.length, "entry", "entries") + " match." : "";
     var shown = list.slice(0, 80);
     var h = shown.map(function (e) {
       var tags = "";
@@ -993,9 +993,8 @@
     host.innerHTML = '<div class="sc-plot" tabindex="0" role="application" aria-roledescription="scatter chart" aria-label="' + esc(label) + ' Arrow keys step through the scores in date order; Enter opens the release.">' + s + "</div>";
     SC = { pts: pts, sx: sx, sy: sy, host: host, k: -1 };
     $("#scores-legend").innerHTML = '<span class="lg-item">' + CR.provGlyph("INDEPENDENT", 10) + ' <b>IND</b> measured by Epoch AI</span><span class="lg-item">' + CR.provGlyph("LAB_REPORTED", 10) +
-      ' <b>LAB</b> reported by the lab</span><span class="lg-item"><svg width="16" height="10" aria-hidden="true"><line x1="0" x2="16" y1="5" y2="5" class="sc-best"/></svg> highest independent score so far</span>' +
+      ' <b>LAB</b> reported by the lab</span><span class="lg-item"><svg width="6" height="14" aria-hidden="true"><line x1="3" x2="3" y1="1" y2="13" class="sc-pair"/></svg> LAB and IND, one release</span><span class="lg-item"><svg width="16" height="10" aria-hidden="true"><line x1="0" x2="16" y1="5" y2="5" class="sc-best"/></svg> highest independent score so far</span>' +
       '<span class="lg-item lg-n">' + CR.plural(nIn.length, "score") + " in view</span>";
-    $("#scores-meta").textContent = "A vertical line joins the lab's score and Epoch's for one release.";
     $$("#bench-seg button").forEach(function (b) { b.setAttribute("aria-checked", b.getAttribute("data-b") === S.bench ? "true" : "false"); b.tabIndex = b.getAttribute("data-b") === S.bench ? 0 : -1; });
     wireScores();
   }
@@ -1276,14 +1275,6 @@
     buildPresets();
     wireFeed(); wireLabs(); wireDisc(); wirePanels();
     renderFindings();
-    /* on a phone the long panels start folded; their headers stay in place */
-    if (window.innerWidth <= 720) {
-      ["#p-labs", "#p-pairs", "#p-access"].forEach(function (sel) {
-        var b = $(sel + " .pcollapse"); if (!b) { return; }
-        b.setAttribute("aria-expanded", "false");
-        document.getElementById(b.getAttribute("aria-controls")).hidden = true;
-      });
-    }
     drawHeat();
     /* the first screen paints first; the panels below follow a moment later */
     renderFilterbar(); renderKpis(); paintSelection(); renderFeed();

@@ -210,7 +210,7 @@
       '<p class="rn-s">source pages from the labs have an archived copy on archive.org.</p>' +
       '<p class="rn-big" style="margin-top:14px">' + num(discArch) + " of " + disc + "</p>" +
       '<p class="rn-s">disclosure links on record have an archived copy.</p>' +
-      (latest ? '<p class="rn-s" style="margin-top:10px">Newest snapshot: ' + num(latest) + ". Each entry in the explorer links its copies with their dates.</p>" : "");
+      (latest ? '<p class="rn-s" style="margin-top:10px">Newest snapshot: ' + num(latest) + ".</p>" : "");
   }
 
   function filesHtml(D) {
@@ -252,7 +252,7 @@
     if (!list.length) { return '<p class="rn-big">' + num(0) + "</p><p class=\"rn-s\">No corrections on record.</p>"; }
     return '<p class="rn-big">' + num(list.length) + " entries</p><ul class=\"rn-list rn-ref\">" +
       list.map(function (e) { return '<li><a href="' + entryHref(e) + '">' + esc(e.model_name) + '</a><span class="t-m">' + esc(e._orgName) + ", " + esc(e.date) + "</span></li>"; }).join("") +
-      '</ul><p class="rn-s">Each keeps its note, with the old value and the evidence, in the explorer.</p>';
+      '</ul>';
   }
 
   function redHtml(D) {

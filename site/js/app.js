@@ -536,7 +536,7 @@
   /* The sections, in navigation order. One list feeds the palette, the
      go-to shortcuts and the "you are here" marks. */
   var SECTIONS = [
-    { file: "index.html", title: "Overview", meta: "The overview: cadence, labs, scores, disclosure", key: "o" },
+    { file: "overview.html", title: "Overview", meta: "The overview: cadence, labs, scores, disclosure", key: "o" },
     { file: "story.html", title: "Story", meta: "The record in five views, with a text version", key: "s" },
     { file: "explorer.html", title: "Explorer", meta: "Every entry, searchable and filterable", key: "e" },
     { file: "methodology.html", title: "Methodology", meta: "The rules every number follows", key: "m" },

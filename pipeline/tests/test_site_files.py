@@ -30,7 +30,7 @@ def test_llms_txt_states_counts_and_lists_every_data_file():
 
 def test_every_shipped_page_is_in_the_sitemap_and_llms_txt():
     paths = {p for p, _ in site_files.PAGES}
-    assert {"/", "/explorer.html", "/story.html", "/data.html", "/methodology.html",
+    assert {"/", "/overview.html", "/explorer.html", "/story.html", "/data.html", "/methodology.html",
             "/about.html", "/changes.html"} <= paths
     text = site_files.llms_txt(META, [])
     for p in paths:

@@ -568,7 +568,7 @@
     buildControls();
     placeControls();
     wireGrid(); wireInspector(); wireToolbar();
-    $("#ex-sub").textContent = D.meta.releases + " releases and " + D.meta.revisions + " revisions (updates to a model already on record) from twelve tracked labs, " + D.meta.first_date + " to " + D.meta.last_date + ". Select a row for its sources.";
+    $("#ex-sub").textContent = D.meta.releases + " releases and " + D.meta.revisions + " revisions (updates to a model already on record) from twelve tracked labs, " + D.meta.first_date + " to " + D.meta.last_date + ".";
     update(false);
     edgeCue();
     document.documentElement.classList.add("ready");

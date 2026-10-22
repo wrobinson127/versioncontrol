@@ -24,7 +24,7 @@ The full rules, the scope and the known limits are in `docs/METHODOLOGY.md`, whi
 ## Commands
 
 ```
-python -m pytest -q                       # 326 tests
+python -m pytest -q                       # 339 tests
 python -m pipeline.validate               # every entry against the schema and provenance rules
 python -m pipeline.build_story --check    # fail if site/story.html has drifted from the data
 python tools/check_pages.py .             # browser checks on every page (Playwright + Chromium)

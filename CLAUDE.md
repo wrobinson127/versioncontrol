@@ -7,7 +7,7 @@ what it is and `docs/METHODOLOGY.md` for the rules every number obeys.
 ## Commands
 
 ```
-python -m pytest -q                     # 326 tests
+python -m pytest -q                     # 339 tests
 python -m pipeline.validate             # every entry against the schema and provenance rules
 python -m pipeline.build_story          # regenerate site/story.html from data/
 python -m pipeline.build_story --check  # fail if story.html has drifted from the data (CI runs this)

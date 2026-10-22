@@ -42,14 +42,14 @@ def test_no_framing_phrases_anywhere():
 
 
 def test_prehistory_note_is_gone():
-    assert "prehistory" not in PAGES["index.html"]
+    assert "prehistory" not in PAGES["overview.html"]
     assert not (ROOT / "content" / "prehistory.md").exists()
     assert ".prehistory" not in (SITE / "css" / "site.css").read_text(encoding="utf-8")
 
 
 def test_overview_measures_open_weights_not_the_newest_release():
     ov = JS["overview.js"]
-    assert '"Newest release' not in ov and "Newest release" not in PAGES["index.html"]
+    assert '"Newest release' not in ov and "Newest release" not in PAGES["overview.html"]
     assert 'kpi("k4", "Open-weights share of releases, "' in ov
     assert 'e.availability_class === "open_weights"' in ov and "sparkLine(owPts" in ov
     # the feed keeps every entry and names what a revision revises
@@ -137,7 +137,7 @@ def test_overview_keeps_only_the_finding_no_panel_draws():
     for cut in ("The highest independent GPQA Diamond score ", "checked releases come with a paper",
                 "The lab's score is above Epoch's in ", '"Select " + y'):
         assert cut not in ov, cut
-    assert '<h2 id="h-findings">Finding</h2>' in PAGES["index.html"]
+    assert '<h2 id="h-findings">Finding</h2>' in PAGES["overview.html"]
 
 
 def test_refusals_appear_only_in_the_explorer_inspector():
@@ -150,7 +150,7 @@ def test_refusals_appear_only_in_the_explorer_inspector():
             if "refus" in line.lower() or "REFUSED_COMPARISON" in line:
                 hits.append((name, line.strip()[:120]))
     assert len(hits) == 1 and hits[0][0] == "explorer.js" and "ib-refused" in hits[0][1], hits
-    assert 'id="p-refused"' not in PAGES["index.html"] and "renderRefused" not in JS["overview.js"]
+    assert 'id="p-refused"' not in PAGES["overview.html"] and "renderRefused" not in JS["overview.js"]
     css = (SITE / "css" / "site.css").read_text(encoding="utf-8")
     assert ".refusals" not in css and ".rf-big" not in css and ".rf {" not in css
 
@@ -191,3 +191,32 @@ def test_entry_summaries_use_current_registry_display_names():
             first_segment = summary[:first_word_end + 20] if first_word_end > 0 else summary[:40]
             mismatches.append(f"{e['id']}: summary starts {first_segment!r}, expected display {display!r}")
     assert not mismatches, "Entry summaries use stale display names:\n" + "\n".join(mismatches[:10])
+
+
+HELPER_CAPTIONS = [
+    "Drag across the grid to filter every panel.", "Select a lab to filter the overview.",
+    "Computed from the record at each load.", "A vertical line joins the lab's score",
+    "The same release and benchmark, scored by the lab and by Epoch AI.", "Hover a row to find it in the grid.",
+    "Escape or Clear filters returns to the whole record.", "Select a row for its sources.",
+    "Each keeps its note, with the old value and the evidence, in the explorer.",
+    "Each entry in the explorer links its copies with their dates.",
+]
+
+
+def test_helper_captions_stay_cut():
+    """Let the layout do the explaining: captions that describe a panel or
+    an obvious affordance are gone. Caveats that change how a number reads
+    stay, as short as they can be."""
+    hits = [f"{n}: {c!r}" for n, s in _visible_strings() for c in HELPER_CAPTIONS if c in s]
+    assert not hits, "\n".join(hits)
+    ov = PAGES["overview.html"]
+    assert '<p class="pmeta">Shares: checked releases only.</p>' in ov
+    assert "LAB and IND, one release" in JS["overview.js"]
+
+
+def test_overview_opens_on_the_measures_and_the_grid():
+    ov = PAGES["overview.html"]
+    assert 'aria-expanded="true" aria-controls="cad-body"' in ov
+    for body in ("feed-list", "labs-grid", "findings-list", "scores-body", "pairs-body", "disc-body", "access-body"):
+        assert f'aria-expanded="false" aria-controls="{body}"' in ov, body
+        assert re.search(rf'id="{body}"[^>]* hidden', ov), body
