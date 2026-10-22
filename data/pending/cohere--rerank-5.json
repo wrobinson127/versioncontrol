@@ -1,0 +1,110 @@
+{
+  "announcement_url": "https://cohere.com/blog/rerank-5",
+  "confidence": 1,
+  "date_hint": null,
+  "detected_on": "2026-10-22",
+  "detectors": [
+    "html_diff"
+  ],
+  "draft_entry": {
+    "availability_class": "public_api",
+    "benchmarks": [],
+    "date": "2026-10-21",
+    "disclosure_links": {
+      "model_card": "NOT_DISCLOSED",
+      "paper": "NOT_DISCLOSED",
+      "system_card": "NOT_DISCLOSED",
+      "usage_policy": "NOT_DISCLOSED"
+    },
+    "extraction": {
+      "model": "claude-haiku-5-5",
+      "retrieval_date": "2026-10-22",
+      "source_url": "https://cohere.com/blog/rerank-5"
+    },
+    "model_name": "Rerank 5",
+    "organization": "Cohere",
+    "summary": "Cohere reports the release of Rerank 5, a retrieval model offered in Pro and Fast tiers, dated October 21, 2026. Cohere states it is generally available through the Cohere API, Model Vault, Microsoft Foundry, Amazon SageMaker, and to North users. Cohere reports Pro scored 82.2 on BRIGHT and ranked first on 39 of 46 composite datasets. Cohere also describes Context Focus, an optional capability that returns scored text spans within documents.",
+    "unpinned_claims": [
+      {
+        "benchmark_as_stated": "BRIGHT",
+        "value": "82.2"
+      },
+      {
+        "benchmark_as_stated": "ViDoRe V3",
+        "value": "1.6 points"
+      },
+      {
+        "benchmark_as_stated": "BEIR",
+        "value": "1.8 points"
+      },
+      {
+        "benchmark_as_stated": "nanoMTEB",
+        "value": "3.4 points"
+      },
+      {
+        "benchmark_as_stated": "ViDoRe Finance",
+        "value": "9.6 points"
+      },
+      {
+        "benchmark_as_stated": "BRIGHT Economics",
+        "value": "9.6 points"
+      },
+      {
+        "benchmark_as_stated": "Parsed PDFs",
+        "value": "89.9"
+      },
+      {
+        "benchmark_as_stated": "Parsed PDFs",
+        "value": "88.5"
+      },
+      {
+        "benchmark_as_stated": "Reranking quality (RCP-nDCG@10) by language, Spanish",
+        "value": "91.2"
+      },
+      {
+        "benchmark_as_stated": "Reranking quality (RCP-nDCG@10) by language, French",
+        "value": "90.5"
+      },
+      {
+        "benchmark_as_stated": "Reranking quality (RCP-nDCG@10) by language, German",
+        "value": "90.6"
+      },
+      {
+        "benchmark_as_stated": "Reranking quality (RCP-nDCG@10) by language, Arabic",
+        "value": "89.7"
+      },
+      {
+        "benchmark_as_stated": "Reranking quality (RCP-nDCG@10) by language, Japanese",
+        "value": "89.4"
+      },
+      {
+        "benchmark_as_stated": "Reranking quality (RCP-nDCG@10) by language, Korean",
+        "value": "91.8"
+      }
+    ]
+  },
+  "id": "cohere--rerank-5",
+  "model_hints": [
+    "Rerank 5"
+  ],
+  "org": "cohere",
+  "signals": [
+    {
+      "date_hint": null,
+      "detector": "html_diff",
+      "model_hint": "Rerank 5",
+      "org": "cohere",
+      "title": "Introducing Rerank 5: precise, efficient enterprise document retrieval Give your AI the most relevant context for each request, now with passage-level precision. Oct 21, 2026 8 min read",
+      "url": "https://cohere.com/blog/rerank-5"
+    },
+    {
+      "date_hint": null,
+      "detector": "html_diff",
+      "model_hint": "Rerank 5",
+      "org": "cohere",
+      "title": "Introducing Rerank 5: precise, efficient enterprise document retrieval Oct 21, 2026 8 min read",
+      "url": "https://cohere.com/blog/rerank-5"
+    }
+  ],
+  "status": "pending-review"
+}
