@@ -20,6 +20,12 @@ NAV = (
     ("data.html", "Data", "Data"),
 )
 
+# Pages in the desktop top bar only. The phone tab bar keeps the five
+# sections above (it has no room for more); About stays in its footer.
+TOP_ONLY = (
+    ("about.html", "About"),
+)
+
 FONTS = ("https://fonts.googleapis.com/css2?family=Martian+Mono:wdth,wght@87.5,400..600"
          "&family=Mona+Sans:wdth,wght@100..125,400..700&display=swap")
 
@@ -91,7 +97,7 @@ def topbar(current: str, base: str = "") -> str:
     cur = ' aria-current="page"'
     links = "\n".join(
         f'    <a href="{base}{f}"{cur if f == current else ""}>{label}</a>'
-        for f, label, _ in NAV)
+        for f, label in [(f, label) for f, label, _ in NAV] + list(TOP_ONLY))
     return (
         '<header class="topbar">\n'
         f'  <a class="brand" href="{base}index.html" aria-label="Version Control, overview">{MARK}<span class="brand-name">Version Control</span></a>\n'

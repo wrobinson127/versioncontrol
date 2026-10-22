@@ -56,7 +56,12 @@ def test_navigation_reaches_every_section_and_the_footer_links():
         for href in (f"{b}about.html", f"{b}changes.html", site_shell.REPORT_URL, site_shell.SOURCE_URL):
             assert f'href="{href}"' in html, (name, href)
         current = re.findall(r'aria-current="page"', html)
-        assert len(current) == (2 if name in [f for f, _, _ in site_shell.NAV] else 0), name
+        # Sections are marked in both bars; top-bar-only pages (About) once.
+        top_only = [f for f, _ in site_shell.TOP_ONLY]
+        expected = 2 if name in [f for f, _, _ in site_shell.NAV] else 1 if name in top_only else 0
+        assert len(current) == expected, name
+        for f in top_only:
+            assert f'href="{b}{f}"' in site_shell.topbar(name, b), (name, f)
 
 
 def test_old_timeline_links_open_the_entry():
