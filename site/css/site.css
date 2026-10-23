@@ -1127,7 +1127,7 @@ code, pre, kbd, samp { font-family: var(--mono); font-stretch: 87.5%; }
 .hm-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px 56px; }
 .hm-intro { max-width: 34em; }
 .home h1 { font-size: clamp(30px, 3.1vw, 44px); line-height: 1.1; font-weight: 650; font-stretch: 112%; letter-spacing: -0.02em; }
-.hm-what { margin-top: 16px; font-size: 18px; line-height: 28px; color: var(--muted); max-width: 40ch; }
+.hm-what { margin-top: 16px; font-size: 18px; line-height: 28px; color: var(--muted); max-width: 40ch; text-wrap: balance; }
 .hm-total { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
 .hm-n { display: block; font-size: clamp(84px, 12.5vw, 196px); line-height: 0.82; font-weight: 420; letter-spacing: -0.015em; color: var(--text); min-height: 0.82em; }
 .hm-n .sk { width: 2.2em; height: 0.7em; vertical-align: bottom; }
@@ -1162,11 +1162,15 @@ code, pre, kbd, samp { font-family: var(--mono); font-stretch: 87.5%; }
 .hm-read b { font-family: var(--mono); font-stretch: 87.5%; font-weight: 500; margin-left: 6px; }
 .hm-pulse.reading .hm-read { opacity: 1; }
 .hm-years { position: relative; height: 18px; margin-top: 8px; transition: opacity 0.15s; }
+.hm-leads { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; transition: opacity 0.15s; }
+.hm-leads path { fill: none; stroke: var(--muted); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.hm-pulse.reading .hm-leads { opacity: 0; }
 .hm-years span { position: absolute; top: 0; font-family: var(--mono); font-stretch: 87.5%; font-size: 11px; line-height: 16px; color: var(--muted); }
 
 @media (prefers-reduced-motion: no-preference) {
   .hm-bars.draw .hm-b { animation: hm-rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) backwards; animation-delay: calc(var(--i) * 16ms); }
   .hm-bars.draw .hm-m.now::before { animation: hm-fade 0.4s ease-out backwards; animation-delay: calc(var(--i) * 16ms + 0.5s); }
+  .hm-leads.draw { animation: hm-fade 0.5s ease-out backwards; }
 }
 @keyframes hm-rise { from { transform: scaleY(0); } }
 @keyframes hm-fade { from { opacity: 0; } }
