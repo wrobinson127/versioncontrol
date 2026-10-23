@@ -100,6 +100,34 @@
     });
     plot.addEventListener("blur", function () { show(-1); });
 
+    /* ---------- leader lines: each end label points at its month's bar ---------- */
+    var leads = $("#hm-leads"), H0 = plot.clientHeight;
+    var firstI = months.findIndex(function (m) { return m.k === oldest.date.slice(0, 7); });
+    var lastI = months.findIndex(function (m) { return m.k === newestK; });
+    function lead(label, i, right) {
+      if (i < 0 || !cols[i]) { return ""; }
+      var f = fig.getBoundingClientRect(), lr = label.getBoundingClientRect(), c = cols[i].getBoundingClientRect();
+      var H = plot.clientHeight || H0;
+      var x1 = (right ? lr.right - 4 : lr.left + 4) - f.left, y1 = lr.bottom + 4 - f.top;
+      var top = c.bottom - Math.max(2, months[i].n / max * H) - f.top;
+      /* the newest month carries a ring above its bar: stop above the ring */
+      var x2 = c.left + c.width / 2 - f.left, y2 = top - (i === lastI ? 19 : 4);
+      if (y2 - y1 < 6) { return ""; }
+      return '<path d="M' + x1.toFixed(1) + " " + y1.toFixed(1) + "L" + x2.toFixed(1) + " " + y2.toFixed(1) + '"/>';
+    }
+    function drawLeads() {
+      var f = fig.getBoundingClientRect();
+      leads.setAttribute("viewBox", "0 0 " + f.width.toFixed(1) + " " + f.height.toFixed(1));
+      leads.innerHTML = lead($("#hm-first"), firstI, false) + lead($("#hm-last"), lastI, true);
+    }
+    drawLeads();
+    if (!CR.reducedMotion()) {
+      leads.style.animationDelay = (months.length * 16 + 600) + "ms";
+      leads.classList.add("draw");
+    }
+    window.addEventListener("resize", drawLeads);
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(drawLeads); }
+
     /* ---------- findings ---------- */
     /* shares divide by checked releases only */
     var sc = CR.discCounts(rel, "system_card");
