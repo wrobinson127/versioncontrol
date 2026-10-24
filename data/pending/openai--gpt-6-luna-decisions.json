@@ -1,0 +1,45 @@
+{
+  "announcement_url": "https://openai.com/index/decisions-api/",
+  "confidence": 1,
+  "date_hint": "2026-09-22",
+  "detected_on": "2026-10-24",
+  "detectors": [
+    "epoch"
+  ],
+  "draft_entry": {
+    "availability_class": "public_api",
+    "benchmarks": [],
+    "date": "2026-10-22",
+    "disclosure_links": {
+      "model_card": "NOT_DISCLOSED",
+      "paper": "NOT_DISCLOSED",
+      "system_card": "NOT_DISCLOSED",
+      "usage_policy": "NOT_DISCLOSED"
+    },
+    "extraction": {
+      "model": "claude-haiku-5-5",
+      "retrieval_date": "2026-10-24",
+      "source_url": "https://openai.com/index/decisions-api/"
+    },
+    "model_name": "Decisions API",
+    "organization": "OpenAI",
+    "summary": "OpenAI announces general availability of the Decisions API, built with GPT-6 Luna, on October 22, 2026. OpenAI reports that the API answers bounded questions from text, images, and structured inputs, returning probability, choice, or score results, with latency up to 10x lower than GPT-6 Luna through the Responses API. Access is through a dedicated Decisions endpoint. OpenAI lists input-token pricing of $0.10 per million tokens, cached input at $0.01 per million, and regional processing in the US and EU.",
+    "unpinned_claims": []
+  },
+  "id": "openai--gpt-6-luna-decisions",
+  "model_hints": [
+    "GPT-6 Luna Decisions"
+  ],
+  "org": "openai",
+  "signals": [
+    {
+      "date_hint": "2026-09-22",
+      "detector": "epoch",
+      "model_hint": "GPT-6 Luna Decisions",
+      "org": "openai",
+      "title": "GPT-6 Luna Decisions",
+      "url": "https://openai.com/index/decisions-api/"
+    }
+  ],
+  "status": "pending-review"
+}
