@@ -1,0 +1,92 @@
+{
+  "announcement_url": "https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart",
+  "confidence": 2,
+  "date_hint": "2026-10-23",
+  "detected_on": "2026-10-24",
+  "detectors": [
+    "epoch",
+    "openrouter"
+  ],
+  "draft_entry": {
+    "availability_class": "open_weights",
+    "benchmarks": [],
+    "date": null,
+    "disclosure_links": {
+      "model_card": "NOT_DISCLOSED",
+      "paper": "NOT_DISCLOSED",
+      "system_card": "NOT_DISCLOSED",
+      "usage_policy": "NOT_DISCLOSED"
+    },
+    "extraction": {
+      "model": "claude-haiku-5-5",
+      "retrieval_date": "2026-10-24",
+      "source_url": "https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart"
+    },
+    "model_name": "Kimi K3.1 Pro",
+    "organization": "Kimi",
+    "summary": "Kimi reports the release of Kimi K3.1 Pro, a post-trained version of Kimi K3 with a 1-million-token context window, and of a high-speed variant, Kimi K3.1 Pro Highspeed. Kimi states that full model weights will be released by Nov 4, and that the model is also accessible through a paid API, unlocked after a minimum $1 top-up. Kimi reports benchmark figures for coding, finance, and cyber tasks, including a claim-level hallucination rate of 6.85% compared with 23.35% for K3.",
+    "unpinned_claims": [
+      {
+        "benchmark_as_stated": "Terminal-Bench 4.0",
+        "value": "[xx.x%]"
+      },
+      {
+        "benchmark_as_stated": "Terminal-Bench-Science 0.1",
+        "value": "[xx.x%]"
+      },
+      {
+        "benchmark_as_stated": "[our internal kcb evaluation]",
+        "value": "[xx.x%]"
+      },
+      {
+        "benchmark_as_stated": "Financial Modeling",
+        "value": "7.2 points"
+      },
+      {
+        "benchmark_as_stated": "Financial Research",
+        "value": "11.6 points"
+      },
+      {
+        "benchmark_as_stated": "Business Operation",
+        "value": "about 4.2×"
+      },
+      {
+        "benchmark_as_stated": "claim-level hallucination rate",
+        "value": "6.85%"
+      },
+      {
+        "benchmark_as_stated": "share of responses containing at least one factual error",
+        "value": "46.4%"
+      },
+      {
+        "benchmark_as_stated": "xdev-bench-hard",
+        "value": "81.0%"
+      }
+    ]
+  },
+  "id": "moonshot--kimi-k3.1-pro",
+  "model_hints": [
+    "Kimi K3.1 Pro",
+    "kimi-k3.1-pro"
+  ],
+  "org": "moonshot",
+  "signals": [
+    {
+      "date_hint": "2026-10-23",
+      "detector": "openrouter",
+      "model_hint": "kimi-k3.1-pro",
+      "org": "moonshot",
+      "title": "MoonshotAI: Kimi K3.1 Pro",
+      "url": "https://openrouter.ai/moonshotai/kimi-k3.1-pro"
+    },
+    {
+      "date_hint": "2026-10-23",
+      "detector": "epoch",
+      "model_hint": "Kimi K3.1 Pro",
+      "org": "moonshot",
+      "title": "Kimi K3.1 Pro",
+      "url": "https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart"
+    }
+  ],
+  "status": "pending-review"
+}
