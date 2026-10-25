@@ -91,7 +91,11 @@ def head(title: str, description: str, path: str, base: str = "", extra: str = "
             f'<link rel="stylesheet" href="{FONTS.replace("&", "&amp;")}">\n'
             f'<link rel="stylesheet" href="{base}css/site.css">\n'
             + pre +
+            # Search engines want a square raster at a multiple of 48px
+            # beside the SVG; favicon.ico at the root is the fallback.
+            f'<link rel="icon" href="{base}favicon.ico" sizes="48x48">\n'
             f'<link rel="icon" href="{base}assets/favicon.svg" type="image/svg+xml">\n'
+            f'<link rel="icon" href="{base}assets/favicon-192.png" type="image/png" sizes="192x192">\n'
             f'<link rel="apple-touch-icon" href="{base}assets/apple-touch-icon.png">\n')
 
 
