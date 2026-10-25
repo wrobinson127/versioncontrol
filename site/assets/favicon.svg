@@ -1,8 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Version Control favicon: a registrar's stamp. -->
-  <rect width="64" height="64" rx="10" fill="#f1f3e9"/>
-  <rect x="7" y="7" width="50" height="50" rx="6" fill="none" stroke="#1d211a" stroke-width="4"/>
-  <text x="32" y="33.5" text-anchor="middle" dominant-baseline="central"
-        font-family='Rockwell, "Rockwell Nova", "Roboto Slab", Georgia, serif'
-        font-size="25" font-weight="700" letter-spacing="1" fill="#1d211a">VC</text>
+  <!-- Version Control favicon: the top-bar mark on the dark ground. -->
+  <rect width="64" height="64" rx="12" fill="#111110"/>
+  <rect x="9" y="9" width="12" height="12" rx="3" fill="#2c2b28"/>
+  <rect x="26" y="9" width="12" height="12" rx="3" fill="#8a5e1c"/>
+  <rect x="43" y="9" width="12" height="12" rx="3" fill="#2c2b28"/>
+  <rect x="9" y="26" width="12" height="12" rx="3" fill="#6e4c19"/>
+  <rect x="26" y="26" width="12" height="12" rx="3" fill="#bf8126"/>
+  <rect x="43" y="26" width="12" height="12" rx="3" fill="#8a5e1c"/>
+  <rect x="9" y="43" width="12" height="12" rx="3" fill="#2c2b28"/>
+  <rect x="26" y="43" width="12" height="12" rx="3" fill="#6e4c19"/>
+  <rect x="43" y="43" width="12" height="12" rx="3" fill="#f0b354"/>
 </svg>
