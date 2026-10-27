@@ -1,0 +1,55 @@
+{
+  "announcement_url": "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
+  "confidence": 2,
+  "date_hint": "2026-10-26",
+  "detected_on": "2026-10-27",
+  "detectors": [
+    "epoch",
+    "openrouter"
+  ],
+  "draft_entry": {
+    "availability_class": "public_api",
+    "benchmarks": [],
+    "date": null,
+    "disclosure_links": {
+      "model_card": "NOT_DISCLOSED",
+      "paper": "NOT_DISCLOSED",
+      "system_card": "NOT_DISCLOSED",
+      "usage_policy": "NOT_DISCLOSED"
+    },
+    "extraction": {
+      "model": "claude-haiku-5-5",
+      "retrieval_date": "2026-10-27",
+      "source_url": "https://developers.openai.com/api/docs/models/gpt-6.1-terra"
+    },
+    "model_name": "GPT-6.1 Terra",
+    "organization": "OpenAI",
+    "summary": "OpenAI lists GPT-6.1 Terra, a model accepting text and image input and producing text output, available through the OpenAI API across Responses, Chat Completions, and other endpoints. OpenAI states the model is intended for visual reasoning, computer use, and drafting or revising text. The listing gives a 1,050,000-token context window, a 128,000-token maximum output, a June 1, 2026 knowledge cutoff, and prices of $1.00 per million input tokens and $5.00 per million output tokens. No benchmark results are reported.",
+    "unpinned_claims": []
+  },
+  "id": "openai--gpt-6.1-terra",
+  "model_hints": [
+    "GPT-6.1 Terra",
+    "gpt-6.1-terra"
+  ],
+  "org": "openai",
+  "signals": [
+    {
+      "date_hint": "2026-10-26",
+      "detector": "openrouter",
+      "model_hint": "gpt-6.1-terra",
+      "org": "openai",
+      "title": "OpenAI: GPT-6.1 Terra",
+      "url": "https://openrouter.ai/openai/gpt-6.1-terra"
+    },
+    {
+      "date_hint": "2026-10-26",
+      "detector": "epoch",
+      "model_hint": "GPT-6.1 Terra",
+      "org": "openai",
+      "title": "GPT-6.1 Terra",
+      "url": "https://developers.openai.com/api/docs/models/gpt-6.1-terra"
+    }
+  ],
+  "status": "pending-review"
+}
