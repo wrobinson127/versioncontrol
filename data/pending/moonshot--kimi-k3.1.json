@@ -1,0 +1,91 @@
+{
+  "announcement_url": "https://www.kimi.com/en/blog/kimi-k3-1-pro",
+  "confidence": 1,
+  "date_hint": null,
+  "detected_on": "2026-10-24",
+  "detectors": [
+    "html_diff"
+  ],
+  "draft_entry": {
+    "availability_class": "open_weights",
+    "benchmarks": [],
+    "date": null,
+    "disclosure_links": {
+      "model_card": "NOT_DISCLOSED",
+      "paper": "NOT_DISCLOSED",
+      "system_card": "NOT_DISCLOSED",
+      "usage_policy": "NOT_DISCLOSED"
+    },
+    "extraction": {
+      "model": "claude-haiku-5-5",
+      "retrieval_date": "2026-10-24",
+      "source_url": "https://www.kimi.com/en/blog/kimi-k3-1-pro"
+    },
+    "model_name": "Kimi K3.1 Pro",
+    "organization": "Kimi",
+    "review_note": "the lab page mentions Artificial Analysis: check each benchmark figure's footnote before approving it as LAB_REPORTED.",
+    "summary": "Kimi reports the release of Kimi K3.1 Pro, a post-trained version of Kimi K3 with a 1-million-token context window, and Kimi K3.1 Pro Highspeed. Both are available now through Kimi.com, Kimi Work, Kimi Code, and the Kimi API. Kimi says full model weights will be released by November 4, 2026. Kimi reports results on coding, 3D modeling, finance, and cybersecurity benchmarks, with comparisons to GPT-6 Astra, Claude Opus 5.5, and K3.",
+    "unpinned_claims": [
+      {
+        "benchmark_as_stated": "Terminal-Bench 4.0",
+        "value": "65.7%"
+      },
+      {
+        "benchmark_as_stated": "Kimi Code Bench 3.0 Long-horizon",
+        "value": "61.2%"
+      },
+      {
+        "benchmark_as_stated": "BenchCAD",
+        "value": "92.7% with tools"
+      },
+      {
+        "benchmark_as_stated": "OfficeQA Pro v2",
+        "value": "64.4"
+      },
+      {
+        "benchmark_as_stated": "Financial Modeling",
+        "value": "7.2 points"
+      },
+      {
+        "benchmark_as_stated": "Financial Research",
+        "value": "11.6 points"
+      },
+      {
+        "benchmark_as_stated": "Business Operation",
+        "value": "4.2×"
+      },
+      {
+        "benchmark_as_stated": "Kimi Hallu Bench Hard",
+        "value": "8.3%"
+      },
+      {
+        "benchmark_as_stated": "xdev-bench-hard",
+        "value": "81.0%"
+      }
+    ]
+  },
+  "id": "moonshot--kimi-k3.1",
+  "model_hints": [
+    "Kimi K3.1"
+  ],
+  "org": "moonshot",
+  "signals": [
+    {
+      "date_hint": null,
+      "detector": "html_diff",
+      "model_hint": "Kimi K3.1",
+      "org": "moonshot",
+      "title": "Kimi K3.1 Pro",
+      "url": "https://www.kimi.com/en/blog/kimi-k3-1-pro"
+    },
+    {
+      "date_hint": null,
+      "detector": "html_diff",
+      "model_hint": "Kimi K3.1",
+      "org": "moonshot",
+      "title": "Kimi K3.1 Pro 技术博客",
+      "url": "https://www.kimi.com/blog/kimi-k3-1-pro"
+    }
+  ],
+  "status": "pending-review"
+}
