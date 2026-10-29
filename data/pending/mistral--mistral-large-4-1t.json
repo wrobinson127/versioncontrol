@@ -1,0 +1,54 @@
+{
+  "announcement_url": "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B-NVFP4",
+  "confidence": 1,
+  "date_hint": "2026-10-15",
+  "detected_on": "2026-10-29",
+  "detectors": [
+    "hf_orgs"
+  ],
+  "draft_entry": {
+    "availability_class": "open_weights",
+    "benchmarks": [],
+    "date": null,
+    "disclosure_links": {
+      "model_card": "NOT_DISCLOSED",
+      "paper": "NOT_DISCLOSED",
+      "system_card": "NOT_DISCLOSED",
+      "usage_policy": "NOT_DISCLOSED"
+    },
+    "extraction": {
+      "model": "claude-haiku-5-5",
+      "retrieval_date": "2026-10-29",
+      "source_url": "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B-NVFP4"
+    },
+    "model_name": "Mistral Large 4 NVFP4",
+    "organization": "Mistral",
+    "summary": "Mistral releases Mistral Large 4 NVFP4, an NVFP4 quantized checkpoint of Mistral Large 4, which Mistral describes as a 1 trillion-parameter natively multimodal Mixture-of-Experts model with 49 billion active parameters per token. Mistral reports similar performance to the FP8 checkpoint, with a smaller memory footprint and faster inference. The weights are available on Hugging Face under the Mistral Ecosystem Open-Weight License, which requires a separate commercial license for Model-as-a-Service operation. Mistral reports a 1M context window and configurable reasoning effort.",
+    "unpinned_claims": []
+  },
+  "id": "mistral--mistral-large-4-1t",
+  "model_hints": [
+    "Mistral-Large-4-1T-A52B",
+    "Mistral-Large-4-1T-A52B-NVFP4"
+  ],
+  "org": "mistral",
+  "signals": [
+    {
+      "date_hint": "2026-10-15",
+      "detector": "hf_orgs",
+      "model_hint": "Mistral-Large-4-1T-A52B-NVFP4",
+      "org": "mistral",
+      "title": "mistralai/Mistral-Large-4-1T-A52B-NVFP4",
+      "url": "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B-NVFP4"
+    },
+    {
+      "date_hint": "2026-10-29",
+      "detector": "hf_orgs",
+      "model_hint": "Mistral-Large-4-1T-A52B",
+      "org": "mistral",
+      "title": "mistralai/Mistral-Large-4-1T-A52B",
+      "url": "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B"
+    }
+  ],
+  "status": "pending-review"
+}

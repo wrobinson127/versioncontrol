@@ -1,0 +1,45 @@
+{
+  "announcement_url": "https://cohere.com/blog/rerank-3pt5",
+  "confidence": 1,
+  "date_hint": "2024-12-02",
+  "detected_on": "2026-10-29",
+  "detectors": [
+    "epoch"
+  ],
+  "draft_entry": {
+    "availability_class": null,
+    "benchmarks": [],
+    "date": "2024-12-02",
+    "disclosure_links": {
+      "model_card": "NOT_DISCLOSED",
+      "paper": "NOT_DISCLOSED",
+      "system_card": "NOT_DISCLOSED",
+      "usage_policy": "NOT_DISCLOSED"
+    },
+    "extraction": {
+      "model": "claude-haiku-5-5",
+      "retrieval_date": "2026-10-29",
+      "source_url": "https://cohere.com/blog/rerank-3pt5"
+    },
+    "model_name": "Rerank 3.5",
+    "organization": "Cohere",
+    "summary": "Cohere announces Rerank 3.5, a retrieval model, in a blog post dated December 2, 2024. Cohere states that Rerank 3.5 covers reasoning and multilingual capabilities for searching complex enterprise data. The announcement reports no benchmark figures, does not state how the model can be accessed, and links no model card, system card, usage policy, or paper.",
+    "unpinned_claims": []
+  },
+  "id": "cohere--rerank-3.5",
+  "model_hints": [
+    "Rerank 3.5"
+  ],
+  "org": "cohere",
+  "signals": [
+    {
+      "date_hint": "2024-12-02",
+      "detector": "epoch",
+      "model_hint": "Rerank 3.5",
+      "org": "cohere",
+      "title": "Rerank 3.5",
+      "url": "https://cohere.com/blog/rerank-3pt5"
+    }
+  ],
+  "status": "pending-review"
+}
