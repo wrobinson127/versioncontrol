@@ -240,6 +240,11 @@ PREDECESSOR_OVERRIDES = {
         "mistral--codestral-25.01",
         "Mistral's model page for Codestral 25.01 names 25.08 as its "
         "replacement (docs.mistral.ai, retrieved 2026-10-19)."),
+    "cohere--rerank-5": (
+        "cohere--rerank-3.5",
+        "Rerank 3.5 is the previous Rerank on record; Cohere's Rerank 3.5 post "
+        "now opens with \"Rerank 5 is here\" (cohere.com/blog/rerank-3pt5, "
+        "retrieved 2026-10-30)."),
 }
 
 
