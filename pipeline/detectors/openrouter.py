@@ -40,6 +40,16 @@ def parse_catalog(payload: dict, lookback_days: int, now_ts: float) -> list:
         org = PROVIDER_TO_ORG.get(provider)
         if org is None:
             continue
+        # Serving variants of a model already listed are not releases:
+        # ":batch", ":free" and other ":tag" endpoints, and modes OpenRouter
+        # describes as "the same underlying model as" another (GPT-6.1 Terra
+        # Pro is GPT-6.1 Terra with reasoning.mode pro). Before 2026-10-31
+        # every one of these reached the review queue and was ruled out by
+        # hand.
+        if ":" in slug:
+            continue
+        if "same underlying model as" in (m.get("description") or "").lower():
+            continue
         name = slug.split("/", 1)[-1]
         date_hint = datetime.datetime.fromtimestamp(
             created, tz=datetime.timezone.utc).strftime("%Y-%m-%d")

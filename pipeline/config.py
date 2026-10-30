@@ -290,7 +290,7 @@ OPENROUTER_MODELS_URL = "https://openrouter.ai/api/v1/models"
 SIBLING_SUFFIX_RE = (
     r"-(FP8|fp8|INT[48]|int[48]|AWQ|awq|GPTQ|gptq|GGUF|gguf|w4a16|bf16"
     r"|4bit|8bit|Base|base|Instruct|it|hf"
-    r"|nvfp4|mxfp4|fp4|mlx|pte|executorch|assistant|drafter)$"
+    r"|nvfp4|mxfp4|fp4|mlx|pte|executorch|assistant|drafter|batch)$"
 )
 
 # --------------------------------------------------------------------------
