@@ -1,11 +1,11 @@
 {
   "delta_chips": 54,
   "entries_with_numbers": 100,
-  "entry_count": 370,
+  "entry_count": 371,
   "first_date": "2022-11-30",
-  "last_date": "2026-10-26",
+  "last_date": "2026-10-29",
   "last_successful_update": "2026-10-30",
   "refused_comparisons": 3,
   "releases": 356,
-  "revisions": 14
+  "revisions": 15
 }
