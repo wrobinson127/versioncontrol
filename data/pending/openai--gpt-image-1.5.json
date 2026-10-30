@@ -1,0 +1,45 @@
+{
+  "announcement_url": "https://openai.com/index/new-chatgpt-images-is-here/",
+  "confidence": 1,
+  "date_hint": "2025-12-16",
+  "detected_on": "2026-10-30",
+  "detectors": [
+    "epoch"
+  ],
+  "draft_entry": {
+    "availability_class": "public_api",
+    "benchmarks": [],
+    "date": "2025-12-16",
+    "disclosure_links": {
+      "model_card": "NOT_DISCLOSED",
+      "paper": "NOT_DISCLOSED",
+      "system_card": "NOT_DISCLOSED",
+      "usage_policy": "NOT_DISCLOSED"
+    },
+    "extraction": {
+      "model": "claude-haiku-5-5",
+      "retrieval_date": "2026-10-30",
+      "source_url": "https://openai.com/index/new-chatgpt-images-is-here/"
+    },
+    "model_name": "GPT Image 1.5",
+    "organization": "OpenAI",
+    "summary": "OpenAI released GPT Image 1.5 on 2025-12-16 as the model powering a new version of ChatGPT Images, and as an API model under the same name. OpenAI reports that the model follows user instructions more closely than GPT Image 1, changes only the requested parts of an uploaded image, and renders denser, smaller text. OpenAI states that the model is rolling out to all ChatGPT users and API users, with Business and Enterprise access to follow. OpenAI reports that image inputs and outputs cost 20% less than in GPT Image 1. The announcement reports no benchmark figures.",
+    "unpinned_claims": []
+  },
+  "id": "openai--gpt-image-1.5",
+  "model_hints": [
+    "GPT Image 1.5"
+  ],
+  "org": "openai",
+  "signals": [
+    {
+      "date_hint": "2025-12-16",
+      "detector": "epoch",
+      "model_hint": "GPT Image 1.5",
+      "org": "openai",
+      "title": "GPT Image 1.5",
+      "url": "https://openai.com/index/new-chatgpt-images-is-here/"
+    }
+  ],
+  "status": "pending-review"
+}
