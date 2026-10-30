@@ -697,5 +697,87 @@
     "urls": [
       "https://huggingface.co/meta-models/Muse-Glimmer-30B-assistant"
     ]
+  },
+  {
+    "id": "moonshot--kimi-k3.1",
+    "reason": "Same release as moonshot--kimi-k3.1-pro: the same Kimi blog post announces Kimi K3.1 Pro and its Highspeed variant.",
+    "rejected_on": "2026-10-30",
+    "urls": [
+      "https://www.kimi.com/blog/kimi-k3-1-pro",
+      "https://www.kimi.com/en/blog/kimi-k3-1-pro"
+    ]
+  },
+  {
+    "id": "openai--gpt-6.1-terra-pro",
+    "reason": "Same model with reasoning.mode set to pro; not a separate release. OpenRouter states it is the same underlying model as GPT-6.1 Terra. Precedent openai--gpt-6-astra-pro.",
+    "rejected_on": "2026-10-30",
+    "urls": [
+      "https://openrouter.ai/openai/gpt-6.1-terra-pro"
+    ]
+  },
+  {
+    "id": "openai--gpt-6.1-terra-batch",
+    "reason": "Batch endpoint of the same model and weights; not a separate release. Precedent: earlier *-batch rulings.",
+    "rejected_on": "2026-10-30",
+    "urls": [
+      "https://openrouter.ai/openai/gpt-6.1-terra:batch"
+    ]
+  },
+  {
+    "id": "openai--gpt-6.1-terra-pro-batch",
+    "reason": "Same model with reasoning.mode set to pro, batch endpoint; not a separate release. Precedent openai--gpt-6-astra-pro.",
+    "rejected_on": "2026-10-30",
+    "urls": [
+      "https://openrouter.ai/openai/gpt-6.1-terra-pro:batch"
+    ]
+  },
+  {
+    "id": "google-deepmind--gemini-3.6-flash-image-nano-banana-2.1",
+    "reason": "Image generation; no language output. Epoch's name for google-deepmind--gemini-nano-banana-2.1, already ruled out. Precedent openai--chatgpt-images-2.5.",
+    "rejected_on": "2026-10-30",
+    "urls": [
+      "https://ai.google.dev/gemini-api/docs/models/gemini-nano-banana-2.1"
+    ]
+  },
+  {
+    "id": "openai--gpt-image-1.5",
+    "reason": "Image generation; no language output. Precedent openai--chatgpt-images-2.5.",
+    "rejected_on": "2026-10-30",
+    "urls": [
+      "https://openai.com/index/new-chatgpt-images-is-here/"
+    ]
+  },
+  {
+    "id": "google-deepmind--genie-4",
+    "reason": "World model in research preview for trusted testers; not a language model and no general public access. See scope rules on research previews.",
+    "rejected_on": "2026-10-30",
+    "urls": [
+      "https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/"
+    ]
+  },
+  {
+    "id": "openai--100m",
+    "reason": "Customer story (Retell AI), not a model release.",
+    "rejected_on": "2026-10-30",
+    "urls": [
+      "https://openai.com/index/retell-ai"
+    ]
+  },
+  {
+    "id": "openai--gpt-6-luna-decisions",
+    "reason": "The Decisions API, a product built on GPT-6 Luna (openai--gpt-6-luna, on record); not a newly named model.",
+    "rejected_on": "2026-10-30",
+    "urls": [
+      "https://openai.com/index/decisions-api/"
+    ]
+  },
+  {
+    "id": "mistral--mistral-large-4-1t",
+    "reason": "Open-weights repository and NVFP4 copy of Mistral Large 4, already on record as mistral--mistral-large-4 (2026-10-06); not a separate release.",
+    "rejected_on": "2026-10-30",
+    "urls": [
+      "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B",
+      "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B-NVFP4"
+    ]
   }
 ]
