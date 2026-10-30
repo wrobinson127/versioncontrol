@@ -2051,6 +2051,11 @@
     "checked": "2026-10-19",
     "via": "existing"
   },
+  "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B": {
+    "archived_url": "https://web.archive.org/web/20261030071028/https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B",
+    "checked": "2026-10-30",
+    "via": "existing"
+  },
   "https://huggingface.co/mistralai/Mistral-Large-Instruct-2407": {
     "archived_url": "https://web.archive.org/web/20260825054226/https://huggingface.co/mistralai/Mistral-Large-Instruct-2407",
     "checked": "2026-10-19",
@@ -2355,6 +2360,11 @@
   "https://mistral.ai/news/mistral-large-2407/": {
     "archived_url": "https://web.archive.org/web/20260824194723/https://mistral.ai/news/mistral-large-2407/",
     "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://mistral.ai/news/mistral-large-4-oss/": {
+    "archived_url": "https://web.archive.org/web/20261030162058/https://mistral.ai/news/mistral-large-4-oss/",
+    "checked": "2026-10-30",
     "via": "existing"
   },
   "https://mistral.ai/news/mistral-large-4/": {

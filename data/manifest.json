@@ -4,13 +4,13 @@
       "sha256": "3a8df9ae94e23e14003ca212c5aefe1be45edc5e708e2da2f6b71656e1962525"
     },
     "data/derived/site_meta.json": {
-      "sha256": "46bf2b6adebe979fcba1df530059ba69f2ffbbdceb80b7524e54cfd4132fea2c"
+      "sha256": "58b090a4a4d7f483098f6a81c8f39535726cb61fcdf4be5395ee14170cddea77"
     },
     "data/derived/views.json.gz": {
-      "sha256": "6e1354eabd8727078e99e50ef482f4f5270e7c0d38d2d14539d535bf4c195a00"
+      "sha256": "7f539a963dfbc72a8b9e87f033c2bba5e9ddb3d32618ca8a3a0e88c86ec32aa5"
     }
   },
-  "entry_count": 370,
+  "entry_count": 371,
   "files": {
     "data/entries/2022.json.gz": {
       "count": 2,
@@ -308,7 +308,7 @@
       "sha256": "07fc51f6a9e567785b2136b3e6e517feb72a3bc1000a8f507e63891eb77b3842"
     },
     "data/entries/2026.json.gz": {
-      "count": 99,
+      "count": 100,
       "ids": [
         "zai--glm-4.7-flash",
         "alibaba-qwen--qwen3-max-thinking",
@@ -408,9 +408,10 @@
         "deepseek--deepseek-v4.1-flash-1017",
         "cohere--rerank-5",
         "moonshot--kimi-k3.1-pro",
-        "openai--gpt-6.1-terra"
+        "openai--gpt-6.1-terra",
+        "mistral--mistral-large-4-oct-2026"
       ],
-      "sha256": "aab20aca8159aabc7410bd061f6c989452f606c3bc8d7a7a59584f54f5a3a2cd"
+      "sha256": "3d69aa9bfccce6d731e7ab2df0d0bb287dd7162b0e135913c6327695880d690c"
     }
   },
   "schema_version": 1
