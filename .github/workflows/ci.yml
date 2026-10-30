@@ -1,9 +1,21 @@
 name: ci
 
+# Runs on every push to every branch, which covers every human PR. There is
+# no pull_request trigger: GitHub holds pull_request runs on PRs the
+# github-actions bot opens until someone clicks "Approve and run", and the
+# bot's own pushes trigger nothing. Instead nightly.yml and promote.yml call
+# this workflow after they push (workflow_call, ref nightly-pending) and post
+# the result as a commit status on the review PR.
 on:
   push:
     branches: ["**"]
-  pull_request:
+  workflow_call:
+    inputs:
+      ref:
+        description: "Branch to check out; empty = the triggering ref"
+        type: string
+        required: false
+        default: ""
 
 permissions:
   contents: read
@@ -13,6 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
@@ -42,6 +56,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

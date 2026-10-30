@@ -56,3 +56,33 @@ jobs:
           fi
           git commit -m "promote: approved candidates into the dataset $(date -u +%F)"
           git push origin nightly-pending
+
+  ci:
+    # The bot's push triggers no CI, so run it here on what was just pushed.
+    needs: promote
+    if: needs.promote.result == 'success'
+    permissions:
+      contents: read
+    uses: ./.github/workflows/ci.yml
+    with:
+      ref: nightly-pending
+
+  ci-status:
+    # Show the result on the review PR's head commit, where a person looks.
+    needs: [promote, ci]
+    if: always() && needs.promote.result == 'success'
+    runs-on: ubuntu-latest
+    permissions:
+      statuses: write
+    steps:
+      - name: Post the CI result to the nightly-pending head commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RESULT: ${{ needs.ci.result }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          sha=$(gh api "repos/$REPO/commits/nightly-pending" --jq .sha)
+          if [ "$RESULT" = "success" ]; then state=success; else state=failure; fi
+          desc="tests, validation and browser checks: $RESULT"
+          gh api -X POST "repos/$REPO/statuses/$sha" -f state="$state" -f context="ci (nightly-pending)" -f target_url="$RUN_URL" -f description="$desc"
