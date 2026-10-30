@@ -744,3 +744,38 @@ def test_a_genuinely_new_meta_repo_is_still_queued():
     cands = correlate.correlate([_meta_hf("Muse-Glimmer-2-30B")], _MUSE_ENTRIES,
                                 set())
     assert [c["id"] for c in cands] == ["meta--muse-glimmer-2"]
+
+
+# Four of the 13 candidates triaged on 2026-10-30 were serving variants or
+# sized repos of models already on the record.
+def _or_model(slug, desc, created="2026-10-26"):
+    ts = datetime.datetime.fromisoformat(created).replace(tzinfo=datetime.timezone.utc).timestamp()
+    return {"id": slug, "name": slug, "created": ts, "description": desc}
+
+
+def test_openrouter_skips_serving_variants():
+    now = datetime.datetime(2026, 10, 27, tzinfo=datetime.timezone.utc).timestamp()
+    payload = {"data": [
+        _or_model("openai/gpt-6.1-terra", "GPT-6.1 Terra is the mid-tier model in OpenAI's GPT-6.1 series."),
+        _or_model("openai/gpt-6.1-terra:batch", "GPT-6.1 Terra is the mid-tier model in OpenAI's GPT-6.1 series."),
+        _or_model("openai/gpt-6.1-terra-pro", "GPT-6.1 Terra Pro is the same underlying model as GPT-6.1 Terra, "
+                  "served with reasoning.mode set to pro."),
+        _or_model("openai/gpt-6.1-terra-pro:batch", "GPT-6.1 Terra Pro is the same underlying model as GPT-6.1 Terra."),
+    ]}
+    sigs = openrouter.parse_catalog(payload, lookback_days=14, now_ts=now)
+    assert [s["model_hint"] for s in sigs] == ["gpt-6.1-terra"]
+
+
+@pytest.mark.parametrize("hint, known", [
+    ("Mistral-Large-4-1T-A52B", "Mistral Large 4"),        # trillion-parameter size tag
+    ("Mistral-Large-4-1T-A52B-NVFP4", "Mistral Large 4"),
+    ("gemini-3.7-flash-batch", "Gemini 3.7 Flash"),        # batch endpoint
+])
+def test_sized_and_batch_names_resolve_to_the_model_on_record(hint, known):
+    assert correlate.base_slug(hint) == correlate.base_slug(known)
+
+
+def test_a_new_tier_name_is_still_its_own_model():
+    """Pro is a separate model at some labs (Kimi K3.1 Pro); only OpenRouter's
+    own "same underlying model" description marks a serving mode."""
+    assert correlate.base_slug("Kimi K3.1 Pro") != correlate.base_slug("Kimi K3.1")

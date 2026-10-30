@@ -15,8 +15,9 @@ _SIBLING_RE = re.compile(config.SIBLING_SUFFIX_RE)
 # HF repos and API slugs decorate with sizes and formats that the base name
 # strips for clustering: "Kimi-K2.5-FP8" and "Kimi-K2.5" are one event. A
 # mixture-of-experts repo also carries its active parameters ("A42B" in
-# Muse-Spark-Open-816B-A42B), which is a size, not a version.
-_SIZE_RE = re.compile(r"-(\d+(?:\.\d+)?[bm]|a\d+(?:\.\d+)?b)(?=$|-)",
+# Muse-Spark-Open-816B-A42B), which is a size, not a version, and a size
+# can run to trillions (Mistral-Large-4-1T-A52B).
+_SIZE_RE = re.compile(r"-(\d+(?:\.\d+)?[bmt]|a\d+(?:\.\d+)?b)(?=$|-)",
                       re.IGNORECASE)
 
 
