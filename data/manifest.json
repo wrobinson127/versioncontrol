@@ -4,13 +4,13 @@
       "sha256": "3a8df9ae94e23e14003ca212c5aefe1be45edc5e708e2da2f6b71656e1962525"
     },
     "data/derived/site_meta.json": {
-      "sha256": "6b6f5be67311d7fdde00a35d0e337b3de980b25ada9bd779ade037e5401c0def"
+      "sha256": "46bf2b6adebe979fcba1df530059ba69f2ffbbdceb80b7524e54cfd4132fea2c"
     },
     "data/derived/views.json.gz": {
-      "sha256": "ddb483e5672213e4c5cab6f8525f9c585d260166e688d3e7195ba2ce5034ddf0"
+      "sha256": "6e1354eabd8727078e99e50ef482f4f5270e7c0d38d2d14539d535bf4c195a00"
     }
   },
-  "entry_count": 367,
+  "entry_count": 370,
   "files": {
     "data/entries/2022.json.gz": {
       "count": 2,
@@ -73,7 +73,7 @@
       "sha256": "e199b11ebb3b6095b31a7a885e666d4deba8b2784f78b81af896fac75e1d5900"
     },
     "data/entries/2024.json.gz": {
-      "count": 95,
+      "count": 96,
       "ids": [
         "deepseek--deepseekmoe-16b",
         "zai--glm-4",
@@ -161,6 +161,7 @@
         "deepseek--deepseek-r1-lite-preview",
         "openai--gpt-4o-nov-2024",
         "alibaba-qwen--ovis1.6-gemma2-27b",
+        "cohere--rerank-3.5",
         "amazon--amazon-nova-pro",
         "openai--o1",
         "meta--llama-3.3-70b",
@@ -171,7 +172,7 @@
         "deepseek--deepseek-v3",
         "alibaba-qwen--qvq"
       ],
-      "sha256": "2b7462ff42ba5cd22cdd82ec82eb357fd7f6cba7dc5fe33c320913dd92f3e99c"
+      "sha256": "407ceeb038468281c0f4f8c33b33c2e2f338603e3c3fe1301a04a5ac452a7201"
     },
     "data/entries/2025.json.gz": {
       "count": 127,
@@ -307,7 +308,7 @@
       "sha256": "07fc51f6a9e567785b2136b3e6e517feb72a3bc1000a8f507e63891eb77b3842"
     },
     "data/entries/2026.json.gz": {
-      "count": 97,
+      "count": 99,
       "ids": [
         "zai--glm-4.7-flash",
         "alibaba-qwen--qwen3-max-thinking",
@@ -405,9 +406,11 @@
         "google-deepmind--gemini-4-argon",
         "meta--muse-spark-open",
         "deepseek--deepseek-v4.1-flash-1017",
-        "cohere--rerank-5"
+        "cohere--rerank-5",
+        "moonshot--kimi-k3.1-pro",
+        "openai--gpt-6.1-terra"
       ],
-      "sha256": "092616b046af20599df63411bb76d6e8a04d57799a3609272aa054010b8783d2"
+      "sha256": "60bfcb15016a6c52e4ce99c14b0f0285fcd8fff293614bad4562eee99fae74a0"
     }
   },
   "schema_version": 1

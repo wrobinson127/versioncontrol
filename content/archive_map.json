@@ -956,6 +956,11 @@
     "checked": "2026-10-19",
     "via": "existing"
   },
+  "https://cohere.com/blog/rerank-3pt5": {
+    "archived_url": "https://web.archive.org/web/20261005095512/https://cohere.com/blog/rerank-3pt5",
+    "checked": "2026-10-30",
+    "via": "existing"
+  },
   "https://cohere.com/blog/rerank-5": {
     "archived_url": "https://web.archive.org/web/20261022115307/https://cohere.com/blog/rerank-5",
     "checked": "2026-10-22",
@@ -1067,6 +1072,11 @@
     "checked": "2026-10-19",
     "via": "existing"
   },
+  "https://deploymentsafety.openai.com/gpt-6-1-terra": {
+    "archived_url": "https://web.archive.org/web/20261027111506/https://deploymentsafety.openai.com/gpt-6-1-terra",
+    "checked": "2026-10-30",
+    "via": "existing"
+  },
   "https://deploymentsafety.openai.com/gpt-6-astra": {
     "archived_url": "https://web.archive.org/web/20260915145803/https://deploymentsafety.openai.com/gpt-6-astra",
     "checked": "2026-10-19",
@@ -1121,6 +1131,11 @@
   "https://developers.googleblog.com/en/introducing-paligemma-2-mix/": {
     "archived_url": "https://web.archive.org/web/20250918221415/https://developers.googleblog.com/en/introducing-paligemma-2-mix/",
     "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://developers.openai.com/api/docs/models/gpt-6.1-terra": {
+    "archived_url": "https://web.archive.org/web/20261028090600/https://developers.openai.com/api/docs/models/gpt-6.1-terra",
+    "checked": "2026-10-30",
     "via": "existing"
   },
   "https://docs.aws.amazon.com/ai/responsible-ai/nova-2-lite/overview.html": {
@@ -2565,6 +2580,11 @@
     "checked": "2026-10-19",
     "via": "existing"
   },
+  "https://openai.com/index/introducing-gpt-6-1-terra/": {
+    "archived_url": "https://web.archive.org/web/20261026201059/https://openai.com/index/introducing-gpt-6-1-terra/",
+    "checked": "2026-10-30",
+    "via": "existing"
+  },
   "https://openai.com/index/introducing-gpt-6-sol-and-luna/": {
     "archived_url": "https://web.archive.org/web/20261010142331/https://openai.com/index/introducing-gpt-6-sol-and-luna/",
     "checked": "2026-10-19",
@@ -2628,6 +2648,12 @@
   "https://platform.kimi.ai/docs/guide/kimi-k2-7-code-quickstart": {
     "archived_url": "https://web.archive.org/web/20260826095129/https://platform.kimi.ai/docs/guide/kimi-k2-7-code-quickstart",
     "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart": {
+    "archived_url": "https://web.archive.org/web/20261023234430/https://platform.kimi.ai/docs/guide/kimi-k3-1-pro-quickstart",
+    "checked": "2026-10-30",
+    "found_by": "cdx",
     "via": "existing"
   },
   "https://platform.openai.com/docs/models/gpt-3.5-turbo": {
@@ -3337,6 +3363,11 @@
     "archived_url": "https://web.archive.org/web/20260829052344/https://www.kimi.com/ai-models/kimi-k2-6",
     "checked": "2026-10-19",
     "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.kimi.com/en/blog/kimi-k3-1-pro": {
+    "archived_url": "https://web.archive.org/web/20261025155824/https://www.kimi.com/en/blog/kimi-k3-1-pro",
+    "checked": "2026-10-30",
     "via": "existing"
   },
   "https://www.kimi.com/user/agreement/modelUse": {
