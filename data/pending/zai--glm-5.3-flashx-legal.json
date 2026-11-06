@@ -1,0 +1,26 @@
+{
+  "announcement_url": "https://openrouter.ai/z-ai/glm-5.3-flashx-legal",
+  "confidence": 1,
+  "date_hint": "2026-11-02",
+  "detected_on": "2026-11-02",
+  "detectors": [
+    "openrouter"
+  ],
+  "draft_entry": null,
+  "id": "zai--glm-5.3-flashx-legal",
+  "model_hints": [
+    "glm-5.3-flashx-legal"
+  ],
+  "org": "zai",
+  "signals": [
+    {
+      "date_hint": "2026-11-02",
+      "detector": "openrouter",
+      "model_hint": "glm-5.3-flashx-legal",
+      "org": "zai",
+      "title": "Z.ai: GLM 5.3 FlashX Legal",
+      "url": "https://openrouter.ai/z-ai/glm-5.3-flashx-legal"
+    }
+  ],
+  "status": "pending-review"
+}

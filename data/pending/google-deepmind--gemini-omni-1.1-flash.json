@@ -1,0 +1,26 @@
+{
+  "announcement_url": "https://openrouter.ai/google/gemini-omni-1.1-flash",
+  "confidence": 1,
+  "date_hint": "2026-11-04",
+  "detected_on": "2026-11-06",
+  "detectors": [
+    "openrouter"
+  ],
+  "draft_entry": null,
+  "id": "google-deepmind--gemini-omni-1.1-flash",
+  "model_hints": [
+    "gemini-omni-1.1-flash"
+  ],
+  "org": "google-deepmind",
+  "signals": [
+    {
+      "date_hint": "2026-11-04",
+      "detector": "openrouter",
+      "model_hint": "gemini-omni-1.1-flash",
+      "org": "google-deepmind",
+      "title": "Google: Gemini Omni 1.1 Flash",
+      "url": "https://openrouter.ai/google/gemini-omni-1.1-flash"
+    }
+  ],
+  "status": "pending-review"
+}
