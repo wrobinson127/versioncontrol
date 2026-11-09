@@ -39,6 +39,10 @@ alone.
 - Nothing publishes without human approval: the nightly writes candidates to
   `data/pending/` on a branch; a person sets `"approved": true`; `promote`
   runs; merging the branch is publication.
+- Review is weekly, on Mondays (ruling 2026-11-09): one yes/no list of the
+  queue to Walker, then one promotion on the review PR. The procedure is in
+  `docs/WEEKLY_REVIEW.md`. An auto-approve rule is backtested in
+  `docs/AUTO_APPROVE_BACKTEST.md` and is not switched on.
 - Registrar voice: `pipeline/lint_voice.py` refuses quality adjectives,
   rankings, comparative claims, and em dashes in any public string.
 - API keys live only in GitHub Actions secrets. Never in files.
