@@ -1,0 +1,26 @@
+{
+  "announcement_url": "https://openrouter.ai/google/gemini-4-carbon",
+  "confidence": 1,
+  "date_hint": "2026-11-10",
+  "detected_on": "2026-11-10",
+  "detectors": [
+    "openrouter"
+  ],
+  "draft_entry": null,
+  "id": "google-deepmind--gemini-4-carbon",
+  "model_hints": [
+    "gemini-4-carbon"
+  ],
+  "org": "google-deepmind",
+  "signals": [
+    {
+      "date_hint": "2026-11-10",
+      "detector": "openrouter",
+      "model_hint": "gemini-4-carbon",
+      "org": "google-deepmind",
+      "title": "Google: Gemini 4 Carbon",
+      "url": "https://openrouter.ai/google/gemini-4-carbon"
+    }
+  ],
+  "status": "pending-review"
+}
