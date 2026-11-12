@@ -779,5 +779,37 @@
       "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B",
       "https://huggingface.co/mistralai/Mistral-Large-4-1T-A52B-NVFP4"
     ]
+  },
+  {
+    "id": "google-deepmind--gemini-omni-1.1-flash",
+    "reason": "Video generation and editing model (OpenRouter lists text, image and video in; text and video out). Out of scope by the 2026-10-19 scope ruling. Precedent google-deepmind--gemini-omni-1.1. Walker, weekly list 2026-11-09, answered 2026-11-12.",
+    "rejected_on": "2026-11-12",
+    "urls": [
+      "https://openrouter.ai/google/gemini-omni-1.1-flash"
+    ]
+  },
+  {
+    "id": "google-deepmind--gemini-omni-1.2-flash",
+    "reason": "Video generation and editing model (OpenRouter lists text, image and video in; text and video out). Out of scope by the 2026-10-19 scope ruling. Precedent google-deepmind--gemini-omni-1.1. Walker, weekly list 2026-11-09, answered 2026-11-12.",
+    "rejected_on": "2026-11-12",
+    "urls": [
+      "https://openrouter.ai/google/gemini-omni-1.2-flash"
+    ]
+  },
+  {
+    "id": "openai--images-2.6",
+    "reason": "Image generation; no language output. Precedent openai--chatgpt-images-2.5. Walker, weekly list 2026-11-09, answered 2026-11-12.",
+    "rejected_on": "2026-11-12",
+    "urls": [
+      "https://openai.com/index/introducing-images-2-6"
+    ]
+  },
+  {
+    "id": "zai--glm-5.3-flashx-legal",
+    "reason": "Legal-domain variant of GLM-5.3-FlashX, itself ruled out as a serving tier of GLM-5.3-Flash. First-party task fine-tunes are not separate releases; precedent alibaba-qwen--qwen-drive-1.0. Walker, weekly list 2026-11-09, answered 2026-11-12.",
+    "rejected_on": "2026-11-12",
+    "urls": [
+      "https://openrouter.ai/z-ai/glm-5.3-flashx-legal"
+    ]
   }
 ]
