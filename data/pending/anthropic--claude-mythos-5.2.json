@@ -1,0 +1,34 @@
+{
+  "announcement_url": "https://www.anthropic.com/claude-fable-and-mythos-5-2",
+  "confidence": 1,
+  "date_hint": null,
+  "detected_on": "2026-11-10",
+  "detectors": [
+    "html_diff"
+  ],
+  "draft_entry": null,
+  "id": "anthropic--claude-mythos-5.2",
+  "model_hints": [
+    "Claude Mythos 5.2"
+  ],
+  "org": "anthropic",
+  "signals": [
+    {
+      "date_hint": null,
+      "detector": "html_diff",
+      "model_hint": "Claude Mythos 5.2",
+      "org": "anthropic",
+      "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2 Our most capable models for daunting technical work, Claude Fable 5.2 and Claude Mythos 5.2 set a new bar in coding, finance, and the sciences.",
+      "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2"
+    },
+    {
+      "date_hint": null,
+      "detector": "html_diff",
+      "model_hint": "Claude Mythos 5.2",
+      "org": "anthropic",
+      "title": "Introducing Claude Fable 5.2 and Claude Mythos 5.2",
+      "url": "https://www.anthropic.com/claude-fable-and-mythos-5-2"
+    }
+  ],
+  "status": "pending-review"
+}

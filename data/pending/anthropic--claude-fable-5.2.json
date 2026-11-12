@@ -1,0 +1,26 @@
+{
+  "announcement_url": "https://openrouter.ai/anthropic/claude-fable-5.2",
+  "confidence": 1,
+  "date_hint": "2026-11-09",
+  "detected_on": "2026-11-10",
+  "detectors": [
+    "openrouter"
+  ],
+  "draft_entry": null,
+  "id": "anthropic--claude-fable-5.2",
+  "model_hints": [
+    "claude-fable-5.2"
+  ],
+  "org": "anthropic",
+  "signals": [
+    {
+      "date_hint": "2026-11-09",
+      "detector": "openrouter",
+      "model_hint": "claude-fable-5.2",
+      "org": "anthropic",
+      "title": "Anthropic: Claude Fable 5.2",
+      "url": "https://openrouter.ai/anthropic/claude-fable-5.2"
+    }
+  ],
+  "status": "pending-review"
+}

@@ -4,13 +4,13 @@
       "sha256": "3a8df9ae94e23e14003ca212c5aefe1be45edc5e708e2da2f6b71656e1962525"
     },
     "data/derived/site_meta.json": {
-      "sha256": "58b090a4a4d7f483098f6a81c8f39535726cb61fcdf4be5395ee14170cddea77"
+      "sha256": "fb29856765d717d09aa185c218287b3a4a997a3709f82ed414a650d95c362f8e"
     },
     "data/derived/views.json.gz": {
-      "sha256": "7f539a963dfbc72a8b9e87f033c2bba5e9ddb3d32618ca8a3a0e88c86ec32aa5"
+      "sha256": "0a67c4d6e4fe46b1a2c26a452315188f86a234a86738d4c9ad06a2caa8461a2f"
     }
   },
-  "entry_count": 371,
+  "entry_count": 375,
   "files": {
     "data/entries/2022.json.gz": {
       "count": 2,
@@ -175,7 +175,7 @@
       "sha256": "407ceeb038468281c0f4f8c33b33c2e2f338603e3c3fe1301a04a5ac452a7201"
     },
     "data/entries/2025.json.gz": {
-      "count": 127,
+      "count": 129,
       "ids": [
         "mistral--codestral-25.01",
         "deepseek--deepseek-r1",
@@ -208,6 +208,7 @@
         "google-deepmind--gemini-2.5-pro",
         "alibaba-qwen--qwen2.5-omni-7b",
         "openai--gpt-4o-mar-2025",
+        "alibaba-qwen--qvq-max",
         "meta--llama-4-maverick",
         "alibaba-qwen--qwq-plus",
         "google-deepmind--t5gemma-gemma-9b-9b",
@@ -274,6 +275,7 @@
         "xai--grok-4-fast",
         "alibaba-qwen--qwen3-omni-30b-a3b",
         "deepseek--deepseek-v3.1-terminus",
+        "alibaba-qwen--qwen3-vl-235b-a22b",
         "google-deepmind--gemini-robotics-er-1.5",
         "anthropic--claude-sonnet-4.5",
         "deepseek--deepseek-v3.2-exp",
@@ -305,10 +307,10 @@
         "openai--gpt-5.2-codex",
         "zai--glm-4.7"
       ],
-      "sha256": "07fc51f6a9e567785b2136b3e6e517feb72a3bc1000a8f507e63891eb77b3842"
+      "sha256": "04d5870ebbe735146e756bdef47a5ce6490f741420b75f85b83981412504bc2c"
     },
     "data/entries/2026.json.gz": {
-      "count": 100,
+      "count": 102,
       "ids": [
         "zai--glm-4.7-flash",
         "alibaba-qwen--qwen3-max-thinking",
@@ -356,6 +358,7 @@
         "zai--glm-5.2",
         "anthropic--claude-sonnet-5",
         "mistral--leanstral-1.5",
+        "openai--gpt-realtime-2.1-mini",
         "meta--muse-spark-1.1",
         "openai--gpt-5.6-luna",
         "openai--gpt-5.6-sol",
@@ -409,9 +412,10 @@
         "cohere--rerank-5",
         "moonshot--kimi-k3.1-pro",
         "openai--gpt-6.1-terra",
-        "mistral--mistral-large-4-oct-2026"
+        "mistral--mistral-large-4-oct-2026",
+        "meta--muse-ember"
       ],
-      "sha256": "3d69aa9bfccce6d731e7ab2df0d0bb287dd7162b0e135913c6327695880d690c"
+      "sha256": "24b4c0dd6fe0dc357cd23b282f34a781a04470549404828bd9684d90f763762c"
     }
   },
   "schema_version": 1

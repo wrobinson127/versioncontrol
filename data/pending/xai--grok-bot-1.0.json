@@ -1,0 +1,26 @@
+{
+  "announcement_url": "https://x.ai/news/grok-bot-1-0",
+  "confidence": 1,
+  "date_hint": null,
+  "detected_on": "2026-11-12",
+  "detectors": [
+    "html_diff"
+  ],
+  "draft_entry": null,
+  "id": "xai--grok-bot-1.0",
+  "model_hints": [
+    "Grok Bot 1.0"
+  ],
+  "org": "xai",
+  "signals": [
+    {
+      "date_hint": null,
+      "detector": "html_diff",
+      "model_hint": "Grok Bot 1.0",
+      "org": "xai",
+      "title": "Nov 2, 2026 Introducing Grok Bot 1.0 Bots now work with your whole team, take on work without being asked, and get more done, faster. Read More",
+      "url": "https://x.ai/news/grok-bot-1-0"
+    }
+  ],
+  "status": "pending-review"
+}

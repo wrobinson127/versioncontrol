@@ -1133,9 +1133,19 @@
     "checked": "2026-10-19",
     "via": "existing"
   },
+  "https://developers.openai.com/api/docs/changelog": {
+    "archived_url": "https://web.archive.org/web/20261111071907/https://developers.openai.com/api/docs/changelog",
+    "checked": "2026-11-12",
+    "via": "existing"
+  },
   "https://developers.openai.com/api/docs/models/gpt-6.1-terra": {
     "archived_url": "https://web.archive.org/web/20261028090600/https://developers.openai.com/api/docs/models/gpt-6.1-terra",
     "checked": "2026-10-30",
+    "via": "existing"
+  },
+  "https://developers.openai.com/api/docs/models/gpt-realtime-2.1-mini": {
+    "archived_url": "https://web.archive.org/web/20261102162544/https://developers.openai.com/api/docs/models/gpt-realtime-2.1-mini",
+    "checked": "2026-11-12",
     "via": "existing"
   },
   "https://docs.aws.amazon.com/ai/responsible-ai/nova-2-lite/overview.html": {
@@ -1232,6 +1242,11 @@
     "archived_url": "https://web.archive.org/web/20251230025433/https://github.com/MoonshotAI/Kimi-Linear/blob/master/tech_report.pdf",
     "checked": "2026-10-19",
     "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://github.com/QwenLM/Qwen3-VL": {
+    "archived_url": "https://web.archive.org/web/20261110141650/https://github.com/QwenLM/Qwen3-VL",
+    "checked": "2026-11-12",
     "via": "existing"
   },
   "https://github.com/QwenLM/Qwen3.5?tab=readme-ov-file": {
@@ -1675,6 +1690,11 @@
     "archived_url": "https://web.archive.org/web/20260809175023/https://huggingface.co/Qwen/Qwen3-Reranker-8B",
     "checked": "2026-10-20",
     "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://huggingface.co/Qwen/Qwen3-VL-235B-A22B-Instruct": {
+    "archived_url": "https://web.archive.org/web/20261104051432/https://huggingface.co/Qwen/Qwen3-VL-235B-A22B-Instruct",
+    "checked": "2026-11-12",
     "via": "existing"
   },
   "https://huggingface.co/Qwen/Qwen3.5-122B-A10B": {
@@ -2731,6 +2751,11 @@
     "checked": "2026-10-19",
     "via": "existing"
   },
+  "https://qwenlm.github.io/blog/qvq-max-preview/": {
+    "archived_url": "https://web.archive.org/web/20260428140140/https://qwenlm.github.io/blog/qvq-max-preview/",
+    "checked": "2026-11-12",
+    "via": "existing"
+  },
   "https://qwenlm.github.io/blog/qwen-vl/": {
     "archived_url": "https://web.archive.org/web/20260914223407/https://qwenlm.github.io/blog/qwen-vl/",
     "checked": "2026-10-19",
@@ -2812,6 +2837,11 @@
     "checked": "2026-10-19",
     "via": "existing"
   },
+  "https://research.meta.ai/blog/muse-ember": {
+    "archived_url": "https://web.archive.org/web/20261110164150/https://research.meta.ai/blog/muse-ember",
+    "checked": "2026-11-12",
+    "via": "existing"
+  },
   "https://research.meta.ai/blog/muse-spark-open": {
     "archived_url": "https://web.archive.org/web/20261018045118/https://research.meta.ai/blog/muse-spark-open",
     "checked": "2026-10-19",
@@ -2820,6 +2850,11 @@
   "https://research.meta.ai/blog/muse-wonder": {
     "archived_url": "https://web.archive.org/web/20261019071328/https://research.meta.ai/blog/muse-wonder",
     "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://research.meta.ai/static/muse-ember-evaluation-report": {
+    "archived_url": "https://web.archive.org/web/20261110164212/https://research.meta.ai/static/muse-ember-evaluation-report",
+    "checked": "2026-11-12",
     "via": "existing"
   },
   "https://research.meta.ai/static/muse-spark-open-evaluation-methodology": {
@@ -3074,6 +3109,11 @@
     "archived_url": "https://web.archive.org/web/20261012091245/https://www.alibabacloud.com/blog/qwen3-8-omni-flash-omni-senses--agentic-delivery-_603580",
     "checked": "2026-10-19",
     "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.alibabacloud.com/blog/qwen3-vl-sharper-vision-deeper-thought-broader-action_602584": {
+    "archived_url": "https://web.archive.org/web/20260315210010/https://www.alibabacloud.com/blog/qwen3-vl-sharper-vision-deeper-thought-broader-action_602584",
+    "checked": "2026-11-12",
     "via": "existing"
   },
   "https://www.alibabacloud.com/help/en/legal/latest/alibaba-cloud-international-website-product-terms-of-service-v-3-8-0": {
