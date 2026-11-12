@@ -159,6 +159,29 @@ def _source_line(label, count, examined: dict) -> str:
     return f"{label}: {count} of {n} {noun} examined"
 
 
+def overdue_candidates(held: list, run_date: str,
+                       days: int = None) -> list:
+    """Held candidates queued more than one review interval before run_date.
+
+    Review is weekly (ruling 2026-11-09), so a candidate a week old is
+    normal. One older than that has sat through a weekly review without a
+    decision, and only those are flagged.
+    """
+    import datetime
+    from . import config
+    days = config.REVIEW_INTERVAL_DAYS if days is None else days
+    today = datetime.date.fromisoformat(run_date[:10])
+    out = []
+    for c in held:
+        try:
+            seen = datetime.date.fromisoformat(str(c.get("detected_on"))[:10])
+        except ValueError:
+            continue
+        if (today - seen).days > days:
+            out.append(c)
+    return out
+
+
 def morning_report(candidates: list, run_date: str, detector_errors: list,
                    flags: list, llm_note: str = "",
                    source_counts: dict = None,
@@ -166,6 +189,13 @@ def morning_report(candidates: list, run_date: str, detector_errors: list,
                    held: list = None) -> str:
     """Markdown artifact summarizing the night. Registrar voice."""
     held = held or []
+    from . import config
+    overdue = overdue_candidates(held, run_date)
+    if overdue:
+        flags = list(flags) + [
+            f"OVERDUE: {len(overdue)} candidate(s) queued more than "
+            f"{config.REVIEW_INTERVAL_DAYS} days, past a weekly review: "
+            + ", ".join(c.get("id", "unknown") for c in overdue)]
     lines = [f"# Morning report, {run_date} (UTC)", ""]
     if not candidates and not held and not detector_errors and not flags:
         lines.append("No new candidate releases detected. All detectors ran clean.")
@@ -205,7 +235,10 @@ def morning_report(candidates: list, run_date: str, detector_errors: list,
         lines.append("")
         lines.append("Queued on a previous night and still unreviewed. These "
                      "are not re-detected, so this is the only place they "
-                     "appear.")
+                     "appear. The queue is reviewed weekly on "
+                     f"{config.REVIEW_WEEKDAY}s (docs/WEEKLY_REVIEW.md); "
+                     "only a candidate older than "
+                     f"{config.REVIEW_INTERVAL_DAYS} days is flagged.")
         lines.append("")
         lines.append("| Candidate | Org | Detected | Date hint | Draft |")
         lines.append("|---|---|---|---|---|")

@@ -407,6 +407,9 @@ def test_replay_fixtures_through_full_path(tmp_path):
     assert "Held from earlier runs: 1" in report
     assert "someorg--held-model" in report
     assert f"Awaiting review in total: {len(candidates) + 1}." in report
+    # Detected in 2000, so it has missed a weekly review: flagged by id.
+    assert "OVERDUE: 1 candidate(s)" in report
+    assert "past a weekly review: someorg--held-model" in report
 
     # The held candidate is also reported on a night that detects nothing new,
     # which is the night it would otherwise vanish on.
@@ -779,3 +782,21 @@ def test_a_new_tier_name_is_still_its_own_model():
     """Pro is a separate model at some labs (Kimi K3.1 Pro); only OpenRouter's
     own "same underlying model" description marks a serving mode."""
     assert correlate.base_slug("Kimi K3.1 Pro") != correlate.base_slug("Kimi K3.1")
+
+
+def test_overdue_flags_only_past_one_review_interval():
+    """Weekly review (ruling 2026-11-09): a candidate up to seven days old is
+    normal and not flagged; one older than that has missed a review."""
+    held = [{"id": "a--seven", "detected_on": "2026-11-02"},
+            {"id": "a--eight", "detected_on": "2026-11-01"},
+            {"id": "a--undated"}]
+    overdue = pending.overdue_candidates(held, "2026-11-09")
+    assert [c["id"] for c in overdue] == ["a--eight"]
+    report = pending.morning_report([], "2026-11-09", detector_errors=[],
+                                    flags=[], held=held)
+    assert "OVERDUE: 1 candidate(s)" in report
+    assert "a--eight" in report.split("## FLAGS")[1]
+    assert "a--seven" not in report.split("## FLAGS")[1]
+    fresh = pending.morning_report([], "2026-11-09", detector_errors=[],
+                                   flags=[], held=held[:1])
+    assert "OVERDUE" not in fresh and "## FLAGS" not in fresh
