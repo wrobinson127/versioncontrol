@@ -1,0 +1,26 @@
+{
+  "announcement_url": "https://openrouter.ai/google/gemini-4-hydrogen",
+  "confidence": 1,
+  "date_hint": "2026-11-12",
+  "detected_on": "2026-11-13",
+  "detectors": [
+    "openrouter"
+  ],
+  "draft_entry": null,
+  "id": "google-deepmind--gemini-4-hydrogen",
+  "model_hints": [
+    "gemini-4-hydrogen"
+  ],
+  "org": "google-deepmind",
+  "signals": [
+    {
+      "date_hint": "2026-11-12",
+      "detector": "openrouter",
+      "model_hint": "gemini-4-hydrogen",
+      "org": "google-deepmind",
+      "title": "Google: Gemini 4 Hydrogen",
+      "url": "https://openrouter.ai/google/gemini-4-hydrogen"
+    }
+  ],
+  "status": "pending-review"
+}
