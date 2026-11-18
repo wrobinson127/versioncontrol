@@ -754,9 +754,25 @@
     "checked": "2026-10-19",
     "via": "existing"
   },
+  "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/": {
+    "archived_url": "https://web.archive.org/web/20261117181602/https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-4-carbon-now-available/",
+    "checked": "2026-11-18",
+    "via": "existing"
+  },
   "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon": {
     "archived_url": "https://web.archive.org/web/20261018091314/https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon",
     "checked": "2026-10-19",
+    "via": "existing"
+  },
+  "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/": {
+    "archived_url": "https://web.archive.org/web/20261118132359/https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-carbon/",
+    "checked": "2026-11-18",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/": {
+    "archived_url": "https://web.archive.org/web/20261117181624/https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-hydrogen/",
+    "checked": "2026-11-18",
     "via": "existing"
   },
   "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/gemini-robotics-er-2/": {
@@ -2954,6 +2970,16 @@
     "checked": "2026-10-19",
     "via": "existing"
   },
+  "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-4-Carbon-Model-Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20261111193408/https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-4-Carbon-Model-Card.pdf",
+    "checked": "2026-11-18",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-4-Hydrogen-Model-Card.pdf": {
+    "archived_url": "https://web.archive.org/web/20261115114440/https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-4-Hydrogen-Model-Card.pdf",
+    "checked": "2026-11-18",
+    "via": "existing"
+  },
   "https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-Robotics-ER-1-6-Model-Card.pdf": {
     "archived_url": "https://web.archive.org/web/20260607135345/https://storage.googleapis.com/deepmind-media/Model-Cards/Gemini-Robotics-ER-1-6-Model-Card.pdf",
     "checked": "2026-10-20",
@@ -2992,6 +3018,16 @@
     "archived_url": "https://web.archive.org/web/20260826102231/https://storage.googleapis.com/deepmind-media/gemini/gemini_3_pro_fsf_report.pdf",
     "checked": "2026-10-19",
     "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/gemini/gemini_4_carbon_safety_report.pdf": {
+    "archived_url": "https://web.archive.org/web/20261117123910/https://storage.googleapis.com/deepmind-media/gemini/gemini_4_carbon_safety_report.pdf",
+    "checked": "2026-11-18",
+    "via": "existing"
+  },
+  "https://storage.googleapis.com/deepmind-media/gemini/gemini_4_hydrogen_safety_report.pdf": {
+    "archived_url": "https://web.archive.org/web/20261118193113/https://storage.googleapis.com/deepmind-media/gemini/gemini_4_hydrogen_safety_report.pdf",
+    "checked": "2026-11-18",
+    "via": "saved"
   },
   "https://storage.googleapis.com/deepmind-media/gemini/gemini_4_safety_report.pdf": {
     "archived_url": "https://web.archive.org/web/20261019091145/https://storage.googleapis.com/deepmind-media/gemini/gemini_4_safety_report.pdf",
@@ -3175,6 +3211,11 @@
     "found_by": "cdx",
     "via": "existing"
   },
+  "https://www.anthropic.com/claude-fable-and-mythos-5-2": {
+    "archived_url": "https://web.archive.org/web/20261117142511/https://www.anthropic.com/claude-fable-and-mythos-5-2",
+    "checked": "2026-11-18",
+    "via": "existing"
+  },
   "https://www.anthropic.com/claude-haiku-5-5": {
     "archived_url": "https://web.archive.org/web/20261019114212/https://www.anthropic.com/claude-haiku-5-5",
     "checked": "2026-10-19",
@@ -3268,6 +3309,12 @@
   "https://www.anthropic.com/claude/sonnet": {
     "archived_url": "https://web.archive.org/web/20260824214851/https://www.anthropic.com/claude/sonnet",
     "checked": "2026-10-19",
+    "found_by": "cdx",
+    "via": "existing"
+  },
+  "https://www.anthropic.com/document/claude-fable-5-2-mythos-5-2-system-card": {
+    "archived_url": "https://web.archive.org/web/20261117004606/https://www.anthropic.com/document/claude-fable-5-2-mythos-5-2-system-card",
+    "checked": "2026-11-18",
     "found_by": "cdx",
     "via": "existing"
   },

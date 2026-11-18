@@ -1,0 +1,37 @@
+{
+  "announcement_url": "https://openai.com/index/introducing-gpt-6-2-astra-sol/",
+  "confidence": 2,
+  "date_hint": "2026-11-17",
+  "detected_on": "2026-11-17",
+  "detectors": [
+    "epoch",
+    "openrouter"
+  ],
+  "draft_attempts": 1,
+  "draft_entry": null,
+  "id": "openai--gpt-6.2-astra",
+  "model_hints": [
+    "GPT-6.2 Astra",
+    "gpt-6.2-astra"
+  ],
+  "org": "openai",
+  "signals": [
+    {
+      "date_hint": "2026-11-17",
+      "detector": "openrouter",
+      "model_hint": "gpt-6.2-astra",
+      "org": "openai",
+      "title": "OpenAI: GPT-6.2 Astra",
+      "url": "https://openrouter.ai/openai/gpt-6.2-astra"
+    },
+    {
+      "date_hint": "2026-11-17",
+      "detector": "epoch",
+      "model_hint": "GPT-6.2 Astra",
+      "org": "openai",
+      "title": "GPT-6.2 Astra",
+      "url": "https://openai.com/index/introducing-gpt-6-2-astra-sol/"
+    }
+  ],
+  "status": "pending-review"
+}
