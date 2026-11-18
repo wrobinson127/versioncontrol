@@ -418,7 +418,7 @@
         "google-deepmind--gemini-4-carbon",
         "google-deepmind--gemini-4-hydrogen"
       ],
-      "sha256": "4a3ffd14cfda7124c8a2ac627e53258b7aa58373750fee286e45907612fefc85"
+      "sha256": "7600a88dc7f1cdaf4780062f373e0ad8f586334d0fe2aa53950fc55f3e3f5783"
     }
   },
   "schema_version": 1
