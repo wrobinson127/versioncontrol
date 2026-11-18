@@ -811,5 +811,21 @@
     "urls": [
       "https://openrouter.ai/z-ai/glm-5.3-flashx-legal"
     ]
+  },
+  {
+    "id": "anthropic--claude-mythos-5.2",
+    "reason": "Direct access only by application to Anthropic's Cyber and Life Sciences Verification Programs; Claude Security for Enterprise customers is a product built on several models, not the model offered as such. Same underlying model as Claude Fable 5.2. Precedent anthropic--claude-mythos-5.",
+    "rejected_on": "2026-11-18",
+    "urls": [
+      "https://www.anthropic.com/claude-fable-and-mythos-5-2"
+    ]
+  },
+  {
+    "id": "xai--grok-bot-1.0",
+    "reason": "Product update to Grok's team agents (Slack, Teams, meetings) on Team, Enterprise and Ultra plans, with no model id on the page. Not a new model. Precedent xai--github-copilot-grok-4.5.",
+    "rejected_on": "2026-11-18",
+    "urls": [
+      "https://x.ai/news/grok-bot-1-0"
+    ]
   }
 ]

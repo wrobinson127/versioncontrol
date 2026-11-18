@@ -4,13 +4,13 @@
       "sha256": "3a8df9ae94e23e14003ca212c5aefe1be45edc5e708e2da2f6b71656e1962525"
     },
     "data/derived/site_meta.json": {
-      "sha256": "fb29856765d717d09aa185c218287b3a4a997a3709f82ed414a650d95c362f8e"
+      "sha256": "1107b3dd487b2ed90beada2df2201a18a24d61d5f59ba509d6767ffb07a565db"
     },
     "data/derived/views.json.gz": {
-      "sha256": "0a67c4d6e4fe46b1a2c26a452315188f86a234a86738d4c9ad06a2caa8461a2f"
+      "sha256": "59165085152e91785035e9c9271f79496452341e469aea4d75cf84bc7d1edbb5"
     }
   },
-  "entry_count": 375,
+  "entry_count": 378,
   "files": {
     "data/entries/2022.json.gz": {
       "count": 2,
@@ -310,7 +310,7 @@
       "sha256": "04d5870ebbe735146e756bdef47a5ce6490f741420b75f85b83981412504bc2c"
     },
     "data/entries/2026.json.gz": {
-      "count": 102,
+      "count": 105,
       "ids": [
         "zai--glm-4.7-flash",
         "alibaba-qwen--qwen3-max-thinking",
@@ -413,9 +413,12 @@
         "moonshot--kimi-k3.1-pro",
         "openai--gpt-6.1-terra",
         "mistral--mistral-large-4-oct-2026",
-        "meta--muse-ember"
+        "anthropic--claude-fable-5.2",
+        "meta--muse-ember",
+        "google-deepmind--gemini-4-carbon",
+        "google-deepmind--gemini-4-hydrogen"
       ],
-      "sha256": "24b4c0dd6fe0dc357cd23b282f34a781a04470549404828bd9684d90f763762c"
+      "sha256": "4a3ffd14cfda7124c8a2ac627e53258b7aa58373750fee286e45907612fefc85"
     }
   },
   "schema_version": 1
