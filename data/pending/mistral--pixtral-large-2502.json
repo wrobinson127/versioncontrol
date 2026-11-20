@@ -1,0 +1,47 @@
+{
+  "announcement_url": "https://openrouter.ai/mistralai/pixtral-large-2502",
+  "confidence": 1,
+  "date_hint": "2026-11-20",
+  "detected_on": "2026-11-20",
+  "detectors": [
+    "openrouter"
+  ],
+  "draft_entry": {
+    "availability_class": "public_api",
+    "benchmarks": [],
+    "date": "2026-11-20",
+    "disclosure_links": {
+      "model_card": "NOT_RESEARCHED",
+      "paper": "NOT_RESEARCHED",
+      "system_card": "NOT_RESEARCHED",
+      "usage_policy": "NOT_RESEARCHED"
+    },
+    "extraction": {
+      "model": "claude-haiku-5-5",
+      "retrieval_date": "2026-11-20",
+      "source_url": "https://openrouter.ai/mistralai/pixtral-large-2502"
+    },
+    "model_name": "Pixtral Large 2502",
+    "organization": "Mistral AI",
+    "review_note": "drafted from openrouter.ai, which is not a mistral domain; 0 benchmark figure(s), all links and the summary dropped. Re-anchor on the lab's own page and write the summary from it.",
+    "summary": null,
+    "third_party_source": true,
+    "unpinned_claims": []
+  },
+  "id": "mistral--pixtral-large-2502",
+  "model_hints": [
+    "pixtral-large-2502"
+  ],
+  "org": "mistral",
+  "signals": [
+    {
+      "date_hint": "2026-11-20",
+      "detector": "openrouter",
+      "model_hint": "pixtral-large-2502",
+      "org": "mistral",
+      "title": "Mistral: Pixtral Large 2502",
+      "url": "https://openrouter.ai/mistralai/pixtral-large-2502"
+    }
+  ],
+  "status": "pending-review"
+}
